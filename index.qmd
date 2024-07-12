@@ -1,0 +1,33 @@
+---
+title: "Statistics 999: Generic Statistics Class"
+subtitle: "UC Berkeley, Spring 2024"
+listing:
+  - id: schedule
+    template: assets/schedule.ejs
+    contents: schedule.yml
+  - id: buttons
+    template: assets/buttons.ejs
+    contents: buttons.yml
+---
+
+::: {#buttons}
+:::
+
+This page is hosted at [{{< var site-url >}}]({{< var site-url >}}). We could provide a templated listing of instructors here (or on its own page), similar to [DS100/fa23](https://github.com/DS-100/fa23).
+
+::: {.callout-note title="Welcome to Week 1 of Stat 999"}
+:::
+
+::: {.callout-note title="Welcome to Week 2"}
+Things are picking up now.
+:::
+
+## Schedule
+
+Here we use Quarto's EJS templating.
+
+For a style similar to that of [Stat 20](https://stat20.org), modify `index.qmd` to point to `assets/{schedule-alt.ejs,buttons-alt.ejs}` and to `{schedule-alt.yml,buttons-alt.yml}` and `_quarto.yml` to point to `assets/styles-alt.scss`.
+
+::: {#schedule}
+:::
+

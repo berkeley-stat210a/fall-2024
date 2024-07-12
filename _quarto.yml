@@ -1,0 +1,38 @@
+project:
+  type: website
+
+website:
+  site-url: https://berkeley-scf.github.io/course-site-quarto/
+  sidebar:
+    style: docked
+    title: "Stat 999"
+    logo: assets/stat_bear.png
+    tools:
+      - icon: github
+        href: https://github.com/berkeley-scf/course-site-quarto
+    contents:
+      - href: index.qmd
+        text: Home / Schedule
+      - href: syllabus.qmd
+        text: Syllabus
+      - href: calendar.qmd
+        text: Calendar
+      - section: "Units"
+        contents:
+          - units/unit1.qmd
+          - units/unit2.ipynb
+          - units/unit3.qmd
+      - href: data.qmd
+        text: Datasets
+      - href: license.qmd
+        text: License
+          
+
+format:
+  html:
+    theme: cosmo
+    css: assets/styles.css
+    toc: true
+
+
+

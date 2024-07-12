@@ -1,0 +1,9 @@
+---
+title: "Data"
+---
+
+We'll use data from several real world situations in class.
+
+## Data 1
+
+## Data 2
