@@ -2,14 +2,14 @@ project:
   type: website
 
 website:
-  site-url: https://berkeley-scf.github.io/course-site-quarto/
+  site-url: https://stat210a.berkeley.edu/fall-2024/
   sidebar:
     style: docked
     title: "Stat 999"
     logo: assets/stat_bear.png
     tools:
       - icon: github
-        href: https://github.com/berkeley-scf/course-site-quarto
+        href: https://github.com/berkeley-stat210a/fall-2024
     contents:
       - href: index.qmd
         text: Home / Schedule
@@ -33,6 +33,3 @@ format:
     theme: cosmo
     css: assets/styles.css
     toc: true
-
-
-
