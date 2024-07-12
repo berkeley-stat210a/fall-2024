@@ -1,6 +1,6 @@
 ---
-title: "Statistics 999: Generic Statistics Class"
-subtitle: "UC Berkeley, Spring 2024"
+title: "Statistics 210a: Theoretical Statistics"
+subtitle: "UC Berkeley, Fall 2024"
 listing:
   - id: schedule
     template: assets/schedule.ejs
@@ -15,7 +15,7 @@ listing:
 
 This page is hosted at [{{< var site-url >}}]({{< var site-url >}}). We could provide a templated listing of instructors here (or on its own page), similar to [DS100/fa23](https://github.com/DS-100/fa23).
 
-::: {.callout-note title="Welcome to Week 1 of Stat 999"}
+::: {.callout-note title="Welcome to Week 1 of Stat 210a"}
 :::
 
 ::: {.callout-note title="Welcome to Week 2"}

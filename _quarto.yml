@@ -5,7 +5,7 @@ website:
   site-url: https://stat210a.berkeley.edu/fall-2024/
   sidebar:
     style: docked
-    title: "Stat 999"
+    title: "Stat 210a"
     logo: assets/stat_bear.png
     tools:
       - icon: github
