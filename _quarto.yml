@@ -3,6 +3,7 @@ project:
 
 website:
   site-url: https://stat210a.berkeley.edu/fall-2024/
+  google-analytics: G-B8G2041HSB
   sidebar:
     style: docked
     title: "Stat 210a"
