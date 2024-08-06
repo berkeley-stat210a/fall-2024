@@ -3,11 +3,11 @@ title: "Statistics 210a: Theoretical Statistics"
 subtitle: "UC Berkeley, Fall 2024"
 listing:
   - id: schedule
-    template: assets/schedule.ejs
-    contents: schedule.yml
+    template: assets/schedule-alt.ejs
+    contents: schedule-alt.yml
   - id: buttons
-    template: assets/buttons.ejs
-    contents: buttons.yml
+    template: assets/buttons-alt.ejs
+    contents: buttons-alt.yml
 ---
 
 ::: {#buttons}
