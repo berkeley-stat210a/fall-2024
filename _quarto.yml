@@ -14,15 +14,15 @@ website:
     contents:
       - href: index.qmd
         text: Home / Schedule
+      - section: "Course Logistics"
+        contents:
+          - faq.qmd
+          - syllabus.qmd
       - href: syllabus.qmd
         text: Syllabus
       - href: calendar.qmd
         text: Calendar
-      - section: "Units"
-        contents:
-          - units/unit1.qmd
-          - units/unit2.ipynb
-          - units/unit3.qmd
+      - handwritten-notes.qmd 
       - href: data.qmd
         text: Datasets
       - href: license.qmd
@@ -32,5 +32,5 @@ website:
 format:
   html:
     theme: cosmo
-    css: assets/styles-alt.css
+    css: assets/styles-alt.scss
     toc: true

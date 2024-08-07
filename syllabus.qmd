@@ -2,24 +2,106 @@
 title: "Syllabus"
 ---
 
-Jump to:
-
-- [About Data 100](#about-data-100)
-  - [Goals](#goals)
-  - [Prerequisites](#prerequisites)
+\[UNDER CONSTRUCTION\]
 
 
-## About Data 100
+Stat 210A is an introductory Ph.D.-level course in theoretical statistics. It is a fast-paced and demanding course intended to prepare students for research careers in statistics.
 
-Combining data, computation, and inferential thinking, data science is redefining how people and organizations solve challenging problems and understand their world. This intermediate level class bridges between Data 8 and upper division computer science and statistics courses as well as methods courses in other fields. In this class, we explore key areas of data science including question formulation, data collection and cleaning, visualization, statistical inference, predictive modeling, and decision making.​ Through a strong emphasis on data centric computing, quantitative critical thinking, and exploratory data analysis, this class covers key principles and techniques of data science. These include languages for transforming, querying and analyzing data; algorithms for machine learning methods including regression, classification and clustering; principles behind creating informative data visualizations; statistical concepts of measurement error and prediction; and techniques for scalable data processing.
+## Course information
 
-### Goals
+### Instructors
 
+-   **Primary Instructor** [Prof. Will Fithian](http://www.stat.berkeley.edu/~wfithian/)
+    -   **Office Hours:** TBD
+    -   **Email:** [wfithian\@berkeley.edu](mailto:wfithian@berkeley.edu)
+-   **GSI** Dohyeong Ki
+    -   **Office Hours:** TBD
+    -   **Email:** [dohyeong_ki\@berkeley.edu](mailto:dohyeong_ki@berkeley.edu)
 
-- Prepare students for advanced Berkeley courses in data-management, machine learning, and statistics, by providing the necessary foundation and context.
-- Enable students to start careers as data scientists by providing experience working with real-world data, tools, and techniques.
-- Empower students to apply computational and inferential thinking to address real-world problems.
+### Course schedule
+
+-   **Lectures:** TuTh 11-12:30, Evans 60
+-   **Recitation sections:** Every second F 11am-12pm, location TBD, beginning week 2
+-   **Final exam review:** TBD
+-   **Final exam:** Wed December 18, 8-11am
+
+### Course communications
+
+-   **Lecture videos and homework solutions** at \[https://bcourses.berkeley.edu bCourses\]
+-   **Email policy:** You can email me or Dohyeong about administrative questions, with "\[Stat 210A\]" in the subject line. *No math* over email, please.
+-   [Ed page](https://edstem.org/us/courses/61763/) for announcements and technical discussion (no homework spoilers!)
+-   [Gradescope](https://www.gradescope.com/courses/816848) for turning in homework
+
+## About Stat 210A
+
+### What is the theory of statistics?
+
+Statistics is the study of methods that use data to understand the world. Statistical methods are used throughout the natural and social sciences, in machine learning and artificial intelligence, and in engineering. Despite the ubiquitous use of statistics, its practitioners are perpetually accused of not actually understanding what they are doing. Statistics theory is, broadly speaking, the subject of what exactly we are doing when we apply statistical methods.
+
+While there are many possible ways to analyze data, most (but certainly not all) statistical methods are based on **statistical modeling:** treating the data as a realization of some *random* data-generating process with attributes, usually called *parameters*, that are *a priori* unknown. The goal of the **analyst**, then, is to use the data to draw accurate inferences about these parameters and/or to make accurate predictions about future data. If the modeling has been done well (a very big "if") then these unknown parameters will correspond well to whatever real-world questions initially motivated the analysis. Applied statistics courses like Stat 215A and B delve deeply into questions about how to ensure that the statistical modeling exercise successfully captures something interesting about reality.
+
+In this course we will instead focus on how the analyst can use the data most effectively within the context of a given mathematical setup. We will discuss the structure of statistical models, how to evaluate the quality of a statistical method, how to design good methods for new settings, and the philosophy of Bayesian vs frequentist modeling frameworks. We will cover estimation, confidence intervals, and hypothesis testing, in parametric and nonparametric methods, in finite samples and asymptotic regimes.
+
+### Topics
+
+Statistical decision theory (frequentist and Bayesian), exponential families, point estimation, hypothesis testing, resampling methods, estimating equations and maximum likelihood, empirical Bayes, large-sample theory, high-dimensional testing, multiple testing and selective inference.
 
 ### Prerequisites
 
-While we are working to make this class widely accessible, we currently require the following (or equivalent) prerequisites. **Prerequisites will be enforced in Data 100. It is your responsibility to know the material in the prerequisites.** 
+The course prerequisites are linear algebra, analysis, probability, and statistics.
+
+### Relationship of Stat 210A to other Berkeley courses
+
+Stat 210A focuses on *classical* statistical contexts: either inference in finite samples, or in fixed-dimensional asymptotic regimes. Stat 210B (for which 210A is a prerequisite) is more technical and covers topics like empirical process theory and high-dimensional statistics.
+
+Berkeley's graduate course on Statistical Learning Theory (CS 281A / Stat 241A) is also very popular and has some overlap in its topics. Roughly speaking, it is more tilted toward "machine learning": it spends more time on topics in predictive modeling (i.e. classification and regression, which are covered in Stat 215A), optimization, and signal processing, but spends less time on inferential questions and (I believe) does not cover topics like hypothesis testing, confidence intervals, and causal inference. Both courses cover estimation and exponential families.
+
+## References
+
+The online notes for this course are self-contained, however it can be helpful to see a different presentation in the following supplementary texts (all links are to public websites or Springer Link):
+
+-   [Keener, *Theoretical Statistics: Topics for a Core Course*, Springer 2010.](http://link.springer.com/book/10.1007%2F978-0-387-93839-4)
+
+-   [Lehmann and Casella, *Theory of Point Estimation*, Springer 1998.](http://link.springer.com/book/10.1007%2Fb98854)
+
+-   [Lehmann and Romano, *Testing Statistical Hypotheses*, Springer 2005.](http://link.springer.com/book/10.1007%2F0-387-27605-X)
+
+-   [Candes, Stats 300C Lecture notes, Stanford 2016.](https://statweb.stanford.edu/~candes/stats300c/lectures.html)
+
+Undergrad-level review texts for prerequisites:
+
+-   [Axler, *Linear Algebra Done Right*](https://link.springer.com/book/10.1007/978-3-319-11080-6)
+
+-   [Abbott, *Understanding Analysis*](https://link.springer.com/book/10.1007/978-1-4939-2712-8)
+
+-   [Adhikari & Pitman, *Probability for Data Science*](http://prob140.org/textbook/)
+
+## Grading
+
+Your final grade is based on:
+
+- Weekly problem sets: 50\%
+
+- Final exam: 50\%
+
+While the final exam is nominally one half of the grade, it is quite difficult and typically accounts for most of the variance in final course grades. If you take shortcuts on the homework, you will save yourself time in the short run, but you may do quite poorly on the exam!
+
+**Lateness policy:** Homework must be submitted to Gradescope at 11:59pm on Wednesday nights. Late problem sets will not be accepted, but we will drop your lowest two grades.
+
+**Collaboration policy:** For homework, you are welcome to work with each other or consult articles or textbooks online, with the following caveats:
+
+- You must write up your solution by yourself.
+
+- You may **NOT** consult any solutions from previous iterations of this course.
+
+- No generative AI allowed for problem sets.
+
+- If you collaborate or use any resources other than course texts, you must **acknowledge** your collaborators and the resources you used.
+
+**Academic integrity:** You are expected to abide by the [Berkeley honor code](http://teaching.berkeley.edu/berkeley-honor-code). Violating the collaboration policy, or cheating in any other way, will result in a failing grade for the semester and you will be reported to the University Office of Student Conduct.
+
+## Accommodations
+
+**Students with disabilities:** Please see me as soon as possible if you need particular accommodations, and we will work out the necessary arrangements.
+
+**Scheduling conflicts:** Please notify me in writing by the **second week of the term** about any known or potential extracurricular conflicts (such as religious observances, graduate or medical school interviews, or team activities). I will try my best to help you with making accommodations, but cannot promise them in all cases. In the event there is no mutually-workable solution, you may be dropped from the class.

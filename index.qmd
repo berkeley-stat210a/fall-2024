@@ -10,17 +10,17 @@ listing:
     contents: buttons-alt.yml
 ---
 
+
+\[UNDER CONSTRUCTION\]
+
+
 ::: {#buttons}
 :::
 
-This page is hosted at [{{< var site-url >}}]({{< var site-url >}}). We could provide a templated listing of instructors here (or on its own page), similar to [DS100/fa23](https://github.com/DS-100/fa23).
+## Course enrollment
 
-::: {.callout-note title="Welcome to Week 1 of Stat 210a"}
-:::
+If you are an undergraduate who wants to take this course, please fill out the [permission code request form](https://docs.google.com/forms/d/e/1FAIpQLScWQLQ_gS7ZYdRZQrvhabRMO_zmdNR6JtHyTk3Vw30QtPbnJA/viewform?usp=sf_link) to let me know about your background. Anyone considering taking the course is encouraged to read the [frequently asked questions](faq.qmd) regarding preparation and review materials.
 
-::: {.callout-note title="Welcome to Week 2"}
-Things are picking up now.
-:::
 
 ## Schedule
 

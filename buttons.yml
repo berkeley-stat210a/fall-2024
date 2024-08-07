@@ -1,9 +1,9 @@
+- button: bCourses
+  link: https://bcourses.berkeley.edu bCourses
+  color: blue
 - button: Ed
-  link: https://ibm.com
+  link: https://edstem.org/us/courses/61763/
   color: purple
-- button: DataHub
-  link: https://ibm.com
-  color: green
 - button: Gradescope
-  link: https://ibm.com
+  link: https://www.gradescope.com/courses/816848
   color: orange
