@@ -71,9 +71,9 @@ ul.task-list li input[type="checkbox"] {
     }
 
     const options = {
-      valueNames: ['listing-week','listing-days','listing-resources',{ data: ['index'] },{ data: ['categories'] }],
+      valueNames: ['listing-week','listing-days',{ data: ['index'] },{ data: ['categories'] }],
       
-      searchColumns: ["listing-week","listing-days","listing-resources"],
+      searchColumns: ["listing-week","listing-days"],
     };
 
     window['quarto-listings'] = window['quarto-listings'] || {};
@@ -99,9 +99,9 @@ ul.task-list li input[type="checkbox"] {
     }
 
     const options = {
-      valueNames: ['listing-button','listing-link',{ data: ['index'] },{ data: ['categories'] }],
+      valueNames: ['listing-button','listing-link','listing-color',{ data: ['index'] },{ data: ['categories'] }],
       
-      searchColumns: ["listing-button","listing-link"],
+      searchColumns: ["listing-button","listing-link","listing-color"],
     };
 
     window['quarto-listings'] = window['quarto-listings'] || {};
@@ -131,7 +131,7 @@ gtag('config', 'G-B8G2041HSB', { 'anonymize_ip': true});
   <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
   <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
 
-<link rel="stylesheet" href="assets/styles-alt.scss">
+<link rel="stylesheet" href="assets/styles.css">
 </head>
 
 <body class="nav-sidebar docked">
@@ -221,12 +221,65 @@ gtag('config', 'G-B8G2041HSB', { 'anonymize_ip': true});
  <span class="menu-text">Handwritten notes</span></a>
   </div>
 </li>
-        <li class="sidebar-item">
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" aria-expanded="true">
+ <span class="menu-text">Course Reader</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./data.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Datasets</span></a>
+  <a href="./reader/introduction.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Course introduction</span></a>
   </div>
 </li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./reader/measure-theory-basics.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Measure Theory Basics</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./reader/models.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Statistical decision theory</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./reader/exponential-families.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Exponential Families</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./reader/sufficiency.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Sufficiency</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./reader/completeness.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Completeness, Ancillarity, and Basu’s Theorem</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./reader/unbiased-estimation.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Unbiased Estimation</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./reader/score-fisher.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Score Function and Fisher Information</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./license.html" class="sidebar-item-text sidebar-link">
@@ -243,8 +296,7 @@ gtag('config', 'G-B8G2041HSB', { 'anonymize_ip': true});
     <h2 id="toc-title">On this page</h2>
    
   <ul>
-  <li><a href="#course-enrollment" id="toc-course-enrollment" class="nav-link active" data-scroll-target="#course-enrollment">Course enrollment</a></li>
-  <li><a href="#schedule" id="toc-schedule" class="nav-link" data-scroll-target="#schedule">Schedule</a></li>
+  <li><a href="#schedule" id="toc-schedule" class="nav-link active" data-scroll-target="#schedule">Schedule</a></li>
   </ul>
 </nav>
     </div>
@@ -269,74 +321,128 @@ gtag('config', 'G-B8G2041HSB', { 'anonymize_ip': true});
 
 </header>
 
-<p>[UNDER CONSTRUCTION]</p>
+<div class="callout callout-style-default callout-caution callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Under construction
+</div>
+</div>
+<div class="callout-body-container callout-body">
+
+</div>
+</div>
+<div class="callout callout-style-default callout-important callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Course enrollment for undergraduates
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>If you are an undergraduate who wants to take this course, please fill out the <a href="https://docs.google.com/forms/d/e/1FAIpQLScWQLQ_gS7ZYdRZQrvhabRMO_zmdNR6JtHyTk3Vw30QtPbnJA/viewform?usp=sf_link">permission code request form</a> to let me know about your background. Anyone considering taking the course is encouraged to read the <a href="./faq.html">frequently asked questions</a> regarding preparation and review materials.</p>
+</div>
+</div>
 <div id="listing-buttons" class="quarto-listing quarto-listing-container-custom">
-<a href="https://ibm.com" type="button" class="btn btn-outline-primary btn-sm">Ed</a>
-<a href="https://ibm.com" type="button" class="btn btn-outline-primary btn-sm">DataHub</a>
-<a href="https://ibm.com" type="button" class="btn btn-outline-primary btn-sm">Gradescope</a>
+  <button style="background-color: blue;"><a href="https://bcourses.berkeley.edu" bcourses="">bCourses</a></button>
+  <button style="background-color: purple;"><a href="https://edstem.org/us/courses/61763/">Ed</a></button>
+  <button style="background-color: orange;"><a href="https://www.gradescope.com/courses/816848">Gradescope</a></button>
 <div class="listing-no-matching d-none">
 No matching items
 </div>
 </div>
-<section id="course-enrollment" class="level2">
-<h2 class="anchored" data-anchor-id="course-enrollment">Course enrollment</h2>
-<p>If you are an undergraduate who wants to take this course, please fill out the <a href="https://docs.google.com/forms/d/e/1FAIpQLScWQLQ_gS7ZYdRZQrvhabRMO_zmdNR6JtHyTk3Vw30QtPbnJA/viewform?usp=sf_link">permission code request form</a> to let me know about your background. Anyone considering taking the course is encouraged to read the <a href="./faq.html">frequently asked questions</a> regarding preparation and review materials.</p>
-</section>
 <section id="schedule" class="level2">
 <h2 class="anchored" data-anchor-id="schedule">Schedule</h2>
 <p>Here we use Quarto’s EJS templating.</p>
 <p>For a style similar to that of <a href="https://stat20.org">Stat 20</a>, modify <code>index.qmd</code> to point to <code>assets/{schedule-alt.ejs,buttons-alt.ejs}</code> and to <code>{schedule-alt.yml,buttons-alt.yml}</code> and <code>_quarto.yml</code> to point to <code>assets/styles-alt.scss</code>.</p>
 <div id="listing-schedule" class="quarto-listing quarto-listing-container-custom">
-  <h4 class="anchored">Week 1</h4>
-  <div class="week-x-box">
-  <div class="daily-sched">
-    <div class="date-cell">
-    <p>Jan 16</p>
-    </div>
-    <div class="materials-cell">
-    <p><span class="daily-topic">Random Variables</span><br>
-        <a href="./units/unit1.html" type="button" class="btn btn-outline-primary btn-sm">Notes</a>
-        <a href="./units/unit1.html" type="button" class="btn btn-outline-primary btn-sm">Slides</a>
-    </p>
-    </div>
-    <div class="date-cell">
-    <p>Jan 18</p>
-    </div>
-    <div class="materials-cell">
-    <p><span class="daily-topic">The Binomial Distribution</span><br>
-        <a href="./units/unit1.html" type="button" class="btn btn-outline-primary btn-sm">Notes</a>
-        <a href="./units/unit1.html" type="button" class="btn btn-outline-primary btn-sm">Slides</a>
-    </p>
-    </div>
-  </div>
-  <div class="resources">
-  <p><span">Resources</span"></p>
-  <ul>
-      <li><a href="https://markdownlivepreview.com">Markdown Live Preview</a></li>
-  </ul>
-  </div>
-  </div>
-  <h4 class="anchored">Week 2</h4>
-  <div class="week-x-box">
-  <div class="daily-sched">
-    <div class="date-cell">
-    <p>Jan 23</p>
-    </div>
-    <div class="materials-cell">
-    <p><span class="daily-topic">Conditional Probability</span><br>
-        <a href="./units/unit1.html" type="button" class="btn btn-outline-primary btn-sm">Notes</a>
-        <a href="./units/unit1.html" type="button" class="btn btn-outline-primary btn-sm">Slides</a>
-        <a href="./units/unit1.html" type="button" class="btn btn-outline-primary btn-sm">PS</a>
-    </p>
-    </div>
-  </div>
-  <div class="resources">
-  <p><span">Resources</span"></p>
-  <ul>
-    <li>None this week</li>
-  </ul>
-  </div>
-  </div>
+
+   <h4 class="anchored">Week 1</h4>
+   <table class="table" data-quarto-disable-processing="true">
+   <!-- 'table' class causes use of quarto styling for tables, seemingly from bootstrap.min.css -->
+   <!-- data-quarto-disable-processing="true" prevents Quarto processing of tables (https://quarto.org/docs/authoring/tables.html#disabling-quarto-table-processing) -->
+   <tbody>
+           <tr>
+           <th scope="row" rowspan="1">Aug 29:</th>
+           <td><strong class="label label-Lecture">Lecture 1</strong> <a href="./faq.html" target="_blank">Introduction</a></td>
+                <td>
+                  <a href="handwritten/lecture01-F24.pdf">Handwritten notes</a>
+                </td>
+           </tr>
+   </tbody>
+   </table>
+   <h4 class="anchored">Week 2</h4>
+   <table class="table" data-quarto-disable-processing="true">
+   <!-- 'table' class causes use of quarto styling for tables, seemingly from bootstrap.min.css -->
+   <!-- data-quarto-disable-processing="true" prevents Quarto processing of tables (https://quarto.org/docs/authoring/tables.html#disabling-quarto-table-processing) -->
+   <tbody>
+           <tr>
+           <th scope="row" rowspan="1">Sep 3:</th>
+           <td><strong class="label label-Lecture">Lecture 2</strong> <a href="./faq.html" target="_blank">Probability</a></td>
+                <td>
+                  <a href="handwritten/lecture02-F24.pdf">Handwritten notes</a>
+                </td>
+           </tr>
+           <tr>
+           <th scope="row" rowspan="1">Sep 5:</th>
+           <td><strong class="label label-Lecture">Lecture 3</strong> <a href="./faq.html" target="_blank">Decision theory</a></td>
+                <td>
+                  <a href="handwritten/lecture03-F24.pdf">Handwritten notes</a>
+                </td>
+           </tr>
+           <tr>
+           <th scope="row" rowspan="1">Sep 6:</th>
+           <td><strong class="label label-Recitation">Recitation 1</strong> <a href="./faq.html" target="_blank">Probability review</a></td>
+                <td>
+                  <a href="handwritten/lecture03-F24.pdf">Handwritten notes</a>
+                </td>
+           </tr>
+   </tbody>
+   </table>
+   <h4 class="anchored">Week 3</h4>
+   <table class="table" data-quarto-disable-processing="true">
+   <!-- 'table' class causes use of quarto styling for tables, seemingly from bootstrap.min.css -->
+   <!-- data-quarto-disable-processing="true" prevents Quarto processing of tables (https://quarto.org/docs/authoring/tables.html#disabling-quarto-table-processing) -->
+   <tbody>
+           <tr>
+           <th scope="row" rowspan="1">Sep 10:</th>
+           <td><strong class="label label-Lecture">Lecture 4</strong> <a href="./faq.html" target="_blank">Estimation</a></td>
+                <td>
+                  <a href="handwritten/lecture04-F24.pdf">Handwritten notes</a>
+                </td>
+           </tr>
+           <tr>
+           <th scope="row" rowspan="1">Sep 11:</th>
+           <td><strong class="label label-Homework">Homework 1</strong> <a href="./faq.html" target="_blank">Homework 1 due 11:59pm</a></td>
+                <td>
+                  <a href="homework/hw1.tex">LaTeX template</a>
+                </td>
+           </tr>
+           <tr>
+           <th scope="row" rowspan="1">Sep 12:</th>
+           <td><strong class="label label-Lecture">Lecture 5</strong> <a href="./faq.html" target="_blank">Sufficiency</a></td>
+                <td>
+                  <a href="handwritten/lecture05-F24.pdf">Handwritten notes</a>
+                </td>
+           </tr>
+   </tbody>
+   </table>
+   <h4 class="anchored">Week 17</h4>
+   <table class="table" data-quarto-disable-processing="true">
+   <!-- 'table' class causes use of quarto styling for tables, seemingly from bootstrap.min.css -->
+   <!-- data-quarto-disable-processing="true" prevents Quarto processing of tables (https://quarto.org/docs/authoring/tables.html#disabling-quarto-table-processing) -->
+   <tbody>
+           <tr>
+           <th scope="row" rowspan="1">Dec 18:</th>
+           <td><strong class="label label-Exam">Exam </strong> <a href="./faq.html" target="_blank">Final Exam, 8-11am</a></td>
+                <td></td>
+           </tr>
+   </tbody>
+   </table>
 <div class="listing-no-matching d-none">
 No matching items
 </div>

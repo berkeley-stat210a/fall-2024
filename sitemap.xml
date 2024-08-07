@@ -2,46 +2,78 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
     <loc>https://stat210a.berkeley.edu/fall-2024/data.html</loc>
-    <lastmod>2024-08-07T05:16:52.542Z</lastmod>
+    <lastmod>2024-08-07T19:32:48.317Z</lastmod>
   </url>
   <url>
     <loc>https://stat210a.berkeley.edu/fall-2024/license.html</loc>
-    <lastmod>2024-08-07T05:16:51.922Z</lastmod>
+    <lastmod>2024-08-07T19:32:47.807Z</lastmod>
   </url>
   <url>
     <loc>https://stat210a.berkeley.edu/fall-2024/faq.html</loc>
-    <lastmod>2024-08-07T05:16:51.160Z</lastmod>
+    <lastmod>2024-08-07T19:32:47.145Z</lastmod>
   </url>
   <url>
     <loc>https://stat210a.berkeley.edu/fall-2024/units/unit3.html</loc>
-    <lastmod>2024-08-07T05:16:48.094Z</lastmod>
+    <lastmod>2024-08-07T19:32:44.153Z</lastmod>
   </url>
   <url>
     <loc>https://stat210a.berkeley.edu/fall-2024/units/macros.html</loc>
-    <lastmod>2024-08-07T05:16:34.551Z</lastmod>
+    <lastmod>2024-08-07T19:32:29.104Z</lastmod>
   </url>
   <url>
     <loc>https://stat210a.berkeley.edu/fall-2024/handwritten-notes.html</loc>
-    <lastmod>2024-08-07T05:16:33.986Z</lastmod>
+    <lastmod>2024-08-07T19:32:28.539Z</lastmod>
+  </url>
+  <url>
+    <loc>https://stat210a.berkeley.edu/fall-2024/reader/introduction.html</loc>
+    <lastmod>2024-08-07T19:32:27.696Z</lastmod>
+  </url>
+  <url>
+    <loc>https://stat210a.berkeley.edu/fall-2024/reader/completeness.html</loc>
+    <lastmod>2024-08-07T19:32:26.949Z</lastmod>
+  </url>
+  <url>
+    <loc>https://stat210a.berkeley.edu/fall-2024/reader/exponential-families.html</loc>
+    <lastmod>2024-08-07T19:32:26.019Z</lastmod>
+  </url>
+  <url>
+    <loc>https://stat210a.berkeley.edu/fall-2024/reader/unbiased-estimation.html</loc>
+    <lastmod>2024-08-07T19:32:21.484Z</lastmod>
+  </url>
+  <url>
+    <loc>https://stat210a.berkeley.edu/fall-2024/reader/models.html</loc>
+    <lastmod>2024-08-07T19:32:25.468Z</lastmod>
+  </url>
+  <url>
+    <loc>https://stat210a.berkeley.edu/fall-2024/reader/sufficiency.html</loc>
+    <lastmod>2024-08-07T19:32:26.371Z</lastmod>
+  </url>
+  <url>
+    <loc>https://stat210a.berkeley.edu/fall-2024/reader/score-fisher.html</loc>
+    <lastmod>2024-08-07T19:32:27.375Z</lastmod>
+  </url>
+  <url>
+    <loc>https://stat210a.berkeley.edu/fall-2024/reader/measure-theory-basics.html</loc>
+    <lastmod>2024-08-07T19:32:28.285Z</lastmod>
   </url>
   <url>
     <loc>https://stat210a.berkeley.edu/fall-2024/index.html</loc>
-    <lastmod>2024-08-07T05:16:34.292Z</lastmod>
+    <lastmod>2024-08-07T19:32:28.863Z</lastmod>
   </url>
   <url>
     <loc>https://stat210a.berkeley.edu/fall-2024/units/unit2.html</loc>
-    <lastmod>2024-08-07T05:16:36.228Z</lastmod>
+    <lastmod>2024-08-07T19:32:29.866Z</lastmod>
   </url>
   <url>
     <loc>https://stat210a.berkeley.edu/fall-2024/units/unit1.html</loc>
-    <lastmod>2024-08-07T05:16:50.861Z</lastmod>
+    <lastmod>2024-08-07T19:32:46.848Z</lastmod>
   </url>
   <url>
     <loc>https://stat210a.berkeley.edu/fall-2024/syllabus.html</loc>
-    <lastmod>2024-08-07T05:16:51.605Z</lastmod>
+    <lastmod>2024-08-07T19:32:47.564Z</lastmod>
   </url>
   <url>
     <loc>https://stat210a.berkeley.edu/fall-2024/calendar.html</loc>
-    <lastmod>2024-08-07T05:16:52.289Z</lastmod>
+    <lastmod>2024-08-07T19:32:48.052Z</lastmod>
   </url>
 </urlset>

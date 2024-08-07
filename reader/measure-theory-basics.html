@@ -1,0 +1,663 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.3.450">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>Measure Theory Basics</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+</style>
+
+
+<script src="../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../">
+<script src="../site_libs/quarto-html/quarto.js"></script>
+<script src="../site_libs/quarto-html/popper.min.js"></script>
+<script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "sidebar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "start",
+  "type": "textbox",
+  "limit": 20,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+<script async="" src="https://www.googletagmanager.com/gtag/js?id=G-B8G2041HSB"></script>
+
+<script type="text/javascript">
+
+window.dataLayer = window.dataLayer || [];
+function gtag(){dataLayer.push(arguments);}
+gtag('js', new Date());
+gtag('config', 'G-B8G2041HSB', { 'anonymize_ip': true});
+</script>
+
+  <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<link rel="stylesheet" href="../assets/styles.css">
+</head>
+
+<body class="nav-sidebar docked">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+  <nav class="quarto-secondary-nav">
+    <div class="container-fluid d-flex">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+        <i class="bi bi-layout-text-sidebar-reverse"></i>
+      </button>
+      <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../reader/introduction.html">Course Reader</a></li><li class="breadcrumb-item"><a href="../reader/measure-theory-basics.html">Measure Theory Basics</a></li></ol></nav>
+      <a class="flex-grow-1" role="button" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+      </a>
+      <button type="button" class="btn quarto-search-button" aria-label="" onclick="window.quartoOpenSearch();">
+        <i class="bi bi-search"></i>
+      </button>
+    </div>
+  </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal sidebar-navigation docked overflow-auto">
+    <div class="pt-lg-2 mt-2 text-left sidebar-header sidebar-header-stacked">
+      <a href="../index.html" class="sidebar-logo-link">
+      <img src="../assets/stat_bear.png" alt="" class="sidebar-logo py-0 d-lg-inline d-none">
+      </a>
+    <div class="sidebar-title mb-0 py-0">
+      <a href="../">Stat 210a</a> 
+        <div class="sidebar-tools-main">
+    <a href="https://github.com/berkeley-stat210a/fall-2024" rel="" title="" class="quarto-navigation-tool px-1" aria-label=""><i class="bi bi-github"></i></a>
+</div>
+    </div>
+      </div>
+        <div class="mt-2 flex-shrink-0 align-items-center">
+        <div class="sidebar-search">
+        <div id="quarto-search" class="" title="Search"></div>
+        </div>
+        </div>
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Home / Schedule</span></a>
+  </div>
+</li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" aria-expanded="true">
+ <span class="menu-text">Course Logistics</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../faq.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Frequently Asked Questions</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../syllabus.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Syllabus</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../syllabus.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Syllabus</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../calendar.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Calendar</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../handwritten-notes.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Handwritten notes</span></a>
+  </div>
+</li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" aria-expanded="true">
+ <span class="menu-text">Course Reader</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../reader/introduction.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Course introduction</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../reader/measure-theory-basics.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text">Measure Theory Basics</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../reader/models.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Statistical decision theory</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../reader/exponential-families.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Exponential Families</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../reader/sufficiency.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Sufficiency</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../reader/completeness.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Completeness, Ancillarity, and Basu’s Theorem</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../reader/unbiased-estimation.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Unbiased Estimation</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../reader/score-fisher.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Score Function and Fisher Information</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../license.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">License</span></a>
+  </div>
+</li>
+    </ul>
+    </div>
+</nav>
+<div id="quarto-sidebar-glass" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass"></div>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#measure-theory-a-rigorous-grounding-for-probability" id="toc-measure-theory-a-rigorous-grounding-for-probability" class="nav-link active" data-scroll-target="#measure-theory-a-rigorous-grounding-for-probability">Measure theory: a rigorous grounding for probability</a></li>
+  <li><a href="#measures" id="toc-measures" class="nav-link" data-scroll-target="#measures">Measures</a></li>
+  <li><a href="#integrals" id="toc-integrals" class="nav-link" data-scroll-target="#integrals">Integrals</a></li>
+  <li><a href="#densities" id="toc-densities" class="nav-link" data-scroll-target="#densities">Densities</a></li>
+  <li><a href="#probability-spaces-and-random-variables" id="toc-probability-spaces-and-random-variables" class="nav-link" data-scroll-target="#probability-spaces-and-random-variables">Probability spaces and random variables</a></li>
+  <li><a href="#conditional-probability" id="toc-conditional-probability" class="nav-link" data-scroll-target="#conditional-probability">Conditional probability</a></li>
+  <li><a href="#more-definitions" id="toc-more-definitions" class="nav-link" data-scroll-target="#more-definitions">More definitions</a></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">Measure Theory Basics</h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+</header>
+
+<p><span class="math display">\[
+\newcommand{\cB}{\mathcal{B}}
+\newcommand{\cF}{\mathcal{F}}
+\newcommand{\cN}{\mathcal{N}}
+\newcommand{\cP}{\mathcal{P}}
+\newcommand{\cX}{\mathcal{X}}
+\newcommand{\EE}{\mathbb{E}}
+\newcommand{\PP}{\mathbb{P}}
+\newcommand{\RR}{\mathbb{R}}
+\newcommand{\ZZ}{\mathbb{Z}}
+\newcommand{\td}{\,\textrm{d}}
+\newcommand{\simiid}{\stackrel{\textrm{i.i.d.}}{\sim}}
+\newcommand{\eqas}{\stackrel{\textrm{a.s.}}{=}}
+\newcommand{\eqPas}{\stackrel{\cP\textrm{-a.s.}}{=}}
+\newcommand{\eqmuas}{\stackrel{\mu\textrm{-a.s.}}{=}}
+\newcommand{\eqD}{\stackrel{D}{=}}
+\newcommand{\indep}{\perp\!\!\!\!\perp}
+\DeclareMathOperator*{\minz}{minimize\;}
+\newcommand{\Var}{\textnormal{Var}}
+\newcommand{\Cov}{\textnormal{Cov}}
+\newcommand{\Corr}{\textnormal{Corr}}
+\]</span></p>
+<section id="measure-theory-a-rigorous-grounding-for-probability" class="level2">
+<h2 class="anchored" data-anchor-id="measure-theory-a-rigorous-grounding-for-probability">Measure theory: a rigorous grounding for probability</h2>
+<p><strong>Measure theory</strong> is an area of mathematics concerned with measuring the “size” of subsets of a certain set. Soon after it was developed in the the early twentieth century, the great Soviet mathematician Kolmogorov realized it could be applied to give a rigorous grounding to probability theory, it was a major advance in understanding and resolving certain <a href="https://en.wikipedia.org/wiki/Bertrand_paradox_(probability)">paradoxes</a> in probability theory. David Aldous gives a nice <a href="https://www.stat.berkeley.edu/~aldous/Real_World/kolmogorov.html">discussion</a> of this history.</p>
+<p>This is <strong>not</strong> a course on measure-theoretic probability and we will not rigorously develop the subject. However, it will be useful to draw on some of the <strong>basics</strong> of measure theory, to simplify our notation throughout the course and to clarify certain concepts around integration and conditioning. <a href="https://www.stat.berkeley.edu/~wfithian/courses/stat210a/hw0.pdf">Homework 0</a> illustrates some of the interesting aspects of measure theory and why it is useful.</p>
+</section>
+<section id="measures" class="level2">
+<h2 class="anchored" data-anchor-id="measures">Measures</h2>
+<p>Given a set <span class="math inline">\(\cX\)</span>, a measure<span class="math inline">\(\mu\)</span> is a certain kind of function mapping “nice enough” subsets <span class="math inline">\(A \subseteq \cX\)</span> to non-negative numbers <span class="math inline">\(\mu(A) \in [0,\infty]\)</span>.</p>
+<p><strong>Example 1 (Counting measure):</strong> If <span class="math inline">\(\cX\)</span> is countable, e.g.&nbsp;<span class="math inline">\(\cX = \mathbb{Z}\)</span>, then a natural measure is the <em>counting measure</em> <span class="math inline">\(\#(A)\)</span><em>,</em> which simply counts the number of points in a subset <span class="math inline">\(A\)</span>. That is, <span class="math inline">\(\#(\{0,1\}) = 2\)</span>, and <span class="math inline">\(\#(\{2,4,6,8,\ldots\}) = \infty\)</span> .</p>
+<p><strong>Example 2 (Lebesgue measure):</strong> If <span class="math inline">\(\cX = \RR^n\)</span> for some integer <span class="math inline">\(n\)</span>, a natural measure is the <em>Lebesgue measure</em> <span class="math inline">\(\lambda(A)\)</span>, which returns the <em>volume</em> of a subset <span class="math inline">\(A\)</span>. Roughly speaking, we can write</p>
+<p><span class="math display">\[
+\lambda(A) = \int \cdots \int_A \td x_1\td x_2\cdots \td x_n.
+\]</span></p>
+<p><strong>Example 3 (Gaussian measure):</strong> Now taking <span class="math inline">\(\cX = \RR\)</span>, we might instead want to define the “size” of a set as the probability that a standard Gaussian random variable <span class="math inline">\(Z \sim \cN(0,1)\)</span> is observed to be in the set <span class="math inline">\(A\)</span>. That is, we can define the measure:</p>
+<p><span class="math display">\[
+P_Z(A) = \PP(Z \in A) = \int_A \phi(x)\td x, \quad \text{ where } \;\phi(x) = \frac{1}{\sqrt{2\pi}} e^{-x^2/2}
+\]</span></p>
+<p>is the probability density function of <span class="math inline">\(Z\)</span>.</p>
+<p>As it turns out, it is not so obvious how to define what exactly we mean by the right-hand side of the previous two equations; in fact, it is not even possible to define the volume of <em>every</em> subset <span class="math inline">\(A \in \mathbb{R}\)</span>. In <a href="https://www.stat.berkeley.edu/~wfithian/courses/stat210a/hw0.pdf">Homework 0</a>, Problem 3, you will use the axiom of choice to construct pathological subsets (so-called <em>non-measurable sets</em>) to which we cannot sensibly assign any volume.</p>
+<p>One of the original motivations for measure theory was to provide a framework for excluding these pathological sets and rigorously defining integrals over the other, nicer sets. In general, the domain of a measure is not all subsets of <span class="math inline">\(\cX\)</span> (called the power set and notated <span class="math inline">\(2^{\cX}\)</span>), but rather a collection of nice subsets <span class="math inline">\(\cF \subseteq 2^{\cX}\)</span>.</p>
+<p>Formally, the collection <span class="math inline">\(\cF\)</span> must be a <span class="math inline">\(\sigma\)</span>-field, meaning that it satisfies certain closure properties. We say <span class="math inline">\(\cF\)</span> is a <span class="math inline">\(\sigma\)</span>-<em>field</em> (or <span class="math inline">\(\sigma\)</span>-<em>algebra</em>) if</p>
+<ol type="1">
+<li><p>The full set <span class="math inline">\(\cX\)</span> is in <span class="math inline">\(\cF\)</span>.</p></li>
+<li><p>If <span class="math inline">\(A\)</span> is in <span class="math inline">\(\cF\)</span> then its complement <span class="math inline">\(\cX \setminus A\)</span> is also in <span class="math inline">\(\cF\)</span> (i.e., <span class="math inline">\(\cF\)</span> is <em>closed under complementation</em>)</p></li>
+<li><p>If <span class="math inline">\(A_1,A_2,\ldots \in \cF\)</span> then <span class="math inline">\(\bigcup_{i=1}^\infty A_i\)</span> is also in <span class="math inline">\(\cF\)</span> (i.e.&nbsp;<span class="math inline">\(\cF\)</span> is <em>closed under countable unions</em>)</p></li>
+</ol>
+<p><strong>Note:</strong> The details of this definition are not important for purposes of this course.</p>
+<p><strong>Example:</strong> If <span class="math inline">\(\cX\)</span> is countable we can take <span class="math inline">\(\cF\)</span> to be the entire power set.</p>
+<p><strong>Example:</strong> If <span class="math inline">\(\cX = \mathbb{R}^n\)</span> we will typically use the <em>Borel</em> <span class="math inline">\(\sigma\)</span>-<em>field</em> <span class="math inline">\(\cB\)</span>, defined as the smallest <span class="math inline">\(\sigma\)</span>-field that includes all open rectangles <span class="math inline">\((a_1,b_1)\times (a_2,b_2) \times \cdots \times (a_n, b_n)\)</span>, where <span class="math inline">\(a_i &lt; b_i\)</span> for all <span class="math inline">\(i\)</span>. That is, we start with the open rectangles and recursively apply the closure properties to obtain a very large collection of sets, which informally we can think of as containing all non-pathological subsets of <span class="math inline">\(\mathbb{R}^n\)</span>.</p>
+<p>We are now ready to define a measure. We call a pair of a set <span class="math inline">\(\cX\)</span> and an associated <span class="math inline">\(\sigma\)</span>-field <span class="math inline">\(\cF \subseteq 2^{\cX}\)</span> a <em>measurable space</em>. Given a measurable space <span class="math inline">\((\cX, \cF)\)</span>, a <em>measure</em> is a function <span class="math inline">\(\mu: \cF \to \mathbb{R}\)</span> satisfying three properties:</p>
+<ol type="1">
+<li><p><strong>Non-negativity:</strong> <span class="math inline">\(\mu(A) \geq 0\)</span> for all <span class="math inline">\(A\in \cF\)</span>.</p></li>
+<li><p><strong>Empty set maps to zero:</strong> <span class="math inline">\(\mu(\emptyset) = 0\)</span></p></li>
+<li><p><strong>Countable additivity:</strong> If <span class="math inline">\(A_1,A_2,\ldots\in \cF\)</span> are all disjoint, then</p></li>
+</ol>
+<p><span class="math display">\[
+\mu\left(\bigcup_{i=1}^\infty A_i\right) = \sum_{i=1}^\infty \mu(A_i)
+\]</span></p>
+<p>If <span class="math inline">\(\mu\)</span> is a measure on <span class="math inline">\((\cX, \cF)\)</span> we call <span class="math inline">\((\cX, \cF, \mu)\)</span> a <em>measure space</em>.</p>
+<p>In the special case <span class="math inline">\(\mu(\cX) = 1\)</span>, we call <span class="math inline">\(\mu\)</span> a <em>probability measure</em> and <span class="math inline">\((\cX, \cF, \mu)\)</span> is called a <em>probability space</em>.</p>
+</section>
+<section id="integrals" class="level2">
+<h2 class="anchored" data-anchor-id="integrals">Integrals</h2>
+<p>One very nice thing about measures is that they let us define integrals of (nice enough) real-valued functions on <span class="math inline">\(\cX\)</span> with respect to the measure <span class="math inline">\(\mu\)</span>, meaning the integral is “weighted” in a way that assigns total weight <span class="math inline">\(\mu(A)\)</span> to each set <span class="math inline">\(A\)</span>. We will use the notation <span class="math inline">\(\int f(x)\,\td\mu(x)\)</span>, or just <span class="math inline">\(\int f \td\mu\)</span>.</p>
+<p>To construct this integral, we begin by defining it for indicator functions, and then extend to more general functions by linearity and limits, in a few steps:</p>
+<p>First, for an indicator function <span class="math inline">\(1_A(x) = 1\{x \in A\}\)</span> of a set <span class="math inline">\(A \in \cF\)</span>, it is straightforward to define the integral as <span class="math inline">\(\int 1_A \td\mu = \mu(A)\)</span> (note if <span class="math inline">\(A \notin \cF\)</span> this does not work, but we are only defining the integral for a class of “nice” functions determined by our <span class="math inline">\(\sigma\)</span>-field)</p>
+<p>Next, consider a <em>simple function</em> <span class="math inline">\(f(x) = \sum_{i=1}^\infty c_i 1_{A_i}(x)\)</span>, with all <span class="math inline">\(c_i \geq 0\)</span> and <span class="math inline">\(A_i \in \cF\)</span>. Because the integral should be linear, we should have</p>
+<p><span class="math display">\[
+\int f\td\mu = \sum_{i=1}^\infty c_i \int 1_{A_i}\td\mu = \sum_{i=1}^\infty c_i \mu(A_i)
+\]</span></p>
+<p>Third, we can extend to all sufficiently nice non-negative functions by approximating them from below with a series of simple functions:</p>
+<p><span class="math display">\[
+\int f\td\mu = \lim_{i=1}^\infty \int f_i\td\mu.
+\]</span></p>
+<p>This idea is illustrated in the picture below:</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="images/Screenshot 2023-08-23 at 11.16.18 PM.png" class="img-fluid figure-img"></p>
+<figcaption class="figure-caption">Approximating a non-negative function from below by a series of simple (piecewise constant) functions. The red function is an indicator, the blue function is a simple function, and the dashed orange function is a simple function that approximates the orange curve.</figcaption>
+</figure>
+</div>
+<p>Finally, we can write any real-valued function as the sum of its positive and negative parts, <span class="math inline">\(f(x) = f^+(x) - f^-(x)\)</span>, where <span class="math inline">\(f^+(x) = \max\{f(x), 0\}\)</span> and <span class="math inline">\(f^-(x) = \max\{-f(x), 0\}\)</span>. Then both <span class="math inline">\(f^+\)</span> and <span class="math inline">\(f^-\)</span> have non-negative (possibly infinite) integrals. Then we simply take</p>
+<p><span class="math display">\[
+\int f\td\mu = \int f^+\td\mu - \int f^-\td\mu \in [-\infty, \infty],
+\]</span></p>
+<p>calling the difference undefined if the integrals of both <span class="math inline">\(f^+\)</span> and <span class="math inline">\(f^-\)</span> are infinite.</p>
+<p>As a result, we have <span class="math inline">\(\int f\td\mu\)</span> for any function <span class="math inline">\(f\)</span> whose positive and negative parts can both be approximated from below by simple functions. Note that we have left out some important details in this presentation (for example we have not characterized which functions <span class="math inline">\(f\)</span> are nice enough to be approximated well by simple functions) but these details are unimportant for this class. The important thing to know is that to any measure <span class="math inline">\(\mu\)</span> there corresponds a well-defined integral <span class="math inline">\(\int \cdot \td\mu\)</span>, which behaves as we would expect it to.</p>
+<p>We can now return to our previous examples of measures and ask what the corresponding integrals are:</p>
+<p><strong>Example 1, continued (Counting measure):</strong> An integral with respect to <span class="math inline">\(\#\)</span> just adds up all the values of <span class="math inline">\(f(x)\)</span>:</p>
+<p><span class="math display">\[
+\int f\td\# = \sum_{x\in \cX} f(x)
+\]</span></p>
+<p><strong>Example 2, continued (Lebesgue measure):</strong> An integral with respect to the Lebesgue measure is called a <em>Lebesgue integral</em>, which is essentially just the usual integral you are used to from calculus class:</p>
+<p><span class="math display">\[
+\int f\td\lambda = \int\cdots \int f(x) \td x_1 \cdots \td x_n.
+\]</span></p>
+<p>The Lebesgue integral extends the Riemann integral to a more general class of functions, in the sense that if the Riemann integral of <span class="math inline">\(f\)</span> is defined then the Lebesgue integral is also well defined and the two integrals coincide. But the Lebesgue integral is also well-defined for functions like <span class="math inline">\(f(x) = 1\{x \in \mathbb{Q}\}\)</span>, for which the Riemann integral is not well-defined (<strong>Exercise:</strong> what is the Lebesgue integral of <span class="math inline">\(1\{x \in \mathbb{Q}\}\)</span>?)</p>
+<p><strong>Example 3, continued (Gaussian measure):</strong> Note that <span class="math inline">\(P_Z(A)\)</span> is defined as the (Lebesgue) integral of <span class="math inline">\(1_A(x)\phi(x)\)</span>. By extension, the integral of <span class="math inline">\(f\)</span> with respect to <span class="math inline">\(P_Z\)</span> is the Lebesgue integral of <span class="math inline">\(f(x) \phi(x)\)</span>, which is nothing more than the expectation of <span class="math inline">\(f(Z)\)</span>:</p>
+<p><span class="math display">\[
+\int f\td P_Z = \int_{-\infty}^\infty f(x) \phi(x) \td x = \EE[f(Z)].
+\]</span></p>
+</section>
+<section id="densities" class="level2">
+<h2 class="anchored" data-anchor-id="densities">Densities</h2>
+<p>We have just seen in the last two examples that there is a special relationship between the Lebesgue measure <span class="math inline">\(\lambda\)</span> on <span class="math inline">\(\RR\)</span> and the Gaussian measure <span class="math inline">\(P_Z\)</span>, allowing us to evaluate integrals with respect to <span class="math inline">\(P\)</span> by turning them into integrals with respect to <span class="math inline">\(\lambda\)</span>, namely <span class="math inline">\(\int f(x)\td P_Z(x) = \int f(x)\phi(x) \td\lambda(x)\)</span>.</p>
+<p>This is a happy fact, since mathematicians have gone to a lot of trouble figuring out how to calculate integrals with respect to the usual (Lebesgue) measure. Most of the expectations we want to calculate in statistics are integrals with respect to some joint probability measure over random variables, and we certainly wouldn’t want to have to reinvent the wheel of integration every time we want to do calculations with respect to a new random variable.</p>
+<p>Note that we can’t turn integrals for every random variable into Lebesgue integrals. If <span class="math inline">\(Y\)</span> follows a binomial distribution, for example, we can just as well define <span class="math inline">\(P_Y(A) = \PP(Y \in A)\)</span>, but there is no counterpart to <span class="math inline">\(\phi\)</span> that would let us turn <span class="math inline">\(P_Y\)</span> integrals into Lebesgue integrals in the same way.</p>
+<p>Formally, consider a measurable space <span class="math inline">\((\cX, \cF)\)</span>, with two measures <span class="math inline">\(P\)</span> and <span class="math inline">\(\mu\)</span>. We say <span class="math inline">\(P\)</span> is <em>absolutely continuous</em> <em>with respect to</em> <span class="math inline">\(\mu\)</span> if <span class="math inline">\(P(A) = 0\)</span> whenever <span class="math inline">\(\mu(A) = 0\)</span>. In notation, we write <span class="math inline">\(P \ll \mu\)</span>.</p>
+<p>If <span class="math inline">\(P \ll \mu\)</span> then, <a href="https://en.wikipedia.org/wiki/Radon%E2%80%93Nikodym_theorem">under mild conditions</a>, we can always define a <em>density function</em> <span class="math inline">\(p:\cX \mapsto [0,\infty)\)</span> such that</p>
+<p><span class="math display">\[
+P(A) = \int 1_A(x) p(x)\td\mu(x), \quad \text{ for all } A \in \cF,
+\]</span></p>
+<p>and by extension <span class="math inline">\(\int f(x)\td P(x) = \int f(x) p(x) \td\mu(x)\)</span>.</p>
+<p>The function <span class="math inline">\(p\)</span> is called the <em>density function</em> or <em>Radon-Nikodym derivative</em> of <span class="math inline">\(P\)</span> with respect to <span class="math inline">\(\mu\)</span>. It is sometimes written using the suggestive notation <span class="math inline">\(\frac{\td P}{\td\mu}(x)\)</span>. Whenever we have a density function we can turn integrals with respect to <span class="math inline">\(P\)</span> into integrals with respect to <span class="math inline">\(\mu\)</span> simply by multiplying the integrand by <span class="math inline">\(p\)</span>.</p>
+<p>If we do not specify what <span class="math inline">\(\mu\)</span> is, it is assumed to be the Lebesgue measure; that is, if we say <span class="math inline">\(P\)</span> is <em>absolutely continuous</em> with no further elaboration, we mean <span class="math inline">\(P \ll \lambda\)</span>.</p>
+<p>If <span class="math inline">\(P\)</span> is a probability measure, we call <span class="math inline">\(p(x)\)</span> its <em>probability density function (with respect to</em> <span class="math inline">\(\mu\)</span>). If <span class="math inline">\(\mu\)</span> is a counting measure, we call <span class="math inline">\(p(x)\)</span> its <em>probability mass function</em>. These are abbreviated pdf and pmf, respectively.</p>
+</section>
+<section id="probability-spaces-and-random-variables" class="level2">
+<h2 class="anchored" data-anchor-id="probability-spaces-and-random-variables">Probability spaces and random variables</h2>
+<p>A typical statistics problem involves many, random variables of various types (e.g.&nbsp;some discrete and some continuous random variables), some of which may be functions of others. The overall joint distribution is defined implicitly by specifying the variables’ relationships to one another, or giving some sequence of rules for how they are all generated. We will want to ask about probabilities of events that involve functions of multiple random variables, e.g.&nbsp;a natural question to ask in a simple variance estimation problem with i.i.d. random variables <span class="math inline">\(X_1,\ldots,X_n\)</span> might be “what is the probability that <span class="math inline">\(\left|\frac{1}{n-1}\sum_{i=1}^n \left(X_i - \overline X\right)^2 - \sigma^2\right| &lt; \delta\)</span> ?”</p>
+<p>The notation in the previous section doesn’t allow us to ask questions like this without, e.g., massaging the above event into the set of <span class="math inline">\((X_1,\ldots,X_n)\)</span> vectors for which the event would hold. This would become even more difficult in more complicated setups.</p>
+<p>Instead of trying to work directly with the measure corresponding to the joint distribution of all of the random variables involved, it can be convenient to instead think of the variables as all being functions of some abstract “outcome” <span class="math inline">\(\omega\)</span> that encompasses all of the randomness in the problem. We introduce an abstract probability space <span class="math inline">\((\Omega, \cF, \PP)\)</span> where</p>
+<ul>
+<li><p><span class="math inline">\(\omega \in \Omega\)</span> is called an <em>outcome</em>,</p></li>
+<li><p><span class="math inline">\(A \in \cF\)</span> is called an <em>event</em>,</p></li>
+<li><p><span class="math inline">\(\PP(A)\)</span> is called the <em>probability of</em> <span class="math inline">\(A\)</span>.</p></li>
+</ul>
+<p>Then a <em>random variable</em> is any (nice enough) function <span class="math inline">\(X:\; \Omega \to \cX\)</span>. We say <span class="math inline">\(X\)</span> has <em>distribution</em> <span class="math inline">\(P\)</span>, and write <span class="math inline">\(X \sim P\)</span>, if</p>
+<p><span class="math display">\[
+\PP(X \in B) = \PP(\{\omega:\; X(\omega) \in B\}) = P(B).
+\]</span>We say the real-valued random variable <span class="math inline">\(X\)</span> is <em>continuous</em> if its distribution is absolutely continuous (with respect to the Lebesgue meaure). If <span class="math inline">\(X\)</span> is a random variable, then <span class="math inline">\(f(X)\)</span> is also a random variable for any (nice enough) function <span class="math inline">\(f\)</span>.</p>
+<p>Likewise, the <em>expectation</em> of a random variable is defined as an integral with respect to <span class="math inline">\(\PP\)</span>:</p>
+<p><span class="math display">\[
+\EE[X] = \int X(\omega) \td\PP(\omega), \quad \text{ and } \quad \EE[f(X,Y)] = \int f(X(\omega), Y(\omega)) \td\PP(\omega).
+\]</span></p>
+<p>Usually, to do real calculations we will eventually boil <span class="math inline">\(\PP\)</span> or <span class="math inline">\(\EE\)</span> into a composition of integrals and/or sums.</p>
+</section>
+<section id="conditional-probability" class="level2">
+<h2 class="anchored" data-anchor-id="conditional-probability">Conditional probability</h2>
+<p>While it is beyond the scope of this course, measure theory also allows us to patch the definition of conditional probability and conditional expectation. Given two events <span class="math inline">\(A\)</span> and <span class="math inline">\(B\)</span>, if <span class="math inline">\(\PP(B) &gt; 0\)</span>, we can unproblematically define the conditional probability of <span class="math inline">\(A\)</span> given <span class="math inline">\(B\)</span> as <span class="math inline">\(\PP(A \mid B) = \PP(A \cap B) / \PP(B)\)</span>, but this definition obviously fails when <span class="math inline">\(\PP(B) = 0\)</span>.</p>
+<p>Generally speaking, we cannot necessarily define <span class="math inline">\(\PP(A \mid B)\)</span> for measure zero events <span class="math inline">\(B\)</span> (Homework 0 includes a problem illustrating the inherent ambiguity of this definition). But, for example, if <span class="math inline">\(X\)</span> and <span class="math inline">\(Y\)</span> are both continuous random variables with some dependence between them we would like to be able to discuss, e.g., the distribution or expectation of <span class="math inline">\(Y\)</span> given that <span class="math inline">\(X\)</span> takes on some specific value <span class="math inline">\(x\)</span>. We can do this by defining the conditional expectation <span class="math inline">\(\EE(Y \mid X)\)</span> as a <em>random variable</em> <span class="math inline">\(g(X)\)</span>, which has the property <span class="math inline">\(\EE[(Y - g(X)) 1_A(X)] = 0\)</span> for all (nice) subsets <span class="math inline">\(A\)</span>. By evaluating this function <span class="math inline">\(g\)</span> at <span class="math inline">\(x\)</span> we can answer the question we asked earlier. However, note this explanation is informal and brushes many important points under the rug; for a more complete explanation, take Stat 205A.</p>
+<p>Having defined the conditional expectation, we can also ask about the conditional distribution of <span class="math inline">\(Y\)</span> by evaluating the conditional expectation on new random variables defined with indicator functions: <span class="math inline">\(\PP(Y \in A \mid X) = \EE[1_A(Y) \mid X]\)</span> .</p>
+</section>
+<section id="more-definitions" class="level2">
+<h2 class="anchored" data-anchor-id="more-definitions">More definitions</h2>
+<p>Finally, this section includes some scattered definitions to remind you of a few more useful definitions which you likely have already seen in your previous probability courses.</p>
+<p>If <span class="math inline">\(\PP(A) = 1\)</span>, we say <span class="math inline">\(A\)</span> occurs <em>almost surely</em>.</p>
+<p>The variance of a random variable <span class="math inline">\(X\)</span> is <span class="math inline">\(\textrm{Var}(X) = \EE[X^2] - \EE [X]\)</span></p>
+<p>See Keener Ch. 1 for more on probability.</p>
+
+
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const isCodeAnnotation = (el) => {
+    for (const clz of el.classList) {
+      if (clz.startsWith('code-annotation-')) {                     
+        return true;
+      }
+    }
+    return false;
+  }
+  const clipboard = new window.ClipboardJS('.code-copy-button', {
+    text: function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+  });
+  clipboard.on('success', function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  });
+  function tippyHover(el, contentFn) {
+    const config = {
+      allowHTML: true,
+      content: contentFn,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start'
+    };
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      return note.innerHTML;
+    });
+  }
+      let selectedAnnoteEl;
+      const selectorForAnnotation = ( cell, annotation) => {
+        let cellAttr = 'data-code-cell="' + cell + '"';
+        let lineAttr = 'data-code-annotation="' +  annotation + '"';
+        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+        return selector;
+      }
+      const selectCodeLines = (annoteEl) => {
+        const doc = window.document;
+        const targetCell = annoteEl.getAttribute("data-target-cell");
+        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+        const lineIds = lines.map((line) => {
+          return targetCell + "-" + line;
+        })
+        let top = null;
+        let height = null;
+        let parent = null;
+        if (lineIds.length > 0) {
+            //compute the position of the single el (top and bottom and make a div)
+            const el = window.document.getElementById(lineIds[0]);
+            top = el.offsetTop;
+            height = el.offsetHeight;
+            parent = el.parentElement.parentElement;
+          if (lineIds.length > 1) {
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+            height = bottom - top;
+          }
+          if (top !== null && height !== null && parent !== null) {
+            // cook up a div (if necessary) and position it 
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            div.style.top = top - 2 + "px";
+            div.style.height = height + 4 + "px";
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            gutterDiv.style.top = top - 2 + "px";
+            gutterDiv.style.height = height + 4 + "px";
+          }
+          selectedAnnoteEl = annoteEl;
+        }
+      };
+      const unselectCodeLines = () => {
+        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+        elementsIds.forEach((elId) => {
+          const div = window.document.getElementById(elId);
+          if (div) {
+            div.remove();
+          }
+        });
+        selectedAnnoteEl = undefined;
+      };
+      // Attach click handler to the DT
+      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+      for (const annoteDlNode of annoteDls) {
+        annoteDlNode.addEventListener('click', (event) => {
+          const clickedEl = event.target;
+          if (clickedEl !== selectedAnnoteEl) {
+            unselectCodeLines();
+            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+            if (activeEl) {
+              activeEl.classList.remove('code-annotation-active');
+            }
+            selectCodeLines(clickedEl);
+            clickedEl.classList.add('code-annotation-active');
+          } else {
+            // Unselect the line
+            unselectCodeLines();
+            clickedEl.classList.remove('code-annotation-active');
+          }
+        });
+      }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+</div> <!-- /content -->
+
+
+
+</body></html>

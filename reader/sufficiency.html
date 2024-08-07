@@ -6,8 +6,10 @@
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
+<meta name="author" content="Will Fithian">
+<meta name="dcterms.date" content="2023-08-29">
 
-<title>Unit 2: Next</title>
+<title>Sufficiency</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -19,40 +21,6 @@ ul.task-list li input[type="checkbox"] {
   width: 0.8em;
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
-}
-/* CSS for syntax highlighting */
-pre > code.sourceCode { white-space: pre; position: relative; }
-pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
-pre > code.sourceCode > span:empty { height: 1.2em; }
-.sourceCode { overflow: visible; }
-code.sourceCode > span { color: inherit; text-decoration: inherit; }
-div.sourceCode { margin: 1em 0; }
-pre.sourceCode { margin: 0; }
-@media screen {
-div.sourceCode { overflow: auto; }
-}
-@media print {
-pre > code.sourceCode { white-space: pre-wrap; }
-pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
-}
-pre.numberSource code
-  { counter-reset: source-line 0; }
-pre.numberSource code > span
-  { position: relative; left: -4em; counter-increment: source-line; }
-pre.numberSource code > span > a:first-child::before
-  { content: counter(source-line);
-    position: relative; left: -1em; text-align: right; vertical-align: baseline;
-    border: none; display: inline-block;
-    -webkit-touch-callout: none; -webkit-user-select: none;
-    -khtml-user-select: none; -moz-user-select: none;
-    -ms-user-select: none; user-select: none;
-    padding: 0 4px; width: 4em;
-  }
-pre.numberSource { margin-left: 3em;  padding-left: 4px; }
-div.sourceCode
-  {   }
-@media screen {
-pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
 }
 </style>
 
@@ -107,7 +75,6 @@ gtag('config', 'G-B8G2041HSB', { 'anonymize_ip': true});
   <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
 
 <link rel="stylesheet" href="../assets/styles.css">
-<link rel="stylesheet" href="../styles.css">
 </head>
 
 <body class="nav-sidebar docked">
@@ -119,9 +86,7 @@ gtag('config', 'G-B8G2041HSB', { 'anonymize_ip': true});
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-      <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item">
-      Stat 210a
-      </li></ol></nav>
+      <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../reader/introduction.html">Course Reader</a></li><li class="breadcrumb-item"><a href="../reader/sufficiency.html">Sufficiency</a></li></ol></nav>
       <a class="flex-grow-1" role="button" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
       </a>
       <button type="button" class="btn quarto-search-button" aria-label="" onclick="window.quartoOpenSearch();">
@@ -234,7 +199,7 @@ gtag('config', 'G-B8G2041HSB', { 'anonymize_ip': true});
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../reader/sufficiency.html" class="sidebar-item-text sidebar-link">
+  <a href="../reader/sufficiency.html" class="sidebar-item-text sidebar-link active">
  <span class="menu-text">Sufficiency</span></a>
   </div>
 </li>
@@ -274,9 +239,9 @@ gtag('config', 'G-B8G2041HSB', { 'anonymize_ip': true});
     <h2 id="toc-title">On this page</h2>
    
   <ul>
-  <li><a href="#latex" id="toc-latex" class="nav-link active" data-scroll-target="#latex"><span class="math inline">\(\LaTeX\)</span></a></li>
-  <li><a href="#evaluated-python-code" id="toc-evaluated-python-code" class="nav-link" data-scroll-target="#evaluated-python-code">Evaluated Python code</a></li>
-  <li><a href="#callout" id="toc-callout" class="nav-link" data-scroll-target="#callout">Callout</a></li>
+  <li><a href="#sufficiency" id="toc-sufficiency" class="nav-link active" data-scroll-target="#sufficiency">Sufficiency</a></li>
+  <li><a href="#factorization-theorem" id="toc-factorization-theorem" class="nav-link" data-scroll-target="#factorization-theorem">Factorization theorem</a></li>
+  <li><a href="#sufficient-statistics-in-exponential-families" id="toc-sufficient-statistics-in-exponential-families" class="nav-link" data-scroll-target="#sufficient-statistics-in-exponential-families">Sufficient statistics in exponential families</a></li>
   </ul>
 </nav>
     </div>
@@ -285,14 +250,26 @@ gtag('config', 'G-B8G2041HSB', { 'anonymize_ip': true});
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title">Unit 2: Next</h1>
+<h1 class="title">Sufficiency</h1>
 </div>
 
 
 
 <div class="quarto-title-meta">
 
+    <div>
+    <div class="quarto-title-meta-heading">Author</div>
+    <div class="quarto-title-meta-contents">
+             <p>Will Fithian </p>
+          </div>
+  </div>
     
+    <div>
+    <div class="quarto-title-meta-heading">Published</div>
+    <div class="quarto-title-meta-contents">
+      <p class="date">August 29, 2023</p>
+    </div>
+  </div>
   
     
   </div>
@@ -300,43 +277,94 @@ gtag('config', 'G-B8G2041HSB', { 'anonymize_ip': true});
 
 </header>
 
-<p>This is an example of using an ipynb file as source rather than qmd. It follows instructions from https://github.com/DS-100/course-notes/README.md.</p>
-<p>Link to the <a href="../data">data</a>.</p>
-<section id="latex" class="level2">
-<h2 class="anchored" data-anchor-id="latex"><span class="math inline">\(\LaTeX\)</span></h2>
-<p>Here is some <span class="math inline">\(\LaTeX\)</span>. <span class="math display">\[
-\theta = 7
+<p><span class="math display">\[
+\newcommand{\cB}{\mathcal{B}}
+\newcommand{\cF}{\mathcal{F}}
+\newcommand{\cN}{\mathcal{N}}
+\newcommand{\cP}{\mathcal{P}}
+\newcommand{\cX}{\mathcal{X}}
+\newcommand{\EE}{\mathbb{E}}
+\newcommand{\PP}{\mathbb{P}}
+\newcommand{\RR}{\mathbb{R}}
+\newcommand{\ZZ}{\mathbb{Z}}
+\newcommand{\td}{\,\textrm{d}}
+\newcommand{\simiid}{\stackrel{\textrm{i.i.d.}}{\sim}}
+\newcommand{\eqas}{\stackrel{\textrm{a.s.}}{=}}
+\newcommand{\eqPas}{\stackrel{\cP\textrm{-a.s.}}{=}}
+\newcommand{\eqmuas}{\stackrel{\mu\textrm{-a.s.}}{=}}
+\newcommand{\eqD}{\stackrel{D}{=}}
+\newcommand{\indep}{\perp\!\!\!\!\perp}
+\DeclareMathOperator*{\minz}{minimize\;}
+\newcommand{\Var}{\textnormal{Var}}
+\newcommand{\Cov}{\textnormal{Cov}}
+\newcommand{\Corr}{\textnormal{Corr}}
+\]</span></p>
+<section id="sufficiency" class="level2">
+<h2 class="anchored" data-anchor-id="sufficiency">Sufficiency</h2>
+<p>Sufficiency is a central concept in statistics that allows us to focus on the essential aspects of the data set while ignoring details that are irrelevant to the inference problem. If <span class="math inline">\(X\sim P_\theta\)</span> represents the entire data set, drawn from a model <span class="math inline">\(\cP = \{P_\theta:\; \theta \in \Theta\}\)</span>, then this lecture will concern the idea of a <em>sufficient statistic</em> <span class="math inline">\(T(X)\)</span> that carries all of the information in the data that can help us learn about <span class="math inline">\(\theta\)</span>.</p>
+<p>A <em>statistic</em> <span class="math inline">\(T(X)\)</span> is any random variable which is a function of the data <span class="math inline">\(X\)</span>, and which does <strong>not</strong> depend on the unknown parameter <span class="math inline">\(\theta\)</span>. We say the statistic <span class="math inline">\(T(X)\)</span> is <em>sufficient</em> for the model <span class="math inline">\(\cP\)</span> if <span class="math inline">\(P_\theta(X \mid T)\)</span> does not depend on <span class="math inline">\(\theta\)</span>. This lecture will be devoted to interpreting this definition and giving examples.</p>
+<p><strong>Example (Independent Bernoulli sequence):</strong> We introduced the binomial example from Lecture 2 by telling a story about an investigator who flips a biased coin <span class="math inline">\(n\)</span> times and records the total number of heads, which has a binomial distribution. All of the estimators we considered were functions only of the (binomially-distributed) count of heads.</p>
+<p>But if the investigator had actually performed this experiment, they would have observed more than just the total number of heads: they would have observed the entire sequence of <span class="math inline">\(n\)</span> heads and tails. If we let <span class="math inline">\(X_i\)</span> denote a binary indicator of whether the <span class="math inline">\(i\)</span>th throw is heads, for <span class="math inline">\(i=1,\ldots,n\)</span>, then we have assumed that these indicators are i.i.d. Bernoulli random variables:</p>
+<p><span class="math display">\[
+X_1,\ldots,X_n \simiid \text{Bern}(\theta).
+\]</span></p>
+<p>Let <span class="math inline">\(T(X) = \sum_i X_i \sim \text{Binom}(n,\theta)\)</span> denote the summary statistic that we previously used to represent the entire data set. It is undeniable that we have lost some information by only recording <span class="math inline">\(T(X)\)</span> instead of the entire sequence <span class="math inline">\(X = (X_1,\ldots,X_n)\)</span>. As a result, we might wonder whether we could have improved the estimator by considering all functions of <span class="math inline">\(X\)</span>, not just functions of <span class="math inline">\(T(X)\)</span>.</p>
+<p>The answer is that, no, we did not really lose anything by summarizing the data by <span class="math inline">\(T(X)\)</span> because <span class="math inline">\(T(X)\)</span> is sufficient. The joint pmf of the data set <span class="math inline">\(X \in \{0,1\}^n\)</span> (i.e., the density wrt the counting measure on <span class="math inline">\(\{0,1\}^n\)</span>) is</p>
+<p><span class="math display">\[
+p_\theta(x) = \prod_{i=1}^n \theta^{x_i}(1-\theta)^{1-x_i} = \theta^{\sum_i x_i}(1-\theta)^{n-\sum_i x_i}.
+\]</span></p>
+<p>Note that this pmf depends only on <span class="math inline">\(T(x)\)</span>: it assigns probability <span class="math inline">\(\theta^t (1-\theta)^{n-t}\)</span> to every sequence with <span class="math inline">\(T(X)=t\)</span> total heads. As a result, the conditional distribution given <span class="math inline">\(T(X)=t\)</span> should be uniform on all of the <span class="math inline">\(\binom{n}{t}\)</span> sequences with <span class="math inline">\(t\)</span> heads. We can confirm this by calculating the conditional pmf directly:</p>
+<p><span class="math display">\[
+\begin{aligned}
+\PP_\theta(X = x \mid T(X) = t)
+&amp;= \frac{\PP_\theta(X=x, \sum_i X_i = t)}{\PP_\theta(T(X) = t)} \\[7pt]
+&amp;= \frac{\theta^t (1-\theta)^{n-t}1\{\sum_i x_i = t\}}{\theta^t(1-\theta)^{n-t}\binom{n}{t}}\\[5pt]
+&amp;= \binom{n}{t}^{-1}1\{T(x) = t\}.
+\end{aligned}
+\]</span></p>
+<p>Since the conditional distribution does not depend on <span class="math inline">\(\theta\)</span>, <span class="math inline">\(T(X)\)</span> is sufficient for the model <span class="math inline">\(\cP\)</span>.</p>
+<p>As we will see next, we didn’t really need to go to the trouble of calculating the conditional distribution. Once we noticed that the density depends on <span class="math inline">\(x\)</span> only through <span class="math inline">\(T(x)\)</span>, we could have concluded that <span class="math inline">\(T(X)\)</span> was sufficient.</p>
+</section>
+<section id="factorization-theorem" class="level2">
+<h2 class="anchored" data-anchor-id="factorization-theorem">Factorization theorem</h2>
+<p>The easiest way to verify that a statistic is sufficient is to show that the density <span class="math inline">\(p_\theta\)</span> factorizes into a part that involves only <span class="math inline">\(\theta\)</span> and <span class="math inline">\(T(x)\)</span>, and a part that involves only <span class="math inline">\(h(x)\)</span>.</p>
+<p><strong>Factorization Theorem:</strong> Let <span class="math inline">\(\cP\)</span> be a model having densities <span class="math inline">\(p_\theta(x)\)</span> with respect to a common dominating measure <span class="math inline">\(\mu\)</span>. Then <span class="math inline">\(T(X)\)</span> is sufficient for <span class="math inline">\(\cP\)</span> if and only if there exist non-negative functions <span class="math inline">\(g_\theta\)</span> and <span class="math inline">\(h\)</span> for which</p>
+<p><span class="math display">\[
+p_\theta(x) = g_\theta(T(x)) h(x),
+\]</span></p>
+<p>for almost every <span class="math inline">\(x\)</span> under <span class="math inline">\(\mu\)</span>.</p>
+<p>The “almost every <span class="math inline">\(x\)</span>” qualification means that</p>
+<p><span class="math display">\[
+\mu\left(\{x:\; p_\theta(x) \neq g_\theta(T(x))h(x)\}\right) = 0.
+\]</span></p>
+<p>It is needed to avoid counterexamples with continuous distributions where we could arbitrarily change the value of <span class="math inline">\(p_{\theta_0}(x_0)\)</span> for a single <span class="math inline">\(\theta_0\)</span> and <span class="math inline">\(x_0\)</span> without actually changing any of the distributions.</p>
+<p><strong>Proof:</strong> The proof is easiest in the discrete case, so we don’t have to deal with conditioning on measure-zero events.</p>
+<p>First, assume that there exists a factorization <span class="math inline">\(p_\theta(x) = g_\theta(T(x)) h(x)\)</span>. Then we</p>
+<p><span class="math display">\[
+\begin{aligned}
+\PP_\theta(X = x \mid T(X) = t)
+&amp;= \frac{p_\theta(x)1\{T(x) = t\}}{\displaystyle\sum_{z:\;T(z) = t} p_\theta(z)}\\[7pt]
+&amp;= \frac{g_\theta(t) h(x) 1\{T(x) = t\}}{g_\theta(t)\displaystyle\sum_{z:\;T(z) = t} h(z)}\\[7pt]
+&amp;= \frac{h(x) 1\{T(x) = t\}}{\displaystyle\sum_{z:\;T(z) = t} h(z)},
+\end{aligned}
+\]</span></p>
+<p>which we see does not depend on <span class="math inline">\(\theta\)</span>.</p>
+<p>Next consider the opposite direction. If <span class="math inline">\(T(X)\)</span> is sufficient, then we can construct a factorization by writing</p>
+<p>. First, define</p>
+<p><span class="math display">\[
+g_\theta(t) = \PP_\theta(T(X)=t) = \sum_{x:\;T(x) = t} p_\theta(x).
+\]</span></p>
+<p>Then, let</p>
+<p><span class="math display">\[
+h(x) = \PP(X = x \mid T(X) = T(x)),
+\]</span></p>
+<p>which does not depend on <span class="math inline">\(\theta\)</span> by sufficiency. Then we have</p>
+<p><span class="math display">\[
+\PP_\theta(X = x) = \PP_\theta(T(X) = T(x)) \;\cdot\;\PP_\theta(X = x \mid T(X) = T(x)) = g_\theta(T(x)) h(x)
 \]</span></p>
 </section>
-<section id="evaluated-python-code" class="level2">
-<h2 class="anchored" data-anchor-id="evaluated-python-code">Evaluated Python code</h2>
-<p>Note that to get code output shown, the underlying notebook must have executed the code.</p>
-<div class="cell" data-execution_count="1">
-<details>
-<summary>Code</summary>
-<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>a<span class="op">=</span><span class="dv">7</span></span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(a)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</details>
-<div class="cell-output cell-output-stdout">
-<pre><code>7</code></pre>
-</div>
-</div>
-</section>
-<section id="callout" class="level2">
-<h2 class="anchored" data-anchor-id="callout">Callout</h2>
-<div class="callout callout-style-default callout-tip callout-titled">
-<div class="callout-header d-flex align-content-center">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-Tip with Title
-</div>
-</div>
-<div class="callout-body-container callout-body">
-<p>This is an example of a callout with a title.</p>
-</div>
-</div>
+<section id="sufficient-statistics-in-exponential-families" class="level2">
+<h2 class="anchored" data-anchor-id="sufficient-statistics-in-exponential-families">Sufficient statistics in exponential families</h2>
 
 
 </section>

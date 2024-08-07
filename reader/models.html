@@ -1,0 +1,723 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.3.450">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="author" content="Will Fithian">
+<meta name="dcterms.date" content="2023-08-29">
+
+<title>Statistical decision theory</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+
+<script src="../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../">
+<script src="../site_libs/quarto-html/quarto.js"></script>
+<script src="../site_libs/quarto-html/popper.min.js"></script>
+<script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "sidebar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "start",
+  "type": "textbox",
+  "limit": 20,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+<script async="" src="https://www.googletagmanager.com/gtag/js?id=G-B8G2041HSB"></script>
+
+<script type="text/javascript">
+
+window.dataLayer = window.dataLayer || [];
+function gtag(){dataLayer.push(arguments);}
+gtag('js', new Date());
+gtag('config', 'G-B8G2041HSB', { 'anonymize_ip': true});
+</script>
+
+  <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<link rel="stylesheet" href="../assets/styles.css">
+</head>
+
+<body class="nav-sidebar docked">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+  <nav class="quarto-secondary-nav">
+    <div class="container-fluid d-flex">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+        <i class="bi bi-layout-text-sidebar-reverse"></i>
+      </button>
+      <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../reader/introduction.html">Course Reader</a></li><li class="breadcrumb-item"><a href="../reader/models.html">Statistical decision theory</a></li></ol></nav>
+      <a class="flex-grow-1" role="button" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+      </a>
+      <button type="button" class="btn quarto-search-button" aria-label="" onclick="window.quartoOpenSearch();">
+        <i class="bi bi-search"></i>
+      </button>
+    </div>
+  </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal sidebar-navigation docked overflow-auto">
+    <div class="pt-lg-2 mt-2 text-left sidebar-header sidebar-header-stacked">
+      <a href="../index.html" class="sidebar-logo-link">
+      <img src="../assets/stat_bear.png" alt="" class="sidebar-logo py-0 d-lg-inline d-none">
+      </a>
+    <div class="sidebar-title mb-0 py-0">
+      <a href="../">Stat 210a</a> 
+        <div class="sidebar-tools-main">
+    <a href="https://github.com/berkeley-stat210a/fall-2024" rel="" title="" class="quarto-navigation-tool px-1" aria-label=""><i class="bi bi-github"></i></a>
+</div>
+    </div>
+      </div>
+        <div class="mt-2 flex-shrink-0 align-items-center">
+        <div class="sidebar-search">
+        <div id="quarto-search" class="" title="Search"></div>
+        </div>
+        </div>
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Home / Schedule</span></a>
+  </div>
+</li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" aria-expanded="true">
+ <span class="menu-text">Course Logistics</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../faq.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Frequently Asked Questions</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../syllabus.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Syllabus</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../syllabus.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Syllabus</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../calendar.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Calendar</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../handwritten-notes.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Handwritten notes</span></a>
+  </div>
+</li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" aria-expanded="true">
+ <span class="menu-text">Course Reader</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../reader/introduction.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Course introduction</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../reader/measure-theory-basics.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Measure Theory Basics</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../reader/models.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text">Statistical decision theory</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../reader/exponential-families.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Exponential Families</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../reader/sufficiency.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Sufficiency</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../reader/completeness.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Completeness, Ancillarity, and Basu’s Theorem</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../reader/unbiased-estimation.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Unbiased Estimation</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../reader/score-fisher.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Score Function and Fisher Information</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../license.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">License</span></a>
+  </div>
+</li>
+    </ul>
+    </div>
+</nav>
+<div id="quarto-sidebar-glass" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass"></div>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#statistical-models" id="toc-statistical-models" class="nav-link active" data-scroll-target="#statistical-models">Statistical models</a>
+  <ul class="collapse">
+  <li><a href="#parametric-vs-nonparametric-models" id="toc-parametric-vs-nonparametric-models" class="nav-link" data-scroll-target="#parametric-vs-nonparametric-models">Parametric vs nonparametric models</a></li>
+  <li><a href="#bayesian-vs-frequentist-inference" id="toc-bayesian-vs-frequentist-inference" class="nav-link" data-scroll-target="#bayesian-vs-frequentist-inference">Bayesian vs Frequentist inference</a></li>
+  </ul></li>
+  <li><a href="#estimation-in-statistical-models" id="toc-estimation-in-statistical-models" class="nav-link" data-scroll-target="#estimation-in-statistical-models">Estimation in statistical models</a>
+  <ul class="collapse">
+  <li><a href="#comparing-estimators" id="toc-comparing-estimators" class="nav-link" data-scroll-target="#comparing-estimators">Comparing estimators</a></li>
+  <li><a href="#strategy-1-summarizing-the-risk-function-by-a-scalar" id="toc-strategy-1-summarizing-the-risk-function-by-a-scalar" class="nav-link" data-scroll-target="#strategy-1-summarizing-the-risk-function-by-a-scalar">Strategy 1: Summarizing the risk function by a scalar</a></li>
+  <li><a href="#strategy-2-restricting-the-choice-of-estimators" id="toc-strategy-2-restricting-the-choice-of-estimators" class="nav-link" data-scroll-target="#strategy-2-restricting-the-choice-of-estimators">Strategy 2: Restricting the choice of estimators</a></li>
+  </ul></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">Statistical decision theory</h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    <div>
+    <div class="quarto-title-meta-heading">Author</div>
+    <div class="quarto-title-meta-contents">
+             <p>Will Fithian </p>
+          </div>
+  </div>
+    
+    <div>
+    <div class="quarto-title-meta-heading">Published</div>
+    <div class="quarto-title-meta-contents">
+      <p class="date">August 29, 2023</p>
+    </div>
+  </div>
+  
+    
+  </div>
+  
+
+</header>
+
+<p><span class="math display">\[
+\newcommand{\cB}{\mathcal{B}}
+\newcommand{\cF}{\mathcal{F}}
+\newcommand{\cN}{\mathcal{N}}
+\newcommand{\cP}{\mathcal{P}}
+\newcommand{\cX}{\mathcal{X}}
+\newcommand{\EE}{\mathbb{E}}
+\newcommand{\PP}{\mathbb{P}}
+\newcommand{\RR}{\mathbb{R}}
+\newcommand{\ZZ}{\mathbb{Z}}
+\newcommand{\td}{\,\textrm{d}}
+\newcommand{\simiid}{\stackrel{\textrm{i.i.d.}}{\sim}}
+\newcommand{\eqas}{\stackrel{\textrm{a.s.}}{=}}
+\newcommand{\eqPas}{\stackrel{\cP\textrm{-a.s.}}{=}}
+\newcommand{\eqmuas}{\stackrel{\mu\textrm{-a.s.}}{=}}
+\newcommand{\eqD}{\stackrel{D}{=}}
+\newcommand{\indep}{\perp\!\!\!\!\perp}
+\DeclareMathOperator*{\minz}{minimize\;}
+\newcommand{\Var}{\textnormal{Var}}
+\newcommand{\Cov}{\textnormal{Cov}}
+\newcommand{\Corr}{\textnormal{Corr}}
+\]</span></p>
+<section id="statistical-models" class="level2">
+<h2 class="anchored" data-anchor-id="statistical-models">Statistical models</h2>
+<p>Until now, we have been discussing the topic of <em>probability</em>. Roughly speaking, in probability we fully specify the distribution of some random variables, and then ask what we can say about the distribution. For example, given a complete description of the rules for generating a random walk, we might ask how long, in expectation, it will take to reach a certain threshold. This is an essentially <em>deductive</em> exercise: while the mathematics might be very hard, the questions we ask generally have unambiguous answers.</p>
+<p>In statistics, we do essentially the opposite: beginning with the <em>data</em> — the Latin word for “given” — we work backwards to draw inferences about the data-generating distribution. This is an <em>inductive</em> exercise, for which the answers will inevitably be more ambiguous.</p>
+<p>We will generally use the letter <span class="math inline">\(X\)</span> to denote the full data set, which we assume is drawn randomly from some unknown distribution <span class="math inline">\(P\)</span> over the <em>sample space</em> <span class="math inline">\(\cX\)</span>. Let <span class="math inline">\(\cP\)</span> denote a family of candidate probability distributions, called the <em>statistical model</em>. We assume the analyst knows that one of the elements of <span class="math inline">\(\cP\)</span> is the true data-generating distribution <span class="math inline">\(P\)</span>, but does not know which one. The set <span class="math inline">\(\cX\)</span> in which <span class="math inline">\(X\)</span> is</p>
+<p><strong>Example (Binomial):</strong> As a simple example, we can imagine an analyst who flips a biased coin <span class="math inline">\(n\)</span> times, getting <span class="math inline">\(X\)</span> heads and <span class="math inline">\(n-X\)</span> tails. If we assume the successive flips are independent, and each has a common probability <span class="math inline">\(\theta\)</span> of landing heads, we can write the model as</p>
+<p><span class="math display">\[
+X \sim \text{Binom}(n, \theta), \quad \text{ for some } \theta \in [0,1].
+\]</span></p>
+<p>Formally, we could say the family of distributions is <span class="math inline">\(\cP = \{\text{Binom}(n, \theta):\; \theta \in [0,1]\}\)</span>, a set of distributions indexed by the real parameter <span class="math inline">\(\theta\)</span>.</p>
+<p>Note that in the previous example, the integer <span class="math inline">\(n\)</span> is another important variable in the problem, but we implicitly assumed that it was “known” by the analyst, meaning that it is the same for all <span class="math inline">\(P \in \cP\)</span>. The parameter <span class="math inline">\(\theta\)</span>, by contrast, is termed “unknown” in the sense that it varies over the family <span class="math inline">\(\cP\)</span>.</p>
+<section id="parametric-vs-nonparametric-models" class="level3">
+<h3 class="anchored" data-anchor-id="parametric-vs-nonparametric-models">Parametric vs nonparametric models</h3>
+<p>Many of the models we will consider in this class are <em>parametric</em>, typically meaning that they are indexed by finitely many real parameters. That is, we have <span class="math inline">\(\cP = \{P_\theta:\; \theta \in \Theta\}\)</span>, typically for some <em>parameter space</em> <span class="math inline">\(\Theta \subseteq \RR^d\)</span>. Then <span class="math inline">\(\theta\)</span> is called the <em>parameter</em> or <em>parameter vector</em>.</p>
+<p>In other models, there is no natural way to index <span class="math inline">\(\cP\)</span> using <span class="math inline">\(d\)</span> real numbers. We call these <em>nonparametric</em> models. Sometimes excited authors referred to their methods as “assumption-free,” but essentially all nonparametric models still make some assumptions about the data distribution. For example, we might assume independence between multiple observations, or shape constraints such as unimodality.</p>
+<p><strong>Example (Nonparameric model):</strong> Suppose we observe an i.i.d. sample of size <span class="math inline">\(n\)</span> from a distribution <span class="math inline">\(P\)</span> on the real line. Even if we do not want to assume anything about <span class="math inline">\(P\)</span>, the i.i.d. assumption will play an important role in the analysis. We might write this model as</p>
+<p><span class="math display">\[
+X_1,\ldots,X_n \simiid P, \quad \text{ for some distribution } P \text{ on } \RR.
+\]</span></p>
+<p>Formally, if <span class="math inline">\(X = (X_1,\ldots,X_n)\)</span>, we can write the family as <span class="math inline">\(\cP = \{P^n:\; P \text{ is a distribution on } \RR\}\)</span>, where <span class="math inline">\(P^n\)</span> represents the <span class="math inline">\(n\)</span>-fold product of <span class="math inline">\(P\)</span> on <span class="math inline">\(\RR^n\)</span>.</p>
+<p><strong>Notation:</strong> Much of what we will learn in this course applies to parametric and nonparametric models alike, and indeed there is no crisp demarcation between parametric and nonparametric models in practice. It will often be convenient to use notation <span class="math inline">\(\cP = \{P_\theta :\; \theta \in \Theta\}\)</span>, without specifying what kind of set <span class="math inline">\(\Theta\)</span> is; in particular there is nothing to stop <span class="math inline">\(\theta\)</span> from being an infinite-dimensional object such as a density function. We can work in this notation without any loss of generality, since we could always take <span class="math inline">\(\theta = P\)</span> and <span class="math inline">\(\Theta = \cP\)</span>.</p>
+</section>
+<section id="bayesian-vs-frequentist-inference" class="level3">
+<h3 class="anchored" data-anchor-id="bayesian-vs-frequentist-inference">Bayesian vs Frequentist inference</h3>
+<p>Thus far we have assumed the data <span class="math inline">\(X\)</span> follows a distribution <span class="math inline">\(P_\theta\)</span>, for some unknown parameter <span class="math inline">\(\theta\)</span> which can be any arbitrary member of the set <span class="math inline">\(\Theta\)</span>. In some contexts we will introduce an additional assumption we can call the <em>Bayesian assumption</em>: that <span class="math inline">\(\theta\)</span> is itself random, drawn from some known distribution <span class="math inline">\(\Lambda\)</span> that we call the <em>prior</em>.</p>
+<p>A major advantage of this assumption is that it reduces the problem of inference about <span class="math inline">\(\theta\)</span> to simply calculating the conditional distribution of <span class="math inline">\(\theta\)</span> given <span class="math inline">\(X\)</span>.</p>
+<p>The philosophical ramifications of this assumption, as well as its practical advantages and disadvantages, will be a major theme later in the course, but for now we will simply say it is an assumption we are sometimes, but not always, willing to make. From a mathematical perspective, it makes no more or less sense to assume <span class="math inline">\(\theta\)</span> is random than it does to assume <span class="math inline">\(\theta\)</span> is fixed and unknown.</p>
+<p>For the remainder of this lecture, and until our unit on Bayesian inference, we will refrain from making this assumption, instead regarding <span class="math inline">\(\theta\)</span> as taking an arbitrary fixed value in <span class="math inline">\(\Theta\)</span>.</p>
+</section>
+</section>
+<section id="estimation-in-statistical-models" class="level2">
+<h2 class="anchored" data-anchor-id="estimation-in-statistical-models">Estimation in statistical models</h2>
+<p>Having observed <span class="math inline">\(X \sim P_\theta\)</span>, an unknown distribution in the model <span class="math inline">\(\cP = \{P_\theta:\; \theta \in \Theta\}\)</span>, we will be interested in learning something about <span class="math inline">\(\theta\)</span>. In <em>estimation</em>, we guess the value of some quantity of interest <span class="math inline">\(g(\theta)\)</span>, called the <em>estimand</em>. Our guess is called the <em>estimate</em> <span class="math inline">\(\delta(X)\)</span>, calculated based on the data. The method <span class="math inline">\(\delta(\cdot)\)</span> that we use to calculate the estimate is called the <em>estimator</em>.</p>
+<p><strong>Example (Binomial, continued):</strong> Returning to our binomial example from above, we may want to estimate <span class="math inline">\(g(\theta) = \theta\)</span>, the probability of the coin landing heads. A natural estimator is <span class="math inline">\(\delta_0(X) = X/n\)</span>, the fraction of coins landing heads in any given trial. One favorable property of this estimator is that it is <em>unbiased</em>, meaning that <span class="math inline">\(\EE_\theta \delta_0(X) = g(\theta)\)</span>, for all <span class="math inline">\(\theta \in \Theta\)</span>.</p>
+<p>There are many potential estimators for any given problem, so our goal will generally be to find a good estimator. To evaluate and compare estimators, we must have a way of evaluating how successful an estimator is in any given realization of the data. To this end we introduce the <em>loss function</em> <span class="math inline">\(L(\theta, d)\)</span>, which measures <em>how bad</em> it is to guess that <span class="math inline">\(g(\theta) = d\)</span> when <span class="math inline">\(\theta\)</span> is the true parameter value. Typically loss functions are non-negative, with <span class="math inline">\(L(\theta, d) = 0\)</span> if and only if <span class="math inline">\(g(\theta) = d\)</span> (no loss from a perfect guess) but this is not required.</p>
+<p>In any given problem, we should ideally choose the loss that best measures our own true (dis)utility function, but in practice people fall back on simple defaults. One loss function that is especially popular for its mathematical convenience is the <em>squared-error loss</em>, defined by <span class="math inline">\(L(\theta, d) = (d-g(\theta))^2\)</span>.</p>
+<p>Whereas the loss function measures how (un)successful an estimator is in one realization of the data, we would really like to evaluate an estimator’s performance over the whole range of possible data sets <span class="math inline">\(X\)</span> that we might observe. This is measured by the <em>risk function</em>, defined as</p>
+<p><span class="math display">\[
+R(\theta; \delta(\cdot)) = \EE_\theta [\, L(\theta, \delta(X)) \,] = \int L(\theta, \delta(x)) \td P_\theta(x)
+\]</span></p>
+<p><strong>Remark on notation:</strong> The subscript in the previous expression tells us <em>which</em> of our candidate probability distributions to use in evaluating the expectation. In some other fields, people may use the subscript to indicate “what randomness to integrate over,” with the implication that any random variable that does not appear in the subscript should be held fixed. In our course, it should generally be assumed that any expectation or probability is integrating over the joint distribution of the entire data set; if we want to hold something fixed we will condition on it. Recall that, for now, the parameter <span class="math inline">\(\theta\)</span> is fixed unless otherwise specified.</p>
+<p>The semicolon in the risk function is meant to indicate we are viewing it primarily as a function of <span class="math inline">\(\theta\)</span>. That is, we should think of and estimator <span class="math inline">\(\delta\)</span> as having a risk function <span class="math inline">\(R(\theta)\)</span>, and the second input in <span class="math inline">\(R(\theta; \delta)\)</span> is telling us which estimator’s risk function to evaluate at <span class="math inline">\(\theta\)</span>.</p>
+<p>The risk for the squared-error loss is called the <em>mean squared error</em> (MSE):</p>
+<p><span class="math display">\[
+\textrm{MSE}(\theta; \delta) = \EE_\theta\left[\,(\delta(X) - g(\theta))^2\,\right]
+\]</span></p>
+<p><strong>Example (Binomial, continued):</strong> To calculate the MSE of our estimator <span class="math inline">\(\delta_0 = X/n\)</span>, note that <span class="math inline">\(\EE_\theta[X/n] = \theta\)</span> (the estimator is <em>unbiased</em>). As a result, we have</p>
+<p><span class="math display">\[
+\begin{aligned}
+\textrm{MSE}(\theta; \delta_0) &amp;= \EE_\theta\left[ \left(\frac{X}{n} - \theta\right)^2\right] \\[7pt]
+&amp;= \text{Var}_\theta(X/n)\\[3pt]
+&amp;= \frac{1}{n}\theta(1-\theta)
+\end{aligned}
+\]</span></p>
+<p>One reason why we might consider estimators other than <span class="math inline">\(\delta_0\)</span> is that, if <span class="math inline">\(n\)</span> is small, our estimate could be quite noisy. As an extreme example, if <span class="math inline">\(n=1\)</span> we will always estimate either <span class="math inline">\(\theta = 0\)</span> or <span class="math inline">\(\theta = 1\)</span>, both of which would be extreme conclusions to draw after a single trial. One simple way of reducing the variance is to pretend that we flipped the coin an additional <span class="math inline">\(m\)</span> times resulting in <span class="math inline">\(a\)</span> heads and <span class="math inline">\(m-a\)</span> tails. This will tend to shade our estimate toward <span class="math inline">\(a/m\)</span>, reducing the risk if <span class="math inline">\(\theta = a/m\)</span> but possibly increasing the risk for other values of <span class="math inline">\(\theta\)</span>.</p>
+<!--# Add widget to show the distribution of estimates for a variety of theta, n, a, m values -->
+<p>We show the risk function for several alternative estimators of this form below:</p>
+<p><span class="math display">\[
+\delta_1(X) = \frac{X + 1}{n + 2}, \quad \delta_2(X) = \frac{X + 2}{n + 4}, \quad \delta_3(X) = \frac{X + 1}{n}
+\]</span></p>
+<p>The last estimator, <span class="math inline">\(\delta_3\)</span>, is another example where we add something to <span class="math inline">\(X\)</span> in the numerator but nothing <span class="math inline">\(n\)</span> in the denominator.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(RColorBrewer)</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>n <span class="ot">=</span> <span class="dv">16</span></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="do">## risk function of estimator (X + synth.heads) / (n + synth.flips)</span></span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>binom.mse <span class="ot">&lt;-</span> <span class="cf">function</span>(theta, n, synth.heads, synth.flips) {</span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>  binom.var <span class="ot">&lt;-</span> theta <span class="sc">*</span> (<span class="dv">1</span> <span class="sc">-</span> theta) <span class="sc">*</span> n <span class="sc">/</span> (n <span class="sc">+</span> synth.flips)<span class="sc">^</span><span class="dv">2</span></span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>  binom.bias <span class="ot">&lt;-</span> (n <span class="sc">*</span> theta <span class="sc">+</span> synth.heads) <span class="sc">/</span> (n <span class="sc">+</span> synth.flips) <span class="sc">-</span> theta</span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">return</span>(binom.var <span class="sc">+</span> binom.bias<span class="sc">^</span><span class="dv">2</span>)</span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a>palette <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"black"</span>,<span class="fu">brewer.pal</span>(<span class="dv">4</span>, <span class="st">"Set1"</span>))</span>
+<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a><span class="fu">curve</span>(<span class="fu">binom.mse</span>(x, n, <span class="dv">0</span>, <span class="dv">0</span>), <span class="at">from=</span><span class="dv">0</span>, <span class="at">to=</span><span class="dv">1</span>, <span class="at">ylim=</span><span class="fu">c</span>(<span class="dv">0</span>,<span class="fl">0.35</span><span class="sc">/</span>n), <span class="at">lwd=</span><span class="dv">2</span>, <span class="at">col=</span>palette[<span class="dv">1</span>],</span>
+<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a>      <span class="at">main =</span> <span class="st">"Mean squared error for binomial estimators (n=16)"</span>, </span>
+<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a>      <span class="at">ylab=</span><span class="fu">expression</span>(<span class="fu">MSE</span>(theta)), </span>
+<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a>      <span class="at">xlab=</span><span class="fu">expression</span>(theta))</span>
+<span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a><span class="fu">curve</span>(<span class="fu">binom.mse</span>(x, n, <span class="dv">1</span>, <span class="dv">2</span>), <span class="at">add=</span><span class="cn">TRUE</span>, <span class="at">col=</span>palette[<span class="dv">2</span>], <span class="at">lwd=</span><span class="dv">2</span>) </span>
+<span id="cb1-19"><a href="#cb1-19" aria-hidden="true" tabindex="-1"></a><span class="fu">curve</span>(<span class="fu">binom.mse</span>(x, n, <span class="dv">2</span>, <span class="dv">4</span>), <span class="at">add=</span><span class="cn">TRUE</span>, <span class="at">col=</span>palette[<span class="dv">3</span>], <span class="at">lwd=</span><span class="dv">2</span>) </span>
+<span id="cb1-20"><a href="#cb1-20" aria-hidden="true" tabindex="-1"></a><span class="fu">curve</span>(<span class="fu">binom.mse</span>(x, n, <span class="dv">1</span>, <span class="dv">0</span>), <span class="at">add=</span><span class="cn">TRUE</span>, <span class="at">col=</span>palette[<span class="dv">4</span>], <span class="at">lwd=</span><span class="dv">2</span>) </span>
+<span id="cb1-21"><a href="#cb1-21" aria-hidden="true" tabindex="-1"></a><span class="fu">legend</span>(<span class="st">"topright"</span>, <span class="at">col=</span>palette, <span class="at">lwd=</span><span class="dv">2</span>,<span class="at">bty=</span><span class="st">"n"</span>,</span>
+<span id="cb1-22"><a href="#cb1-22" aria-hidden="true" tabindex="-1"></a>       <span class="at">legend=</span><span class="fu">c</span>(<span class="fu">expression</span>(delta[<span class="dv">0</span>]), <span class="fu">expression</span>(delta[<span class="dv">1</span>]), <span class="fu">expression</span>(delta[<span class="dv">2</span>]), <span class="fu">expression</span>(delta[<span class="dv">3</span>])))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="models_files/figure-html/unnamed-chunk-1-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+<p>If we look at the vertical axis, the MSE may appear to be very small, especially considering we only have 16 flips. But recall that an MSE of <span class="math inline">\(0.01\)</span> means that we are typically missing by about <span class="math inline">\(0.1\)</span>, while estimating a parameter that is between <span class="math inline">\(0\)</span> and <span class="math inline">\(1\)</span>.</p>
+<section id="comparing-estimators" class="level3">
+<h3 class="anchored" data-anchor-id="comparing-estimators">Comparing estimators</h3>
+<p>In comparing the risk functions of these estimators, we can notice a few things. As expected, both <span class="math inline">\(\delta_1\)</span> and <span class="math inline">\(\delta_2\)</span> outperform <span class="math inline">\(\delta_0\)</span> for values of <span class="math inline">\(\theta\)</span> close to <span class="math inline">\(1/2\)</span>, but underperform for more extreme values of <span class="math inline">\(\theta\)</span>. The estimator <span class="math inline">\(\delta_3\)</span>, however, performs worse than <span class="math inline">\(\delta_0\)</span> throughout the entire parameter space; this is because we have added bias without doing anything to reduce the variance. While it is difficult to choose between the other three estimators, we can at least rule out <span class="math inline">\(\delta_3\)</span> on the grounds that we have no reason to ever prefer it over <span class="math inline">\(\delta_0\)</span>.</p>
+<p>Formally, we say an estimator <span class="math inline">\(\delta\)</span> is <em>inadmissible</em> if there is some other estimator <span class="math inline">\(\delta^*\)</span> for which</p>
+<ol type="1">
+<li><p><span class="math inline">\(R(\theta; \delta^*) \leq R(\theta; \delta)\)</span> for all <span class="math inline">\(\theta\in\Theta\)</span>, and</p></li>
+<li><p><span class="math inline">\(R(\theta; \delta^*) &lt; R(\theta; \delta)\)</span> for some <span class="math inline">\(\theta\in\Theta\)</span>.</p></li>
+</ol>
+<p>In this case we say <span class="math inline">\(\delta^*\)</span> <em>strictly</em> <em>dominates</em> <span class="math inline">\(\delta\)</span>; more generally we can say <span class="math inline">\(\delta^*\)</span> *dominates* <span class="math inline">\(\delta\)</span> if we only have (1). An estimator is <em>admissible</em> if it is not inadmissible. We can see from our plot that <span class="math inline">\(\delta_3\)</span> is inadmissible because <span class="math inline">\(\delta_0\)</span> strictly dominates it.</p>
+<p>Comparing the other three estimators is more difficult, however, because no one of them dominates any other. In most estimation problems, including this one, we can never hope to come up with an estimator that uniformly attains the smallest risk among all estimators. That is because, for example, we can always choose the constant estimator <span class="math inline">\(\delta(X) \equiv 1/2\)</span> that simply ignores the data and always guesses that <span class="math inline">\(\theta = 1/2\)</span>. This estimator may perform poorly for other values of <span class="math inline">\(\theta\)</span>, but it is the only estimator that has exactly zero MSE for <span class="math inline">\(\theta = 1/2\)</span>.</p>
+<p>If we cannot hope to minimize the risk for every value of <span class="math inline">\(\theta\)</span> simultaneously then we must come up with some other way to resolve the inherent ambiguity in comparing all of the many estimators that we must choose among.</p>
+<p>In our unit on estimation, we will consider two main strategies for resolving this ambiguity.</p>
+</section>
+<section id="strategy-1-summarizing-the-risk-function-by-a-scalar" class="level3">
+<h3 class="anchored" data-anchor-id="strategy-1-summarizing-the-risk-function-by-a-scalar">Strategy 1: Summarizing the risk function by a scalar</h3>
+<p>If we can find a way to summarize the risk function for each estimator by a single real number that we want to minimize, then we can find an estimator that is optimal in this summary sense. The two main ways to summarize the risk are to examine the average-case risk and the worst-case risk.</p>
+<section id="average-case-risk-bayes-estimation" class="level4">
+<h4 class="anchored" data-anchor-id="average-case-risk-bayes-estimation">Average-case risk (Bayes estimation)</h4>
+<p>The first option is to minimize some (weighted) average of the risk function over the parameter space <span class="math inline">\(\Theta\)</span> :</p>
+<p><span class="math display">\[
+\minz_{\delta(\cdot)} \int_\theta R(\theta; \delta)\td \Lambda(\theta)
+\]</span></p>
+<p>The average is taken with respect to some measure <span class="math inline">\(\Lambda\)</span> of our choosing. If <span class="math inline">\(\Lambda(\Theta) &lt; \infty\)</span> we can assume without loss of generality that <span class="math inline">\(\Lambda\)</span> is a probability measure, since we could always normalize it without changing the minimization problem. Then, this average is simply the estimator’s expected risk, called the <em>Bayes risk</em>, or equivalently the expected loss averaging over the joint distribution of <span class="math inline">\(\theta\)</span> and <span class="math inline">\(X\)</span>. An estimator that minimizes the Bayes risk is called a Bayes estimator.</p>
+<p>In the binomial problem above, <span class="math inline">\(\delta_1(X) = \frac{X + 1}{n + 2}\)</span> is a Bayes estimator that minimizes the average-case risk with respect to the Lebesgue measure on <span class="math inline">\(\Theta = [0,1]\)</span>. <span class="math inline">\(\delta_2(X) = \frac{X+2}{n+4}\)</span> is also a Bayes estimator with respect to a different prior, specifically the <span class="math inline">\(\textrm{Beta}(2,2)\)</span> distribution. We will show this later.</p>
+<p>Note that minimizing the average-case risk may be a natural thing to do regardless of whether we “really believe” that <span class="math inline">\(\theta \sim \Lambda\)</span>. Hence Bayes estimators are well-motivated even from a purely frequentist perspective; using them does not have to imply one has any specific position on the philosophical interpretation of probability.</p>
+<p>If <span class="math inline">\(\Lambda(\Theta) = \infty\)</span> then we call <span class="math inline">\(\Lambda\)</span> an <em>improper prior</em>, and we can no longer interpret the corresponding Bayes risk as an expectation. But, as we will see, working with improper priors can sometimes be convenient and often leads to good estimators in practice.</p>
+</section>
+<section id="worst-case-risk-minimax-estimation" class="level4">
+<h4 class="anchored" data-anchor-id="worst-case-risk-minimax-estimation">Worst-case risk (Minimax estimation)</h4>
+<p>If we are reluctant to average over the parameter space, we can instead seek to minimize the worst-case risk over the entire parameter space:</p>
+<p><span class="math display">\[
+\minz_{\delta(\cdot)} \sup_{\theta\in\Theta} R(\theta; \delta)
+\]</span></p>
+<p>This minimization problem has a game-theoretic interpretation if we imagine that, after we choose our estimator, Nature will adversarially choose the least favorable parameter value.</p>
+<p>As we will see, minimax estimation is closely related to Bayes estimation and the minimax estimator is commonly a Bayes estimator.</p>
+<p>The minimax perspective pushes us to choose estimators with flat risk functions, and indeed <span class="math inline">\(\delta_2(X) = \frac{X + 2}{X + 4}\)</span> is the minimax estimator when <span class="math inline">\(n = 16\)</span>.</p>
+</section>
+</section>
+<section id="strategy-2-restricting-the-choice-of-estimators" class="level3">
+<h3 class="anchored" data-anchor-id="strategy-2-restricting-the-choice-of-estimators">Strategy 2: Restricting the choice of estimators</h3>
+<p>The second main strategy for resolving ambiguity is to restrict ourselves to choose an estimator that satisfies some additional side constraint.</p>
+<section id="unbiased-estimation" class="level4">
+<h4 class="anchored" data-anchor-id="unbiased-estimation">Unbiased estimation</h4>
+<p>One property we might want to demand of an estimator is that it be <em>unbiased</em>, meaning that <span class="math inline">\(\EE_\theta [\delta_0(X)] = g(\theta)\)</span>, for all <span class="math inline">\(\theta\in\Theta\)</span>. This rules out, for example, estimators that ignore the data and always guess the same value.</p>
+<p>As we will see, once we requiring unbiasedness there will often be a clear winner among all remaining estimators under consideration, called the <em>uniformly minimum variance unbiased</em> (UMVU) estimator, which uniformly minimizes the risk for any convex loss function.</p>
+<p>Of the four estimators we considered above, only <span class="math inline">\(\delta_0(X) = X/n\)</span> is unbiased, and it is indeed the UMVU for this problem.</p>
+
+
+</section>
+</section>
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const isCodeAnnotation = (el) => {
+    for (const clz of el.classList) {
+      if (clz.startsWith('code-annotation-')) {                     
+        return true;
+      }
+    }
+    return false;
+  }
+  const clipboard = new window.ClipboardJS('.code-copy-button', {
+    text: function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+  });
+  clipboard.on('success', function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  });
+  function tippyHover(el, contentFn) {
+    const config = {
+      allowHTML: true,
+      content: contentFn,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start'
+    };
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      return note.innerHTML;
+    });
+  }
+      let selectedAnnoteEl;
+      const selectorForAnnotation = ( cell, annotation) => {
+        let cellAttr = 'data-code-cell="' + cell + '"';
+        let lineAttr = 'data-code-annotation="' +  annotation + '"';
+        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+        return selector;
+      }
+      const selectCodeLines = (annoteEl) => {
+        const doc = window.document;
+        const targetCell = annoteEl.getAttribute("data-target-cell");
+        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+        const lineIds = lines.map((line) => {
+          return targetCell + "-" + line;
+        })
+        let top = null;
+        let height = null;
+        let parent = null;
+        if (lineIds.length > 0) {
+            //compute the position of the single el (top and bottom and make a div)
+            const el = window.document.getElementById(lineIds[0]);
+            top = el.offsetTop;
+            height = el.offsetHeight;
+            parent = el.parentElement.parentElement;
+          if (lineIds.length > 1) {
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+            height = bottom - top;
+          }
+          if (top !== null && height !== null && parent !== null) {
+            // cook up a div (if necessary) and position it 
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            div.style.top = top - 2 + "px";
+            div.style.height = height + 4 + "px";
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            gutterDiv.style.top = top - 2 + "px";
+            gutterDiv.style.height = height + 4 + "px";
+          }
+          selectedAnnoteEl = annoteEl;
+        }
+      };
+      const unselectCodeLines = () => {
+        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+        elementsIds.forEach((elId) => {
+          const div = window.document.getElementById(elId);
+          if (div) {
+            div.remove();
+          }
+        });
+        selectedAnnoteEl = undefined;
+      };
+      // Attach click handler to the DT
+      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+      for (const annoteDlNode of annoteDls) {
+        annoteDlNode.addEventListener('click', (event) => {
+          const clickedEl = event.target;
+          if (clickedEl !== selectedAnnoteEl) {
+            unselectCodeLines();
+            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+            if (activeEl) {
+              activeEl.classList.remove('code-annotation-active');
+            }
+            selectCodeLines(clickedEl);
+            clickedEl.classList.add('code-annotation-active');
+          } else {
+            // Unselect the line
+            unselectCodeLines();
+            clickedEl.classList.remove('code-annotation-active');
+          }
+        });
+      }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+</div> <!-- /content -->
+
+
+
+</body></html>
