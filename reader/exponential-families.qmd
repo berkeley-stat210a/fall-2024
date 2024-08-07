@@ -1,0 +1,288 @@
+---
+title: "Exponential Families"
+author: Will Fithian
+date: 08-29-2023
+format: html
+editor: visual
+---
+
+{{< include latex-macros.tex >}}
+
+## Exponential family structure
+
+Thus far we have discussed statistical models in the abstract without making any assumptions about them. Exponential families, the topic of this lecture, are models with a special structure that makes them especially easy to work with.
+
+<!--# Rewrite this to give the more general structure first and then call out the parameterization later. Also, next time maybe do sufficient statistics before exponential families? -->
+
+We say the model $\cP = \{P_\eta:\eta \in \Xi\}$ is an $s$*-parameter* *exponential family* if it is defined by a family of densities of the form:
+
+$$
+p_\eta(x) = e^{\eta'T(x) - A(\eta)}h(x),
+$$ {#eq-expo-fam}
+
+all with respect to a common *dominating measure* $\mu$, i.e. a measure $\mu$ such that $P_\eta \ll \mu$ for all $\eta\in \Xi$.
+
+The different parts of the expression in @eq-expo-fam have distinct names referring to the role they play in defining the density:
+
+$$
+\begin{aligned}
+T&:\; \cX \to \RR^s &\qquad &\text{ is called the {\it sufficient statistic}}\\
+h&:\; \cX \to [0,\infty) &\qquad &\text{ is called the {\it carrier density} or {\it base density}}\\
+\eta &\in \Xi \subseteq \RR^s &\qquad &\text{ is called the {\it natural parameter}}\\
+A&:\; \Xi \to \RR &\qquad &\text{ is called the {\it log-partition function}}
+\end{aligned}
+$$
+
+The function $A(\eta)$ is totally determined by $T$ and $h$, and plays the role of normalizing the density so that $P_\eta(\cX) = 1$:
+
+$$
+A(\eta) = \log\left( \int_\cX e^{\eta'T(x)}h(x)\td\mu(x)\right) \leq \infty
+$$ {#eq-log-partition}
+
+If $A(\eta) = \infty$ then there is no way to normalize $p_\eta$, so $\eta$ is not an allowed value for the natural parameter to take. The *natural parameter space*, which we denote $\Xi_1$, is the set of all $\eta$ values for which the family is normalizable:
+
+$$
+\Xi_1 = \{\eta:\; A(\eta) < \infty\} \subseteq \RR^s.
+$$
+
+We will show in Homework 1 that $A(\eta)$ is a convex function, so $\Xi_1$ is a convex set.
+
+Note that, because $\mu$ is allowed to be an arbitrary measure, $h(x)$ also plays an inessential role since we could always absorb it into the base measure $\mu$. More precisely, suppose we define a new dominating measure $\nu$ whose density with respect to $\mu$ is $h$ (informally we can write $\td\nu = h\td\mu$). Then $P_\eta$, which had density $e^{\eta'T(x)}h(x)$ with respect to $\mu$, now has density $e^{\eta'T(x)}$ with respect to $\nu$.
+
+As a result, if we were aiming for maximal parsimony we could assume without loss of generality that $h(x) = 1$, removing it from the definition @eq-expo-fam and replacing $\mu$ with our new, bespoke measure $\nu$. However, it is convenient to leave @eq-expo-fam as is if it allows us to take $\mu$ to be some simple default measure like a counting measure or Lebesgue measure. In that case, $p_\eta$ will be a standard pmf or pdf, so we can discuss it without going over the head of anyone who lacks a background in measure theory.
+
+**Example (Poisson):** The Poisson distribution $\textrm{Pois}(\lambda)$ has probability mass function
+
+$$
+p_\lambda(x) = \frac{\lambda^x e^{-\lambda}}{x!}, \quad \textrm{ on } x = 0, 1, 2, \ldots.
+$$
+
+Formally this pmf is a density over the counting measure on the set of non-negative integers $\ZZ_+ = \{0,1,\ldots\}$.
+
+Letting $\lambda$ range over $[0, \infty)$ yields an exponential family, but it is not immediately obvious from the form of the density. To see this, we need to massage $p_\lambda(x)$ a bit, by observing that
+
+$$
+p_\lambda(x) = \exp\{(\log \lambda) x - \lambda\}\frac{1}{x!}.
+$$
+
+Now we see that we can reparameterize the family by setting $\eta = \log\lambda$, leading to
+
+$$
+p_\eta(x) = \exp\{\eta x - e^\eta\} \frac{1}{x!}.
+$$ At this point, we immediately recognize $p_\eta$ as an exponential family with sufficient statistic $T(x) = x$, and base density $h(x) = \frac{1}{x!}$, and log-partition function $A(\eta) = e^{\eta}$.
+
+Note that this is not the only way to decompose the Poisson distribution as an exponential family. For example, we could just as well take $T(x) = x/2$; then we would have $\eta = 2\log\lambda$ and $A(\eta) = e^{\eta/2}$. Or, we could take $T(x) = x + 1$ and $A(\eta) = e^{\eta} + \eta$.
+
+This is not just a property of the Poisson distribution; the decomposition is generally non-unique for exponential families. For any exponential family of the form @eq-expo-fam , if $U \in \RR^{s\times s}$ is invertible and $v \in \RR^s$ then we can write the same density as $e^{\zeta'S(x) - B(\zeta)}h(x)$, for new sufficient statistic $S(x) = U T(x) + v$, new natural parameter $\zeta = (U^{-1})'\eta$, and and new log-partition function $B(\zeta) = A(U'\zeta) + \zeta'U^{-1}v$. So "the" sufficient statistic of an exponential family is defined only up to invertible affine transformations.
+
+## Differential identities
+
+Exponentiating @eq-log-partition, we obtain the equation
+
+$$
+e^{A(\eta)} = \int_\cX e^{\eta'T(x)}h(x)\td\mu(x)
+$$ {#eq-partition}
+
+We can derive many interesting identities by differentiating this function, and related functions, with respect to $\eta$. We will always evaluate derivatives by differentiating under the integral sign. This is not always a correct operation, but by Theorem 2.4 in Keener, it is correct on the interior of the natural parameter space $\Xi_1$. We refer the reader to Keener for details.
+
+### Mean of $T(X)$
+
+Partially differentiating @eq-partition once with respect to a generic coordinate $\eta_j$, for $j =1, \ldots, s$, we obtain
+
+$$
+\begin{aligned}
+\frac{\partial}{\partial \eta_j} e^{A(\eta)} &= \int_\cX \frac{\partial}{\partial \eta_j} e^{\eta'T(x)}h(x)\td\mu(x)\\[7pt]
+e^{A(\eta)} \frac{\partial A}{\partial \eta_j}(\eta) &= \int_\cX T_j(x) e^{\eta'T(x)}h(x)\td\mu(x)\\[7pt]
+\frac{\partial A}{\partial \eta_j}(\eta) &= \int_\cX T_j(x) e^{\eta'T(x) - A(\eta)}h(x)\td\mu(x)\\[7pt]
+&= \EE_\eta \left[\,T_j(X)\,\right]\\
+\end{aligned}
+$$
+
+Arranging these partial derivatives into a vector, we obtain
+
+$$
+\nabla A(\eta) = \EE_\eta\left[\,T(X)\,\right],
+$$
+
+which gives us a very convenient method for evaluating the expectation of the sufficient statistic.
+
+### Variance of $T(X)$
+
+Pushing our luck further, we can take a second partial derivative:
+
+$$
+\begin{aligned}
+\frac{\partial^2}{\partial \eta_j\partial \eta_k} e^{A(\eta)} &= \int_\cX \frac{\partial^2}{\partial \eta_j\partial \eta_k} e^{\eta'T(x)}h(x)\td\mu(x)\\[7pt]
+e^{A(\eta)}\left(\frac{\partial^2 A}{\partial \eta_j\partial \eta_k} + \frac{\partial A}{\partial \eta_j} \frac{\partial A}{\partial \eta_k} \right)&= \int_\cX T_j(x) T_k(x)e^{\eta'T(x)}h(x)\td\mu(x)\\[7pt]
+\frac{\partial^2 A}{\partial \eta_j\partial \eta_k} + \EE_\eta[T_j(X)]\EE_\eta[T_k(X)] &= \EE_\eta \left[\,T_j(X) T_k(X)\,\right]\\
+\frac{\partial^2 A}{\partial \eta_j\partial \eta_k} &= \text{Cov}_\eta\left(T_j(X), T_k(X)\right).
+\end{aligned}
+$$
+
+Again, collecting these second partials into a Hessian matrix gives us
+
+$$
+\nabla^2 A(\eta) = \text{Var}_\eta(T(X)),
+$$
+
+where the right-hand side denotes the $s\times s$ variance-covariance matrix of the random vector $T(X)$.
+
+**Example (Poisson, continued):** As we showed above, in the Poisson exponential family the sufficient statistic is $T(X)=X$, the natural parameter is $\eta = \log\lambda$, and the log-partition function is $A(\eta) = e^\eta \;(=\lambda)$.
+
+**Note:** This calculation would not have worked correctly if we had instead said $A(\eta) = \lambda$, and differentiated that expression with respect to $\lambda$. We would then get $\EE_\eta[X] = 1$ and $\text{Var}_\eta(X) = 0$, which are clearly incorrect.
+
+### Moment-generating function and cumulant-generating function
+
+The moment generating function (MGF) of a $d$-dimensional random vector $X\sim P$ is defined as $M^X(u) = \EE[e^{u'X}]$, for $u\in \RR^d$. If the MGF is well-defined in a neighborhood of $u=0$, then we can use it to calculated moments of $X$ by evaluating its derivatives at 0.
+
+We can show this using manipulations very similar to the ones we saw above. To evaluate the first moment of $X_j$, we can differentiate once with respect to $u_j$, since
+
+$$
+\frac{\partial}{\partial u_j} M^X(u) = \int_\cX \frac{\partial}{\partial u_j} e^{u'x}\td P(x) = \int_\cX x_j e^{u'x}\td P(x) = \int_\cX x_j e^{u'x} \td P(x).
+$$
+
+Here we have again assumed that we can differentiate under the integral sign; this is a technical condition that we would check if we were being more careful.
+
+Evaluating the derivative at $u=0$, we obtain $\frac{\partial}{\partial u_j} M^X(0) = \int_\cX x_j \td P(x) = \EE[X_j]$. Moreover, we can repeat this trick as many times as we want, leading to a formula for mixed partial derivatives of any order:
+
+$$
+\left.\frac{\partial^{m_1 + \cdots + m_d}}{\partial u_1^{m_1}\cdots\partial u_d^{m_d}} M^X(u)\right|_{u=0} = \left.\int_{\cX} x_1^{m_1}\cdots x_d^{m_d} e^{u'x}\td P(x)\right|_{u=0} = \EE\left[\,X_1^{m_1} \cdots X_d^{m_d}\,\right].
+$$ {#eq-mgf}
+
+The MGF is therefore very useful for evaluating moments of $X$. It is also useful for finding distributions of sums of independent random variables, because $M^{X + Y}(u) = M^X(u)M^Y(u),$ if $X$ and $Y$ are independent. If two random variables have the same MGF then they have the same distribution.
+
+In an exponential family, the MGF of $T(X)$, under sampling from $P_\eta$, is simple to evaluate:
+
+$$
+\begin{aligned}
+M^{T(X)}_\eta(u) &= \EE_\eta\left[\,e^{u'T(X)}\,\right]\\[5pt]
+&= \int_\cX e^{u'T(x)}e^{\eta'T(x) - A(\eta)}h(x)\td\mu(x) \\[5pt]
+&= e^{-A(\eta)}\int_\cX e^{(u+\eta)'T(x)} h(x)\td\mu(x)\\[5pt]
+&= e^{A(\eta+u)-A(\eta)}
+\end{aligned}
+$$
+
+**Example (Poisson, continued):** The MGF for $X \sim \text{Pois}(\lambda)$, with $\eta = \log\lambda$, is
+
+$$
+M^{X}_\eta(u) = \exp\{e^{\eta + u} - e^{\eta}\} = \exp\{\lambda (e^u - 1)\}
+$$
+
+To see how the MGF is useful, suppose we have $X_i \sim \text{Pois}(\lambda_i)$, independently for $i = 1,2,\ldots,n$, and we want to know the distribution of $X_+ = \sum_i X_i$. Then we can multiply the MGF's for $X_1,\ldots,X_n$ together to obtain the MGF for $X_+$:
+
+$$
+M^{X_+}(u) = \prod_i M_{\eta_i}^{X_i}(u) = \exp\left\{\sum_i \lambda_i (e^u-1)\right\}.
+$$
+
+As a result, we have $X_+ \sim \text{Pois}(\lambda_+)$, for $\lambda_+ = \sum_j \lambda_i$.
+
+Likewise, the closely related *cumulant-generating function* (CGF) is defined as the log of the MGF:
+
+$$
+K^{T(X)}_\eta(u) = \log M^{T(X)}_\eta(u) = A(\eta+u)-A(\eta)
+$$
+
+Evaluating the CGF's derivatives at $u=0$ gives us the distribution's *cumulants* instead of its moments (the first two cumulants are the mean and variance). $K_\eta^{T(X)}$ and $A$ are closely related. In particular, note that
+
+$$
+\left.\frac{\partial}{\partial \eta_j}K_\eta^{T}(u)\right|_{u=0} = \frac{\partial}{\partial \eta_j} A(\eta),
+$$
+
+This relationship explains why we can also get cumulants for $T(X)$ under $P_\eta$ by differentiating $A(\eta)$. It also partly explains why $A(\eta)$ is sometimes referred to as the CGF even though it is generally not the CGF for $T(X)$.
+
+## Other parameterizations
+
+Sometimes instead of parameterizing $\cP$ by the natural parameter $\eta$, it is more convenient to parameterize the family by another parameter $\theta$. Then we can write the density in terms of this alternative parameterization as
+
+$$
+p_\theta(x) = e^{\eta(\theta)'T(x) - B(\theta)}h(x), \quad \text{ where } B(\theta) = A(\eta(\theta)).
+$$
+
+The Poisson distribution, if indexed by the mean $\lambda$, is an example of such an alternative parameterization, with $\eta(\lambda) = \log\lambda$ and $B(\lambda) = \lambda$. Another example is the normal family:
+
+**Example (Normal):** Consider the model $X\sim \cN(\mu, \sigma^2)$, for $\mu\in\RR$ and $\sigma^2>0$. The usual parameter vector for this problem is $\theta = (\mu, \sigma^2)$. The density in that parameterization is
+
+$$
+p_\theta(x) = \frac{1}{\sqrt{2\pi\sigma^2}} \exp\left\{-(\mu-x)^2/2\sigma^2\right\}.
+$$
+
+Expanding the square and raising the $\sqrt{2\pi\sigma^2}$ into the exponent, we can massage the density into the exponential family structure we are looking for:
+
+$$
+p_\theta(x) 
+= \exp\left\{\frac{\mu}{\sigma^2} x - \frac{1}{2\sigma^2}x^2 - \frac{\mu}{2\sigma^2} - \frac{1}{2}\log\left(2\pi\sigma^2\right)\right\},
+$$
+
+which we can recognize as an exponential family with sufficient statistic $T(x) = (x,x^2)$, natural parameter $\eta(\theta) = (\mu/\sigma^2,-1/2\sigma^2)$, carrier density $h(x)=1$, and log-partition function
+
+$$
+B(\theta) = \frac{\mu^2}{2\sigma^2} + \frac{1}{2}\log\left(2\pi\sigma^2\right).
+$$
+
+We can rewrite the log-partition function in terms of $\eta_1 = \mu^2/2\sigma^2$ and $\eta_2=-1/2\sigma^2$ to complete the natural parameterization:
+
+$$
+p_\eta(x) = e^{\eta'T(x) - A(\eta)}, \quad \text{ for } A(\eta) = \frac{-\eta_1^2}{4\eta_2} + \frac{1}{2}\log(-\pi/\eta_2)
+$$
+
+Hence, the Gaussian is the (only) exponential family with sufficient statistic $T(x) = (x,x^2)$, and carrier density $h(x)=1$, with respect to the Lebesgue measure on $\RR$.
+
+**Example (Binomial):** Next, consider the model $X \sim \text{Binom}(n,\theta)$, which has pmf
+
+$$
+p_\theta(x) = \theta^x (1-\theta)^{n-x}\binom{n}{x}.
+$$
+
+We can again massage this into canonical form by raising the parameters into the exponent and collecting terms
+
+$$
+\begin{aligned}
+p_\theta(x) 
+&= \exp\left\{x\log\theta + (n-x)\log(1-\theta)\right\}\binom{n}{x}\\
+&= \exp\left\{x\log\left(\frac{\theta}{1-\theta}\right)-n\log(1-\theta)\right\}\binom{n}{x},
+\end{aligned}
+$$
+
+which we recognize as an exponential family structure with $T(x)=x$, natural parameter $\eta=\log\left(\frac{\theta}{1-\theta}\right)$ The natural parameter $\eta$ is called the *log-odds* or *logit*, which is used in classification models such as logistic regression and the many extensions thereof.
+
+**Example (Beta):** The Beta distribution is a common family of distributions on the unit interval. If $X \sim \text{Beta}(\alpha,\beta)$ then $X$ has pdf
+
+$$
+\begin{aligned}
+p_{\alpha,\beta}(x) 
+&= \frac{x^{\alpha-1}(1-x)^{\beta-1}}{B(\alpha,\beta)}\\[5pt]
+&= \exp\{\alpha \log x + \beta\log (1-x) - \log B(\alpha,\beta)\}\cdot \frac{1}{x(1-x)},
+\end{aligned}
+$$
+
+where $B(\alpha,\beta) = \int_0^1 t^{\alpha-1}(1-t)^{\beta-1}\td t$ is called the *beta function*. We recognize this as an exponential family with $T(x) = (\log x, \log(1-x))$, $\eta = (\alpha,\beta)$, and $h(x) = \frac{1}{x(1-x)}$, though as always there are other ways to decompose the density.
+
+In addition to these examples, we could add most of the distributional families detailed on Wikipedia: the Gamma, multinomial, Dirichlet, Pareto, Wishart, and many others. We will see more exponential family examples throughout the course.
+
+## Exponential tilting
+
+To help interpret what it means for a model to have an exponential family structure, we can think of $p_\eta(x) = e^{\eta'T(x) - A(\eta)} h(x)$ as an *exponential tilt* of the carrier density $h(x)$. That is, beginning with $h(x)$, we first multiply by $e^{\eta'T(x)}$, increasing the density of points in the sample space for which $\eta'T(x)$ is largest relative to those for which $\eta'T(x)$ is smaller. Then, we re-normalize by $e^{-A(\eta)}$ to obtain a probability distribution.
+
+This is easiest to understand in a one-parameter family with sufficient statistic $T(X) = X$
+
+## Repeated sampling from exponential families
+
+One of the most important properties of exponential families is that a large sample can be summarized by a low-dimensional statistic. Suppose we observe a vector of observations $X = (X_1,\ldots,X_n)$ representing an independent and identically distributed (i.i.d.) sample from an exponential family. Let $p_\eta^{(1)$ denote the density for a single observation:
+
+$$
+X_1\ldots,X_n \simiid p_\eta^{(1)}(x) = e^{\eta'T(x) - A(\eta)}h(x).
+$$
+
+Then the random vector $X = (X_1,\ldots,X_n)$ follows another closely related exponential family:
+
+$$
+\begin{aligned}
+p_\eta(x) 
+&= \prod_{i=1}^n e^{\eta'T(x_i) - A(\eta)}h(x_i)\\[7pt]
+&= \exp\left\{\eta'\sum_{i=1}^n T(x_i) - nA(\eta)\right\} \prod_{i=1}^n h(x_i).
+\end{aligned}
+$$
+
+This new density $p_\eta$, which governs the distribution of the entire sample, is an exponential family with the same natural parameter as before, sufficient statistic $\sum_i T(X_i)$, carrier density $\prod_i h(x_i)$, and log-partition function $nA(\eta)$.
+
+For reasons that will become clearer in the next lecture, it is very significant that the sufficient statistic does not increase in dimension as the sample size grows. This means that the $s$-dimensional vector $\sum_i T(X_i)$ is for all intents and purposes a complete summary of the entire sample, no matter how large $n$ is.

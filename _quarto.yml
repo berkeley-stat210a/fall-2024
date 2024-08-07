@@ -22,15 +22,23 @@ website:
         text: Syllabus
       - href: calendar.qmd
         text: Calendar
-      - handwritten-notes.qmd 
-      - href: data.qmd
-        text: Datasets
+      - handwritten-notes.qmd
+      - section: "Course Reader"
+        contents:
+          - reader/introduction.qmd
+          - reader/measure-theory-basics.qmd
+          - reader/models.qmd
+          - reader/exponential-families.qmd
+          - reader/sufficiency.qmd
+          - reader/completeness.qmd
+          - reader/unbiased-estimation.qmd
+          - reader/score-fisher.qmd
       - href: license.qmd
         text: License
-          
+
 
 format:
   html:
     theme: cosmo
-    css: assets/styles-alt.scss
+    css: assets/styles.css
     toc: true

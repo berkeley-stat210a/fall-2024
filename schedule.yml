@@ -1,46 +1,76 @@
 - week: 1
   days:
-    - date: "Aug 24"
+    - date: "Aug 29"
       items:
         - type: "Lecture"
           id: "1"
           name: Introduction
-          href: "./test.pdf"
+          href: faq.qmd
           auxil:
-            - id: "Note 1"
-              href: "./units/unit1.html"
-            - id: "Note 2"
-              href: "./units/unit1.html"
-        - type: "Participation"
-          id: "1"
-          name: Lecture Participation 1
-          href: "https://ds100.org/fa23/lecture/lec01"
-    - date: "Aug 25"
-      items:
-        - type: "Lab"
-          id: "1"
-          name: Prerequisite Coding (due Aug 29)
-          href: "https://ds100.org/fa23/lecture/lec01"
-        - type: "Homework"
-          id: "1A"
-          name: Plotting and Permutation Test (due Aug 31)
-          href: "https://ds100.org/fa23/lecture/lec01"
-        - type: "Homework"
-          id: "1B"
-          name: Prerequisite Math (due Aug 31)
-          href: "https://ds100.org/fa23/lecture/lec01"
+            - id: "Handwritten notes"
+              href: "handwritten/lecture01-F24.pdf"
 - week: 2
   days:
-    - date: "Aug 29"
+    - date: "Sep 3"
       items:
         - type: "Lecture"
           id: "2"
-          name: Pandas 1
-          href: "https://ds100.org/fa23/lecture/lec01"
-        - type: "Participation"
-          id: "2"
-          name: Lecture Participation 2
-          href: "https://ds100.org/fa23/lecture/lec01"
+          name: Probability
+          href: faq.qmd
           auxil:
-            id: "Note 2"
-            href: "./units/unit2.html"
+            - id: "Handwritten notes"
+              href: "handwritten/lecture02-F24.pdf"
+    - date: "Sep 5"
+      items:
+        - type: "Lecture"
+          id: "3"
+          name: "Decision theory"
+          href: faq.qmd
+          auxil:
+            - id: "Handwritten notes"
+              href: "handwritten/lecture03-F24.pdf"
+    - date: "Sep 6"
+      items:
+        - type: "Recitation"
+          id: "1"
+          name: "Probability review"
+          href: faq.qmd
+          auxil:
+            - id: "Handwritten notes"
+              href: "handwritten/lecture03-F24.pdf"
+- week: 3
+  days:
+    - date: "Sep 10"
+      items:
+        - type: "Lecture"
+          id: "4"
+          name: Estimation
+          href: faq.qmd
+          auxil:
+            - id: "Handwritten notes"
+              href: "handwritten/lecture04-F24.pdf"
+    - date: "Sep 11"
+      items:
+        - type: "Homework"
+          id: "1"
+          name: "Homework 1 due 11:59pm"
+          href: faq.qmd
+          auxil:
+            - id: "LaTeX template"
+              href: "homework/hw1.tex"
+    - date: "Sep 12"
+      items:
+        - type: "Lecture"
+          id: "5"
+          name: Sufficiency
+          href: faq.qmd
+          auxil:
+            - id: "Handwritten notes"
+              href: "handwritten/lecture05-F24.pdf"
+- week: 17
+  days:
+    - date: "Dec 18"
+      items:
+        - type: "Exam"
+          name: "Final Exam, 8-11am"
+          href: faq.qmd

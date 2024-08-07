@@ -2,6 +2,6 @@
 title: "Calendar"
 ---
 
-We can just embed the iframe html:
+<iframe src="https://calendar.google.com/calendar/embed?height=600&wkst=1&bgcolor=%23ffffff&ctz=America%2FLos_Angeles&showTitle=0&mode=WEEK&src=c_c569210cd2cbe621b14a6ab1352eb8a3a55af9ef246232fa7c18c2f0cffa3152%40group.calendar.google.com&src=c_8014ef8910740d10e6726484834ccafc8bbcca1de9f154c7f3e700f50645b0df%40group.calendar.google.com&src=c_c3ebc8ce500920de3ad11f2f7eac8338847ae5e13099f663126156f988b95409%40group.calendar.google.com&src=c_bbba1a1eb63601be6f7687cd14f221e0a6b894917b7d21ec88376244c7fbb79f%40group.calendar.google.com&color=%237CB342&color=%23795548&color=%233F51B5&color=%23D50000" height=800 width=800 title="an embedded website (could be a calendar)"></iframe>
 
-<iframe src="https://calendar.google.com/calendar/embed?height=600&wkst=1&bgcolor=%23ffffff&ctz=America%2FLos_Angeles&showTitle=0&mode=WEEK&src=Y190OGE0MzY1cGhmY20wMGUyOW1oMXVha3Fuc0Bncm91cC5jYWxlbmRhci5nb29nbGUuY29t&src=Y19wZjBhcmZlYnBndGtiNTJlb25jbzNxMmVwMEBncm91cC5jYWxlbmRhci5nb29nbGUuY29t&src=Y19hZWNnMGE0djVlYmdjbDh0amo3cTcyNm9wNEBncm91cC5jYWxlbmRhci5nb29nbGUuY29t&src=Y19pZmlxOTA3MGI5OGprMDJoYnI4cDM3djNlc0Bncm91cC5jYWxlbmRhci5nb29nbGUuY29t&src=c_469240f03417bcbdddb731b455bbff98dba55de11c5afb03fff0657e39522b54%40group.calendar.google.com&color=%237CB342&color=%23795548&color=%233F51B5&color=%23D50000&color=%235229A3" height=800 width=800 title="an embedded website (could be a calendar)"></iframe>
+

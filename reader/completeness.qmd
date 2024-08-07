@@ -1,0 +1,225 @@
+---
+title: "Completeness, Ancillarity, and Basu's Theorem"
+format:
+  html:
+    toc: true
+    number-sections: true
+---
+
+{{< include latex-macros.tex >}}
+
+::: {.callout-caution}
+## Under construction
+
+Check that Laplace median problem is on HW 2 or other, check that minimality for uniform scale is in previous lecture.
+:::
+
+## Completeness
+
+As we have seen, for a given statistical problem we may have many different sufficient statistics, some of which reduce the data more than others. We usually want to look for one that is *minimal sufficient*, meaning that it strips away as much irrelevant information as possible and only retains the information that is relevant to estimating the parameter.
+
+In some cases the minimal sufficient statistic has an additional property called *completeness*. The definition of completeness is initially counterintuitive, but it has a number of useful implications we will explore throughout the semester.
+
+### Definition of completeness
+
+A statistic $T(X)$ is complete for a family of distributions $\cP = \{P_\theta: \theta \in \Theta\}$ if no nontrivial function of $T$ can have expectation zero for every distribution in the family:
+
+$$\EE_\theta \,f(T(X)) = 0 \quad \forall \theta \in \Theta \implies f(T) \eqPas 0$$
+::: callout-note
+The name for complete statistics comes from a prior notion that $\cP^T = \{P_\theta^T:\; \theta \in \Theta\}$ is ``complete'' as a model if its linear span includes all possible distributions on $T(X)$; see Homework 3.
+:::
+
+If $X$ itself is complete, then the definition immediately implies that there can be at most one unbiased estimator for any estimand: if $\EE_\theta \delta_1(X) = \EE_\theta \delta_2(X) = g(\theta)$ for all $\theta \in \Theta$, then $f(X) = \delta_1(X) - \delta_2(X) = 0$ almost surely. More generally, if $T(X)$ is a complete statistic then there can be at most one unbiased estimator that runs through $T$. We will return to this fact when we discuss unbiased estimation.
+
+We will be especially interested in statistics that are both complete and sufficient. If $T(X)$ is complete and sufficient we call it a *complete sufficient statistic*.
+
+::: callout-warning
+A complete statistic need not be sufficient: the constant "statistic" $T(X) \equiv 0$ is complete in any model. In general, to show that $T(X)$ is complete sufficient we must establish both properties.
+:::
+
+
+### Examples
+
+**Example 1 (Laplace location family)**: Let $X_1,\ldots,X_n \simiid \text{Lap}(\theta)$ for $\theta \in \RR$, and recall that the vector of order statistics $S(X) = (X_{(1)},\ldots,X_{(n)})$ is a minimal sufficient statistic. Is $S(X)$ complete?
+
+::: {.callout-important icon=false collapse="true" appearance="simple"}
+
+## Expand to see answer
+
+**No, $S(X)$ is not complete.**
+
+Both the sample median $\text{Med}(S)$ (as defined in Homework 2 Problem XX) and sample mean $\overline{X}(S)$ can be calculated using $S(X)$ alone, and both are unbiased estimators for $\theta$. Hence $f(S) = \text{Med}(S) - \overline{X}(S)$ has expectation zero, but is not almost surely equal to zero because the median and mean are not equal to each other.
+
+:::
+
+
+
+**Example 1 (Uniform scale family)**: Let $X_1, \ldots, X_n \simiid U[0, \theta]$, for $\theta > 0$. We showed previously that the maximum $T(X) = X_{(n)}$ is minimal sufficient. Is it complete?
+
+::: {.callout-important icon=false collapse="true" appearance="simple"}
+
+## Expand to see answer
+
+**Yes, $T(X)$ is complete.**
+
+As we showed previously, the density of $T(X)$ for $t > 0$ is
+$$
+p_\theta(t) =  \frac{nt^{n-1}}{\theta^n}\,\cdot \;1\{t \leq \theta\}.
+$$
+
+Suppose we could find $f(t)$ such that
+$$
+0 = \EE_\theta f(T) = \frac{n}{\theta^n}\int_0^\theta f(t) t^{n-1} \,dt, \quad \text{ for all } \theta > 0.
+$$
+Dividing the last expression by $n/\theta^n$ and then differentiating with respect to $\theta$, we obtain 
+$$
+0 = f(\theta) \theta^{n-1}, \quad \text{ for all } \theta > 0,
+$$
+hence $f \equiv 0$.
+
+:::
+
+
+
+### Full-rank exponential families
+
+In the general case where $T(X)$ can take on infinitely many values, it is hard to show completeness because the space of possible counterexample functions $f$ is infinite-dimensional. But there is an important class of examples where we can quickly verify complete sufficiency, as we see next.
+
+**Definition:** Let $\cP = \{P_\eta:\; \eta \in \Xi\}$ be an $s$-parameter exponential family with densities
+$$
+p_\eta(x) = e^{\eta'T(x) - A(\eta)} h(x),
+$$
+with respect to some carrier measure $\mu$. Assume further that the sufficient statistic $T(X)$ satisfies no affine constraint: that is, there is no $\alpha \in \RR$ and nonzero $\beta \in \RR^s$ with $\beta'T(x) \eqPas \alpha$.
+
+If $\Xi$ contains an open set we say $\cP$ is *full-rank*; otherwise we say it is *curved*.
+
+::: callout-note
+
+If $T(X)$ does satisfy a linear constraint, that means $\cP$ can be defined equivalently as an $r$-parameter exponential family for some $r < s$. It may be full-rank or curved depending on the parameter space in a lower-dimensional parameterization.
+
+:::
+
+**Theorem (Complete sufficiency in full-rank exponential families):** If $\cP$ is a full-rank $s$-parameter exponential family, then $T(X)$ is complete sufficient.
+
+The proof is somewhat technical and uses the uniqueness of moment-generating functions.
+
+::: {.callout-important icon=false collapse="true" appearance="simple"}
+
+## Expand for proof
+
+$T(X)$ is sufficient by the factorization theorem, so it remains only to prove completeness.
+
+Assume without loss of generality that $0$ is in the interior of $\Xi$; otherwise we can reparameterize. Assume also that $\cP$ is in canonical form, i.e. $T(X) = X$ and $p_\eta(x) = e^{\eta'x - A(\eta)}$; in general we can always reduce to this case by making a sufficiency reduction and taking $P_0^T$ as the carrier measure.
+
+Any measurable function $f$ can be decomposed as $f(x) = f^+(x) - f^-(x)$ where $f^+$ and $f^-$ are non-negative measurable functions. If $\EE_\eta f(X) = \int (f^+-f^-)p_\eta \,d\mu = 0$ for all $\eta\in\Xi$, then we have
+$$
+\int e^{\eta'x} f^+(x) \,d\mu(x) = \int e^{\eta'x} f^-(x) \,d\mu(x), \quad \text{ for all } \eta \in \Xi.
+$${#eq-mgf-equality}
+By assumption, $\Xi$ contains an open neighborhood that includes $0$ on which both integrals are finite. Let $c = \int f^+(x)\,d\mu(x) \geq 0$.
+
+If $c>0$ then we can define the random variables $Y^+$ and $Y^-$ with probability densities $f^+(x)/c$ and $f^-(x)/c$ respectively; then @eq-mgf-equality implies that $Y^+$ and $Y^-$ have equal MGFs in a neighborhood of $0$; hence they have the same distribution and their densities must be a.s. equal to each other. But $f^+(x)=f^-(x)$ only when both are zero, so we have $f^+, f^- \eqmuas 0$.
+:::
+
+The next figure shows three cases for exponential families with the same sufficient statistic. The set $\Xi_1$ indicates the full natural parameter space for a generic 2-parameter exponential family, and (A), (B), and (C) denote parameter spaces for three different subfamilies. The subfamily described by the shaded circle (A) is a full-rank exponential family, because it contains an open set. The subfamily described by the curve (B) is a typical example of a curved family, because it does not contain an open set. The subfamily described by the line segment (C) is technically curved according to the definition above, but we could view it as a full-rank $1$-parameter exponential family after reparameterizing it.
+
+![This figure shows three cases: ](completeness.png)
+
+### Complete sufficient statistics are minimal
+
+A second convenient property of completeness is that complete sufficient statistics are always minimal sufficient.
+
+**Theorem:** If $T(X)$ is complete sufficient for the family $\mathcal{P}$, then $T(X)$ is minimal sufficient for $\cP$.
+
+The way that we usually use completeness in proofs is to show that two quantities are almost surely equal by showing that they have the same expectation. The next proof is an example.
+
+*Proof:* Let $S(X)$ represent any minimal sufficient statistic, and define the conditional expectation of $T$ given $S$:
+$$
+\overline{T}(S(X)) = \EE[T(X) \mid S(X)].
+$$
+Note that this conditional expectation does not depend on the parameter $\theta$, because $S(X)$ is sufficient, so $\overline{T}$ is a valid statistic. If we can show that $\overline{T} \eqas T(X)$, that means we can calculate $T(X)$ from $S(X)$, so $T(X)$ is also minimal sufficient.
+
+Because $S(X)$ is minimal sufficient, we can write it as $f(T(X))$ for some function $f$, and use $f$ to define a function $g$ giving the difference between $T$ and $\overline{T}$:
+$$
+g(t) = t - \overline{T}(f(t)).
+$$
+The expectation of $g(T)$ is always zero, because
+$$
+\begin{aligned}
+\EE_\theta\; g(T(X)) &= \EE_\theta\; T(X) - \EE_\theta\; \overline{T}(S(X)) \\[5pt]
+&= \EE_\theta\; T(X) - \EE_\theta\left[\EE[T(X) \mid S(X)]\right]\\
+&= 0.
+\end{aligned}
+$$
+As a result, $g(T) \eqas 0$ and hence $T \eqas \overline{T}$, as desired.
+
+## Ancillarity
+
+We've spent a lot of time discussing sufficient statistics, which are statistics that carry *all* of the information about $\theta$. Our next definition describes a type of statistic that carry *no* information about the parameter.
+
+**Definition:** We say $V(X)$ is ancillary for the model $\cP = \{P_\theta: \theta \in \Theta\}$ if its distribution does not depend on $\theta$.
+
+Just as the sufficiency principle tells us that our inference procedures should depend only on information from sufficient statistics, an analogous principle suggests in effect that procedures should depend as little as possible on ancillary statistics. Specifically, it recommends treating $V(X)$ as a fixed value and evaluating the rest of the data set according to its distribution *conditional on* $V(X)$:
+ 
+**Conditionality Principle:** If $V(X)$ is ancillary, then all inference should be conditional on $V(X)$.
+
+It may not be immediately clear why conditioning on $V(X)$ "removes" it from the problem, but we will return to the idea of conditional inference during our unit on hypothesis testing and interval estimation, where it will play an important role.
+
+
+## Basu's Theorem
+
+Basu's Theorem gives us a simple way to prove that statistics are independent of one another using the definitions introduced above.
+
+**Theorem (Basu):** If $T(X)$ is complete sufficient and $V(X)$ ancillary for the model $\cP$, then $V(X) \indep T(X)$ for all $\theta \in \Theta$.
+
+Again, for this proof our strategy will be to show that two quantities are almost surely equal to each other, by showing that they have the same expectation for all $\theta$.
+
+*Proof:* Define the following two quantities representing the marginal and conditional probabilities that $V$ falls into a generic set $A$.
+$$
+\begin{aligned}
+p_A &= \PP(V \in A)\\[5pt]
+q_A(T(X)) &= \PP(V \in A \mid T(X))
+\end{aligned}
+$$
+Note that $p_A$ does not depend on $\theta$ by ancillarity of $V$, while $q_A$ does not depend on $\theta$ by sufficiency of $T$.
+
+The expectation of their difference is
+$$
+\EE_\theta\left[q_A(T) - p_A\right] = p_A - p_A = 0, \quad \text{ for all } \theta. 
+$$
+By completeness of $T$, this implies that $q_A(T) \eqas p_A$: the conditional probability equals the marginal probability. Hence, for any $B$, we have
+$$
+\begin{aligned}
+\PP_\theta(V \in A, T \in B) &= \int q_A(t) 1\{t \in B\}\,dP_\theta^T(t)\\
+&= \int p_A 1\{t \in B\}\,dP_\theta^T(t)\\
+&= \PP_\theta(V \in A) \PP_\theta(T \in B).
+\end{aligned}
+$$
+
+### Using Basu's Theorem
+
+Basu's Theorem can be helpful in proving independence. To use it, remember that the hypotheses of the theorem (sufficiency, completeness, and ancillarity) are all defined with respect to a *family* $\cP$. The conclusion, however, is defined with respect to individual *distributions*. As a result, when we apply the theorem we can often benefit from being a little clever about how to define $\cP$. The following example should make this clear:
+
+**Example (Independence of sample mean and sample variance for Gaussian):** Assume $X_1,\ldots,X_n \simiid \cN(\mu, \sigma^2)$ for $\mu \in \RR$ and $\sigma^2 > 0$. Define the *sample mean* and *sample variance* as
+$$
+\begin{aligned}
+\overline{X} &= \frac{1}{n}\sum_{i=1}^n X_i\\[5pt]
+S^2 &= \frac{1}{n-1}\sum_{i=1}^n (X_i - \overline{X})^2
+\end{aligned}
+$$
+We would like to show $\overline{X} \indep S^2$.
+
+Initially the approach of applying Basu's Theorem appears hopeless because, in the model with $\mu$ and $\sigma^2$ unknown, neither of these two statistics is ancillary *or* sufficient. However, we can nevertheless apply Basu's Theorem if we are just a bit more clever: 
+
+:::{.callout-important  icon=false collapse="true" appearance="simple"}
+
+## Expand for answer
+
+Consider the model $\cP$ with *known* $\sigma^2 > 0$ and unknown $\mu\in \RR$. This $\cP$ is a one-parameter full-rank exponential family with complete sufficient statistic $\overline{X}$. Moreover, $S^2$ is ancillary, since we can write
+$$
+S^2 = \sum_{i=1}^n (Z_i - \overline{Z})^2, \quad \text{ for } Z_i = X_i - \mu.
+$$
+Because the distribution of $Z_1,\ldots,Z_n \simiid N(0,\sigma^2)$ is known, it follows that the distribution of $S^2$ is known as well (specifically, $S^2/\sigma^2$ is a $\chi^2$ random variable with $n-1$ degrees of freedom). Since $\mu$ is the only unknown parameter, $S^2$ is therefore ancillary in $\cP$. Applying Basu's theorem, we have $\overline{X} \indep S^2$ for any $\mu \in \RR$. But $\sigma^2$ was arbitrary, so we have the result for all $\mu$ and $\sigma^2$.
+
+:::
+
+

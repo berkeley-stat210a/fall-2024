@@ -1,0 +1,237 @@
+---
+title: "Unbiased Estimation"
+format:
+  html:
+    toc: true
+    number-sections: true
+---
+
+{{< include latex-macros.tex >}}
+
+::: callout-caution
+## Under construction
+
+Check that examples and proofs are complete and accurate.
+
+Add link to Lecture 2
+:::
+
+## Outline
+
+1.  Convex Loss
+2.  Rao-Blackwell Theorem
+3.  UMVU Estimators
+4.  Examples
+
+## Unbiased Estimation
+
+Recall from Lecture 2 that we had two primary strategies to choose an estimator:
+
+1.  Summarize the risk function by a scalar (average or supremum)
+2.  Restrict attention to a smaller class of estimators
+
+Today we'll discuss *unbiased estimation*, which is an example of the second strategy. That is, if $g(\theta)$ is our estimand, we will require that $\EE_\theta \delta = g(\theta)$ for all $\theta$
+
+Unbiased estimation is especially convenient in models with a complete sufficient statistic $T(X)$. In that case:
+
+-   There is at most one unbiased $\delta(T(X))$ (if $\delta_1, \delta_2(T)$ are both unbiased, then $\delta_1 \eqas \delta_2$)
+-   If an unbiased estimator exists, it **uniformly minimizes** risk for any convex loss function
+
+## Convex Loss Functions
+
+Recall $f(y)$ is *convex* if for all $x_1, x_2$ and all $\gamma \in [0,1]$:
+
+$$f(\gamma x_1 + (1-\gamma)x_2) \leq \gamma f(x_1) + (1-\gamma) f(x_2)$$ $f$ is *strictly convex* if the inequality is strict unless $x_1 = x_2$.
+
+An key fact about convex functions is **Jensen's Inequality:** If $f$ is convex, then for *any* random variable $X$, we have
+
+$$f(\EE[X]) \leq \EE[f(X)]$$ If $f$ is strictly convex, then the inequality is strict unless $X$ is constant.
+
+We say a loss function $L(\theta, d)$ is (strictly) convex if is (strictly) convex as a function of the estimate $d$, its second argument, holding the parameter $\theta$ fixed.
+
+**Example:** The best-known example of a convex loss function is the squared error loss. Recall that the corresponding risk, the MSE, can be decomposed as the sum of the bias squared and the variance:
+
+$$
+\begin{aligned}
+\text{MSE}_\theta(\delta) &= \EE_\theta[(\delta(X) - g(\theta))^2] \\[5pt]
+&= \text{Bias}_\theta(\delta)^2 + \text{Var}_\theta(\delta(X))
+\end{aligned}
+$$ If $\delta(X)$ is unbiased, then its MSE is exactly its variance, so minimizing the risk among unbiased estimators just amounts to finding one with the least variance.
+
+## The Rao-Blackwell Theorem
+
+Intuitively, convex losses punish us for using noisy estimators: we would always improve the risk if we could replace an estimator $\delta(X)$ with its expectation: $$L(\theta, \EE_\theta [\delta(X)]) \leq \EE_\theta \left[L(\theta, \delta(X))\right].$$Generally, this is not feasible in real problems because $\EE_\theta [\delta(X)]$ depends on $\theta$, so it is not an estimator. But for any sufficient statistic $T(X)$, the **conditional expectation** of $\delta(X)$ given $T(X)$ really is an estimator, and it is always at least as good as $\delta(X$) if the loss is convex.
+
+The next result formalizes this fact, and thereby gives decision-theoretic teeth to the sufficiency principle:
+
+**Theorem (Rao-Blackwell):** Let $T(X)$ be sufficient for $\cP = \{P_\theta:\;\theta\in\Theta\}$, and let $\delta(X)$ be any estimator for $g(\theta)$. Define the new estimator:
+
+$$\bar{\delta}(T(X)) = \EE[\delta(X) \mid T(X)]$$
+
+Then for any convex loss $L(\theta, d)$, we have $R(\theta, \bar{\delta}) \leq R(\theta, \delta)$ for all $\theta$. If $L$ is strictly convex, $\bar{\delta}$ strictly dominates $\delta$ as an estimator unless $\delta(X) \eqPas \bar{\delta}(T(X))$.
+
+*Proof:*
+
+$$\begin{aligned}
+R(\theta, \bar{\delta}) &= \EE_\theta\left[\,L(\theta, \;\EE[\delta \mid T])\,\right]\\[5pt]
+&\leq \EE_\theta\left[\,\EE[L(\theta, \delta) \mid T]\,\right]\\[5pt]
+&= \EE_\theta[\,L(\theta, \delta)\,] \\[5pt]
+&= R(\theta, \bar{\delta})
+\end{aligned}$$
+
+$\bar{\delta}$ is called the Rao-Blackwellization of $\delta$. Note that the condition \$\\delta(X) \\eqPas \\bar{\\delta}(T(X))\$ is equivalent to the condition that $\delta$ depends only on $X$ through $T(X)$.
+
+Whenever we are dealing with a convex loss, the Rao-Blackwell theorem lets us restrict our attention only to estimators that run through $T(X)$, because any other estimator could be improved (or at least not worsened) by Rao-Blackwellization. The theorem even gives us a recipe for \*\*constructing\*\* the improved estimator.
+
+## UMVU estimators
+
+In this section we will combine two key facts from this lecture and last concerning unbiased estimation of any estimand $g(\theta)$.
+
+1.  If $T(X)$ is complete sufficient, there can be at most one unbiased estimator based on $T(X)$.
+2.  If the loss is convex, then we can restrict our attention only to estimators that are based on $T(X)$.
+
+Together these facts imply that, if any unbiased estimator exists at all, then there is a unique best unbiased estimator.
+
+Not all estimands have unbiased estimators. We say $g(\theta)$ is *U-estimable* if there exists any $\delta(X)$ with $\EE_\theta \delta(X) = g(\theta)$ for all $\theta$. This leads to the following theorem:
+
+**Theorem:** For model $\mathcal{P} = \{P_\theta : \theta \in \Theta\}$, assume $T(X)$ is a complete sufficient statistic. Then
+
+1.  For any U-estimable $g(\theta)$ there exists a unique unbiased estimator of the form $\delta(T(X))$.
+2.  For a (strictly) convex loss, that estimator (strictly) dominates any other unbiased estimator $\tilde{\delta}(X)$ unless $\tilde{\delta}(X) \eqas \delta(T(X))$.
+
+As usual the "uniqueness" here is only up to $\eqPas$.
+
+*Proof:*
+
+\(1\) Since $g(\theta)$ is U-estimable, there exists some unbiased estimator $\delta_0(X)$. Then its Rao-Blackwellization $\delta(T(X)) = \EE[\delta_0 \mid T]$ is also unbiased, since
+
+$$
+\EE_\theta \delta(T) = \EE_\theta[\EE[\delta_0 | T]] = \EE_\theta \delta_0 = g(\theta).
+$$
+
+Any other estimator of the form $\tilde\delta(T)$ must be almost surely equal to $\delta(T)$, by completeness: if $f(t) = \delta(t)-\tilde\delta(t)$, then both estimators being unbiased means $\EE_\theta f(T) = g(\theta)-g(\theta) = 0$, so $f(T(X)) \eqas 0$. Thus, $\delta(T)$ is unique.
+
+\(2\) The first result implies that every unbiased estimator has the same Rao-Blackwellization, namely $\delta(T)$. Thus, by the Rao-Blackwell theorem, $\delta(T)$ (strictly) dominates every other unbiased estimator for any (strictly) convex loss function, unless the estimator is almost surely identical to $\delta$. $\blacksquare$
+
+The estimator from this theorem is usually called the *UMVU (Uniformly Minimum Variance Unbiased) Estimator*. We say $\delta(X)$ is UMVU if:
+
+1.  $\delta(X)$ is unbiased
+2.  $\text{Var}_\theta \,\delta(X) \leq \text{Var}_\theta \,\tilde{\delta}(X)$ for all $\theta$ and all unbiased $\tilde{\delta}(X)$
+
+Since $\text{MSE}(\theta; \delta) = \text{Var}_\theta(\delta(X))$ for any unbiased estimator, and the squared error loss is strictly convex, Theorem XXX immediately implies the existence of a unique UMVU estimator for any U-estimable $g(\theta)$, whenever we have a complete sufficient statistic.
+
+Note that in problems where no complete sufficient statistic exists, there can be multiple unbiased estimators based on the minimal sufficient statistic; for example, both the mean and the median are unbiased for the Laplace location parameter, but they are not almost surely equal to each other, and they do not have the same risk function.
+
+## Finding the UMVUE
+
+Theorem XXX suggests two strategies for finding the UMVUE:
+
+1.  Solve directly for an unbiased estimator based on $T$
+2.  Find any unbiased estimator at all, then Rao-Blackwellize it
+
+We give examples of both strategies below:
+
+**Example (Poisson):** Let $X_1, \ldots, X_n \sim \text{Pois}(\theta)$, $g(\theta) = e^{-\theta}$ and consider unbiased estimation for $g(\theta) = \theta^2$.
+
+The complete sufficient statistic for the model is
+
+$$T(X) = \sum X_i \sim \text{Pois}(n\theta),$$
+and its probability mass function for $t \geq 0$ is
+$$
+p_\theta(t) = \frac{e^{-n\theta} (n\theta)^t}{t!}
+$$
+**Strategy 1**
+
+If there is some unbiased estimator $\delta(t)$, we can try to solve for it by setting its expectation equal to $\theta^2$:
+$$
+\theta^2 = \EE_\theta \delta(T) = \sum_{t=0}^\infty \delta(t) \frac{e^{-n\theta} (n\theta)^t}{t!}.
+$$
+Rearranging factors, we obtain matching power series:
+$$
+\sum_{t=0}^\infty \delta(t) \frac{n^t \theta^t}{t!} = e^{n\theta}\theta^2 =  \sum_{k=0}^\infty \frac{n^k\theta^{k+2}}{k!}.
+$$
+We will choose the coefficients on the left-hand side to match terms. First, change the index for the left-hand sum to $t = k+2$:
+$$
+\sum_{t=0}^\infty \delta(t) \frac{n^t \theta^t}{t!} = e^{n\theta}\theta^2 =  \sum_{t=2}^\infty \frac{n^{t-2}\theta^{t}}{(t-2)!}.
+$$
+To match the terms, we can set $\delta(0)=\delta(1)=0$, and for $t\geq 2$, set $\delta(t)=\frac{t!}{n^2(t-2)!}=\frac{t(t-1)}{n^2}$. The same expression works for both, so we obtain the estimator
+$$
+\delta(T) = \frac{T(T-1)}{n^2}
+$$
+
+**Strategy 2:**
+
+Alternatively, we can find an unbiased estimator and Rao-Blackwellize it. If $n\geq $, we can use the fact that
+
+$$
+\EE_\theta [X_1 X_2] = \EE_\theta [X_1] \;\cdot\; \EE_\theta [X_2] = \theta^2
+$$
+to obtain an initial unbiased estimator $\delta_0(X) = X_1X_2$, which we will Rao-Blackwellize.
+
+Conditional on $
+
+to match the terms
+
+
+$\delta(T) = (1 - 1/n)^T$ unbiased:
+
+$$\begin{aligned}
+\EE_\theta \delta(T) &= \sum_{t=0}^\infty (1-1/n)^t e^{-n\theta} (n\theta)^t / t! \\
+&= e^{-n\theta} \sum_{t=0}^\infty ((n-1)\theta)^t / t! \\
+&= e^{-n\theta} e^{(n-1)\theta} = e^{-\theta}
+\end{aligned}$$
+
+Alternatively, we could Rao-Blackwellize $\delta_0(X) = I(X_1 = 0)$:
+
+$$\begin{aligned}
+\EE[I(X_1 = 0) | T] &= \PP(X_1 = 0 | T) \\
+&= \frac{\PP(X_1 = 0, X_2 + \cdots + X_n = T)}{\PP(X_2 + \cdots + X_n = T-1) + \PP(X_2 + \cdots + X_n = T)} \\
+&= \frac{\binom{n-1}{T} (1/n)^0 (1-1/n)^T}{\binom{n-1}{T-1} (1/n) (1-1/n)^{T-1} + \binom{n-1}{T} (1-1/n)^T} \\
+&= \frac{(1-1/n)^T}{T/n + (1-1/n)^T} \\
+&= (1-1/n)^T
+\end{aligned}$$
+
+**Example:** $X_1, \ldots, X_n \sim U[0, \theta]$, $\theta > 0$
+
+$T = X_{(n)}$ complete sufficient
+
+$p_\theta(t) = n t^{n-1} / \theta^n \cdot I(0 < t < \theta)$
+
+$\EE_\theta[T] = \frac{n}{n+1} \theta$
+
+$T \cdot \frac{n+1}{n}$ is UMVUE
+
+Alternatively, $2X_1$ is unbiased:
+
+$$\EE[2X_1 | T] = 2T \cdot \frac{n+1}{2n} = T \cdot \frac{n+1}{n}$$
+
+Actually, $T$ is inadmissible too! Keener shows $\frac{n-1}{n} T$ has better MSE for any estimator $c \cdot T$.
+
+This raises the question: why do we require zero bias?
+
+The UMVUE is often inefficient, inadmissible, or just dumb in cases where another approach makes much more sense.
+
+**Example:** $X \sim \text{Bin}(1000, \theta)$
+
+Estimate $g(\theta) = I(\theta > 0.5)$
+
+UMVUE is $I(X > 500)$. Why?
+
+-   $X = 500$: Conclude $g(\theta) = 1$
+-   $X = 499$: Conclude $g(\theta) = 0$
+
+This is not epistemically reasonable. Could do much better with e.g. MLE or a Bayes estimator.
+
+In fact, our theorem should make us suspicious of UMVUEs: every idiotic function of $T$ is a UMVUE of its own expectation!
+
+**Example:** $X_1, \ldots, X_n \sim N(\mu, 1)$, estimate $g(\mu) = \|\mu\|$
+
+$\bar{X}$ is complete sufficient
+
+$\|\bar{X}\|$ is unbiased: $\EE[\|\bar{X}\|] = \EE[\|N(\mu, 1/n)\|] = \|\mu\|$
+
+So $\|\bar{X}\|$ is UMVUE
+
+If $\mu = 0$, $\delta(\bar{X}) = 0$ about half the time
+
+$\|\bar{X}\| + d \cdot \max(0, \|\bar{X}\| - d)$ strictly dominates UMVUE

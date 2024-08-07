@@ -1,0 +1,23 @@
+---
+title: "Course introduction"
+author: "Will Fithian"
+date: 08-24-2023
+format: html
+editor: visual
+---
+
+{{< include latex-macros.tex >}}
+
+## What is the theory of statistics?
+
+Statistics is the study of methods that use data to understand the world. Statistical methods are used throughout the natural and social sciences, in machine learning and artificial intelligence, and in engineering. Despite the ubiquitous use of statistics, its practitioners are perpetually accused of not actually understanding what they are doing. Statistics theory is, broadly speaking, about trying to understand what we are doing when we use statistical methods.
+
+While there are many possible ways to analyze data, most (but certainly not all) statistical methods are based on **statistical modeling:** treating the data as a realization of some **random** data-generating process with attributes, usually called **parameters***,* that are *a priori* unknown. The goal of the **analyst**, then, is to use the data to draw accurate inferences about these parameters and/or to make accurate predictions about future data. If the modeling has been done well (a very big "if") then these unknown parameters will correspond well to whatever real-world questions initially motivated the analysis. Applied statistics courses like Stat 215A and B delve deeply into questions about how to ensure that the statistical modeling exercise successfully captures something interesting about reality.
+
+In this course we will instead focus on how the analyst can use the data most effectively within the context of a given mathematical setup. We will discuss the structure of statistical models, how to evaluate the quality of a statistical method, how to design good methods for new settings, and the philosophy of Bayesian vs frequentist modeling frameworks. We will cover estimation, confidence intervals, and hypothesis testing, in parametric and nonparametric methods, in finite samples and asymptotic regimes.
+
+## Relationship of Stat 210A to other Berkeley courses
+
+Stat 210A focuses on *classical* statistical contexts: either inference in finite samples, or in fixed-dimensional asymptotic regimes. Stat 210B (for which 210A is a prerequisite) is more technical and covers topics like empirical process theory and high-dimensional statistics.
+
+Berkeley's graduate course on Statistical Learning Theory (CS 281A / Stat 241A) is also very popular and has some overlap in its topics. Roughly speaking, it is more tilted toward "machine learning": it spends more time on topics in predictive modeling (i.e. classification and regression, which are covered in Stat 215A), optimization, and signal processing, but spends less time on inferential questions and (I believe) does not cover topics like hypothesis testing, confidence intervals, and causal inference. Both courses cover estimation and exponential families.

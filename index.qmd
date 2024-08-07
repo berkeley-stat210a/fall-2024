@@ -3,24 +3,25 @@ title: "Statistics 210a: Theoretical Statistics"
 subtitle: "UC Berkeley, Fall 2024"
 listing:
   - id: schedule
-    template: assets/schedule-alt.ejs
-    contents: schedule-alt.yml
+    template: assets/schedule.ejs
+    contents: schedule.yml
   - id: buttons
-    template: assets/buttons-alt.ejs
-    contents: buttons-alt.yml
+    template: assets/buttons.ejs
+    contents: buttons.yml
 ---
 
+::: callout-caution
+## Under construction
+:::
 
-\[UNDER CONSTRUCTION\]
+::: callout-important
+## Course enrollment for undergraduates
 
+If you are an undergraduate who wants to take this course, please fill out the [permission code request form](https://docs.google.com/forms/d/e/1FAIpQLScWQLQ_gS7ZYdRZQrvhabRMO_zmdNR6JtHyTk3Vw30QtPbnJA/viewform?usp=sf_link) to let me know about your background. Anyone considering taking the course is encouraged to read the [frequently asked questions](faq.qmd) regarding preparation and review materials.
+:::
 
 ::: {#buttons}
 :::
-
-## Course enrollment
-
-If you are an undergraduate who wants to take this course, please fill out the [permission code request form](https://docs.google.com/forms/d/e/1FAIpQLScWQLQ_gS7ZYdRZQrvhabRMO_zmdNR6JtHyTk3Vw30QtPbnJA/viewform?usp=sf_link) to let me know about your background. Anyone considering taking the course is encouraged to read the [frequently asked questions](faq.qmd) regarding preparation and review materials.
-
 
 ## Schedule
 
@@ -30,4 +31,3 @@ For a style similar to that of [Stat 20](https://stat20.org), modify `index.qmd`
 
 ::: {#schedule}
 :::
-

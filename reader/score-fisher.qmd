@@ -1,0 +1,179 @@
+---
+title: "Score Function and Fisher Information"
+format:
+  html:
+    toc: true
+    number-sections: true
+---
+
+{{< include latex-macros.tex >}}
+
+::: callout-caution
+## Under construction
+
+Think through "tangent family" part... is it really helping, or can it be combined with curved exponential family example?
+
+Add back in figures from handwritten notes.
+:::
+
+## Outline
+
+1.  Score function
+2.  Fisher information
+3.  Cramér-Rao Lower Bound
+4.  Examples
+
+## Motivation: Tangent Family
+
+Consider a family of densities:
+
+$$p(x; \theta) = e^{\theta'T(x) - A(\theta)}h(x)$$
+
+where $\theta \in \RR^d$ and $A(\theta) = \log \int e^{\theta'T(x)}h(x)dx$.
+
+For this family:
+
+-   $T(X)$ is complete sufficient
+-   $T(X)$ is minimal
+-   $\PP_\theta(T(X) = t) = e^{\theta't - A(\theta)}$
+-   $\EE_\theta[T(X)] = A'(\theta)$
+
+
+Let $\theta_0 \in \RR^d$ be fixed. Define the **tangent family**
+
+$$q(x; t) = e^{t'\nabla l_{\theta_0}(x) - k(t)}p_{\theta_0}(x)$$
+
+where $k(t) = \log \int e^{t'\nabla l_{\theta_0}(x)}p_{\theta_0}(x)dx$.
+
+Then $\nabla l_{\theta_0}(X)$ is complete sufficient for the tangent family at $\theta_0$.
+
+This is called the Score function.
+
+## Score Function
+
+Assume a family $\cP$ has densities $p_\theta$ with respect to a measure $\mu$, for $\theta \in \Theta \subseteq \RR^d$. Assume additionally that these densities have common support: that $\{x: p_\theta(x) > 0\}$ is the same for all $\theta$.
+
+Recall the log-likelihood is $l(\theta;X) = \log p_\theta(X)$ (thought of as a random function of $\theta$)
+
+**Definition:** The *Score function* is $\nabla l_\theta(X)$.
+
+It plays a key role in many areas of statistics, especially in asymptotics. We can think of it as a "local complete sufficient statistic." For $\eta \approx 0$, and $\theta_0 \in \Theta^\circ$, we have
+
+$$p_{\theta_0+\eta}(x) = e^{\ell(\theta_0 + \eta; x)} \approx e^{\eta'\nabla \ell(\theta_0;x)}p_{\theta_0}(x).$$
+
+## Differential Identities and the Fisher Information
+
+Assuming enough regularity, we can arrive at some important differential identities by differentiating both sides of the equation
+
+$$1 = \int_\cX e^{\ell(\theta;x)}\,d\mu(x).$$
+
+Differentiating both sides with respect to $\theta_j$, we obtain $$0 = \int_\cX \frac{\partial}{\partial \theta_j} \ell(\theta; x) e^{\ell(\theta; x)}\,d\mu(x) = \EE_\theta \left[\frac{\partial}{\partial\theta_j}\ell(\theta;X)\right].$$ Collecting these identities into a vector, we obtain $$\EE_\theta [\nabla \ell(\theta; X)] = 0.$$ Importantly, note that this identity only holds if the $\theta$ in the subscript (defining the distribution with respect to which the expectation is taken) matches the $\theta$ at which the gradient is being evaluated.
+
+If we differentiate the identity a second time with respect to $\theta_k$, we obtain $$0 = \int_\cX \left(\frac{\partial^2\ell}{\partial \theta_j\partial\theta_k} + \frac{\partial \ell}{\partial \theta_j}\frac{\partial \ell}{\partial\theta_k}\right) e^{\ell}\,d\mu = \EE_\theta\left[\frac{\partial^2\ell}{\partial \theta_j\partial\theta_k}\right] + \EE_\theta\left[\frac{\partial \ell}{\partial \theta_j}\frac{\partial \ell}{\partial \theta_k}\right] 
+%= \EE_\theta\left[\frac{\partial^2\ell}{\partial \theta_j\partial\theta_k}\right] + \Cov_\theta\left(\frac{\partial \ell}{\partial \theta_j},\frac{\partial \ell}{\partial \theta_k}\right).
+$$ Again collecting these identities into a matrix, and noting that $$\EE_\theta\left[\frac{\partial \ell}{\partial \theta_j}\frac{\partial \ell}{\partial \theta_k}\right] = \Cov_\theta\left(\frac{\partial \ell}{\partial \theta_j},\frac{\partial \ell}{\partial \theta_k}\right),$$ we obtain $$\Var_\theta\left(\nabla\ell(\theta;X)\right) = \EE_\theta\left[-\nabla^2\ell(\theta;X)\right],$$ again with the important observation that the $\theta$ in both subscripts must match the $\theta$ where the first and second derivatives are evaluated.
+
+The left-hand side of the last equation, the variance of the score, is called the *Fisher Information* matrix $$ J(\theta) := \Var_\theta(\nabla\ell(\theta;X)). $$ Note $J(\theta)$ is always positive semidefinite. It is possible to extend this definition to certain models where $\ell(\theta;x)$ is not differentiable with respect to $\theta$, such as the Laplace location family. However we will not explore these generalizations.
+
+## Cramér-Rao Lower Bound
+
+Let $\delta(X)$ be any real-valued statistic. Let $g(\theta) = \EE_\theta[\delta]$, so $\delta$ is an unbiased estimator for $g(\theta)$. If we repeat the idea of differentiating $g(\theta) = \int \delta(x) e^{\ell(\theta;x)}\,d\mu(x)$ with respect to $\theta_j$ for each $j$, and collect the resulting partial derivatives into a vector, we obtain
+
+$$\nabla g(\theta) = \int \delta(x) \nabla \ell(\theta;x) e^{\ell(\theta;x)}\,d\mu(x) = \EE_\theta\left[\delta(X) \nabla\ell(\theta;X)\right] = \Cov_\theta\left(\delta(X), \nabla\ell(\theta;X)\right).$$ Combining these results with the Cauchy-Schwarz inequality gives us the *Cramér-Rao Lower Bound*, also known as the *Information lower bound*. For a single parameter ($d=1$), we have $$\Var_\theta(\delta(X)) \cdot \Var_\theta(\dot{\ell}(\theta;X)) \geq \Cov_\theta(\delta(X), \dot{\ell}(\theta; X))^2, $$ so after rearranging terms and applying identities, $$\Var_\theta(\delta(X)) \geq \frac{\dot{g}(\theta)^2}{J(\theta)}.$$
+
+For the multivariate case ($d>1$), we have more generally $$ \Var_\theta(\delta(X) \geq \nabla g(\theta)'J(\theta)^{-1}\nabla g(\theta).$$ The interpretation of this identity is that no unbiased estimator for $g(\theta)$ can have variance smaller than $\nabla g(\theta)'J(\theta)^{-1}\nabla g(\theta)$. In particular, if $g(\theta) = \theta_j$, no estimator can have variance smaller than $(J(\theta)^{-1})_{jj}$.
+
+$$\Var_\theta(\delta) \geq \Var_\theta(\delta(X)) \Cov_\theta(\delta, \nabla l_\theta(X))I(\theta)^{-1}\Cov_\theta(\delta, \nabla l_\theta(X))' = g'(\theta)I(\theta)^{-1}g'(\theta)'$$
+
+::: {.callout-important icon=false collapse="true" appearance="simple"}
+
+## Expand to see proof
+
+For any $a \in \RR^d$, we can write 
+$$\begin{aligned}
+\Var_\theta(\delta(X)) \cdot a'J(\theta)a &= \Var_\theta(\delta)\Var_\theta(a'\nabla\ell(\theta;X))\\
+&\geq \Cov_\theta(\delta(X), a'\nabla\ell(\theta;X))^2\\
+&= \left(a'\nabla \Cov_\theta(\delta, \nabla\ell(\theta))\right)^2\\
+&= (a'\nabla g(\theta))^2.
+\end{aligned}$$
+
+Thus we obtain for all nonzero $a \in \RR^d$,
+
+$$\Var_\theta(\delta(X)) \geq \frac{(a'\nabla g(\theta))^2}{a'J(\theta)a}.$$
+
+We obtain the result by optimizing the bound, with $a = J(\theta)^{-1}\nabla g(\theta)$ (show this as an exercise).
+
+:::
+
+<!-- For multivariate $\theta \in \RR^d$, $g(\theta) \in \RR^k$: -->
+
+<!-- $$\Var_\theta(\delta) \succeq g'(\theta)I(\theta)^{-1}g'(\theta)'$$ -->
+
+<!-- Meaning: $a'\Var_\theta(\delta)a \geq a'g'(\theta)I(\theta)^{-1}g'(\theta)'a$ for all $a \in \RR^k$. -->
+
+## Examples 
+
+**Example: i.i.d. sample**
+
+Assume $X_1, \ldots, X_n \simiid p_\theta^{(1)}(x)$, for $\theta \in \Theta \subseteq \RR^d$.
+
+Assume additionally that $p_\theta^{(1)}$ is "regular:" it has common support, and finite derivative w.r.t. $\theta$.
+
+Then the full data density is $p_\theta(x) = \prod_i p_\theta^{(1)}(x_i)$.
+
+Define the single-sample log-likelihood $\ell_1(\theta;x_i) = \log p_\theta^{(1)}(x_i)$; then we have $\ell(\theta;x) = \sum_i \ell_1(\theta;x_i)$.
+
+Then the Fisher information for the full sample is
+$$J(\theta) = \Var_\theta(\nabla \ell(\theta; X)) = \sum_{i=1}^n \Var_\theta(\nabla \ell_1(\theta; X_i)) = n J_1(\theta),$$
+where $J_1(\theta) = \Var_\theta(\nabla\ell(\theta; X_1))$ is the Fisher information for a single sample.
+
+As a result, we see that the Information bound scales like $n^{-1}$ for regular families; in other words, the standard deviation of an estimator should scale roughly like $1/\sqrt{n}$.
+
+**Example: exponential family**
+
+Suppose we have an exponential family of the form
+$$ p_\eta(x) = e^{\eta'T(x) - A(\eta)} h(x).$$
+
+The log-likelihood is $\ell(\eta;X) = \eta'T(X) - A(\eta) + \log h(X)$, and its gradient (the score) is
+$$\nabla \ell(\eta;X) = T(X) - \nabla A(\eta) = T(X) - \EE_\eta T(X).$$
+Since $\EE_\eta T(X)$ is nonrandom, the variance is 
+$$ J(\eta) = \Var_\eta (T(X)) = \nabla^2 A(\eta).$$
+
+We could alternatively derive the Fisher information from taking a second derivative with respect to $\eta$, giving
+$$ \nabla^2\ell(\eta;X) = -\nabla^2 A(\eta),$$
+which is deterministically equal to $-\Var_\eta(T(X))$, so we have confirmed the identity $J(\eta) = -\EE_\eta[\nabla^2 \ell(\eta;X)]$.
+
+**Example: Curved exponential family**
+
+Next, consider a curved version of the previous family, parameterized by $\theta \in \RR$:
+$$p_\theta(x) = e^{\eta(\theta)'T(x) - B(\theta)}h(x),\quad \text{ with } B(\theta) = A(\eta(\theta))$$
+Again, the log-likelihood is
+$$\ell(\theta;X) = \eta(\theta)'T(x) - B(\theta)  + \log h(x),$$
+and its first derivative is
+$$\begin{aligned} 
+\dot{\ell}(\theta;X) &= \dot{\eta}(\theta)'T(X) - \dot{\eta}(\theta)'\nabla_\eta A(\eta(\theta))\\
+&= \dot{\eta}(\theta) '\left(T(X) - \nabla_\eta A(\eta(\theta))\right)\\
+&= \dot{\eta}(\theta)'(T(X) - \EE_\theta T(X)).\end{aligned}$$
+
+As a result, the Fisher information is 
+$$J(\theta) = \Var_\theta(\dot{\eta}(\theta)'T(X)) =  \dot{\eta}(\theta)'\Var_\theta(T(X))\dot{\eta}(\theta).$$
+Note in this model $\dot{\eta}'T(X)$ is a "local complete sufficient statistic" for the model near $\theta$.
+
+
+
+## Efficiency
+
+The CRLB is not necessarily attainable.
+
+We define the efficiency of an unbiased estimator as:
+
+$$\text{eff}_\delta(\theta) = \frac{\text{CRLB}(\theta)}{\Var_\theta(\delta)} \leq 1,$$
+
+We say $\delta(X)$ is *efficient* if $\text{eff}_\delta(\theta) = 1$ for all $\theta$.
+
+For $g(\theta)=\theta\in \RR$, the efficiency depends on how correlated $\delta(X)$ is with the score:
+$$\begin{aligned}\text{eff}_\delta(\theta) &= \frac{\Cov_\theta(\delta(X), \dot{\ell}(\theta;X))^2}{\Var_\theta(\delta(X)) \cdot \Var_\theta(\dot{\ell}(\theta;X))}\\
+&= \Corr_\theta(\delta,\dot{\ell}(\theta))^2
+\end{aligned}$$
+
+Thus, an efficient estimator for $\theta$ is one that is perfectly correlated with the score. This is rarely achieved in finite samples, but we can often approach it asymptotically as $n \to \infty$.
