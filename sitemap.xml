@@ -2,38 +2,46 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
     <loc>https://stat210a.berkeley.edu/fall-2024/data.html</loc>
-    <lastmod>2024-07-12T22:23:08.536Z</lastmod>
+    <lastmod>2024-08-07T05:16:52.542Z</lastmod>
   </url>
   <url>
     <loc>https://stat210a.berkeley.edu/fall-2024/license.html</loc>
-    <lastmod>2024-07-12T22:23:08.536Z</lastmod>
+    <lastmod>2024-08-07T05:16:51.922Z</lastmod>
   </url>
   <url>
-    <loc>https://stat210a.berkeley.edu/fall-2024/units/unit1.html</loc>
-    <lastmod>2024-07-12T22:23:08.537Z</lastmod>
-  </url>
-  <url>
-    <loc>https://stat210a.berkeley.edu/fall-2024/units/unit2.html</loc>
-    <lastmod>2024-07-12T22:23:08.537Z</lastmod>
-  </url>
-  <url>
-    <loc>https://stat210a.berkeley.edu/fall-2024/index.html</loc>
-    <lastmod>2024-07-12T22:44:14.299Z</lastmod>
-  </url>
-  <url>
-    <loc>https://stat210a.berkeley.edu/fall-2024/units/macros.html</loc>
-    <lastmod>2024-07-12T22:23:08.537Z</lastmod>
+    <loc>https://stat210a.berkeley.edu/fall-2024/faq.html</loc>
+    <lastmod>2024-08-07T05:16:51.160Z</lastmod>
   </url>
   <url>
     <loc>https://stat210a.berkeley.edu/fall-2024/units/unit3.html</loc>
-    <lastmod>2024-07-12T22:23:08.537Z</lastmod>
+    <lastmod>2024-08-07T05:16:48.094Z</lastmod>
+  </url>
+  <url>
+    <loc>https://stat210a.berkeley.edu/fall-2024/units/macros.html</loc>
+    <lastmod>2024-08-07T05:16:34.551Z</lastmod>
+  </url>
+  <url>
+    <loc>https://stat210a.berkeley.edu/fall-2024/handwritten-notes.html</loc>
+    <lastmod>2024-08-07T05:16:33.986Z</lastmod>
+  </url>
+  <url>
+    <loc>https://stat210a.berkeley.edu/fall-2024/index.html</loc>
+    <lastmod>2024-08-07T05:16:34.292Z</lastmod>
+  </url>
+  <url>
+    <loc>https://stat210a.berkeley.edu/fall-2024/units/unit2.html</loc>
+    <lastmod>2024-08-07T05:16:36.228Z</lastmod>
+  </url>
+  <url>
+    <loc>https://stat210a.berkeley.edu/fall-2024/units/unit1.html</loc>
+    <lastmod>2024-08-07T05:16:50.861Z</lastmod>
   </url>
   <url>
     <loc>https://stat210a.berkeley.edu/fall-2024/syllabus.html</loc>
-    <lastmod>2024-07-12T22:23:08.536Z</lastmod>
+    <lastmod>2024-08-07T05:16:51.605Z</lastmod>
   </url>
   <url>
     <loc>https://stat210a.berkeley.edu/fall-2024/calendar.html</loc>
-    <lastmod>2024-07-12T22:23:08.536Z</lastmod>
+    <lastmod>2024-08-07T05:16:52.289Z</lastmod>
   </url>
 </urlset>

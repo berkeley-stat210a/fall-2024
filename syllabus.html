@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.5.54">
+<meta name="generator" content="quarto-1.3.450">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -45,13 +45,7 @@ ul.task-list li input[type="checkbox"] {
   "collapse-after": 3,
   "panel-placement": "start",
   "type": "textbox",
-  "limit": 50,
-  "keyboard-shortcut": [
-    "f",
-    "/",
-    "s"
-  ],
-  "show-item-context": false,
+  "limit": 20,
   "language": {
     "search-no-results-text": "No results",
     "search-matching-documents-text": "matching documents",
@@ -60,7 +54,6 @@ ul.task-list li input[type="checkbox"] {
     "search-more-match-text": "more match in this document",
     "search-more-matches-text": "more matches in this document",
     "search-clear-button-title": "Clear",
-    "search-text-placeholder": "",
     "search-detached-cancel-button-title": "Cancel",
     "search-submit-button-title": "Submit",
     "search-label": "Search"
@@ -77,7 +70,7 @@ gtag('config', 'G-B8G2041HSB', { 'anonymize_ip': true});
 </script>
 
 
-<link rel="stylesheet" href="assets/styles.css">
+<link rel="stylesheet" href="assets/styles-alt.scss">
 </head>
 
 <body class="nav-sidebar docked">
@@ -86,13 +79,13 @@ gtag('config', 'G-B8G2041HSB', { 'anonymize_ip': true});
   <header id="quarto-header" class="headroom fixed-top">
   <nav class="quarto-secondary-nav">
     <div class="container-fluid d-flex">
-      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./syllabus.html">Syllabus</a></li></ol></nav>
-        <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
-        </a>
-      <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
+      <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./faq.html">Course Logistics</a></li><li class="breadcrumb-item"><a href="./syllabus.html">Syllabus</a></li></ol></nav>
+      <a class="flex-grow-1" role="button" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+      </a>
+      <button type="button" class="btn quarto-search-button" aria-label="" onclick="window.quartoOpenSearch();">
         <i class="bi bi-search"></i>
       </button>
     </div>
@@ -101,7 +94,7 @@ gtag('config', 'G-B8G2041HSB', { 'anonymize_ip': true});
 <!-- content -->
 <div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
 <!-- sidebar -->
-  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation docked overflow-auto">
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal sidebar-navigation docked overflow-auto">
     <div class="pt-lg-2 mt-2 text-left sidebar-header sidebar-header-stacked">
       <a href="./index.html" class="sidebar-logo-link">
       <img src="./assets/stat_bear.png" alt="" class="sidebar-logo py-0 d-lg-inline d-none">
@@ -109,7 +102,7 @@ gtag('config', 'G-B8G2041HSB', { 'anonymize_ip': true});
     <div class="sidebar-title mb-0 py-0">
       <a href="./">Stat 210a</a> 
         <div class="sidebar-tools-main">
-    <a href="https://github.com/berkeley-stat210a/fall-2024" title="" class="quarto-navigation-tool px-1" aria-label=""><i class="bi bi-github"></i></a>
+    <a href="https://github.com/berkeley-stat210a/fall-2024" rel="" title="" class="quarto-navigation-tool px-1" aria-label=""><i class="bi bi-github"></i></a>
 </div>
     </div>
       </div>
@@ -126,9 +119,32 @@ gtag('config', 'G-B8G2041HSB', { 'anonymize_ip': true});
  <span class="menu-text">Home / Schedule</span></a>
   </div>
 </li>
-        <li class="sidebar-item">
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" aria-expanded="true">
+ <span class="menu-text">Course Logistics</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./faq.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Frequently Asked Questions</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./syllabus.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text">Syllabus</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./syllabus.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Syllabus</span></a>
   </div>
 </li>
@@ -138,35 +154,12 @@ gtag('config', 'G-B8G2041HSB', { 'anonymize_ip': true});
  <span class="menu-text">Calendar</span></a>
   </div>
 </li>
-        <li class="sidebar-item sidebar-item-section">
-      <div class="sidebar-item-container"> 
-            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true">
- <span class="menu-text">Units</span></a>
-          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true" aria-label="Toggle section">
-            <i class="bi bi-chevron-right ms-2"></i>
-          </a> 
-      </div>
-      <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">  
-          <li class="sidebar-item">
+        <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./units/unit1.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Unit 1: Intro</span></a>
+  <a href="./handwritten-notes.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Handwritten notes</span></a>
   </div>
 </li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="./units/unit2.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Unit 2: Next</span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="./units/unit3.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Unit 3: More</span></a>
-  </div>
-</li>
-      </ul>
-  </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./data.html" class="sidebar-item-text sidebar-link">
@@ -182,18 +175,29 @@ gtag('config', 'G-B8G2041HSB', { 'anonymize_ip': true});
     </ul>
     </div>
 </nav>
-<div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
+<div id="quarto-sidebar-glass" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass"></div>
 <!-- margin-sidebar -->
     <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
         <nav id="TOC" role="doc-toc" class="toc-active">
     <h2 id="toc-title">On this page</h2>
    
   <ul>
-  <li><a href="#about-data-100" id="toc-about-data-100" class="nav-link active" data-scroll-target="#about-data-100">About Data 100</a>
+  <li><a href="#course-information" id="toc-course-information" class="nav-link active" data-scroll-target="#course-information">Course information</a>
   <ul class="collapse">
-  <li><a href="#goals" id="toc-goals" class="nav-link" data-scroll-target="#goals">Goals</a></li>
-  <li><a href="#prerequisites" id="toc-prerequisites" class="nav-link" data-scroll-target="#prerequisites">Prerequisites</a></li>
+  <li><a href="#instructors" id="toc-instructors" class="nav-link" data-scroll-target="#instructors">Instructors</a></li>
+  <li><a href="#course-schedule" id="toc-course-schedule" class="nav-link" data-scroll-target="#course-schedule">Course schedule</a></li>
+  <li><a href="#course-communications" id="toc-course-communications" class="nav-link" data-scroll-target="#course-communications">Course communications</a></li>
   </ul></li>
+  <li><a href="#about-stat-210a" id="toc-about-stat-210a" class="nav-link" data-scroll-target="#about-stat-210a">About Stat 210A</a>
+  <ul class="collapse">
+  <li><a href="#what-is-the-theory-of-statistics" id="toc-what-is-the-theory-of-statistics" class="nav-link" data-scroll-target="#what-is-the-theory-of-statistics">What is the theory of statistics?</a></li>
+  <li><a href="#topics" id="toc-topics" class="nav-link" data-scroll-target="#topics">Topics</a></li>
+  <li><a href="#prerequisites" id="toc-prerequisites" class="nav-link" data-scroll-target="#prerequisites">Prerequisites</a></li>
+  <li><a href="#relationship-of-stat-210a-to-other-berkeley-courses" id="toc-relationship-of-stat-210a-to-other-berkeley-courses" class="nav-link" data-scroll-target="#relationship-of-stat-210a-to-other-berkeley-courses">Relationship of Stat 210A to other Berkeley courses</a></li>
+  </ul></li>
+  <li><a href="#references" id="toc-references" class="nav-link" data-scroll-target="#references">References</a></li>
+  <li><a href="#grading" id="toc-grading" class="nav-link" data-scroll-target="#grading">Grading</a></li>
+  <li><a href="#accommodations" id="toc-accommodations" class="nav-link" data-scroll-target="#accommodations">Accommodations</a></li>
   </ul>
 </nav>
     </div>
@@ -215,35 +219,108 @@ gtag('config', 'G-B8G2041HSB', { 'anonymize_ip': true});
   </div>
   
 
-
 </header>
 
-
-<p>Jump to:</p>
+<p>[UNDER CONSTRUCTION]</p>
+<p>Stat 210A is an introductory Ph.D.-level course in theoretical statistics. It is a fast-paced and demanding course intended to prepare students for research careers in statistics.</p>
+<section id="course-information" class="level2">
+<h2 class="anchored" data-anchor-id="course-information">Course information</h2>
+<section id="instructors" class="level3">
+<h3 class="anchored" data-anchor-id="instructors">Instructors</h3>
 <ul>
-<li><a href="#about-data-100">About Data 100</a>
+<li><strong>Primary Instructor</strong> <a href="http://www.stat.berkeley.edu/~wfithian/">Prof.&nbsp;Will Fithian</a>
 <ul>
-<li><a href="#goals">Goals</a></li>
-<li><a href="#prerequisites">Prerequisites</a></li>
+<li><strong>Office Hours:</strong> TBD</li>
+<li><strong>Email:</strong> <a href="mailto:wfithian@berkeley.edu">wfithian@berkeley.edu</a></li>
+</ul></li>
+<li><strong>GSI</strong> Dohyeong Ki
+<ul>
+<li><strong>Office Hours:</strong> TBD</li>
+<li><strong>Email:</strong> <a href="mailto:dohyeong_ki@berkeley.edu">dohyeong_ki@berkeley.edu</a></li>
 </ul></li>
 </ul>
-<section id="about-data-100" class="level2">
-<h2 class="anchored" data-anchor-id="about-data-100">About Data 100</h2>
-<p>Combining data, computation, and inferential thinking, data science is redefining how people and organizations solve challenging problems and understand their world. This intermediate level class bridges between Data 8 and upper division computer science and statistics courses as well as methods courses in other fields. In this class, we explore key areas of data science including question formulation, data collection and cleaning, visualization, statistical inference, predictive modeling, and decision making.​ Through a strong emphasis on data centric computing, quantitative critical thinking, and exploratory data analysis, this class covers key principles and techniques of data science. These include languages for transforming, querying and analyzing data; algorithms for machine learning methods including regression, classification and clustering; principles behind creating informative data visualizations; statistical concepts of measurement error and prediction; and techniques for scalable data processing.</p>
-<section id="goals" class="level3">
-<h3 class="anchored" data-anchor-id="goals">Goals</h3>
+</section>
+<section id="course-schedule" class="level3">
+<h3 class="anchored" data-anchor-id="course-schedule">Course schedule</h3>
 <ul>
-<li>Prepare students for advanced Berkeley courses in data-management, machine learning, and statistics, by providing the necessary foundation and context.</li>
-<li>Enable students to start careers as data scientists by providing experience working with real-world data, tools, and techniques.</li>
-<li>Empower students to apply computational and inferential thinking to address real-world problems.</li>
+<li><strong>Lectures:</strong> TuTh 11-12:30, Evans 60</li>
+<li><strong>Recitation sections:</strong> Every second F 11am-12pm, location TBD, beginning week 2</li>
+<li><strong>Final exam review:</strong> TBD</li>
+<li><strong>Final exam:</strong> Wed December 18, 8-11am</li>
 </ul>
+</section>
+<section id="course-communications" class="level3">
+<h3 class="anchored" data-anchor-id="course-communications">Course communications</h3>
+<ul>
+<li><strong>Lecture videos and homework solutions</strong> at [https://bcourses.berkeley.edu bCourses]</li>
+<li><strong>Email policy:</strong> You can email me or Dohyeong about administrative questions, with “[Stat 210A]” in the subject line. <em>No math</em> over email, please.</li>
+<li><a href="https://edstem.org/us/courses/61763/">Ed page</a> for announcements and technical discussion (no homework spoilers!)</li>
+<li><a href="https://www.gradescope.com/courses/816848">Gradescope</a> for turning in homework</li>
+</ul>
+</section>
+</section>
+<section id="about-stat-210a" class="level2">
+<h2 class="anchored" data-anchor-id="about-stat-210a">About Stat 210A</h2>
+<section id="what-is-the-theory-of-statistics" class="level3">
+<h3 class="anchored" data-anchor-id="what-is-the-theory-of-statistics">What is the theory of statistics?</h3>
+<p>Statistics is the study of methods that use data to understand the world. Statistical methods are used throughout the natural and social sciences, in machine learning and artificial intelligence, and in engineering. Despite the ubiquitous use of statistics, its practitioners are perpetually accused of not actually understanding what they are doing. Statistics theory is, broadly speaking, the subject of what exactly we are doing when we apply statistical methods.</p>
+<p>While there are many possible ways to analyze data, most (but certainly not all) statistical methods are based on <strong>statistical modeling:</strong> treating the data as a realization of some <em>random</em> data-generating process with attributes, usually called <em>parameters</em>, that are <em>a priori</em> unknown. The goal of the <strong>analyst</strong>, then, is to use the data to draw accurate inferences about these parameters and/or to make accurate predictions about future data. If the modeling has been done well (a very big “if”) then these unknown parameters will correspond well to whatever real-world questions initially motivated the analysis. Applied statistics courses like Stat 215A and B delve deeply into questions about how to ensure that the statistical modeling exercise successfully captures something interesting about reality.</p>
+<p>In this course we will instead focus on how the analyst can use the data most effectively within the context of a given mathematical setup. We will discuss the structure of statistical models, how to evaluate the quality of a statistical method, how to design good methods for new settings, and the philosophy of Bayesian vs frequentist modeling frameworks. We will cover estimation, confidence intervals, and hypothesis testing, in parametric and nonparametric methods, in finite samples and asymptotic regimes.</p>
+</section>
+<section id="topics" class="level3">
+<h3 class="anchored" data-anchor-id="topics">Topics</h3>
+<p>Statistical decision theory (frequentist and Bayesian), exponential families, point estimation, hypothesis testing, resampling methods, estimating equations and maximum likelihood, empirical Bayes, large-sample theory, high-dimensional testing, multiple testing and selective inference.</p>
 </section>
 <section id="prerequisites" class="level3">
 <h3 class="anchored" data-anchor-id="prerequisites">Prerequisites</h3>
-<p>While we are working to make this class widely accessible, we currently require the following (or equivalent) prerequisites. <strong>Prerequisites will be enforced in Data 100. It is your responsibility to know the material in the prerequisites.</strong></p>
-
-
+<p>The course prerequisites are linear algebra, analysis, probability, and statistics.</p>
 </section>
+<section id="relationship-of-stat-210a-to-other-berkeley-courses" class="level3">
+<h3 class="anchored" data-anchor-id="relationship-of-stat-210a-to-other-berkeley-courses">Relationship of Stat 210A to other Berkeley courses</h3>
+<p>Stat 210A focuses on <em>classical</em> statistical contexts: either inference in finite samples, or in fixed-dimensional asymptotic regimes. Stat 210B (for which 210A is a prerequisite) is more technical and covers topics like empirical process theory and high-dimensional statistics.</p>
+<p>Berkeley’s graduate course on Statistical Learning Theory (CS 281A / Stat 241A) is also very popular and has some overlap in its topics. Roughly speaking, it is more tilted toward “machine learning”: it spends more time on topics in predictive modeling (i.e.&nbsp;classification and regression, which are covered in Stat 215A), optimization, and signal processing, but spends less time on inferential questions and (I believe) does not cover topics like hypothesis testing, confidence intervals, and causal inference. Both courses cover estimation and exponential families.</p>
+</section>
+</section>
+<section id="references" class="level2">
+<h2 class="anchored" data-anchor-id="references">References</h2>
+<p>The online notes for this course are self-contained, however it can be helpful to see a different presentation in the following supplementary texts (all links are to public websites or Springer Link):</p>
+<ul>
+<li><p><a href="http://link.springer.com/book/10.1007%2F978-0-387-93839-4">Keener, <em>Theoretical Statistics: Topics for a Core Course</em>, Springer 2010.</a></p></li>
+<li><p><a href="http://link.springer.com/book/10.1007%2Fb98854">Lehmann and Casella, <em>Theory of Point Estimation</em>, Springer 1998.</a></p></li>
+<li><p><a href="http://link.springer.com/book/10.1007%2F0-387-27605-X">Lehmann and Romano, <em>Testing Statistical Hypotheses</em>, Springer 2005.</a></p></li>
+<li><p><a href="https://statweb.stanford.edu/~candes/stats300c/lectures.html">Candes, Stats 300C Lecture notes, Stanford 2016.</a></p></li>
+</ul>
+<p>Undergrad-level review texts for prerequisites:</p>
+<ul>
+<li><p><a href="https://link.springer.com/book/10.1007/978-3-319-11080-6">Axler, <em>Linear Algebra Done Right</em></a></p></li>
+<li><p><a href="https://link.springer.com/book/10.1007/978-1-4939-2712-8">Abbott, <em>Understanding Analysis</em></a></p></li>
+<li><p><a href="http://prob140.org/textbook/">Adhikari &amp; Pitman, <em>Probability for Data Science</em></a></p></li>
+</ul>
+</section>
+<section id="grading" class="level2">
+<h2 class="anchored" data-anchor-id="grading">Grading</h2>
+<p>Your final grade is based on:</p>
+<ul>
+<li><p>Weekly problem sets: 50%</p></li>
+<li><p>Final exam: 50%</p></li>
+</ul>
+<p>While the final exam is nominally one half of the grade, it is quite difficult and typically accounts for most of the variance in final course grades. If you take shortcuts on the homework, you will save yourself time in the short run, but you may do quite poorly on the exam!</p>
+<p><strong>Lateness policy:</strong> Homework must be submitted to Gradescope at 11:59pm on Wednesday nights. Late problem sets will not be accepted, but we will drop your lowest two grades.</p>
+<p><strong>Collaboration policy:</strong> For homework, you are welcome to work with each other or consult articles or textbooks online, with the following caveats:</p>
+<ul>
+<li><p>You must write up your solution by yourself.</p></li>
+<li><p>You may <strong>NOT</strong> consult any solutions from previous iterations of this course.</p></li>
+<li><p>No generative AI allowed for problem sets.</p></li>
+<li><p>If you collaborate or use any resources other than course texts, you must <strong>acknowledge</strong> your collaborators and the resources you used.</p></li>
+</ul>
+<p><strong>Academic integrity:</strong> You are expected to abide by the <a href="http://teaching.berkeley.edu/berkeley-honor-code">Berkeley honor code</a>. Violating the collaboration policy, or cheating in any other way, will result in a failing grade for the semester and you will be reported to the University Office of Student Conduct.</p>
+</section>
+<section id="accommodations" class="level2">
+<h2 class="anchored" data-anchor-id="accommodations">Accommodations</h2>
+<p><strong>Students with disabilities:</strong> Please see me as soon as possible if you need particular accommodations, and we will work out the necessary arrangements.</p>
+<p><strong>Scheduling conflicts:</strong> Please notify me in writing by the <strong>second week of the term</strong> about any known or potential extracurricular conflicts (such as religious observances, graduate or medical school interviews, or team activities). I will try my best to help you with making accommodations, but cannot promise them in all cases. In the event there is no mutually-workable solution, you may be dropped from the class.</p>
+
+
 </section>
 
 </main> <!-- /main -->
@@ -282,7 +359,18 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     }
     return false;
   }
-  const onCopySuccess = function(e) {
+  const clipboard = new window.ClipboardJS('.code-copy-button', {
+    text: function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+  });
+  clipboard.on('success', function(e) {
     // button target
     const button = e.trigger;
     // don't keep focus
@@ -314,50 +402,11 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     }, 1000);
     // clear code selection
     e.clearSelection();
-  }
-  const getTextToCopy = function(trigger) {
-      const codeEl = trigger.previousElementSibling.cloneNode(true);
-      for (const childEl of codeEl.children) {
-        if (isCodeAnnotation(childEl)) {
-          childEl.remove();
-        }
-      }
-      return codeEl.innerText;
-  }
-  const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
-    text: getTextToCopy
   });
-  clipboard.on('success', onCopySuccess);
-  if (window.document.getElementById('quarto-embedded-source-code-modal')) {
-    // For code content inside modals, clipBoardJS needs to be initialized with a container option
-    // TODO: Check when it could be a function (https://github.com/zenorocha/clipboard.js/issues/860)
-    const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
-      text: getTextToCopy,
-      container: window.document.getElementById('quarto-embedded-source-code-modal')
-    });
-    clipboardModal.on('success', onCopySuccess);
-  }
-    var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
-    var mailtoRegex = new RegExp(/^mailto:/);
-      var filterRegex = new RegExp("https:\/\/stat210a\.berkeley\.edu\/fall-2024\/");
-    var isInternal = (href) => {
-        return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
-    }
-    // Inspect non-navigation links and adorn them if external
- 	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
-    for (var i=0; i<links.length; i++) {
-      const link = links[i];
-      if (!isInternal(link.href)) {
-        // undo the damage that might have been done by quarto-nav.js in the case of
-        // links that we want to consider external
-        if (link.dataset.originalHref !== undefined) {
-          link.href = link.dataset.originalHref;
-        }
-      }
-    }
-  function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+  function tippyHover(el, contentFn) {
     const config = {
       allowHTML: true,
+      content: contentFn,
       maxWidth: 500,
       delay: 100,
       arrow: false,
@@ -367,17 +416,8 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       interactive: true,
       interactiveBorder: 10,
       theme: 'quarto',
-      placement: 'bottom-start',
+      placement: 'bottom-start'
     };
-    if (contentFn) {
-      config.content = contentFn;
-    }
-    if (onTriggerFn) {
-      config.onTrigger = onTriggerFn;
-    }
-    if (onUntriggerFn) {
-      config.onUntrigger = onUntriggerFn;
-    }
     window.tippy(el, config); 
   }
   const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
@@ -389,130 +429,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       try { href = new URL(href).hash; } catch {}
       const id = href.replace(/^#\/?/, "");
       const note = window.document.getElementById(id);
-      if (note) {
-        return note.innerHTML;
-      } else {
-        return "";
-      }
-    });
-  }
-  const xrefs = window.document.querySelectorAll('a.quarto-xref');
-  const processXRef = (id, note) => {
-    // Strip column container classes
-    const stripColumnClz = (el) => {
-      el.classList.remove("page-full", "page-columns");
-      if (el.children) {
-        for (const child of el.children) {
-          stripColumnClz(child);
-        }
-      }
-    }
-    stripColumnClz(note)
-    if (id === null || id.startsWith('sec-')) {
-      // Special case sections, only their first couple elements
-      const container = document.createElement("div");
-      if (note.children && note.children.length > 2) {
-        container.appendChild(note.children[0].cloneNode(true));
-        for (let i = 1; i < note.children.length; i++) {
-          const child = note.children[i];
-          if (child.tagName === "P" && child.innerText === "") {
-            continue;
-          } else {
-            container.appendChild(child.cloneNode(true));
-            break;
-          }
-        }
-        if (window.Quarto?.typesetMath) {
-          window.Quarto.typesetMath(container);
-        }
-        return container.innerHTML
-      } else {
-        if (window.Quarto?.typesetMath) {
-          window.Quarto.typesetMath(note);
-        }
-        return note.innerHTML;
-      }
-    } else {
-      // Remove any anchor links if they are present
-      const anchorLink = note.querySelector('a.anchorjs-link');
-      if (anchorLink) {
-        anchorLink.remove();
-      }
-      if (window.Quarto?.typesetMath) {
-        window.Quarto.typesetMath(note);
-      }
-      // TODO in 1.5, we should make sure this works without a callout special case
-      if (note.classList.contains("callout")) {
-        return note.outerHTML;
-      } else {
-        return note.innerHTML;
-      }
-    }
-  }
-  for (var i=0; i<xrefs.length; i++) {
-    const xref = xrefs[i];
-    tippyHover(xref, undefined, function(instance) {
-      instance.disable();
-      let url = xref.getAttribute('href');
-      let hash = undefined; 
-      if (url.startsWith('#')) {
-        hash = url;
-      } else {
-        try { hash = new URL(url).hash; } catch {}
-      }
-      if (hash) {
-        const id = hash.replace(/^#\/?/, "");
-        const note = window.document.getElementById(id);
-        if (note !== null) {
-          try {
-            const html = processXRef(id, note.cloneNode(true));
-            instance.setContent(html);
-          } finally {
-            instance.enable();
-            instance.show();
-          }
-        } else {
-          // See if we can fetch this
-          fetch(url.split('#')[0])
-          .then(res => res.text())
-          .then(html => {
-            const parser = new DOMParser();
-            const htmlDoc = parser.parseFromString(html, "text/html");
-            const note = htmlDoc.getElementById(id);
-            if (note !== null) {
-              const html = processXRef(id, note);
-              instance.setContent(html);
-            } 
-          }).finally(() => {
-            instance.enable();
-            instance.show();
-          });
-        }
-      } else {
-        // See if we can fetch a full url (with no hash to target)
-        // This is a special case and we should probably do some content thinning / targeting
-        fetch(url)
-        .then(res => res.text())
-        .then(html => {
-          const parser = new DOMParser();
-          const htmlDoc = parser.parseFromString(html, "text/html");
-          const note = htmlDoc.querySelector('main.content');
-          if (note !== null) {
-            // This should only happen for chapter cross references
-            // (since there is no id in the URL)
-            // remove the first header
-            if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
-              note.children[0].remove();
-            }
-            const html = processXRef(null, note);
-            instance.setContent(html);
-          } 
-        }).finally(() => {
-          instance.enable();
-          instance.show();
-        });
-      }
-    }, function(instance) {
+      return note.innerHTML;
     });
   }
       let selectedAnnoteEl;
@@ -556,7 +473,6 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
             }
             div.style.top = top - 2 + "px";
             div.style.height = height + 4 + "px";
-            div.style.left = 0;
             let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
             if (gutterDiv === null) {
               gutterDiv = window.document.createElement("div");
@@ -582,32 +498,6 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
         });
         selectedAnnoteEl = undefined;
       };
-        // Handle positioning of the toggle
-    window.addEventListener(
-      "resize",
-      throttle(() => {
-        elRect = undefined;
-        if (selectedAnnoteEl) {
-          selectCodeLines(selectedAnnoteEl);
-        }
-      }, 10)
-    );
-    function throttle(fn, ms) {
-    let throttle = false;
-    let timer;
-      return (...args) => {
-        if(!throttle) { // first call gets through
-            fn.apply(this, args);
-            throttle = true;
-        } else { // all the others get throttled
-            if(timer) clearTimeout(timer); // cancel #2
-            timer = setTimeout(() => {
-              fn.apply(this, args);
-              timer = throttle = false;
-            }, ms);
-        }
-      };
-    }
       // Attach click handler to the DT
       const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
       for (const annoteDlNode of annoteDls) {
@@ -668,7 +558,6 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 });
 </script>
 </div> <!-- /content -->
-
 
 
 

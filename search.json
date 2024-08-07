@@ -4,181 +4,63 @@
     "href": "data.html",
     "title": "Data",
     "section": "",
-    "text": "We’ll use data from several real world situations in class.",
-    "crumbs": [
-      "Datasets"
-    ]
+    "text": "We’ll use data from several real world situations in class."
   },
   {
     "objectID": "data.html#data-1",
     "href": "data.html#data-1",
     "title": "Data",
     "section": "Data 1",
-    "text": "Data 1",
-    "crumbs": [
-      "Datasets"
-    ]
+    "text": "Data 1"
   },
   {
     "objectID": "data.html#data-2",
     "href": "data.html#data-2",
     "title": "Data",
     "section": "Data 2",
-    "text": "Data 2",
-    "crumbs": [
-      "Datasets"
-    ]
+    "text": "Data 2"
   },
   {
     "objectID": "license.html",
     "href": "license.html",
     "title": "License",
     "section": "",
-    "text": "This work is licensed under a Creative Commons Attribution 4.0 International License.",
-    "crumbs": [
-      "License"
-    ]
+    "text": "This work is licensed under a Creative Commons Attribution 4.0 International License."
   },
   {
-    "objectID": "units/unit1.html",
-    "href": "units/unit1.html",
-    "title": "Unit 1: Intro",
+    "objectID": "faq.html",
+    "href": "faq.html",
+    "title": "Frequently Asked Questions",
     "section": "",
-    "text": "This is an example of using qmd as the source document.",
-    "crumbs": [
-      "Units",
-      "Unit 1: Intro"
-    ]
+    "text": "Who can / should take this course?\nThis is a fast-paced and demanding course designed to prepare PhD students for research careers in statistics. Undergraduates and PhD students in other fields are very welcome to take the class, and many have succeeded in the past. But you should be prepared to work hard.\nCan I take this course if I have a conflict with the lecture time?\nAttendance is not taken at lectures but attending is an important part of taking the course. If you want to take another course at the same time, you can do it as long as the other professor is OK with your not attending their lectures.\nHow can I prepare for the course?\nThe course prerequisites are undergraduate-level linear algebra, real analysis, and a year of upper-division probability and statistics. If you are unsure of your background in one or more of these, the texts below can be useful review materials. All books linked below, except Gelman & Hill, should be available for free with a Berkeley library subscription. Email me if you have trouble accessing them.\n\nLinear algebra: Fluency with undergrad-level abstract linear algebra is essential to understanding the course content (numerical tools like LU or Cholesky decompositions are not essential). Chapters 1-3 and 5-6 of Linear Algebra Done Right (Axler) are good review materials.\nReal analysis: Familiarity with and intuition for ideas of infinite sequences, convergence, Taylor approximations, etc. should be enough. Chapters 1-3 of Understanding Analysis (Abbott) are good review materials.\nProbability: The whole course involves probability. If Chapters 1-6, 8-9, 13-17, and 23 of Probability for Data Science (Adhikari and Pitman) aren’t mostly review for you, I strongly recommend studying them before the course begins.\nStatistics: We will derive all statistical results from first principles, but at a fairly technical level. If you have never seen them in an applied context, Chapters 1-6 of Data Analysis Using Regression and Multilevel/Hierarchical Models (Gelman & Hill) should give you some frame of reference."
   },
   {
-    "objectID": "units/unit1.html#evaluated-python-code-chunk-with-a-plot",
-    "href": "units/unit1.html#evaluated-python-code-chunk-with-a-plot",
-    "title": "Unit 1: Intro",
+    "objectID": "units/unit3.html",
+    "href": "units/unit3.html",
+    "title": "Unit 3: More",
+    "section": "",
+    "text": "This is an example of using qmd as the source document with pdf as one target. I’ve taken out the qmd stuff that doesn’t seem to render to pdf."
+  },
+  {
+    "objectID": "units/unit3.html#evaluated-python-code-chunk-with-a-plot",
+    "href": "units/unit3.html#evaluated-python-code-chunk-with-a-plot",
+    "title": "Unit 3: More",
     "section": "Evaluated Python code chunk, with a plot",
-    "text": "Evaluated Python code chunk, with a plot\n\n\nCode\nimport numpy as np\nx = np.random.normal(size=100)\nimport matplotlib.pyplot as plt\nplt.hist(x)\nplt.show()\nnp.mean(x)\n\n\n\n\n\n\n\n\n\n0.04946427672732993",
-    "crumbs": [
-      "Units",
-      "Unit 1: Intro"
-    ]
+    "text": "Evaluated Python code chunk, with a plot\n\n\nCode\nimport numpy as np\nx = np.random.normal(size=100)\nimport matplotlib.pyplot as plt\nplt.hist(x)\nplt.show()\nnp.mean(x)\n\n\n\n\n\n0.1805580116274452"
   },
   {
-    "objectID": "units/unit1.html#latex",
-    "href": "units/unit1.html#latex",
-    "title": "Unit 1: Intro",
-    "section": "\\(\\LaTeX\\)",
-    "text": "\\(\\LaTeX\\)\n\\[\n\\theta = \\int_0^\\infty f(x,\\theta)d\\theta\n\\]",
-    "crumbs": [
-      "Units",
-      "Unit 1: Intro"
-    ]
+    "objectID": "units/unit3.html#latex",
+    "href": "units/unit3.html#latex",
+    "title": "Unit 3: More",
+    "section": "LaTeX",
+    "text": "LaTeX\n\\[\n\\theta = \\int_0^\\infty f(x,\\theta)d\\theta\n\\]"
   },
   {
-    "objectID": "units/unit1.html#latex-macro",
-    "href": "units/unit1.html#latex-macro",
-    "title": "Unit 1: Intro",
-    "section": "\\(\\LaTeX\\) macro",
-    "text": "\\(\\LaTeX\\) macro\n\nWarning: need to look back at this as having include-before-body in the yaml causes extra space at top of page.\n\n\\[\nA = X \\trans Y\n\\]",
-    "crumbs": [
-      "Units",
-      "Unit 1: Intro"
-    ]
-  },
-  {
-    "objectID": "units/unit1.html#styled-div-via-direct-html",
-    "href": "units/unit1.html#styled-div-via-direct-html",
-    "title": "Unit 1: Intro",
-    "section": "Styled div via direct html",
-    "text": "Styled div via direct html\n\nThis content can be styled via the border class.",
-    "crumbs": [
-      "Units",
-      "Unit 1: Intro"
-    ]
-  },
-  {
-    "objectID": "units/unit1.html#a-callout",
-    "href": "units/unit1.html#a-callout",
-    "title": "Unit 1: Intro",
-    "section": "A callout",
-    "text": "A callout\n\n\n\n\n\n\nTip with Title\n\n\n\nThis is an example of a callout with a title.",
-    "crumbs": [
-      "Units",
-      "Unit 1: Intro"
-    ]
-  },
-  {
-    "objectID": "units/unit1.html#tabset",
-    "href": "units/unit1.html#tabset",
-    "title": "Unit 1: Intro",
-    "section": "Tabset",
-    "text": "Tabset\n\nRPython\n\n\nThis code is not executed.\nfizz_buzz &lt;- function(fbnums = 1:50) {\n  output &lt;- dplyr::case_when(\n    fbnums %% 15 == 0 ~ \"FizzBuzz\",\n    fbnums %% 3 == 0 ~ \"Fizz\",\n    fbnums %% 5 == 0 ~ \"Buzz\",\n    TRUE ~ as.character(fbnums)\n  )\n  print(output)\n}\n\nfizz_buzz(3)\n\n\nThis code is executed.\n\n\nCode\ndef fizz_buzz(num):\n  if num % 15 == 0:\n    print(\"FizzBuzz\")\n  elif num % 5 == 0:\n    print(\"Buzz\")\n  elif num % 3 == 0:\n    print(\"Fizz\")\n  else:\n    print(num)\n    \nfizz_buzz(3)\n\n\nFizz",
-    "crumbs": [
-      "Units",
-      "Unit 1: Intro"
-    ]
-  },
-  {
-    "objectID": "units/unit2.html",
-    "href": "units/unit2.html",
-    "title": "Unit 2: Next",
-    "section": "",
-    "text": "This is an example of using an ipynb file as source rather than qmd. It follows instructions from https://github.com/DS-100/course-notes/README.md.\nLink to the data.",
-    "crumbs": [
-      "Units",
-      "Unit 2: Next"
-    ]
-  },
-  {
-    "objectID": "units/unit2.html#latex",
-    "href": "units/unit2.html#latex",
-    "title": "Unit 2: Next",
-    "section": "\\(\\LaTeX\\)",
-    "text": "\\(\\LaTeX\\)\nHere is some \\(\\LaTeX\\). \\[\n\\theta = 7\n\\]",
-    "crumbs": [
-      "Units",
-      "Unit 2: Next"
-    ]
-  },
-  {
-    "objectID": "units/unit2.html#evaluated-python-code",
-    "href": "units/unit2.html#evaluated-python-code",
-    "title": "Unit 2: Next",
-    "section": "Evaluated Python code",
-    "text": "Evaluated Python code\nNote that to get code output shown, the underlying notebook must have executed the code.\n\n\nCode\na=7\nprint(a)\n\n\n7",
-    "crumbs": [
-      "Units",
-      "Unit 2: Next"
-    ]
-  },
-  {
-    "objectID": "units/unit2.html#callout",
-    "href": "units/unit2.html#callout",
-    "title": "Unit 2: Next",
-    "section": "Callout",
-    "text": "Callout\n\n\n\n\n\n\nTip with Title\n\n\n\nThis is an example of a callout with a title.",
-    "crumbs": [
-      "Units",
-      "Unit 2: Next"
-    ]
-  },
-  {
-    "objectID": "index.html",
-    "href": "index.html",
-    "title": "Statistics 210a: Theoretical Statistics",
-    "section": "",
-    "text": "Ed\n\n  DataHub\n\n  Gradescope\n\n\nNo matching items\nThis page is hosted at https://stat210a.berkeley.edu/fall-2024/. We could provide a templated listing of instructors here (or on its own page), similar to DS100/fa23.",
-    "crumbs": [
-      "Home / Schedule"
-    ]
-  },
-  {
-    "objectID": "index.html#schedule",
-    "href": "index.html#schedule",
-    "title": "Statistics 210a: Theoretical Statistics",
-    "section": "Schedule",
-    "text": "Schedule\nHere we use Quarto’s EJS templating.\nFor a style similar to that of Stat 20, modify index.qmd to point to assets/{schedule-alt.ejs,buttons-alt.ejs} and to {schedule-alt.yml,buttons-alt.yml} and _quarto.yml to point to assets/styles-alt.scss.\n\n\n   Week 1\n\n   \n   \n   \n   \n   \n   \n\n        \n\n           \n           \n           Aug 24:\n           \n           Lecture 1 Introduction\n           \n                \n                \n                  Note 1\n                  \n                  Note 2\n                  \n                \n           \n                \n           \n        \n\n           \n           \n           Participation 1 Lecture Participation 1\n           \n                \n           \n                \n           \n        \n   \n\n        \n\n           \n           \n           Aug 25:\n           \n           Lab 1 Prerequisite Coding (due Aug 29)\n           \n                \n           \n                \n           \n        \n\n           \n           \n           Homework 1A Plotting and Permutation Test (due Aug 31)\n           \n                \n           \n                \n           \n        \n\n           \n           \n           Homework 1B Prerequisite Math (due Aug 31)\n           \n                \n           \n                \n           \n        \n   \n   \n   \n  \n\n   Week 2\n\n   \n   \n   \n   \n   \n   \n\n        \n\n           \n           \n           Aug 29:\n           \n           Lecture 2 Pandas 1\n           \n                \n           \n                \n           \n        \n\n           \n           \n           Participation 2 Lecture Participation 2\n           \n                \n                \n                \n           \n                \n           \n        \n   \n   \n   \n  \n\n\nNo matching items",
-    "crumbs": [
-      "Home / Schedule"
-    ]
+    "objectID": "units/unit3.html#latex-macro",
+    "href": "units/unit3.html#latex-macro",
+    "title": "Unit 3: More",
+    "section": "LaTeX macro",
+    "text": "LaTeX macro\n\nWarning: need to look back at this as having include-before-body in the yaml causes extra space at top of page.\n\n\\[\nA = X \\trans Y\n\\]"
   },
   {
     "objectID": "units/macros.html",
@@ -188,77 +70,164 @@
     "text": "\\[\n\\newcommand{\\trans}{^\\mathsf{T}}\n\\newcommand{\\eps}{\\epsilon}\n\\]"
   },
   {
-    "objectID": "units/unit3.html",
-    "href": "units/unit3.html",
-    "title": "Unit 3: More",
+    "objectID": "handwritten-notes.html",
+    "href": "handwritten-notes.html",
+    "title": "Handwritten notes",
     "section": "",
-    "text": "This is an example of using qmd as the source document with pdf as one target. I’ve taken out the qmd stuff that doesn’t seem to render to pdf.",
-    "crumbs": [
-      "Units",
-      "Unit 3: More"
-    ]
+    "text": "Lecture 1\nLecture 2"
   },
   {
-    "objectID": "units/unit3.html#evaluated-python-code-chunk-with-a-plot",
-    "href": "units/unit3.html#evaluated-python-code-chunk-with-a-plot",
-    "title": "Unit 3: More",
+    "objectID": "handwritten-notes.html#handwritten-lecture-notes",
+    "href": "handwritten-notes.html#handwritten-lecture-notes",
+    "title": "Handwritten notes",
+    "section": "",
+    "text": "Lecture 1\nLecture 2"
+  },
+  {
+    "objectID": "index.html",
+    "href": "index.html",
+    "title": "Statistics 210a: Theoretical Statistics",
+    "section": "",
+    "text": "[UNDER CONSTRUCTION]"
+  },
+  {
+    "objectID": "index.html#course-enrollment",
+    "href": "index.html#course-enrollment",
+    "title": "Statistics 210a: Theoretical Statistics",
+    "section": "Course enrollment",
+    "text": "Course enrollment\nIf you are an undergraduate who wants to take this course, please fill out the permission code request form to let me know about your background. Anyone considering taking the course is encouraged to read the frequently asked questions regarding preparation and review materials."
+  },
+  {
+    "objectID": "index.html#schedule",
+    "href": "index.html#schedule",
+    "title": "Statistics 210a: Theoretical Statistics",
+    "section": "Schedule",
+    "text": "Schedule\nHere we use Quarto’s EJS templating.\nFor a style similar to that of Stat 20, modify index.qmd to point to assets/{schedule-alt.ejs,buttons-alt.ejs} and to {schedule-alt.yml,buttons-alt.yml} and _quarto.yml to point to assets/styles-alt.scss.\n\n  Week 1\n  \n  \n    \n    Jan 16\n    \n    \n    Random Variables\n        Notes\n        Slides\n    \n    \n    \n    Jan 18\n    \n    \n    The Binomial Distribution\n        Notes\n        Slides\n    \n    \n  \n  \n  Resources\n  \n      Markdown Live Preview\n  \n  \n  \n  Week 2\n  \n  \n    \n    Jan 23\n    \n    \n    Conditional Probability\n        Notes\n        Slides\n        PS\n    \n    \n  \n  \n  Resources\n  \n    None this week\n  \n  \n  \n\nNo matching items"
+  },
+  {
+    "objectID": "units/unit2.html",
+    "href": "units/unit2.html",
+    "title": "Unit 2: Next",
+    "section": "",
+    "text": "This is an example of using an ipynb file as source rather than qmd. It follows instructions from https://github.com/DS-100/course-notes/README.md.\nLink to the data."
+  },
+  {
+    "objectID": "units/unit2.html#latex",
+    "href": "units/unit2.html#latex",
+    "title": "Unit 2: Next",
+    "section": "\\(\\LaTeX\\)",
+    "text": "\\(\\LaTeX\\)\nHere is some \\(\\LaTeX\\). \\[\n\\theta = 7\n\\]"
+  },
+  {
+    "objectID": "units/unit2.html#evaluated-python-code",
+    "href": "units/unit2.html#evaluated-python-code",
+    "title": "Unit 2: Next",
+    "section": "Evaluated Python code",
+    "text": "Evaluated Python code\nNote that to get code output shown, the underlying notebook must have executed the code.\n\n\nCode\na=7\nprint(a)\n\n\n7"
+  },
+  {
+    "objectID": "units/unit2.html#callout",
+    "href": "units/unit2.html#callout",
+    "title": "Unit 2: Next",
+    "section": "Callout",
+    "text": "Callout\n\n\n\n\n\n\nTip with Title\n\n\n\nThis is an example of a callout with a title."
+  },
+  {
+    "objectID": "units/unit1.html",
+    "href": "units/unit1.html",
+    "title": "Unit 1: Intro",
+    "section": "",
+    "text": "This is an example of using qmd as the source document."
+  },
+  {
+    "objectID": "units/unit1.html#evaluated-python-code-chunk-with-a-plot",
+    "href": "units/unit1.html#evaluated-python-code-chunk-with-a-plot",
+    "title": "Unit 1: Intro",
     "section": "Evaluated Python code chunk, with a plot",
-    "text": "Evaluated Python code chunk, with a plot\n\n\nCode\nimport numpy as np\nx = np.random.normal(size=100)\nimport matplotlib.pyplot as plt\nplt.hist(x)\nplt.show()\nnp.mean(x)\n\n\n\n\n\n\n\n\n\n-0.0737031335629501",
-    "crumbs": [
-      "Units",
-      "Unit 3: More"
-    ]
+    "text": "Evaluated Python code chunk, with a plot\n\n\nCode\nimport numpy as np\nx = np.random.normal(size=100)\nimport matplotlib.pyplot as plt\nplt.hist(x)\nplt.show()\nnp.mean(x)\n\n\n\n\n\n-0.07855549064815952"
   },
   {
-    "objectID": "units/unit3.html#latex",
-    "href": "units/unit3.html#latex",
-    "title": "Unit 3: More",
-    "section": "LaTeX",
-    "text": "LaTeX\n\\[\n\\theta = \\int_0^\\infty f(x,\\theta)d\\theta\n\\]",
-    "crumbs": [
-      "Units",
-      "Unit 3: More"
-    ]
+    "objectID": "units/unit1.html#latex",
+    "href": "units/unit1.html#latex",
+    "title": "Unit 1: Intro",
+    "section": "\\(\\LaTeX\\)",
+    "text": "\\(\\LaTeX\\)\n\\[\n\\theta = \\int_0^\\infty f(x,\\theta)d\\theta\n\\]"
   },
   {
-    "objectID": "units/unit3.html#latex-macro",
-    "href": "units/unit3.html#latex-macro",
-    "title": "Unit 3: More",
-    "section": "LaTeX macro",
-    "text": "LaTeX macro\n\nWarning: need to look back at this as having include-before-body in the yaml causes extra space at top of page.\n\n\\[\nA = X \\trans Y\n\\]",
-    "crumbs": [
-      "Units",
-      "Unit 3: More"
-    ]
+    "objectID": "units/unit1.html#latex-macro",
+    "href": "units/unit1.html#latex-macro",
+    "title": "Unit 1: Intro",
+    "section": "\\(\\LaTeX\\) macro",
+    "text": "\\(\\LaTeX\\) macro\n\nWarning: need to look back at this as having include-before-body in the yaml causes extra space at top of page.\n\n\\[\nA = X \\trans Y\n\\]"
+  },
+  {
+    "objectID": "units/unit1.html#styled-div-via-direct-html",
+    "href": "units/unit1.html#styled-div-via-direct-html",
+    "title": "Unit 1: Intro",
+    "section": "Styled div via direct html",
+    "text": "Styled div via direct html\n\nThis content can be styled via the border class."
+  },
+  {
+    "objectID": "units/unit1.html#a-callout",
+    "href": "units/unit1.html#a-callout",
+    "title": "Unit 1: Intro",
+    "section": "A callout",
+    "text": "A callout\n\n\n\n\n\n\nTip with Title\n\n\n\nThis is an example of a callout with a title."
+  },
+  {
+    "objectID": "units/unit1.html#tabset",
+    "href": "units/unit1.html#tabset",
+    "title": "Unit 1: Intro",
+    "section": "Tabset",
+    "text": "Tabset\n\nRPython\n\n\nThis code is not executed.\nfizz_buzz &lt;- function(fbnums = 1:50) {\n  output &lt;- dplyr::case_when(\n    fbnums %% 15 == 0 ~ \"FizzBuzz\",\n    fbnums %% 3 == 0 ~ \"Fizz\",\n    fbnums %% 5 == 0 ~ \"Buzz\",\n    TRUE ~ as.character(fbnums)\n  )\n  print(output)\n}\n\nfizz_buzz(3)\n\n\nThis code is executed.\n\n\nCode\ndef fizz_buzz(num):\n  if num % 15 == 0:\n    print(\"FizzBuzz\")\n  elif num % 5 == 0:\n    print(\"Buzz\")\n  elif num % 3 == 0:\n    print(\"Fizz\")\n  else:\n    print(num)\n    \nfizz_buzz(3)\n\n\nFizz"
   },
   {
     "objectID": "syllabus.html",
     "href": "syllabus.html",
     "title": "Syllabus",
     "section": "",
-    "text": "Jump to:",
-    "crumbs": [
-      "Syllabus"
-    ]
+    "text": "[UNDER CONSTRUCTION]\nStat 210A is an introductory Ph.D.-level course in theoretical statistics. It is a fast-paced and demanding course intended to prepare students for research careers in statistics."
   },
   {
-    "objectID": "syllabus.html#about-data-100",
-    "href": "syllabus.html#about-data-100",
+    "objectID": "syllabus.html#course-information",
+    "href": "syllabus.html#course-information",
     "title": "Syllabus",
-    "section": "About Data 100",
-    "text": "About Data 100\nCombining data, computation, and inferential thinking, data science is redefining how people and organizations solve challenging problems and understand their world. This intermediate level class bridges between Data 8 and upper division computer science and statistics courses as well as methods courses in other fields. In this class, we explore key areas of data science including question formulation, data collection and cleaning, visualization, statistical inference, predictive modeling, and decision making.​ Through a strong emphasis on data centric computing, quantitative critical thinking, and exploratory data analysis, this class covers key principles and techniques of data science. These include languages for transforming, querying and analyzing data; algorithms for machine learning methods including regression, classification and clustering; principles behind creating informative data visualizations; statistical concepts of measurement error and prediction; and techniques for scalable data processing.\n\nGoals\n\nPrepare students for advanced Berkeley courses in data-management, machine learning, and statistics, by providing the necessary foundation and context.\nEnable students to start careers as data scientists by providing experience working with real-world data, tools, and techniques.\nEmpower students to apply computational and inferential thinking to address real-world problems.\n\n\n\nPrerequisites\nWhile we are working to make this class widely accessible, we currently require the following (or equivalent) prerequisites. Prerequisites will be enforced in Data 100. It is your responsibility to know the material in the prerequisites.",
-    "crumbs": [
-      "Syllabus"
-    ]
+    "section": "Course information",
+    "text": "Course information\n\nInstructors\n\nPrimary Instructor Prof. Will Fithian\n\nOffice Hours: TBD\nEmail: wfithian@berkeley.edu\n\nGSI Dohyeong Ki\n\nOffice Hours: TBD\nEmail: dohyeong_ki@berkeley.edu\n\n\n\n\nCourse schedule\n\nLectures: TuTh 11-12:30, Evans 60\nRecitation sections: Every second F 11am-12pm, location TBD, beginning week 2\nFinal exam review: TBD\nFinal exam: Wed December 18, 8-11am\n\n\n\nCourse communications\n\nLecture videos and homework solutions at [https://bcourses.berkeley.edu bCourses]\nEmail policy: You can email me or Dohyeong about administrative questions, with “[Stat 210A]” in the subject line. No math over email, please.\nEd page for announcements and technical discussion (no homework spoilers!)\nGradescope for turning in homework"
+  },
+  {
+    "objectID": "syllabus.html#about-stat-210a",
+    "href": "syllabus.html#about-stat-210a",
+    "title": "Syllabus",
+    "section": "About Stat 210A",
+    "text": "About Stat 210A\n\nWhat is the theory of statistics?\nStatistics is the study of methods that use data to understand the world. Statistical methods are used throughout the natural and social sciences, in machine learning and artificial intelligence, and in engineering. Despite the ubiquitous use of statistics, its practitioners are perpetually accused of not actually understanding what they are doing. Statistics theory is, broadly speaking, the subject of what exactly we are doing when we apply statistical methods.\nWhile there are many possible ways to analyze data, most (but certainly not all) statistical methods are based on statistical modeling: treating the data as a realization of some random data-generating process with attributes, usually called parameters, that are a priori unknown. The goal of the analyst, then, is to use the data to draw accurate inferences about these parameters and/or to make accurate predictions about future data. If the modeling has been done well (a very big “if”) then these unknown parameters will correspond well to whatever real-world questions initially motivated the analysis. Applied statistics courses like Stat 215A and B delve deeply into questions about how to ensure that the statistical modeling exercise successfully captures something interesting about reality.\nIn this course we will instead focus on how the analyst can use the data most effectively within the context of a given mathematical setup. We will discuss the structure of statistical models, how to evaluate the quality of a statistical method, how to design good methods for new settings, and the philosophy of Bayesian vs frequentist modeling frameworks. We will cover estimation, confidence intervals, and hypothesis testing, in parametric and nonparametric methods, in finite samples and asymptotic regimes.\n\n\nTopics\nStatistical decision theory (frequentist and Bayesian), exponential families, point estimation, hypothesis testing, resampling methods, estimating equations and maximum likelihood, empirical Bayes, large-sample theory, high-dimensional testing, multiple testing and selective inference.\n\n\nPrerequisites\nThe course prerequisites are linear algebra, analysis, probability, and statistics.\n\n\nRelationship of Stat 210A to other Berkeley courses\nStat 210A focuses on classical statistical contexts: either inference in finite samples, or in fixed-dimensional asymptotic regimes. Stat 210B (for which 210A is a prerequisite) is more technical and covers topics like empirical process theory and high-dimensional statistics.\nBerkeley’s graduate course on Statistical Learning Theory (CS 281A / Stat 241A) is also very popular and has some overlap in its topics. Roughly speaking, it is more tilted toward “machine learning”: it spends more time on topics in predictive modeling (i.e. classification and regression, which are covered in Stat 215A), optimization, and signal processing, but spends less time on inferential questions and (I believe) does not cover topics like hypothesis testing, confidence intervals, and causal inference. Both courses cover estimation and exponential families."
+  },
+  {
+    "objectID": "syllabus.html#references",
+    "href": "syllabus.html#references",
+    "title": "Syllabus",
+    "section": "References",
+    "text": "References\nThe online notes for this course are self-contained, however it can be helpful to see a different presentation in the following supplementary texts (all links are to public websites or Springer Link):\n\nKeener, Theoretical Statistics: Topics for a Core Course, Springer 2010.\nLehmann and Casella, Theory of Point Estimation, Springer 1998.\nLehmann and Romano, Testing Statistical Hypotheses, Springer 2005.\nCandes, Stats 300C Lecture notes, Stanford 2016.\n\nUndergrad-level review texts for prerequisites:\n\nAxler, Linear Algebra Done Right\nAbbott, Understanding Analysis\nAdhikari & Pitman, Probability for Data Science"
+  },
+  {
+    "objectID": "syllabus.html#grading",
+    "href": "syllabus.html#grading",
+    "title": "Syllabus",
+    "section": "Grading",
+    "text": "Grading\nYour final grade is based on:\n\nWeekly problem sets: 50%\nFinal exam: 50%\n\nWhile the final exam is nominally one half of the grade, it is quite difficult and typically accounts for most of the variance in final course grades. If you take shortcuts on the homework, you will save yourself time in the short run, but you may do quite poorly on the exam!\nLateness policy: Homework must be submitted to Gradescope at 11:59pm on Wednesday nights. Late problem sets will not be accepted, but we will drop your lowest two grades.\nCollaboration policy: For homework, you are welcome to work with each other or consult articles or textbooks online, with the following caveats:\n\nYou must write up your solution by yourself.\nYou may NOT consult any solutions from previous iterations of this course.\nNo generative AI allowed for problem sets.\nIf you collaborate or use any resources other than course texts, you must acknowledge your collaborators and the resources you used.\n\nAcademic integrity: You are expected to abide by the Berkeley honor code. Violating the collaboration policy, or cheating in any other way, will result in a failing grade for the semester and you will be reported to the University Office of Student Conduct."
+  },
+  {
+    "objectID": "syllabus.html#accommodations",
+    "href": "syllabus.html#accommodations",
+    "title": "Syllabus",
+    "section": "Accommodations",
+    "text": "Accommodations\nStudents with disabilities: Please see me as soon as possible if you need particular accommodations, and we will work out the necessary arrangements.\nScheduling conflicts: Please notify me in writing by the second week of the term about any known or potential extracurricular conflicts (such as religious observances, graduate or medical school interviews, or team activities). I will try my best to help you with making accommodations, but cannot promise them in all cases. In the event there is no mutually-workable solution, you may be dropped from the class."
   },
   {
     "objectID": "calendar.html",
     "href": "calendar.html",
     "title": "Calendar",
     "section": "",
-    "text": "We can just embed the iframe html:",
-    "crumbs": [
-      "Calendar"
-    ]
+    "text": "We can just embed the iframe html:"
   }
 ]
