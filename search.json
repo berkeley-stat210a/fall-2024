@@ -46,7 +46,7 @@
     "href": "units/unit3.html#evaluated-python-code-chunk-with-a-plot",
     "title": "Unit 3: More",
     "section": "Evaluated Python code chunk, with a plot",
-    "text": "Evaluated Python code chunk, with a plot\n\n\nCode\nimport numpy as np\nx = np.random.normal(size=100)\nimport matplotlib.pyplot as plt\nplt.hist(x)\nplt.show()\nnp.mean(x)\n\n\n\n\n\n-0.09282655623431875"
+    "text": "Evaluated Python code chunk, with a plot\n\n\nCode\nimport numpy as np\nx = np.random.normal(size=100)\nimport matplotlib.pyplot as plt\nplt.hist(x)\nplt.show()\nnp.mean(x)\n\n\n\n\n\n-0.04367339374561691"
   },
   {
     "objectID": "units/unit3.html#latex",
@@ -438,7 +438,7 @@
     "href": "units/unit1.html#evaluated-python-code-chunk-with-a-plot",
     "title": "Unit 1: Intro",
     "section": "Evaluated Python code chunk, with a plot",
-    "text": "Evaluated Python code chunk, with a plot\n\n\nCode\nimport numpy as np\nx = np.random.normal(size=100)\nimport matplotlib.pyplot as plt\nplt.hist(x)\nplt.show()\nnp.mean(x)\n\n\n\n\n\n0.03866450649660297"
+    "text": "Evaluated Python code chunk, with a plot\n\n\nCode\nimport numpy as np\nx = np.random.normal(size=100)\nimport matplotlib.pyplot as plt\nplt.hist(x)\nplt.show()\nnp.mean(x)\n\n\n\n\n\n-0.10729664182100629"
   },
   {
     "objectID": "units/unit1.html#latex",
@@ -487,7 +487,7 @@
     "href": "syllabus.html#course-information",
     "title": "Syllabus",
     "section": "Course information",
-    "text": "Course information\n\nInstructors\n\nPrimary Instructor Prof. Will Fithian\n\nOffice Hours: TBD\nEmail: wfithian@berkeley.edu\n\nGSI Dohyeong Ki\n\nOffice Hours: TBD\nEmail: dohyeong_ki@berkeley.edu\n\n\n\n\nCourse schedule\n\nLectures: TuTh 11-12:30, Evans 60\nRecitation sections: Every second F 11am-12pm, location TBD, beginning week 2\nFinal exam review: TBD\nFinal exam: Wed December 18, 8-11am\n\n\n\nCourse communications\n\nLecture videos and homework solutions at [https://bcourses.berkeley.edu bCourses]\nEmail policy: You can email me or Dohyeong about administrative questions, with “[Stat 210A]” in the subject line. No math over email, please.\nEd page for announcements and technical discussion (no homework spoilers!)\nGradescope for turning in homework"
+    "text": "Course information\n\nInstructors\n\nPrimary Instructor Prof. Will Fithian\n\nOffice Hours: Tuesday 3:30-4:30pm on Zoom, Thursday 9:30-10:30am in Evans 301\nEmail: wfithian@berkeley.edu\n\nGSI Dohyeong Ki\n\nOffice Hours: Wednesday 9-10am, Friday 4:30-5:30pm (location TBD)\nEmail: dohyeong_ki@berkeley.edu\n\n\n\n\nCourse schedule\n\nLectures: Tuesday and Thursday 11am-12:30pm, Evans 60\nRecitation sections: Every second F 3:30-4:30pm (location TBD), starting September 6\nElection week:\n\nBlanket 2-day extension on homework 9 (due Friday November 8, 11:59pm)\n\nThanksgiving week:\n\nTuesday November 26: lecture 11-12:30 on Zoom, 3:30-4:30 OH on Zoom\nNo lecture Thursday November 28\nNo in-person office hours\n\nFinal exam review: (a.k.a. last recitation section) Friday, December\nFinal exam: Wed December 18, 8-11am\n\n\n\nCourse communications\n\nLecture videos and homework solutions at [https://bcourses.berkeley.edu bCourses]\nEmail policy: You can email me or Dohyeong about administrative questions, with “[Stat 210A]” in the subject line. No math over email, please.\nEd page for announcements and technical discussion (no homework spoilers!)\nGradescope for turning in homework"
   },
   {
     "objectID": "syllabus.html#about-stat-210a",
@@ -508,13 +508,13 @@
     "href": "syllabus.html#grading",
     "title": "Syllabus",
     "section": "Grading",
-    "text": "Grading\nYour final grade is based on:\n\nWeekly problem sets: 50%\nFinal exam: 50%\n\nLateness policy: Homework must be submitted to Gradescope at 11:59pm on Wednesday nights. Late problem sets will not be accepted, but we will drop your lowest two grades.\nCollaboration policy: For homework, you are welcome to work with each other or consult articles or textbooks online, with the following caveats:\n\nYou must write up your solution by yourself.\nYou may NOT consult any solutions from previous iterations of this course.\nNo generative AI allowed for problem sets.\nIf you collaborate or use any resources other than course texts, you must acknowledge your collaborators and the resources you used.\n\nAcademic integrity: You are expected to abide by the Berkeley honor code. Violating the collaboration policy, or cheating in any other way, will result in a failing grade for the semester and you will be reported to the University Office of Student Conduct.\nWhile the final exam is nominally one half of the grade, it is quite difficult and typically accounts for most of the variance in final course grades. If you take shortcuts on the homework, you will save yourself time in the short run, but you may do quite poorly on the final.\n\n\n\nHomework and final exam grades for Fall 2023, with letter grade cutoffs"
+    "text": "Grading\nYour final grade is based on:\n\nWeekly problem sets: 50%\nFinal exam: 50%\n\nLateness policy: Homework must be submitted to Gradescope at 11:59pm on Wednesday nights. Late problem sets will not be accepted, but we will drop your lowest two grades.\nCollaboration policy: For homework, you are welcome to work with each other or consult articles or textbooks online, with the following caveats:\n\nYou must write up your solution by yourself.\nYou may NOT consult any solutions from previous iterations of this course.\nNo generative AI allowed for problem sets.\nIf you collaborate or use any resources other than course texts, you must acknowledge your collaborators and the resources you used.\n\nAcademic integrity: You are expected to abide by the Berkeley honor code. Violating the collaboration policy, or cheating in any other way, will result in a failing grade for the semester and you will be reported to the University Office of Student Conduct.\nWhile the final exam is nominally one half of the grade, it is quite difficult and typically accounts for most of the variance in final course grades. If you take shortcuts on the homework, you will save yourself time in the short run, but you may do quite poorly on the final.\n\n\n\nHomework and final exam grades for a recent semester, with letter grade cutoffs"
   },
   {
     "objectID": "syllabus.html#accommodations",
     "href": "syllabus.html#accommodations",
     "title": "Syllabus",
     "section": "Accommodations",
-    "text": "Accommodations\nStudents with disabilities: Please see me as soon as possible if you need particular accommodations, and we will work out the necessary arrangements.\nScheduling conflicts: Please notify me in writing by the second week of the term about any known or potential extracurricular conflicts (such as religious observances, graduate or medical school interviews, or team activities). I will try my best to help you with making accommodations, but cannot promise them in all cases. In the event there is no mutually-workable solution, you may be dropped from the class."
+    "text": "Accommodations\nStudents with disabilities: Please see me as soon as possible if you need particular accommodations, and we will work out the necessary arrangements.\nScheduling conflicts: Please notify me in writing by the second week of the semester about any known or potential extracurricular conflicts (such as religious observances, graduate or medical school interviews, or team activities). I will try my best to help you with making accommodations, but cannot promise them in all cases. In the event there is no mutually-workable solution, you may be dropped from the class.\nExam accommodations: If you need accommodations on the final exam due to disability, or unavoidable travel or time conflict, please fill out the exam exam accommodation form by Friday, October 4 so that I can make arrangements. To ensure exam integrity I much prefer for all students to take the exam in Berkeley at the regularly scheduled time (8am December 18th), but will try to work with you if you have a conflict."
   }
 ]
