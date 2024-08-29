@@ -46,7 +46,7 @@
     "href": "units/unit3.html#evaluated-python-code-chunk-with-a-plot",
     "title": "Unit 3: More",
     "section": "Evaluated Python code chunk, with a plot",
-    "text": "Evaluated Python code chunk, with a plot\n\n\nCode\nimport numpy as np\nx = np.random.normal(size=100)\nimport matplotlib.pyplot as plt\nplt.hist(x)\nplt.show()\nnp.mean(x)\n\n\n\n\n\n0.02842647826381281"
+    "text": "Evaluated Python code chunk, with a plot\n\n\nCode\nimport numpy as np\nx = np.random.normal(size=100)\nimport matplotlib.pyplot as plt\nplt.hist(x)\nplt.show()\nnp.mean(x)\n\n\n\n\n\n0.15439823416423015"
   },
   {
     "objectID": "units/unit3.html#latex",
@@ -900,14 +900,14 @@
     "href": "index.html",
     "title": "Statistics 210a: Theoretical Statistics",
     "section": "",
-    "text": "Under construction"
+    "text": "Course enrollment for undergraduates\n\n\n\nIf you are an undergraduate who wants to take this course, please fill out the permission code request form to let me know about your background. Anyone considering taking the course is encouraged to read the frequently asked questions regarding preparation and review materials."
   },
   {
     "objectID": "index.html#schedule",
     "href": "index.html#schedule",
     "title": "Statistics 210a: Theoretical Statistics",
     "section": "Schedule",
-    "text": "Schedule\nHere we use Quarto’s EJS templating.\nFor a style similar to that of Stat 20, modify index.qmd to point to assets/{schedule-alt.ejs,buttons-alt.ejs} and to {schedule-alt.yml,buttons-alt.yml} and _quarto.yml to point to assets/styles-alt.scss.\n\n\n   Week 1\n   \n   \n   \n   \n           \n           Aug 29:\n           Lecture 1 Introduction\n                \n                  Handwritten notes\n                \n           \n   \n   \n   Week 2\n   \n   \n   \n   \n           \n           Sep 3:\n           Lecture 2 Probability\n                \n                  Handwritten notes\n                \n           \n           \n           Sep 5:\n           Lecture 3 Decision theory\n                \n                  Handwritten notes\n                \n           \n           \n           Sep 6:\n           Recitation 1 Probability review\n                \n                  Handwritten notes\n                \n           \n   \n   \n   Week 3\n   \n   \n   \n   \n           \n           Sep 10:\n           Lecture 4 Estimation\n                \n                  Handwritten notes\n                \n           \n           \n           Sep 11:\n           Homework 1 Homework 1 due 11:59pm\n                \n                  LaTeX template\n                \n           \n           \n           Sep 12:\n           Lecture 5 Sufficiency\n                \n                  Handwritten notes\n                \n           \n   \n   \n   Week 17\n   \n   \n   \n   \n           \n           Dec 18:\n           Exam  Final Exam, 8-11am\n                \n           \n   \n   \n\nNo matching items"
+    "text": "Schedule\n\n\n   Week 1\n   \n   \n   \n   \n           \n           Aug 29:\n           Lecture 1 Introduction\n                \n                  Handwritten notes\n                \n           \n   \n   \n   Week 2\n   \n   \n   \n   \n           \n           Sep 3:\n           Lecture 2 Probability\n                \n                  Handwritten notes\n                \n           \n           \n           Sep 5:\n           Lecture 3 Decision theory\n                \n                  Handwritten notes\n                \n           \n           \n           Sep 6:\n           Recitation 1 Probability review\n                \n                  Handwritten notes\n                \n           \n   \n   \n   Week 3\n   \n   \n   \n   \n           \n           Sep 10:\n           Lecture 4 Estimation\n                \n                  Handwritten notes\n                \n           \n           \n           Sep 11:\n           Homework 1 Homework 1 due 11:59pm\n                \n                  LaTeX template\n                \n           \n           \n           Sep 12:\n           Lecture 5 Sufficiency\n                \n                  Handwritten notes\n                \n           \n   \n   \n   Week 17\n   \n   \n   \n   \n           \n           Dec 18:\n           Exam  Final Exam, 8-11am\n                \n           \n   \n   \n\nNo matching items"
   },
   {
     "objectID": "units/unit2.html",
@@ -949,7 +949,7 @@
     "href": "units/unit1.html#evaluated-python-code-chunk-with-a-plot",
     "title": "Unit 1: Intro",
     "section": "Evaluated Python code chunk, with a plot",
-    "text": "Evaluated Python code chunk, with a plot\n\n\nCode\nimport numpy as np\nx = np.random.normal(size=100)\nimport matplotlib.pyplot as plt\nplt.hist(x)\nplt.show()\nnp.mean(x)\n\n\n\n\n\n-0.1326276863453903"
+    "text": "Evaluated Python code chunk, with a plot\n\n\nCode\nimport numpy as np\nx = np.random.normal(size=100)\nimport matplotlib.pyplot as plt\nplt.hist(x)\nplt.show()\nnp.mean(x)\n\n\n\n\n\n-0.023651098888038055"
   },
   {
     "objectID": "units/unit1.html#latex",
