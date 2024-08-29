@@ -6,8 +6,9 @@
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
+<meta name="dcterms.date" content="2023-10-05">
 
-<title>Unit 3: More</title>
+<title>Minimax Estimation</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -19,40 +20,6 @@ ul.task-list li input[type="checkbox"] {
   width: 0.8em;
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
-}
-/* CSS for syntax highlighting */
-pre > code.sourceCode { white-space: pre; position: relative; }
-pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
-pre > code.sourceCode > span:empty { height: 1.2em; }
-.sourceCode { overflow: visible; }
-code.sourceCode > span { color: inherit; text-decoration: inherit; }
-div.sourceCode { margin: 1em 0; }
-pre.sourceCode { margin: 0; }
-@media screen {
-div.sourceCode { overflow: auto; }
-}
-@media print {
-pre > code.sourceCode { white-space: pre-wrap; }
-pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
-}
-pre.numberSource code
-  { counter-reset: source-line 0; }
-pre.numberSource code > span
-  { position: relative; left: -4em; counter-increment: source-line; }
-pre.numberSource code > span > a:first-child::before
-  { content: counter(source-line);
-    position: relative; left: -1em; text-align: right; vertical-align: baseline;
-    border: none; display: inline-block;
-    -webkit-touch-callout: none; -webkit-user-select: none;
-    -khtml-user-select: none; -moz-user-select: none;
-    -ms-user-select: none; user-select: none;
-    padding: 0 4px; width: 4em;
-  }
-pre.numberSource { margin-left: 3em;  padding-left: 4px; }
-div.sourceCode
-  {   }
-@media screen {
-pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
 }
 </style>
 
@@ -237,22 +204,35 @@ gtag('config', 'G-B8G2041HSB', { 'anonymize_ip': true});
     <h2 id="toc-title">On this page</h2>
    
   <ul>
-  <li><a href="#evaluated-python-code-chunk-with-a-plot" id="toc-evaluated-python-code-chunk-with-a-plot" class="nav-link active" data-scroll-target="#evaluated-python-code-chunk-with-a-plot">Evaluated Python code chunk, with a plot</a></li>
-  <li><a href="#latex" id="toc-latex" class="nav-link" data-scroll-target="#latex">LaTeX</a></li>
-  <li><a href="#latex-macro" id="toc-latex-macro" class="nav-link" data-scroll-target="#latex-macro">LaTeX macro</a></li>
+  <li><a href="#minimax-risk-estimator" id="toc-minimax-risk-estimator" class="nav-link active" data-scroll-target="#minimax-risk-estimator"><span class="header-section-number">1</span> Minimax Risk Estimator</a>
+  <ul class="collapse">
+  <li><a href="#definition-of-minimax-risk" id="toc-definition-of-minimax-risk" class="nav-link" data-scroll-target="#definition-of-minimax-risk"><span class="header-section-number">1.1</span> Definition of Minimax Risk</a></li>
+  <li><a href="#game-theory-interpretation" id="toc-game-theory-interpretation" class="nav-link" data-scroll-target="#game-theory-interpretation"><span class="header-section-number">1.2</span> Game Theory Interpretation</a></li>
+  </ul></li>
+  <li><a href="#least-favorable-priors" id="toc-least-favorable-priors" class="nav-link" data-scroll-target="#least-favorable-priors"><span class="header-section-number">2</span> Least Favorable Priors</a>
+  <ul class="collapse">
+  <li><a href="#theorem" id="toc-theorem" class="nav-link" data-scroll-target="#theorem"><span class="header-section-number">2.1</span> Theorem</a></li>
+  <li><a href="#example-binomial" id="toc-example-binomial" class="nav-link" data-scroll-target="#example-binomial"><span class="header-section-number">2.2</span> Example: Binomial</a></li>
+  </ul></li>
+  <li><a href="#least-favorable-sequence" id="toc-least-favorable-sequence" class="nav-link" data-scroll-target="#least-favorable-sequence"><span class="header-section-number">3</span> Least Favorable Sequence</a>
+  <ul class="collapse">
+  <li><a href="#theorem-1" id="toc-theorem-1" class="nav-link" data-scroll-target="#theorem-1"><span class="header-section-number">3.1</span> Theorem</a></li>
+  <li><a href="#basic-picture" id="toc-basic-picture" class="nav-link" data-scroll-target="#basic-picture"><span class="header-section-number">3.2</span> Basic Picture</a></li>
+  </ul></li>
+  <li><a href="#practical-applications" id="toc-practical-applications" class="nav-link" data-scroll-target="#practical-applications"><span class="header-section-number">4</span> Practical Applications</a>
+  <ul class="collapse">
+  <li><a href="#approach-1-near-optimal-estimators" id="toc-approach-1-near-optimal-estimators" class="nav-link" data-scroll-target="#approach-1-near-optimal-estimators"><span class="header-section-number">4.1</span> Approach 1: Near-optimal Estimators</a></li>
+  <li><a href="#approach-2-problem-hardness" id="toc-approach-2-problem-hardness" class="nav-link" data-scroll-target="#approach-2-problem-hardness"><span class="header-section-number">4.2</span> Approach 2: Problem Hardness</a></li>
+  </ul></li>
   </ul>
-<div class="quarto-alternate-formats"><h2>Other Formats</h2><ul><li><a href="unit3.pdf"><i class="bi bi-file-pdf"></i>PDF</a></li></ul></div></nav>
+</nav>
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
-$$
-\newcommand{\trans}{^\mathsf{T}} 
-\newcommand{\eps}{\epsilon}
-$$
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<div class="quarto-title-block"><div><h1 class="title">Unit 3: More</h1><button type="button" class="btn code-tools-button dropdown-toggle" id="quarto-code-tools-menu" data-bs-toggle="dropdown" aria-expanded="false"><i class="bi"></i> Code</button><ul class="dropdown-menu dropdown-menu-end" aria-labelelledby="quarto-code-tools-menu"><li><a id="quarto-show-all-code" class="dropdown-item" href="javascript:void(0)" role="button">Show All Code</a></li><li><a id="quarto-hide-all-code" class="dropdown-item" href="javascript:void(0)" role="button">Hide All Code</a></li><li><hr class="dropdown-divider"></li><li><a id="quarto-view-source" class="dropdown-item" href="javascript:void(0)" role="button">View Source</a></li></ul></div></div>
+<h1 class="title">Minimax Estimation</h1>
 </div>
 
 
@@ -260,6 +240,12 @@ $$
 <div class="quarto-title-meta">
 
     
+    <div>
+    <div class="quarto-title-meta-heading">Published</div>
+    <div class="quarto-title-meta-contents">
+      <p class="date">October 5, 2023</p>
+    </div>
+  </div>
   
     
   </div>
@@ -267,45 +253,146 @@ $$
 
 </header>
 
-<p>This is an example of using qmd as the source document with pdf as one target. I’ve taken out the qmd stuff that doesn’t seem to render to pdf.</p>
-<section id="evaluated-python-code-chunk-with-a-plot" class="level2">
-<h2 class="anchored" data-anchor-id="evaluated-python-code-chunk-with-a-plot">Evaluated Python code chunk, with a plot</h2>
-<div class="cell" data-execution_count="1">
-<details open="">
-<summary>Code</summary>
-<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>x <span class="op">=</span> np.random.normal(size<span class="op">=</span><span class="dv">100</span>)</span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
-<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>plt.hist(x)</span>
-<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>plt.show()</span>
-<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>np.mean(x)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</details>
-<div class="cell-output cell-output-display">
-<p><img src="unit3_files/figure-html/cell-2-output-1.png" width="579" height="411"></p>
-</div>
-<div class="cell-output cell-output-display" data-execution_count="1">
-<pre><code>0.02842647826381281</code></pre>
-</div>
-</div>
-</section>
-<section id="latex" class="level2">
-<h2 class="anchored" data-anchor-id="latex">LaTeX</h2>
 <p><span class="math display">\[
-\theta = \int_0^\infty f(x,\theta)d\theta
+\newcommand{\cB}{\mathcal{B}}
+\newcommand{\cF}{\mathcal{F}}
+\newcommand{\cN}{\mathcal{N}}
+\newcommand{\cP}{\mathcal{P}}
+\newcommand{\cX}{\mathcal{X}}
+\newcommand{\EE}{\mathbb{E}}
+\newcommand{\PP}{\mathbb{P}}
+\newcommand{\RR}{\mathbb{R}}
+\newcommand{\ZZ}{\mathbb{Z}}
+\newcommand{\td}{\,\textrm{d}}
+\newcommand{\simiid}{\stackrel{\textrm{i.i.d.}}{\sim}}
+\newcommand{\eqas}{\stackrel{\textrm{a.s.}}{=}}
+\newcommand{\eqPas}{\stackrel{\cP\textrm{-a.s.}}{=}}
+\newcommand{\eqmuas}{\stackrel{\mu\textrm{-a.s.}}{=}}
+\newcommand{\eqD}{\stackrel{D}{=}}
+\newcommand{\indep}{\perp\!\!\!\!\perp}
+\DeclareMathOperator*{\minz}{minimize\;}
+\newcommand{\Var}{\textnormal{Var}}
+\newcommand{\Cov}{\textnormal{Cov}}
+\newcommand{\Corr}{\textnormal{Corr}}
 \]</span></p>
+<section id="minimax-risk-estimator" class="level2" data-number="1">
+<h2 data-number="1" class="anchored" data-anchor-id="minimax-risk-estimator"><span class="header-section-number">1</span> Minimax Risk Estimator</h2>
+<section id="definition-of-minimax-risk" class="level3" data-number="1.1">
+<h3 data-number="1.1" class="anchored" data-anchor-id="definition-of-minimax-risk"><span class="header-section-number">1.1</span> Definition of Minimax Risk</h3>
+<p>The last idea for choosing an estimator: worst-case risk.</p>
+<p>Minimize <span class="math inline">\(\sup_\theta R(\theta, \delta)\)</span></p>
+<p>The minimum achievable sup risk is called the minimax risk of the estimation problem:</p>
+<p><span class="math display">\[r = \inf_\delta \sup_\theta R(\theta, \delta)\]</span></p>
+<p>An estimator <span class="math inline">\(\delta\)</span> is called minimax if it achieves the minimax risk, i.e.,</p>
+<p><span class="math display">\[\sup_\theta R(\theta, \delta) = r\]</span></p>
 </section>
-<section id="latex-macro" class="level2">
-<h2 class="anchored" data-anchor-id="latex-macro">LaTeX macro</h2>
-<blockquote class="blockquote">
-<p><strong>Warning</strong>: need to look back at this as having <code>include-before-body</code> in the yaml causes extra space at top of page.</p>
-</blockquote>
-<p><span class="math display">\[
-A = X \trans Y
-\]</span></p>
+<section id="game-theory-interpretation" class="level3" data-number="1.2">
+<h3 data-number="1.2" class="anchored" data-anchor-id="game-theory-interpretation"><span class="header-section-number">1.2</span> Game Theory Interpretation</h3>
+<ol type="1">
+<li>Analyst chooses estimator <span class="math inline">\(\delta\)</span></li>
+<li>Nature chooses parameter <span class="math inline">\(\theta\)</span> to maximize risk</li>
+</ol>
+<p>Note: Nature chooses <span class="math inline">\(\theta\)</span> adversarially, not <span class="math inline">\(X\)</span>.</p>
+<p>Compare to Bayes where Nature chooses prior from a known distribution (Nature plays a specific mixed strategy).</p>
+<p>We will look for Nature’s Nash equilibrium strategy.</p>
+</section>
+</section>
+<section id="least-favorable-priors" class="level2" data-number="2">
+<h2 data-number="2" class="anchored" data-anchor-id="least-favorable-priors"><span class="header-section-number">2</span> Least Favorable Priors</h2>
+<p>Minimax is closely related to Bayes.</p>
+<p>Key observation: average case risk ≤ worst case risk</p>
+<p>For proper prior <span class="math inline">\(\pi\)</span>, the Bayes risk is:</p>
+<p><span class="math display">\[r(\pi) = \int_\Theta R(\theta, \delta_\pi) d\pi(\theta)\]</span></p>
+<p><span class="math display">\[\leq \int_\Theta \sup_\theta R(\theta, \delta) d\pi(\theta) = \sup_\theta R(\theta, \delta)\]</span></p>
+<p>If <span class="math inline">\(\delta_\pi\)</span> is Bayes, then <span class="math inline">\(r(\pi) = \inf_\delta \int_\Theta R(\theta, \delta) d\pi(\theta)\)</span></p>
+<p>Bayes risk of any Bayes estimator lower bounds <span class="math inline">\(r\)</span>.</p>
+<p>Least favorable prior <span class="math inline">\(\pi\)</span> gives best lower bound: <span class="math inline">\(r(\pi) = \sup_\pi r(\pi)\)</span></p>
+<p>Sup risk of any estimator upper bounds <span class="math inline">\(r\)</span>:</p>
+<p><span class="math display">\[\sup_\theta R(\theta, \delta) \geq r \geq \sup_\pi r(\pi)\]</span></p>
+<p>Can exhibit minimax est. &amp; LF prior by finding <span class="math inline">\(\pi\)</span> and <span class="math inline">\(\delta\)</span> that collapse these inequalities.</p>
+<section id="theorem" class="level3" data-number="2.1">
+<h3 data-number="2.1" class="anchored" data-anchor-id="theorem"><span class="header-section-number">2.1</span> Theorem</h3>
+<p>If <span class="math inline">\(R(\delta_\pi) = \sup_\theta R(\theta, \delta_\pi)\)</span> with Bayes estimator <span class="math inline">\(\delta_\pi\)</span>, then:</p>
+<ol type="a">
+<li><span class="math inline">\(\delta_\pi\)</span> is minimax</li>
+<li>If <span class="math inline">\(\delta_\pi\)</span> is unique Bayes (up to <span class="math inline">\(\pi\)</span>-a.e.), it is unique minimax</li>
+<li><span class="math inline">\(\pi\)</span> is least favorable</li>
+</ol>
+<p>Proof:</p>
+<ol type="a">
+<li><p>Any other <span class="math inline">\(\delta\)</span>: <span class="math display">\[\sup_\theta R(\theta, \delta) \geq \int R(\theta, \delta) d\pi(\theta) \geq\]</span> <span class="math display">\[\int R(\theta, \delta_\pi) d\pi(\theta) = r(\pi) = \sup_\theta R(\theta, \delta_\pi)\]</span> <span class="math inline">\(r\)</span> is minimax risk, <span class="math inline">\(\delta_\pi\)</span> is minimax</p></li>
+<li><p>Replace <span class="math inline">\(\geq\)</span> with <span class="math inline">\(=\)</span> in 2nd inequality ⟹ <span class="math inline">\(\delta = \delta_\pi\)</span> <span class="math inline">\(\pi\)</span>-a.e.</p></li>
+<li><p>Any other prior <span class="math inline">\(\pi'\)</span>: <span class="math display">\[\inf_\delta r(\pi') \leq \int R(\theta, \delta_\pi) d\pi'(\theta)\]</span> <span class="math display">\[\leq \sup_\theta R(\theta, \delta_\pi) = r(\pi)\]</span></p></li>
+</ol>
+<p>The above theorem gives a checkable condition: does avg risk = sup risk?</p>
+<p>Note: If <span class="math inline">\(R(\theta, \delta_\pi)\)</span> is constant, it doesn’t prove anything.</p>
+<ol type="1">
+<li><span class="math inline">\(R(\theta, \delta_\pi)\)</span> is constant</li>
+<li>Also <span class="math inline">\(R(\theta, \delta_\pi) = \sup_\theta R(\theta, \delta_\pi) = r(\pi)\)</span></li>
+</ol>
+</section>
+<section id="example-binomial" class="level3" data-number="2.2">
+<h3 data-number="2.2" class="anchored" data-anchor-id="example-binomial"><span class="header-section-number">2.2</span> Example: Binomial</h3>
+<p><span class="math inline">\(X \sim \text{Binom}(n, \theta)\)</span>, estimate <span class="math inline">\(\theta\)</span> with squared error</p>
+<p>Try Beta(<span class="math inline">\(\alpha, \beta\)</span>), hope to get one with constant risk</p>
+<p><span class="math display">\[\delta_\pi(X) = \frac{X + \alpha}{n + \alpha + \beta}\]</span></p>
+<p><span class="math display">\[R(\theta, \delta_\pi) = \mathbb{E}[\theta^2] - \mathbb{E}[\delta_\pi(X)^2] + \text{Var}(\delta_\pi(X))\]</span></p>
+<p><span class="math display">\[= \theta - \frac{(\alpha + \beta + n + 1)(\alpha + n\theta)^2}{(\alpha + \beta + n)^2(n + \alpha + \beta + 1)} + \frac{(\alpha + n\theta)(\beta + n(1-\theta))}{(\alpha + \beta + n)^2(n + \alpha + \beta + 1)}\]</span></p>
+<p>Set <span class="math inline">\(\alpha + \beta = n + 2\)</span>, <span class="math inline">\(\alpha + \beta = \frac{n}{2}\)</span></p>
+<p><span class="math display">\[\beta = \frac{n+2}{2}, \alpha = \frac{n+2}{2}\]</span></p>
+<p>Beta(<span class="math inline">\(\frac{n+2}{2}, \frac{n+2}{2}\)</span>) is LF, <span class="math inline">\(\delta_\pi\)</span> is minimax</p>
+<p>We got lucky.</p>
+<p>Question: Why so much prior weight on <span class="math inline">\(\theta \approx \frac{1}{2}\)</span>?</p>
+</section>
+</section>
+<section id="least-favorable-sequence" class="level2" data-number="3">
+<h2 data-number="3" class="anchored" data-anchor-id="least-favorable-sequence"><span class="header-section-number">3</span> Least Favorable Sequence</h2>
+<p>Sometimes there is no least favorable prior, e.g., if parameter space isn’t compact.</p>
+<p><span class="math inline">\(X \sim N(\theta, 1)\)</span>: LF prior should spread mass everywhere, but that is not a proper prior.</p>
+<p>Definition: A sequence <span class="math inline">\(\{\pi_n\}\)</span> is LF if <span class="math inline">\(r(\pi_n) \to \sup_\pi r(\pi)\)</span></p>
+<section id="theorem-1" class="level3" data-number="3.1">
+<h3 data-number="3.1" class="anchored" data-anchor-id="theorem-1"><span class="header-section-number">3.1</span> Theorem</h3>
+<p>Suppose <span class="math inline">\(\{\pi_n\}\)</span> is a prior sequence and <span class="math inline">\(\delta\)</span> satisfies <span class="math inline">\(\sup_\theta R(\theta, \delta) = \lim_n r(\pi_n)\)</span>. Then:</p>
+<ol type="a">
+<li><span class="math inline">\(\delta\)</span> is minimax</li>
+<li><span class="math inline">\(\{\pi_n\}\)</span> is LF</li>
+</ol>
+<p>Proof:</p>
+<ol type="a">
+<li><p>Other est. <span class="math inline">\(\delta'\)</span>. Then <span class="math inline">\(\forall n\)</span>: <span class="math display">\[\sup_\theta R(\theta, \delta') \geq \int R(\theta, \delta') d\pi_n(\theta) \geq r(\pi_n)\]</span> <span class="math display">\[\geq \lim_n r(\pi_n) = \sup_\theta R(\theta, \delta)\]</span></p></li>
+<li><p>Prior <span class="math inline">\(\pi\)</span>: <span class="math display">\[r(\pi) = \inf_\delta \int R(\theta, \delta) d\pi(\theta) \leq \int R(\theta, \delta) d\pi(\theta)\]</span> <span class="math display">\[\leq \sup_\theta R(\theta, \delta) = \lim_n r(\pi_n)\]</span></p></li>
+</ol>
+</section>
+<section id="basic-picture" class="level3" data-number="3.2">
+<h3 data-number="3.2" class="anchored" data-anchor-id="basic-picture"><span class="header-section-number">3.2</span> Basic Picture</h3>
+<ul>
+<li><span class="math inline">\(\sup_\theta R(\theta, \delta)\)</span> (generic <span class="math inline">\(\delta\)</span>)</li>
+<li><span class="math inline">\(\inf_\delta \sup_\theta R(\theta, \delta)\)</span> (minimax risk)</li>
+<li><span class="math inline">\(\sup_\pi r(\pi)\)</span> (if LF prior exists)</li>
+<li><span class="math inline">\(r(\pi)\)</span> (generic <span class="math inline">\(\pi\)</span>)</li>
+</ul>
+<p>If minimax est. exists: <span class="math inline">\(\inf_\delta \sup_\theta R(\theta, \delta) = \sup_\theta R(\theta, \delta^*)\)</span></p>
+<p>If LF prior exists: <span class="math inline">\(\sup_\pi r(\pi) = r(\pi^*)\)</span></p>
+</section>
+</section>
+<section id="practical-applications" class="level2" data-number="4">
+<h2 data-number="4" class="anchored" data-anchor-id="practical-applications"><span class="header-section-number">4</span> Practical Applications</h2>
+<p>Minimax estimators are very hard to find, but minimax bounds are often used in statistical theory to characterize hardness, especially lower bounds.</p>
+<section id="approach-1-near-optimal-estimators" class="level3" data-number="4.1">
+<h3 data-number="4.1" class="anchored" data-anchor-id="approach-1-near-optimal-estimators"><span class="header-section-number">4.1</span> Approach 1: Near-optimal Estimators</h3>
+<ol type="1">
+<li>Propose practical estimator <span class="math inline">\(\delta\)</span></li>
+<li>Find <span class="math inline">\(\pi\)</span> for which <span class="math inline">\(r(\pi)\)</span> close to <span class="math inline">\(\sup_\theta R(\theta, \delta)\)</span> (or same rate, or asymptotically)</li>
+<li>Conclude <span class="math inline">\(\delta\)</span> can’t be improved much</li>
+</ol>
+</section>
+<section id="approach-2-problem-hardness" class="level3" data-number="4.2">
+<h3 data-number="4.2" class="anchored" data-anchor-id="approach-2-problem-hardness"><span class="header-section-number">4.2</span> Approach 2: Problem Hardness</h3>
+<p>Quantify hardness of a problem by its minimax rate in some asymptotic regime.</p>
+<p>Caveat: A problem might be easy throughout most of parameter space but very hard in some bizarre corner we never encounter in practice.</p>
 
 
-<!-- -->
-
+</section>
 </section>
 
 </main> <!-- /main -->
@@ -388,57 +475,6 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     // clear code selection
     e.clearSelection();
   });
-  const viewSource = window.document.getElementById('quarto-view-source') ||
-                     window.document.getElementById('quarto-code-tools-source');
-  if (viewSource) {
-    const sourceUrl = viewSource.getAttribute("data-quarto-source-url");
-    viewSource.addEventListener("click", function(e) {
-      if (sourceUrl) {
-        // rstudio viewer pane
-        if (/\bcapabilities=\b/.test(window.location)) {
-          window.open(sourceUrl);
-        } else {
-          window.location.href = sourceUrl;
-        }
-      } else {
-        const modal = new bootstrap.Modal(document.getElementById('quarto-embedded-source-code-modal'));
-        modal.show();
-      }
-      return false;
-    });
-  }
-  function toggleCodeHandler(show) {
-    return function(e) {
-      const detailsSrc = window.document.querySelectorAll(".cell > details > .sourceCode");
-      for (let i=0; i<detailsSrc.length; i++) {
-        const details = detailsSrc[i].parentElement;
-        if (show) {
-          details.open = true;
-        } else {
-          details.removeAttribute("open");
-        }
-      }
-      const cellCodeDivs = window.document.querySelectorAll(".cell > .sourceCode");
-      const fromCls = show ? "hidden" : "unhidden";
-      const toCls = show ? "unhidden" : "hidden";
-      for (let i=0; i<cellCodeDivs.length; i++) {
-        const codeDiv = cellCodeDivs[i];
-        if (codeDiv.classList.contains(fromCls)) {
-          codeDiv.classList.remove(fromCls);
-          codeDiv.classList.add(toCls);
-        } 
-      }
-      return false;
-    }
-  }
-  const hideAllCode = window.document.getElementById("quarto-hide-all-code");
-  if (hideAllCode) {
-    hideAllCode.addEventListener("click", toggleCodeHandler(false));
-  }
-  const showAllCode = window.document.getElementById("quarto-show-all-code");
-  if (showAllCode) {
-    showAllCode.addEventListener("click", toggleCodeHandler(true));
-  }
   function tippyHover(el, contentFn) {
     const config = {
       allowHTML: true,
@@ -592,49 +628,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     }
   }
 });
-</script><div class="modal fade" id="quarto-embedded-source-code-modal" tabindex="-1" aria-labelledby="quarto-embedded-source-code-modal-label" aria-hidden="true"><div class="modal-dialog modal-dialog-scrollable"><div class="modal-content"><div class="modal-header"><h5 class="modal-title" id="quarto-embedded-source-code-modal-label">Source Code</h5><button class="btn-close" data-bs-dismiss="modal"></button></div><div class="modal-body"><div class="">
-<div class="sourceCode" id="cb3" data-shortcodes="false"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co">---</span></span>
-<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="an">title:</span><span class="co"> "Unit 3: More"</span></span>
-<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="an">format:</span></span>
-<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a><span class="co">  html:</span></span>
-<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a><span class="co">    code-fold: show</span></span>
-<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a><span class="co">    code-tools: true</span></span>
-<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a><span class="co">    include-before-body:</span></span>
-<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a><span class="co">     - file: macros.md</span></span>
-<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a><span class="co">  pdf: </span></span>
-<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a><span class="co">    include-before-body:</span></span>
-<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a><span class="co">     - file: macros.tex</span></span>
-<span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a><span class="co">---</span></span>
-<span id="cb3-13"><a href="#cb3-13" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-14"><a href="#cb3-14" aria-hidden="true" tabindex="-1"></a>This is an example of using qmd as the source document with pdf as one target. I've taken out the qmd stuff that doesn't seem to render to pdf.</span>
-<span id="cb3-15"><a href="#cb3-15" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-16"><a href="#cb3-16" aria-hidden="true" tabindex="-1"></a><span class="fu">## Evaluated Python code chunk, with a plot</span></span>
-<span id="cb3-17"><a href="#cb3-17" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-20"><a href="#cb3-20" aria-hidden="true" tabindex="-1"></a><span class="in">```{python}</span></span>
-<span id="cb3-21"><a href="#cb3-21" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
-<span id="cb3-22"><a href="#cb3-22" aria-hidden="true" tabindex="-1"></a>x <span class="op">=</span> np.random.normal(size<span class="op">=</span><span class="dv">100</span>)</span>
-<span id="cb3-23"><a href="#cb3-23" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
-<span id="cb3-24"><a href="#cb3-24" aria-hidden="true" tabindex="-1"></a>plt.hist(x)</span>
-<span id="cb3-25"><a href="#cb3-25" aria-hidden="true" tabindex="-1"></a>plt.show()</span>
-<span id="cb3-26"><a href="#cb3-26" aria-hidden="true" tabindex="-1"></a>np.mean(x)</span>
-<span id="cb3-27"><a href="#cb3-27" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb3-28"><a href="#cb3-28" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-29"><a href="#cb3-29" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-30"><a href="#cb3-30" aria-hidden="true" tabindex="-1"></a><span class="fu">## LaTeX</span></span>
-<span id="cb3-31"><a href="#cb3-31" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-32"><a href="#cb3-32" aria-hidden="true" tabindex="-1"></a>$$</span>
-<span id="cb3-33"><a href="#cb3-33" aria-hidden="true" tabindex="-1"></a>\theta = \int_0^\infty f(x,\theta)d\theta</span>
-<span id="cb3-34"><a href="#cb3-34" aria-hidden="true" tabindex="-1"></a>$$</span>
-<span id="cb3-35"><a href="#cb3-35" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-36"><a href="#cb3-36" aria-hidden="true" tabindex="-1"></a><span class="fu">## LaTeX macro</span></span>
-<span id="cb3-37"><a href="#cb3-37" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-38"><a href="#cb3-38" aria-hidden="true" tabindex="-1"></a><span class="at">&gt; **Warning**: need to look back at this as having </span><span class="in">`include-before-body`</span><span class="at"> in the yaml causes extra space at top of page.</span></span>
-<span id="cb3-39"><a href="#cb3-39" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-40"><a href="#cb3-40" aria-hidden="true" tabindex="-1"></a>$$</span>
-<span id="cb3-41"><a href="#cb3-41" aria-hidden="true" tabindex="-1"></a>A = X \trans Y</span>
-<span id="cb3-42"><a href="#cb3-42" aria-hidden="true" tabindex="-1"></a>$$</span>
-</code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div></div></div></div></div>
+</script>
 </div> <!-- /content -->
 
 

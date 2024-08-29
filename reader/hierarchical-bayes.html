@@ -6,8 +6,9 @@
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
+<meta name="dcterms.date" content="2023-09-28">
 
-<title>Unit 3: More</title>
+<title>Hierarchical Bayes, Markov Chain Monte Carlo, and Empirical Bayes</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -19,40 +20,6 @@ ul.task-list li input[type="checkbox"] {
   width: 0.8em;
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
-}
-/* CSS for syntax highlighting */
-pre > code.sourceCode { white-space: pre; position: relative; }
-pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
-pre > code.sourceCode > span:empty { height: 1.2em; }
-.sourceCode { overflow: visible; }
-code.sourceCode > span { color: inherit; text-decoration: inherit; }
-div.sourceCode { margin: 1em 0; }
-pre.sourceCode { margin: 0; }
-@media screen {
-div.sourceCode { overflow: auto; }
-}
-@media print {
-pre > code.sourceCode { white-space: pre-wrap; }
-pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
-}
-pre.numberSource code
-  { counter-reset: source-line 0; }
-pre.numberSource code > span
-  { position: relative; left: -4em; counter-increment: source-line; }
-pre.numberSource code > span > a:first-child::before
-  { content: counter(source-line);
-    position: relative; left: -1em; text-align: right; vertical-align: baseline;
-    border: none; display: inline-block;
-    -webkit-touch-callout: none; -webkit-user-select: none;
-    -khtml-user-select: none; -moz-user-select: none;
-    -ms-user-select: none; user-select: none;
-    padding: 0 4px; width: 4em;
-  }
-pre.numberSource { margin-left: 3em;  padding-left: 4px; }
-div.sourceCode
-  {   }
-@media screen {
-pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
 }
 </style>
 
@@ -237,22 +204,32 @@ gtag('config', 'G-B8G2041HSB', { 'anonymize_ip': true});
     <h2 id="toc-title">On this page</h2>
    
   <ul>
-  <li><a href="#evaluated-python-code-chunk-with-a-plot" id="toc-evaluated-python-code-chunk-with-a-plot" class="nav-link active" data-scroll-target="#evaluated-python-code-chunk-with-a-plot">Evaluated Python code chunk, with a plot</a></li>
-  <li><a href="#latex" id="toc-latex" class="nav-link" data-scroll-target="#latex">LaTeX</a></li>
-  <li><a href="#latex-macro" id="toc-latex-macro" class="nav-link" data-scroll-target="#latex-macro">LaTeX macro</a></li>
+  <li><a href="#hierarchical-bayes" id="toc-hierarchical-bayes" class="nav-link active" data-scroll-target="#hierarchical-bayes"><span class="header-section-number">1</span> Hierarchical Bayes</a>
+  <ul class="collapse">
+  <li><a href="#example-predicting-batting-averages" id="toc-example-predicting-batting-averages" class="nav-link" data-scroll-target="#example-predicting-batting-averages"><span class="header-section-number">1.1</span> Example: Predicting Batting Averages</a></li>
+  <li><a href="#gaussian-hierarchical-model" id="toc-gaussian-hierarchical-model" class="nav-link" data-scroll-target="#gaussian-hierarchical-model"><span class="header-section-number">1.2</span> Gaussian Hierarchical Model</a></li>
+  <li><a href="#graphical-form" id="toc-graphical-form" class="nav-link" data-scroll-target="#graphical-form"><span class="header-section-number">1.3</span> Graphical Form</a></li>
+  </ul></li>
+  <li><a href="#markov-chain-monte-carlo-mcmc" id="toc-markov-chain-monte-carlo-mcmc" class="nav-link" data-scroll-target="#markov-chain-monte-carlo-mcmc"><span class="header-section-number">2</span> Markov Chain Monte Carlo (MCMC)</a>
+  <ul class="collapse">
+  <li><a href="#definition-of-markov-chain" id="toc-definition-of-markov-chain" class="nav-link" data-scroll-target="#definition-of-markov-chain"><span class="header-section-number">2.1</span> Definition of Markov Chain</a></li>
+  <li><a href="#theory" id="toc-theory" class="nav-link" data-scroll-target="#theory"><span class="header-section-number">2.2</span> Theory</a></li>
+  </ul></li>
+  <li><a href="#gibbs-sampler" id="toc-gibbs-sampler" class="nav-link" data-scroll-target="#gibbs-sampler"><span class="header-section-number">3</span> Gibbs Sampler</a>
+  <ul class="collapse">
+  <li><a href="#gibbs-stationarity" id="toc-gibbs-stationarity" class="nav-link" data-scroll-target="#gibbs-stationarity"><span class="header-section-number">3.1</span> Gibbs Stationarity</a></li>
+  <li><a href="#implementation-details-matter" id="toc-implementation-details-matter" class="nav-link" data-scroll-target="#implementation-details-matter"><span class="header-section-number">3.2</span> Implementation Details Matter</a></li>
+  </ul></li>
+  <li><a href="#empirical-bayes" id="toc-empirical-bayes" class="nav-link" data-scroll-target="#empirical-bayes"><span class="header-section-number">4</span> Empirical Bayes</a></li>
   </ul>
-<div class="quarto-alternate-formats"><h2>Other Formats</h2><ul><li><a href="unit3.pdf"><i class="bi bi-file-pdf"></i>PDF</a></li></ul></div></nav>
+</nav>
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
-$$
-\newcommand{\trans}{^\mathsf{T}} 
-\newcommand{\eps}{\epsilon}
-$$
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<div class="quarto-title-block"><div><h1 class="title">Unit 3: More</h1><button type="button" class="btn code-tools-button dropdown-toggle" id="quarto-code-tools-menu" data-bs-toggle="dropdown" aria-expanded="false"><i class="bi"></i> Code</button><ul class="dropdown-menu dropdown-menu-end" aria-labelelledby="quarto-code-tools-menu"><li><a id="quarto-show-all-code" class="dropdown-item" href="javascript:void(0)" role="button">Show All Code</a></li><li><a id="quarto-hide-all-code" class="dropdown-item" href="javascript:void(0)" role="button">Hide All Code</a></li><li><hr class="dropdown-divider"></li><li><a id="quarto-view-source" class="dropdown-item" href="javascript:void(0)" role="button">View Source</a></li></ul></div></div>
+<h1 class="title">Hierarchical Bayes, Markov Chain Monte Carlo, and Empirical Bayes</h1>
 </div>
 
 
@@ -260,6 +237,12 @@ $$
 <div class="quarto-title-meta">
 
     
+    <div>
+    <div class="quarto-title-meta-heading">Published</div>
+    <div class="quarto-title-meta-contents">
+      <p class="date">September 28, 2023</p>
+    </div>
+  </div>
   
     
   </div>
@@ -267,44 +250,212 @@ $$
 
 </header>
 
-<p>This is an example of using qmd as the source document with pdf as one target. I’ve taken out the qmd stuff that doesn’t seem to render to pdf.</p>
-<section id="evaluated-python-code-chunk-with-a-plot" class="level2">
-<h2 class="anchored" data-anchor-id="evaluated-python-code-chunk-with-a-plot">Evaluated Python code chunk, with a plot</h2>
-<div class="cell" data-execution_count="1">
-<details open="">
-<summary>Code</summary>
-<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>x <span class="op">=</span> np.random.normal(size<span class="op">=</span><span class="dv">100</span>)</span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
-<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>plt.hist(x)</span>
-<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>plt.show()</span>
-<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>np.mean(x)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</details>
-<div class="cell-output cell-output-display">
-<p><img src="unit3_files/figure-html/cell-2-output-1.png" width="579" height="411"></p>
-</div>
-<div class="cell-output cell-output-display" data-execution_count="1">
-<pre><code>0.02842647826381281</code></pre>
-</div>
-</div>
-</section>
-<section id="latex" class="level2">
-<h2 class="anchored" data-anchor-id="latex">LaTeX</h2>
 <p><span class="math display">\[
-\theta = \int_0^\infty f(x,\theta)d\theta
+\newcommand{\cB}{\mathcal{B}}
+\newcommand{\cF}{\mathcal{F}}
+\newcommand{\cN}{\mathcal{N}}
+\newcommand{\cP}{\mathcal{P}}
+\newcommand{\cX}{\mathcal{X}}
+\newcommand{\EE}{\mathbb{E}}
+\newcommand{\PP}{\mathbb{P}}
+\newcommand{\RR}{\mathbb{R}}
+\newcommand{\ZZ}{\mathbb{Z}}
+\newcommand{\td}{\,\textrm{d}}
+\newcommand{\simiid}{\stackrel{\textrm{i.i.d.}}{\sim}}
+\newcommand{\eqas}{\stackrel{\textrm{a.s.}}{=}}
+\newcommand{\eqPas}{\stackrel{\cP\textrm{-a.s.}}{=}}
+\newcommand{\eqmuas}{\stackrel{\mu\textrm{-a.s.}}{=}}
+\newcommand{\eqD}{\stackrel{D}{=}}
+\newcommand{\indep}{\perp\!\!\!\!\perp}
+\DeclareMathOperator*{\minz}{minimize\;}
+\newcommand{\Var}{\textnormal{Var}}
+\newcommand{\Cov}{\textnormal{Cov}}
+\newcommand{\Corr}{\textnormal{Corr}}
+\]</span></p>
+<section id="hierarchical-bayes" class="level2" data-number="1">
+<h2 data-number="1" class="anchored" data-anchor-id="hierarchical-bayes"><span class="header-section-number">1</span> Hierarchical Bayes</h2>
+<p>The full power of Bayes is realized in large, complex problems with repeat structure, allowing us to pool information across many observations.</p>
+<section id="example-predicting-batting-averages" class="level3" data-number="1.1">
+<h3 data-number="1.1" class="anchored" data-anchor-id="example-predicting-batting-averages"><span class="header-section-number">1.1</span> Example: Predicting Batting Averages</h3>
+<p>Predict a batter’s true batting average from <span class="math inline">\(n_i\)</span> at-bats, <span class="math inline">\(X_i\)</span> hits: <span class="math inline">\(X_i|\theta_i \sim \text{Binom}(n_i, \theta_i)\)</span></p>
+<p>Pool info across players <span class="math inline">\(i=1,\ldots,m\)</span> via hierarchical model:</p>
+<p><span class="math display">\[
+\begin{aligned}
+\alpha, \beta &amp;\sim \pi_0(\alpha, \beta) \quad \text{(hyperprior)} \\
+\theta_i|\alpha, \beta &amp;\sim \text{Beta}(\alpha, \beta), \quad i=1,\ldots,m \\
+X_i|\theta_i, n_i &amp;\sim \text{Binom}(n_i, \theta_i), \quad i=1,\ldots,m
+\end{aligned}
+\]</span></p>
+<p><span class="math display">\[
+\mathbb{E}[\theta_i|X] = \mathbb{E}[\mathbb{E}[\theta_i|X, \alpha, \beta]|X] = \mathbb{E}\left[\frac{\alpha + X_i}{\alpha + \beta + n_i}|X\right]
+\]</span></p>
+<p>Use all <span class="math inline">\(X_1,\ldots,X_m\)</span> to learn a good prior on <span class="math inline">\(\theta_i\)</span>.</p>
+<p>Note: There is always an equivalent model where we marginalize over <span class="math inline">\(\alpha, \beta\)</span> and just write a more complicated prior on <span class="math inline">\(\theta\)</span>. The hierarchical version may give better intuition or computational strategies.</p>
+</section>
+<section id="gaussian-hierarchical-model" class="level3" data-number="1.2">
+<h3 data-number="1.2" class="anchored" data-anchor-id="gaussian-hierarchical-model"><span class="header-section-number">1.2</span> Gaussian Hierarchical Model</h3>
+<p><span class="math display">\[
+\begin{aligned}
+\theta_i &amp;\sim N(\mu, \tau^2), \quad i=1,\ldots,d \\
+X_i|\theta_i &amp;\sim N(\theta_i, \sigma^2), \quad i=1,\ldots,d
+\end{aligned}
+\]</span></p>
+<p>Posterior mean:</p>
+<p><span class="math display">\[
+\mathbb{E}[\theta_i|X] = \mathbb{E}[\mathbb{E}[\theta_i|X, \mu, \tau^2]|X] = \mathbb{E}\left[\frac{\tau^2}{\tau^2 + \sigma^2}X_i + \frac{\sigma^2}{\tau^2 + \sigma^2}\mu|X\right]
+\]</span></p>
+<p>Linear shrinkage estimator: Bayes optimal shrinkage estimated from data.</p>
+<p>Likelihood for <span class="math inline">\(\mu, \tau^2\)</span> (marginalizing over <span class="math inline">\(\theta_i\)</span>):</p>
+<p><span class="math display">\[
+\begin{aligned}
+X_i|\mu, \tau^2 &amp;\sim N(\mu, \tau^2 + \sigma^2) \\
+\bar{X} &amp;\sim N(\mu, \frac{\tau^2 + \sigma^2}{n}) \\
+S^2 = \frac{1}{n-1}\sum_{i=1}^n (X_i - \bar{X})^2 &amp;\sim \frac{\tau^2 + \sigma^2}{n-1}\chi^2_{n-1}
+\end{aligned}
+\]</span></p>
+<p>Define <span class="math inline">\(B = \tau^2 + \sigma^2\)</span> (amount of shrinkage):</p>
+<p><span class="math display">\[
+\delta(x) = \mathbb{E}[\mathbb{E}[\theta_i|X, B]|X] = \mathbb{E}\left[\frac{B - \sigma^2}{B}X_i + \frac{\sigma^2}{B}\bar{X}|X\right]
+\]</span></p>
+<p>Estimated from entire data set:</p>
+<p><span class="math display">\[
+\begin{aligned}
+\bar{X} &amp;\sim N(\mu, \frac{B}{n}) \\
+(n-1)S^2 &amp;\sim B\chi^2_{n-1}
+\end{aligned}
+\]</span></p>
+<p>Conjugate prior (scale mixture):</p>
+<p><span class="math display">\[
+\pi(B|\lambda, \nu) \propto B^{-\nu/2-2}\exp(-\frac{\lambda}{2B})
+\]</span></p>
+<p><span class="math display">\[
+B|X \sim \text{InvGamma}\left(\frac{n+\nu}{2}, \frac{\lambda + (n-1)S^2}{2}\right)
+\]</span></p>
+<p><span class="math display">\[
+\mathbb{E}\left[\frac{1}{B}|X\right] = \frac{n+\nu}{\lambda + (n-1)S^2}
+\]</span></p>
+<p><span class="math display">\[
+\delta_i(x) = \frac{(n-3)S^2}{(n-1)S^2 + \lambda}X_i + \frac{\lambda + 2S^2}{(n-1)S^2 + \lambda}\bar{X}
+\]</span></p>
+<p>Pseudo-data: <span class="math inline">\(\nu, \lambda\)</span> with <span class="math inline">\(\nu \approx 2, \lambda \approx \nu\sigma^2\)</span></p>
+<p>Might want to truncate prior to <span class="math inline">\([\sigma^2, \infty)\)</span> if <span class="math inline">\(\lambda\)</span> small.</p>
+</section>
+<section id="graphical-form" class="level3" data-number="1.3">
+<h3 data-number="1.3" class="anchored" data-anchor-id="graphical-form"><span class="header-section-number">1.3</span> Graphical Form</h3>
+<p>For hyperparameters <span class="math inline">\(\alpha, \beta\)</span>:</p>
+<pre><code>     α, β
+    /  |  \
+   θ₁  θ₂  θ₃
+   |   |   |
+   X₁  X₂  X₃</code></pre>
+<p>These are the distributions associated with a factor for each vertex in a DAG <span class="math inline">\((V,E)\)</span>:</p>
+<p><span class="math display">\[
+p(z) = \prod_{i=1}^{|V|} p(z_i|z_{\text{pa}(i)})
+\]</span></p>
+<p>For this model:</p>
+<p><span class="math display">\[
+p(\alpha, \beta, \theta_1,\ldots,\theta_m, X_1,\ldots,X_m) = p(\alpha, \beta)\prod_{i=1}^m p(\theta_i|\alpha, \beta)p(X_i|\theta_i)
 \]</span></p>
 </section>
-<section id="latex-macro" class="level2">
-<h2 class="anchored" data-anchor-id="latex-macro">LaTeX macro</h2>
-<blockquote class="blockquote">
-<p><strong>Warning</strong>: need to look back at this as having <code>include-before-body</code> in the yaml causes extra space at top of page.</p>
-</blockquote>
+</section>
+<section id="markov-chain-monte-carlo-mcmc" class="level2" data-number="2">
+<h2 data-number="2" class="anchored" data-anchor-id="markov-chain-monte-carlo-mcmc"><span class="header-section-number">2</span> Markov Chain Monte Carlo (MCMC)</h2>
+<p>Hierarchical models are very flexible, but often create big computational headaches:</p>
 <p><span class="math display">\[
-A = X \trans Y
+\pi(\theta|x) = \frac{p(x|\theta)\pi(\theta)}{\int p(x|\theta)\pi(\theta)d\theta}
 \]</span></p>
+<p>Numerator is usually nice, denominator often intractable.</p>
+<p>Computational strategy: Set up a Markov chain with stationary distribution <span class="math inline">\(\pi(\theta|x)\)</span>, run it to get approximate samples from <span class="math inline">\(\pi(\theta|x)\)</span>.</p>
+<section id="definition-of-markov-chain" class="level3" data-number="2.1">
+<h3 data-number="2.1" class="anchored" data-anchor-id="definition-of-markov-chain"><span class="header-section-number">2.1</span> Definition of Markov Chain</h3>
+<p>A stationary Markov chain with transition kernel <span class="math inline">\(Q(y|x)\)</span> and initial distribution <span class="math inline">\(\pi_0(x)\)</span> is a sequence of r.v.’s <span class="math inline">\(X_0, X_1, \ldots\)</span> where <span class="math inline">\(X_0 \sim \pi_0\)</span> and:</p>
+<p><span class="math display">\[
+P(X_{t+1} \in A | X_t, \ldots, X_0) = P(X_{t+1} \in A | X_t) = \int_A Q(y|X_t) dy
+\]</span></p>
+<p>Marginal distribution of <span class="math inline">\(X_t\)</span>:</p>
+<p><span class="math display">\[
+\pi_t(y) = P(X_t \in A) = \int Q(y|x)\pi_{t-1}(x) dx
+\]</span></p>
+<p>This is a directed graphical model: <span class="math inline">\(X_0 \to X_1 \to X_2 \to \cdots\)</span></p>
+<p>If <span class="math inline">\(\pi(y) = \int Q(y|x)\pi(x) dx\)</span>, we say <span class="math inline">\(\pi\)</span> is a stationary distribution for <span class="math inline">\(Q\)</span>.</p>
+<p>A sufficient condition is detailed balance:</p>
+<p><span class="math display">\[
+\pi(x)Q(y|x) = \pi(y)Q(x|y)
+\]</span></p>
+<p><span class="math display">\[
+\int_y Q(y|x)\pi(x) dx = \int_y \pi(y)Q(x|y) dy = \pi(y)
+\]</span></p>
+<p>A Markov chain with detailed balance is called reversible: <span class="math inline">\(X_{t-1} | X_t \sim X_{t+1} | X_t\)</span> if <span class="math inline">\(\pi_t = \pi\)</span>.</p>
+</section>
+<section id="theory" class="level3" data-number="2.2">
+<h3 data-number="2.2" class="anchored" data-anchor-id="theory"><span class="header-section-number">2.2</span> Theory</h3>
+<p>If a Markov chain with stationary distribution <span class="math inline">\(\pi\)</span> is:</p>
+<ol type="1">
+<li>Irreducible: <span class="math inline">\(\forall x,y, \exists n: P(X_n = y | X_0 = x) &gt; 0\)</span></li>
+<li>Aperiodic: <span class="math inline">\(\forall x, \gcd\{n &gt; 0: P(X_n = x | X_0 = x) &gt; 0\} = 1\)</span></li>
+</ol>
+<p>Then <span class="math inline">\(\pi_t \to \pi\)</span> in TV distance, regardless of <span class="math inline">\(\pi_0\)</span> (chain “forgets” <span class="math inline">\(\pi_0\)</span>).</p>
+<p>Strategy: Find <span class="math inline">\(Q\)</span> with stationary distribution <span class="math inline">\(\pi(\theta|x)\)</span>, start at any <span class="math inline">\(X_0\)</span>, run chain for a long time, then <span class="math inline">\(X_t\)</span> is approximately a sample from posterior for large <span class="math inline">\(t\)</span>.</p>
+</section>
+</section>
+<section id="gibbs-sampler" class="level2" data-number="3">
+<h2 data-number="3" class="anchored" data-anchor-id="gibbs-sampler"><span class="header-section-number">3</span> Gibbs Sampler</h2>
+<p>For parameter vector <span class="math inline">\(\theta = (\theta_1, \ldots, \theta_d)\)</span>:</p>
+<p>Algorithm: 1. Initialize <span class="math inline">\(\theta^{(0)}\)</span> 2. For <span class="math inline">\(t = 1, \ldots, T\)</span>: For <span class="math inline">\(j = 1, \ldots, d\)</span>: Sample <span class="math inline">\(\theta_j^{(t)} \sim p(\theta_j | \theta_{-j}^{(t-1)}, X)\)</span> Record <span class="math inline">\(\theta^{(t)}\)</span></p>
+<p>Variations: - Update one random coordinate <span class="math inline">\(J \sim \text{Unif}(1,\ldots,d)\)</span> - Update coordinates in random order</p>
+<p>Advantage for hierarchical priors: only need to sample low-dimensional conditional distributions:</p>
+<p><span class="math display">\[
+p(\theta_i | \theta_{-i}, X, \alpha) \propto p(\theta_i | \theta_{\text{pa}(i)}) \prod_{j \in \text{ch}(i)} p(\theta_j | \theta_i)
+\]</span></p>
+<p>Especially easy if using conjugate priors at all levels; often can be parallelized.</p>
+<section id="gibbs-stationarity" class="level3" data-number="3.1">
+<h3 data-number="3.1" class="anchored" data-anchor-id="gibbs-stationarity"><span class="header-section-number">3.1</span> Gibbs Stationarity</h3>
+<p>Claim: If <span class="math inline">\(\pi_t = \pi(\theta|X)\)</span>, then <span class="math inline">\(\pi_{t+1} = \pi(\theta|X)\)</span>.</p>
+<p>Proof (sketch): Consider updating only one fixed coordinate <span class="math inline">\(j\)</span>: <span class="math inline">\(\theta_j^{(t+1)} \sim p(\theta_j | \theta_{-j}^{(t)}, X)\)</span> If <span class="math inline">\(\theta^{(t)} \sim \pi(\theta|X)\)</span>, then <span class="math inline">\(\theta^{(t+1)} \sim \pi(\theta|X)\)</span> Updating any coordinate preserves posterior distribution Updating coordinates in any order also does</p>
+<p>In theory: Pick initialization and valid kernel <span class="math inline">\(Q\)</span>, sample long enough, get <span class="math inline">\(\theta^{(t)} \sim \pi(\theta|X)\)</span> Do it again <span class="math inline">\(N\)</span> more times, get <span class="math inline">\(N\)</span> samples from <span class="math inline">\(\pi(\theta|X)\)</span></p>
+<p>In practice: How do we know we’ve sampled long enough? - Plot <span class="math inline">\(\theta_i^{(t)}\)</span> vs <span class="math inline">\(t\)</span>, show how fast the MC mixes - Look for <span class="math inline">\(\hat{R} = \frac{\text{between-chain variance}}{\text{within-chain variance}} \approx 1\)</span></p>
+<p>These methods are GOOD, NOT GREAT. Can be deceived, especially for bimodal posteriors.</p>
+<p>Better approach: Burn-in then convergence. Estimate posterior based on <span class="math inline">\(\theta^{(B+1)}, \ldots, \theta^{(B+N)}\)</span></p>
+<p>For function <span class="math inline">\(f(\theta)\)</span>: <span class="math inline">\(\hat{\mu}_f = \frac{1}{N} \sum_{t=B+1}^{B+N} f(\theta^{(t)})\)</span></p>
+</section>
+<section id="implementation-details-matter" class="level3" data-number="3.2">
+<h3 data-number="3.2" class="anchored" data-anchor-id="implementation-details-matter"><span class="header-section-number">3.2</span> Implementation Details Matter</h3>
+<p>Example: <span class="math display">\[
+\begin{aligned}
+\theta &amp;\sim N(0, 100) \\
+X_i | \theta &amp;\sim N(\theta, 0.1^2), \quad i=1,\ldots,n
+\end{aligned}
+\]</span></p>
+<p>Posterior: <span class="math inline">\(\theta | X \sim N\left(\frac{\bar{X}/0.01^2}{n/0.01^2 + 1/100}, \frac{1}{n/0.01^2 + 1/100}\right)\)</span></p>
+<p>Gibbs sampler: 1. <span class="math inline">\(\mathbb{E}[\theta|X] = 8.9, \text{SD}(\theta|X) = 0.1\)</span> 2. <span class="math inline">\(\theta^{(t+1)} | X, \theta^{(t)} \sim N(8.9, 0.1^2)\)</span></p>
+<p>Gibbs takes a long time to mix.</p>
+<p>Better parameterization: <span class="math display">\[
+\begin{aligned}
+B &amp;= \theta - \bar{X} \\
+\theta &amp;= B + \bar{X}
+\end{aligned}
+\]</span></p>
+<p><span class="math inline">\(B|X \sim N(0, 0.1^2)\)</span></p>
+<p>Gibbs: Directly sampling from posterior</p>
+</section>
+</section>
+<section id="empirical-bayes" class="level2" data-number="4">
+<h2 data-number="4" class="anchored" data-anchor-id="empirical-bayes"><span class="header-section-number">4</span> Empirical Bayes</h2>
+<p>Back to Gaussian hierarchical model:</p>
+<p><span class="math display">\[
+\begin{aligned}
+\theta_i &amp;\sim N(\mu, \tau^2) \\
+X_i | \theta_i &amp;\sim N(\theta_i, \sigma^2)
+\end{aligned}
+\]</span></p>
+<p><span class="math display">\[
+\mathbb{E}[\theta_i | X, B] = \frac{B - \sigma^2}{B}X_i + \frac{\sigma^2}{B}\bar{X}, \quad B = \tau^2 + \sigma^2
+\]</span></p>
+<p>For any reasonable prior: <span class="math inline">\(B | X \approx \frac{1}{N}\sum_{i=1}^N (X_i - \bar{X})^2\)</span></p>
+<p>If prior doesn’t matter much, why use one? Could just estimate <span class="math inline">\(B\)</span> from data, however we want.</p>
+<p>A minimax estimator is <span class="math inline">\(B = \sigma^2 + \frac{1}{N}\sum_{i=1}^N (X_i - \bar{X})^2\)</span></p>
+<p>Called Empirical Bayes: a hybrid approach in which hyperparameters are treated as fixed, others treated as random.</p>
 
-
-<!-- -->
 
 </section>
 
@@ -388,57 +539,6 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     // clear code selection
     e.clearSelection();
   });
-  const viewSource = window.document.getElementById('quarto-view-source') ||
-                     window.document.getElementById('quarto-code-tools-source');
-  if (viewSource) {
-    const sourceUrl = viewSource.getAttribute("data-quarto-source-url");
-    viewSource.addEventListener("click", function(e) {
-      if (sourceUrl) {
-        // rstudio viewer pane
-        if (/\bcapabilities=\b/.test(window.location)) {
-          window.open(sourceUrl);
-        } else {
-          window.location.href = sourceUrl;
-        }
-      } else {
-        const modal = new bootstrap.Modal(document.getElementById('quarto-embedded-source-code-modal'));
-        modal.show();
-      }
-      return false;
-    });
-  }
-  function toggleCodeHandler(show) {
-    return function(e) {
-      const detailsSrc = window.document.querySelectorAll(".cell > details > .sourceCode");
-      for (let i=0; i<detailsSrc.length; i++) {
-        const details = detailsSrc[i].parentElement;
-        if (show) {
-          details.open = true;
-        } else {
-          details.removeAttribute("open");
-        }
-      }
-      const cellCodeDivs = window.document.querySelectorAll(".cell > .sourceCode");
-      const fromCls = show ? "hidden" : "unhidden";
-      const toCls = show ? "unhidden" : "hidden";
-      for (let i=0; i<cellCodeDivs.length; i++) {
-        const codeDiv = cellCodeDivs[i];
-        if (codeDiv.classList.contains(fromCls)) {
-          codeDiv.classList.remove(fromCls);
-          codeDiv.classList.add(toCls);
-        } 
-      }
-      return false;
-    }
-  }
-  const hideAllCode = window.document.getElementById("quarto-hide-all-code");
-  if (hideAllCode) {
-    hideAllCode.addEventListener("click", toggleCodeHandler(false));
-  }
-  const showAllCode = window.document.getElementById("quarto-show-all-code");
-  if (showAllCode) {
-    showAllCode.addEventListener("click", toggleCodeHandler(true));
-  }
   function tippyHover(el, contentFn) {
     const config = {
       allowHTML: true,
@@ -592,49 +692,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     }
   }
 });
-</script><div class="modal fade" id="quarto-embedded-source-code-modal" tabindex="-1" aria-labelledby="quarto-embedded-source-code-modal-label" aria-hidden="true"><div class="modal-dialog modal-dialog-scrollable"><div class="modal-content"><div class="modal-header"><h5 class="modal-title" id="quarto-embedded-source-code-modal-label">Source Code</h5><button class="btn-close" data-bs-dismiss="modal"></button></div><div class="modal-body"><div class="">
-<div class="sourceCode" id="cb3" data-shortcodes="false"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co">---</span></span>
-<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="an">title:</span><span class="co"> "Unit 3: More"</span></span>
-<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="an">format:</span></span>
-<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a><span class="co">  html:</span></span>
-<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a><span class="co">    code-fold: show</span></span>
-<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a><span class="co">    code-tools: true</span></span>
-<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a><span class="co">    include-before-body:</span></span>
-<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a><span class="co">     - file: macros.md</span></span>
-<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a><span class="co">  pdf: </span></span>
-<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a><span class="co">    include-before-body:</span></span>
-<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a><span class="co">     - file: macros.tex</span></span>
-<span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a><span class="co">---</span></span>
-<span id="cb3-13"><a href="#cb3-13" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-14"><a href="#cb3-14" aria-hidden="true" tabindex="-1"></a>This is an example of using qmd as the source document with pdf as one target. I've taken out the qmd stuff that doesn't seem to render to pdf.</span>
-<span id="cb3-15"><a href="#cb3-15" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-16"><a href="#cb3-16" aria-hidden="true" tabindex="-1"></a><span class="fu">## Evaluated Python code chunk, with a plot</span></span>
-<span id="cb3-17"><a href="#cb3-17" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-20"><a href="#cb3-20" aria-hidden="true" tabindex="-1"></a><span class="in">```{python}</span></span>
-<span id="cb3-21"><a href="#cb3-21" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
-<span id="cb3-22"><a href="#cb3-22" aria-hidden="true" tabindex="-1"></a>x <span class="op">=</span> np.random.normal(size<span class="op">=</span><span class="dv">100</span>)</span>
-<span id="cb3-23"><a href="#cb3-23" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
-<span id="cb3-24"><a href="#cb3-24" aria-hidden="true" tabindex="-1"></a>plt.hist(x)</span>
-<span id="cb3-25"><a href="#cb3-25" aria-hidden="true" tabindex="-1"></a>plt.show()</span>
-<span id="cb3-26"><a href="#cb3-26" aria-hidden="true" tabindex="-1"></a>np.mean(x)</span>
-<span id="cb3-27"><a href="#cb3-27" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb3-28"><a href="#cb3-28" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-29"><a href="#cb3-29" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-30"><a href="#cb3-30" aria-hidden="true" tabindex="-1"></a><span class="fu">## LaTeX</span></span>
-<span id="cb3-31"><a href="#cb3-31" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-32"><a href="#cb3-32" aria-hidden="true" tabindex="-1"></a>$$</span>
-<span id="cb3-33"><a href="#cb3-33" aria-hidden="true" tabindex="-1"></a>\theta = \int_0^\infty f(x,\theta)d\theta</span>
-<span id="cb3-34"><a href="#cb3-34" aria-hidden="true" tabindex="-1"></a>$$</span>
-<span id="cb3-35"><a href="#cb3-35" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-36"><a href="#cb3-36" aria-hidden="true" tabindex="-1"></a><span class="fu">## LaTeX macro</span></span>
-<span id="cb3-37"><a href="#cb3-37" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-38"><a href="#cb3-38" aria-hidden="true" tabindex="-1"></a><span class="at">&gt; **Warning**: need to look back at this as having </span><span class="in">`include-before-body`</span><span class="at"> in the yaml causes extra space at top of page.</span></span>
-<span id="cb3-39"><a href="#cb3-39" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-40"><a href="#cb3-40" aria-hidden="true" tabindex="-1"></a>$$</span>
-<span id="cb3-41"><a href="#cb3-41" aria-hidden="true" tabindex="-1"></a>A = X \trans Y</span>
-<span id="cb3-42"><a href="#cb3-42" aria-hidden="true" tabindex="-1"></a>$$</span>
-</code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div></div></div></div></div>
+</script>
 </div> <!-- /content -->
 
 

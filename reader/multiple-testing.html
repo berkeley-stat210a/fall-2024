@@ -1,0 +1,659 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.3.450">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="dcterms.date" content="2023-11-30">
+
+<title>Multiple Testing: FWER, FDR, and Related Procedures</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+</style>
+
+
+<script src="../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../">
+<script src="../site_libs/quarto-html/quarto.js"></script>
+<script src="../site_libs/quarto-html/popper.min.js"></script>
+<script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "sidebar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "start",
+  "type": "textbox",
+  "limit": 20,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+<script async="" src="https://www.googletagmanager.com/gtag/js?id=G-B8G2041HSB"></script>
+
+<script type="text/javascript">
+
+window.dataLayer = window.dataLayer || [];
+function gtag(){dataLayer.push(arguments);}
+gtag('js', new Date());
+gtag('config', 'G-B8G2041HSB', { 'anonymize_ip': true});
+</script>
+
+  <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<link rel="stylesheet" href="../assets/styles.css">
+</head>
+
+<body class="nav-sidebar docked">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+  <nav class="quarto-secondary-nav">
+    <div class="container-fluid d-flex">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+        <i class="bi bi-layout-text-sidebar-reverse"></i>
+      </button>
+      <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item">
+      Stat 210a
+      </li></ol></nav>
+      <a class="flex-grow-1" role="button" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+      </a>
+      <button type="button" class="btn quarto-search-button" aria-label="" onclick="window.quartoOpenSearch();">
+        <i class="bi bi-search"></i>
+      </button>
+    </div>
+  </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal sidebar-navigation docked overflow-auto">
+    <div class="pt-lg-2 mt-2 text-left sidebar-header sidebar-header-stacked">
+      <a href="../index.html" class="sidebar-logo-link">
+      <img src="../assets/stat_bear.png" alt="" class="sidebar-logo py-0 d-lg-inline d-none">
+      </a>
+    <div class="sidebar-title mb-0 py-0">
+      <a href="../">Stat 210a</a> 
+        <div class="sidebar-tools-main">
+    <a href="https://github.com/berkeley-stat210a/fall-2024" rel="" title="" class="quarto-navigation-tool px-1" aria-label=""><i class="bi bi-github"></i></a>
+</div>
+    </div>
+      </div>
+        <div class="mt-2 flex-shrink-0 align-items-center">
+        <div class="sidebar-search">
+        <div id="quarto-search" class="" title="Search"></div>
+        </div>
+        </div>
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Home / Schedule</span></a>
+  </div>
+</li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" aria-expanded="true">
+ <span class="menu-text">Course Logistics</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../faq.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Frequently Asked Questions</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../syllabus.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Syllabus</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../syllabus.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Syllabus</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../calendar.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Calendar</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../handwritten-notes.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Handwritten notes</span></a>
+  </div>
+</li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" aria-expanded="true">
+ <span class="menu-text">Course Reader</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../reader/introduction.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Course introduction</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../reader/measure-theory-basics.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Measure Theory Basics</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../license.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">License</span></a>
+  </div>
+</li>
+    </ul>
+    </div>
+</nav>
+<div id="quarto-sidebar-glass" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass"></div>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#multiple-testing" id="toc-multiple-testing" class="nav-link active" data-scroll-target="#multiple-testing"><span class="header-section-number">1</span> Multiple Testing</a>
+  <ul class="collapse">
+  <li><a href="#setup" id="toc-setup" class="nav-link" data-scroll-target="#setup"><span class="header-section-number">1.1</span> Setup</a></li>
+  </ul></li>
+  <li><a href="#family-wise-error-rate-fwer" id="toc-family-wise-error-rate-fwer" class="nav-link" data-scroll-target="#family-wise-error-rate-fwer"><span class="header-section-number">2</span> Family-wise Error Rate (FWER)</a></li>
+  <li><a href="#bonferroni-correction" id="toc-bonferroni-correction" class="nav-link" data-scroll-target="#bonferroni-correction"><span class="header-section-number">3</span> Bonferroni Correction</a></li>
+  <li><a href="#testing-with-dependence" id="toc-testing-with-dependence" class="nav-link" data-scroll-target="#testing-with-dependence"><span class="header-section-number">4</span> Testing with Dependence</a>
+  <ul class="collapse">
+  <li><a href="#example-scheffés-s-method" id="toc-example-scheffés-s-method" class="nav-link" data-scroll-target="#example-scheffés-s-method"><span class="header-section-number">4.1</span> Example: Scheffé’s S-method</a></li>
+  </ul></li>
+  <li><a href="#deduced-inference" id="toc-deduced-inference" class="nav-link" data-scroll-target="#deduced-inference"><span class="header-section-number">5</span> Deduced Inference</a>
+  <ul class="collapse">
+  <li><a href="#example-simultaneous-intervals-for-multivariate-gaussian" id="toc-example-simultaneous-intervals-for-multivariate-gaussian" class="nav-link" data-scroll-target="#example-simultaneous-intervals-for-multivariate-gaussian"><span class="header-section-number">5.1</span> Example: Simultaneous Intervals for Multivariate Gaussian</a></li>
+  <li><a href="#example-linear-regression-n-obs-d-variables" id="toc-example-linear-regression-n-obs-d-variables" class="nav-link" data-scroll-target="#example-linear-regression-n-obs-d-variables"><span class="header-section-number">5.2</span> Example: Linear Regression (n obs, d variables)</a></li>
+  </ul></li>
+  <li><a href="#false-discovery-rate-fdr" id="toc-false-discovery-rate-fdr" class="nav-link" data-scroll-target="#false-discovery-rate-fdr"><span class="header-section-number">6</span> False Discovery Rate (FDR)</a></li>
+  <li><a href="#benjamini-hochberg-procedure" id="toc-benjamini-hochberg-procedure" class="nav-link" data-scroll-target="#benjamini-hochberg-procedure"><span class="header-section-number">7</span> Benjamini-Hochberg Procedure</a>
+  <ul class="collapse">
+  <li><a href="#b-h-as-empirical-bayes" id="toc-b-h-as-empirical-bayes" class="nav-link" data-scroll-target="#b-h-as-empirical-bayes"><span class="header-section-number">7.1</span> B-H as Empirical Bayes</a></li>
+  </ul></li>
+  <li><a href="#fdr-control" id="toc-fdr-control" class="nav-link" data-scroll-target="#fdr-control"><span class="header-section-number">8</span> FDR Control</a>
+  <ul class="collapse">
+  <li><a href="#remarks" id="toc-remarks" class="nav-link" data-scroll-target="#remarks"><span class="header-section-number">8.1</span> Remarks</a></li>
+  </ul></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">Multiple Testing: FWER, FDR, and Related Procedures</h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+    <div>
+    <div class="quarto-title-meta-heading">Published</div>
+    <div class="quarto-title-meta-contents">
+      <p class="date">November 30, 2023</p>
+    </div>
+  </div>
+  
+    
+  </div>
+  
+
+</header>
+
+<p><span class="math display">\[
+\newcommand{\cB}{\mathcal{B}}
+\newcommand{\cF}{\mathcal{F}}
+\newcommand{\cN}{\mathcal{N}}
+\newcommand{\cP}{\mathcal{P}}
+\newcommand{\cX}{\mathcal{X}}
+\newcommand{\EE}{\mathbb{E}}
+\newcommand{\PP}{\mathbb{P}}
+\newcommand{\RR}{\mathbb{R}}
+\newcommand{\ZZ}{\mathbb{Z}}
+\newcommand{\td}{\,\textrm{d}}
+\newcommand{\simiid}{\stackrel{\textrm{i.i.d.}}{\sim}}
+\newcommand{\eqas}{\stackrel{\textrm{a.s.}}{=}}
+\newcommand{\eqPas}{\stackrel{\cP\textrm{-a.s.}}{=}}
+\newcommand{\eqmuas}{\stackrel{\mu\textrm{-a.s.}}{=}}
+\newcommand{\eqD}{\stackrel{D}{=}}
+\newcommand{\indep}{\perp\!\!\!\!\perp}
+\DeclareMathOperator*{\minz}{minimize\;}
+\newcommand{\Var}{\textnormal{Var}}
+\newcommand{\Cov}{\textnormal{Cov}}
+\newcommand{\Corr}{\textnormal{Corr}}
+\]</span></p>
+<section id="multiple-testing" class="level2" data-number="1">
+<h2 data-number="1" class="anchored" data-anchor-id="multiple-testing"><span class="header-section-number">1</span> Multiple Testing</h2>
+<p>In many testing problems, we want to test many hypotheses at a time, e.g.:</p>
+<ul>
+<li>Test <span class="math inline">\(H_0: \beta_j = 0\)</span> for <span class="math inline">\(j = 1,\ldots,d\)</span> in linear regression</li>
+<li>Test whether each of 20K single nucleotide polymorphisms (SNPs) is associated with a given phenotype (e.g., diabetes, schizophrenia)</li>
+<li>Test whether each of 2000 website tweaks affect user engagement</li>
+</ul>
+<section id="setup" class="level3" data-number="1.1">
+<h3 data-number="1.1" class="anchored" data-anchor-id="setup"><span class="header-section-number">1.1</span> Setup</h3>
+<p><span class="math inline">\(X \sim P_\theta \in \cP\)</span>, <span class="math inline">\(H_{0i}: \theta \in \Theta_i\)</span>, <span class="math inline">\(i = 1,\ldots,m\)</span></p>
+<p>Commonly, <span class="math inline">\(H_{0i}: \theta_i = 0\)</span></p>
+<p>Goal: Return accept/reject decision for each <span class="math inline">\(i\)</span></p>
+<p>Let <span class="math inline">\(R = \{i: H_{0i} \text{ rejected}\}\)</span>, <span class="math inline">\(|R| \leq m\)</span></p>
+<p><span class="math inline">\(H_{0c} = \{i: H_{0i} \text{ true}\}\)</span>, <span class="math inline">\(|H_{0c}| = m_0 \leq m\)</span></p>
+<p><span class="math inline">\(R \cap H_{0c}\)</span> = false rejections</p>
+</section>
+</section>
+<section id="family-wise-error-rate-fwer" class="level2" data-number="2">
+<h2 data-number="2" class="anchored" data-anchor-id="family-wise-error-rate-fwer"><span class="header-section-number">2</span> Family-wise Error Rate (FWER)</h2>
+<p>Problem: Even if all <span class="math inline">\(H_{0i}\)</span> true, might have:</p>
+<p><span class="math inline">\(\mathbb{P}(\text{any } H_{0i} \text{ rejected}) \leq 1 - (1-\alpha)^m \approx m\alpha\)</span></p>
+<p>Example: <span class="math inline">\(X_i \sim N(\theta_i, 1)\)</span> iid, <span class="math inline">\(i = 1,\ldots,m\)</span>, <span class="math inline">\(H_{0i}: \theta_i = 0\)</span></p>
+<p><span class="math inline">\(\mathbb{P}_0(\text{any } H_{0i} \text{ rejected}) = 1 - (1-\alpha)^m \approx m\alpha\)</span></p>
+<p>Is this a problem? Yes, if all attention will be focused on the false rejections and none on the correct non-rejections.</p>
+<p>Classical solution is to control the family-wise error rate (FWER):</p>
+<p>FWER = <span class="math inline">\(\mathbb{P}_\theta(\text{any false rejections}) = \mathbb{P}_\theta(R \cap H_{0c} \neq \emptyset)\)</span></p>
+<p>Want: <span class="math inline">\(\sup_\theta \text{FWER}(\theta) \leq \alpha\)</span></p>
+<p>Typically achieved by correcting marginal p-values: <span class="math inline">\(p_1(X), \ldots, p_m(X)\)</span>, <span class="math inline">\(p_i \sim U(0,1)\)</span></p>
+<p>e.g., <span class="math inline">\(\phi_i = 1\{\alpha/(2m)|X_i| &gt; \Phi^{-1}(1-\alpha/(2m))\}\)</span> for Gaussian</p>
+</section>
+<section id="bonferroni-correction" class="level2" data-number="3">
+<h2 data-number="3" class="anchored" data-anchor-id="bonferroni-correction"><span class="header-section-number">3</span> Bonferroni Correction</h2>
+<p>Assume <span class="math inline">\(p_1,\ldots,p_m\)</span> are p-values for <span class="math inline">\(H_{01},\ldots,H_{0m}\)</span> with <span class="math inline">\(p_i \sim U(0,1)\)</span> under <span class="math inline">\(H_{0i}\)</span></p>
+<p>For general dependence, can guarantee control by rejecting <span class="math inline">\(H_{0i}\)</span> iff <span class="math inline">\(p_i \leq \alpha/m\)</span>:</p>
+<p><span class="math inline">\(\mathbb{P}_\theta(\text{any false rejections}) \leq \mathbb{P}_\theta(\text{any } H_{0i} \text{ rejected}) \leq \sum_{i \in H_{0c}} \mathbb{P}_\theta(H_{0i} \text{ rejected}) \leq m_0\alpha/m \leq \alpha\)</span></p>
+<p>If p-values independent, can improve to <span class="math inline">\(1-(1-\alpha)^{1/m}\)</span> (Šidák correction)</p>
+<p>Then <span class="math inline">\(\mathbb{P}_\theta(\text{no false rejections}) = \prod_{i \in H_{0c}} \mathbb{P}_\theta(p_i &gt; (1-(1-\alpha)^{1/m})) \geq (1-\alpha)^{m_0/m} \geq 1-\alpha\)</span></p>
+<p>For small <span class="math inline">\(\alpha\)</span>: <span class="math inline">\(1-(1-\alpha)^{1/m} \approx \alpha/m\)</span></p>
+<p>Šidák doesn’t improve much on Bonferroni</p>
+</section>
+<section id="testing-with-dependence" class="level2" data-number="4">
+<h2 data-number="4" class="anchored" data-anchor-id="testing-with-dependence"><span class="header-section-number">4</span> Testing with Dependence</h2>
+<p>Bonferroni isn’t much worse than Šidák e.g., <span class="math inline">\(\alpha = 0.05\)</span>, <span class="math inline">\(m = 20\)</span>: <span class="math inline">\(0.0025\)</span> vs <span class="math inline">\(0.00256\)</span></p>
+<p>But when tests are highly dependent, can often do much better</p>
+<section id="example-scheffés-s-method" class="level3" data-number="4.1">
+<h3 data-number="4.1" class="anchored" data-anchor-id="example-scheffés-s-method"><span class="header-section-number">4.1</span> Example: Scheffé’s S-method</h3>
+<p><span class="math inline">\(X \sim N(\theta, I_d)\)</span>, <span class="math inline">\(\theta \in \mathbb{R}^d\)</span> <span class="math inline">\(H_0: a_j^T \theta = 0\)</span> for <span class="math inline">\(j = 1,\ldots,m\)</span>, <span class="math inline">\(\|a_j\| = 1\)</span></p>
+<p>Reject <span class="math inline">\(H_{0j}\)</span> if <span class="math inline">\(|a_j^T X| &gt; \sqrt{d F_{d,\infty,1-\alpha}}\)</span></p>
+<p>Controls FWER:</p>
+<p><span class="math inline">\(\mathbb{P}(\|X - \theta\|^2 \leq dF_{d,\infty,1-\alpha}) = 1-\alpha\)</span></p>
+<p>Can view as deduction from confidence region: <span class="math inline">\(C(X) = \{\theta: \|X - \theta\|^2 \leq dF_{d,\infty,1-\alpha}\}\)</span></p>
+</section>
+</section>
+<section id="deduced-inference" class="level2" data-number="5">
+<h2 data-number="5" class="anchored" data-anchor-id="deduced-inference"><span class="header-section-number">5</span> Deduced Inference</h2>
+<p>Given any joint confidence region <span class="math inline">\(C(X)\)</span> for <span class="math inline">\(\theta \in \Theta\)</span>, we may freely assume <span class="math inline">\(\theta \in C(X)\)</span> and deduce any and all implied conclusions without any FWER inflation:</p>
+<p><span class="math inline">\(\mathbb{P}_\theta(\text{any deduced inference is wrong}) \leq \mathbb{P}_\theta(\theta \notin C(X)) \leq \alpha\)</span></p>
+<p>Deduction is often a good paradigm for deriving simultaneous intervals</p>
+<p>We say <span class="math inline">\(C_1(X),\ldots,C_m(X)\)</span> are simultaneous <span class="math inline">\(1-\alpha\)</span> confidence intervals for <span class="math inline">\(g_1(\theta),\ldots,g_m(\theta)\)</span> if:</p>
+<p><span class="math inline">\(\mathbb{P}_\theta(g_i(\theta) \in C_i(X) \text{ for all } i = 1,\ldots,m) \geq 1-\alpha\)</span></p>
+<section id="example-simultaneous-intervals-for-multivariate-gaussian" class="level3" data-number="5.1">
+<h3 data-number="5.1" class="anchored" data-anchor-id="example-simultaneous-intervals-for-multivariate-gaussian"><span class="header-section-number">5.1</span> Example: Simultaneous Intervals for Multivariate Gaussian</h3>
+<p>Assume <span class="math inline">\(X \sim N_d(\theta, \Sigma)\)</span>, <span class="math inline">\(\Sigma\)</span> known, <span class="math inline">\(\Sigma_{ii} = 1\)</span></p>
+<p>Let <span class="math inline">\(t_\alpha\)</span> be upper <span class="math inline">\(\alpha\)</span> quantile of <span class="math inline">\(\|X - \theta\|_\Sigma = \sqrt{(X-\theta)^T \Sigma^{-1}(X-\theta)}\)</span></p>
+<p><span class="math inline">\(C_i(X) = [\theta_i: |X_i - \theta_i| \leq t_\alpha \sqrt{\Sigma_{ii}}]\)</span> for all <span class="math inline">\(i\)</span></p>
+<p><span class="math inline">\(\mathbb{P}(C(X) \ni \theta_i \text{ for any } i) = \mathbb{P}(\|X - \theta\|_\Sigma \leq t_\alpha) = 1-\alpha\)</span></p>
+<p><span class="math inline">\(t_\alpha = \sqrt{\chi^2_{d,1-\alpha}}\)</span> if <span class="math inline">\(\Sigma = I_d\)</span></p>
+<p>Note: we could have instead constructed an elliptical conf. region, but then the intervals would be conservative:</p>
+<p><span class="math inline">\(\mathbb{P}(\|X - \theta\|_\Sigma^2 \leq \chi^2_{d,1-\alpha}) = 1-\alpha\)</span></p>
+</section>
+<section id="example-linear-regression-n-obs-d-variables" class="level3" data-number="5.2">
+<h3 data-number="5.2" class="anchored" data-anchor-id="example-linear-regression-n-obs-d-variables"><span class="header-section-number">5.2</span> Example: Linear Regression (n obs, d variables)</h3>
+<p><span class="math inline">\(X \in \mathbb{R}^{n \times d}\)</span> design, <span class="math inline">\(\beta \in \mathbb{R}^d\)</span>, <span class="math inline">\(Y \sim N(X\beta, \sigma^2 I_n)\)</span></p>
+<p>Estimate <span class="math inline">\(\hat{\beta} = (X^T X)^{-1} X^T Y\)</span></p>
+<p>where <span class="math inline">\(\hat{\beta} \sim N(\beta, \sigma^2 (X^T X)^{-1})\)</span></p>
+<p><span class="math inline">\(S^2 = \|Y - X\hat{\beta}\|^2/(n-d)\)</span>, <span class="math inline">\(V = RS^2\)</span>, <span class="math inline">\(R = (X^T X)^{-1}\)</span></p>
+<p>Distr. of <span class="math inline">\(\hat{\beta}_j/\sqrt{V_{jj}}\)</span> fully known</p>
+<p>Assume w.l.o.g. <span class="math inline">\(X^T X = I_d\)</span></p>
+<p>Let <span class="math inline">\(t_\alpha\)</span> denote upper <span class="math inline">\(\alpha\)</span> quantile of <span class="math inline">\(\|\hat{\beta} - \beta\|/\sqrt{S^2}\)</span></p>
+<p>Then <span class="math inline">\(C_j = \hat{\beta}_j \pm t_\alpha \sqrt{V_{jj}}\)</span> are simultaneous CIs for <span class="math inline">\(\beta_j\)</span>, <span class="math inline">\(j = 1,\ldots,d\)</span> (compute <span class="math inline">\(t_\alpha\)</span> by simulation)</p>
+<p><span class="math inline">\(\mathbb{P}(|\hat{\beta}_j - \beta_j| \leq t_\alpha \sqrt{V_{jj}} \text{ for all } j) = 1-\alpha\)</span></p>
+</section>
+</section>
+<section id="false-discovery-rate-fdr" class="level2" data-number="6">
+<h2 data-number="6" class="anchored" data-anchor-id="false-discovery-rate-fdr"><span class="header-section-number">6</span> False Discovery Rate (FDR)</h2>
+<p>Problem: With 10K independent test statistics, all at level <span class="math inline">\(\alpha = 0.001\)</span>, we expect 10 rejections just by chance. What if we get 50? Probably only ~20 of them are false rejections.</p>
+<p>Can we accept 10 false rejections as long as most rejections are valid?</p>
+<p>Benjamini-Hochberg (1995) proposed a more liberal error control criterion called FDR:</p>
+<p><span class="math inline">\(R(X) = |R(X)|\)</span> = rejections (“discoveries”) <span class="math inline">\(V(X) = |R(X) \cap H_{0c}|\)</span> = false discoveries</p>
+<p>The FDP is: <span class="math inline">\(\text{FDP} = \begin{cases} V(X)/R(X) &amp; \text{if } R(X) &gt; 0 \\ 0 &amp; \text{if } R(X) = 0 \end{cases}\)</span></p>
+<p>The FDR is <span class="math inline">\(\mathbb{E}[\text{FDP}]\)</span></p>
+</section>
+<section id="benjamini-hochberg-procedure" class="level2" data-number="7">
+<h2 data-number="7" class="anchored" data-anchor-id="benjamini-hochberg-procedure"><span class="header-section-number">7</span> Benjamini-Hochberg Procedure</h2>
+<p>B-H also proposed a method to control FDR given ordered p-values <span class="math inline">\(p_{(1)} \leq p_{(2)} \leq \cdots \leq p_{(m)}\)</span>:</p>
+<p><span class="math inline">\(R(X) = \max\{r: p_{(r)} \leq \alpha r/m\}\)</span> (called step-up procedure)</p>
+<p>Reject <span class="math inline">\(H_{0(1)},\ldots,H_{0(R)}\)</span></p>
+<p>This is much more liberal than Bonferroni procedure: When <span class="math inline">\(\alpha = 0.05\)</span>, B-H rejects at least <span class="math inline">\(r\)</span> p-values if <span class="math inline">\(p_{(r)} \leq 0.05r/m\)</span></p>
+<section id="b-h-as-empirical-bayes" class="level3" data-number="7.1">
+<h3 data-number="7.1" class="anchored" data-anchor-id="b-h-as-empirical-bayes"><span class="header-section-number">7.1</span> B-H as Empirical Bayes</h3>
+<p>Equivalent formulation for <span class="math inline">\(R(t) = \#\{p_i \leq t\}\)</span>: Let <span class="math inline">\(\hat{F}(t) = R(t)/m\)</span> = estimate of CDF of p-values</p>
+<p>B-H rejects <span class="math inline">\(H_i\)</span> if <span class="math inline">\(p_i \leq T(X) = \max\{t: \hat{F}(t) \geq t/\alpha\}\)</span></p>
+<p>When <span class="math inline">\(\hat{F}(t)\)</span> is continuously increasing in <span class="math inline">\(t\)</span> except at jump values where it jumps down:</p>
+<p><span class="math inline">\(\hat{F}(T(X)) = T(X)/\alpha\)</span></p>
+<p>[Insert graph showing <span class="math inline">\(\hat{F}(t)\)</span> vs <span class="math inline">\(t/\alpha\)</span>]</p>
+<p>Only values of <span class="math inline">\(t\)</span> that matter for the algorithm are <span class="math inline">\(t = p_i\)</span> where <span class="math inline">\(\hat{F}(t) = t/\alpha\)</span>, i.e., <span class="math inline">\(\alpha i/m = p_{(i)}\)</span></p>
+</section>
+</section>
+<section id="fdr-control" class="level2" data-number="8">
+<h2 data-number="8" class="anchored" data-anchor-id="fdr-control"><span class="header-section-number">8</span> FDR Control</h2>
+<p>Elegant but fragile proof due to Storey, Taylor, Siegmund (2002)</p>
+<p>Assume <span class="math inline">\(\#\{i: H_{0i} \text{ true}\} = m_0\)</span> indep. <span class="math inline">\(p_i \sim U[0,1]\)</span> under <span class="math inline">\(H_{0i}\)</span></p>
+<p>Let <span class="math inline">\(V(t) = \#\{i \in H_{0c}: p_i \leq t\}\)</span></p>
+<p><span class="math inline">\(\text{FDR} = \mathbb{E}[\text{FDP}] = \mathbb{E}\left[\frac{V(T)}{R(T)} \cdot 1\{R(T) &gt; 0\}\right]\)</span></p>
+<p>Then FDR <span class="math inline">\(= \mathbb{E}[\text{FDP}] = \mathbb{E}[\mathbb{E}[\text{FDP} | T]] \leq \mathbb{E}[m_0T/(mT)] = \alpha m_0/m \leq \alpha\)</span></p>
+<p>Note: <span class="math inline">\(Q(t) = V(t)/(mt)\)</span> is a martingale when <span class="math inline">\(t\)</span> runs backwards from <span class="math inline">\(t=1\)</span> to <span class="math inline">\(t=0\)</span></p>
+<p><span class="math inline">\(\mathbb{E}[V(s) | V(t)] = V(t) \cdot s/t\)</span></p>
+<p><span class="math inline">\(\mathbb{E}[1\{p_i \leq s\} | 1\{p_i \leq t\}, V(t)] = s/t \cdot 1\{p_i \leq t\}\)</span></p>
+<p>And <span class="math inline">\(T\)</span> is a stopping time w.r.t. the filtration <span class="math inline">\(\mathcal{F}_t\)</span> of <span class="math inline">\(\{V(t), R(t)\}\)</span> (again, filtration with <span class="math inline">\(t=1 \to t=0\)</span>)</p>
+<p>Why? For <span class="math inline">\(s&lt;t\)</span>, <span class="math inline">\(R(s) = \#\{i: p_i \leq s\}\)</span></p>
+<p><span class="math inline">\(\mathbb{E}[1\{p_i \leq s\} | \mathcal{F}_t] = s/t \cdot 1\{p_i \leq t\}\)</span></p>
+<p><span class="math inline">\(\hat{F}(s) = R(s)/m\)</span></p>
+<p>[Insert graph showing <span class="math inline">\(\hat{F}(t)\)</span> vs <span class="math inline">\(t/\alpha\)</span> and <span class="math inline">\(Q(t)\)</span>]</p>
+<p><span class="math inline">\(\text{FDR} = \alpha \mathbb{E}[V(T)/(mT)] = \alpha \mathbb{E}[Q(T)] = \alpha \mathbb{E}[Q(1)] = \alpha m_0/m\)</span></p>
+<section id="remarks" class="level3" data-number="8.1">
+<h3 data-number="8.1" class="anchored" data-anchor-id="remarks"><span class="header-section-number">8.1</span> Remarks</h3>
+<ul>
+<li>Proof only works if p-values indep., null ones exactly uniform</li>
+<li>More robust proof shows FDR controlled when null p-values conservative</li>
+<li>Can be extended to positive dependence</li>
+<li>FDR controlled under general dependence if we use corrected level <span class="math inline">\(\alpha m / (m+1-i)\)</span></li>
+<li><span class="math inline">\(\sum_{i=1}^m 1/i \approx \log m + 0.577\)</span></li>
+</ul>
+
+
+</section>
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const isCodeAnnotation = (el) => {
+    for (const clz of el.classList) {
+      if (clz.startsWith('code-annotation-')) {                     
+        return true;
+      }
+    }
+    return false;
+  }
+  const clipboard = new window.ClipboardJS('.code-copy-button', {
+    text: function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+  });
+  clipboard.on('success', function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  });
+  function tippyHover(el, contentFn) {
+    const config = {
+      allowHTML: true,
+      content: contentFn,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start'
+    };
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      return note.innerHTML;
+    });
+  }
+      let selectedAnnoteEl;
+      const selectorForAnnotation = ( cell, annotation) => {
+        let cellAttr = 'data-code-cell="' + cell + '"';
+        let lineAttr = 'data-code-annotation="' +  annotation + '"';
+        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+        return selector;
+      }
+      const selectCodeLines = (annoteEl) => {
+        const doc = window.document;
+        const targetCell = annoteEl.getAttribute("data-target-cell");
+        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+        const lineIds = lines.map((line) => {
+          return targetCell + "-" + line;
+        })
+        let top = null;
+        let height = null;
+        let parent = null;
+        if (lineIds.length > 0) {
+            //compute the position of the single el (top and bottom and make a div)
+            const el = window.document.getElementById(lineIds[0]);
+            top = el.offsetTop;
+            height = el.offsetHeight;
+            parent = el.parentElement.parentElement;
+          if (lineIds.length > 1) {
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+            height = bottom - top;
+          }
+          if (top !== null && height !== null && parent !== null) {
+            // cook up a div (if necessary) and position it 
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            div.style.top = top - 2 + "px";
+            div.style.height = height + 4 + "px";
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            gutterDiv.style.top = top - 2 + "px";
+            gutterDiv.style.height = height + 4 + "px";
+          }
+          selectedAnnoteEl = annoteEl;
+        }
+      };
+      const unselectCodeLines = () => {
+        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+        elementsIds.forEach((elId) => {
+          const div = window.document.getElementById(elId);
+          if (div) {
+            div.remove();
+          }
+        });
+        selectedAnnoteEl = undefined;
+      };
+      // Attach click handler to the DT
+      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+      for (const annoteDlNode of annoteDls) {
+        annoteDlNode.addEventListener('click', (event) => {
+          const clickedEl = event.target;
+          if (clickedEl !== selectedAnnoteEl) {
+            unselectCodeLines();
+            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+            if (activeEl) {
+              activeEl.classList.remove('code-annotation-active');
+            }
+            selectCodeLines(clickedEl);
+            clickedEl.classList.add('code-annotation-active');
+          } else {
+            // Unselect the line
+            unselectCodeLines();
+            clickedEl.classList.remove('code-annotation-active');
+          }
+        });
+      }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+</div> <!-- /content -->
+
+
+
+</body></html>

@@ -1,0 +1,656 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.3.450">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="dcterms.date" content="2023-10-24">
+
+<title>Testing with Nuisance Parameters</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+</style>
+
+
+<script src="../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../">
+<script src="../site_libs/quarto-html/quarto.js"></script>
+<script src="../site_libs/quarto-html/popper.min.js"></script>
+<script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "sidebar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "start",
+  "type": "textbox",
+  "limit": 20,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+<script async="" src="https://www.googletagmanager.com/gtag/js?id=G-B8G2041HSB"></script>
+
+<script type="text/javascript">
+
+window.dataLayer = window.dataLayer || [];
+function gtag(){dataLayer.push(arguments);}
+gtag('js', new Date());
+gtag('config', 'G-B8G2041HSB', { 'anonymize_ip': true});
+</script>
+
+  <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<link rel="stylesheet" href="../assets/styles.css">
+</head>
+
+<body class="nav-sidebar docked">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+  <nav class="quarto-secondary-nav">
+    <div class="container-fluid d-flex">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+        <i class="bi bi-layout-text-sidebar-reverse"></i>
+      </button>
+      <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item">
+      Stat 210a
+      </li></ol></nav>
+      <a class="flex-grow-1" role="button" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+      </a>
+      <button type="button" class="btn quarto-search-button" aria-label="" onclick="window.quartoOpenSearch();">
+        <i class="bi bi-search"></i>
+      </button>
+    </div>
+  </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal sidebar-navigation docked overflow-auto">
+    <div class="pt-lg-2 mt-2 text-left sidebar-header sidebar-header-stacked">
+      <a href="../index.html" class="sidebar-logo-link">
+      <img src="../assets/stat_bear.png" alt="" class="sidebar-logo py-0 d-lg-inline d-none">
+      </a>
+    <div class="sidebar-title mb-0 py-0">
+      <a href="../">Stat 210a</a> 
+        <div class="sidebar-tools-main">
+    <a href="https://github.com/berkeley-stat210a/fall-2024" rel="" title="" class="quarto-navigation-tool px-1" aria-label=""><i class="bi bi-github"></i></a>
+</div>
+    </div>
+      </div>
+        <div class="mt-2 flex-shrink-0 align-items-center">
+        <div class="sidebar-search">
+        <div id="quarto-search" class="" title="Search"></div>
+        </div>
+        </div>
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Home / Schedule</span></a>
+  </div>
+</li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" aria-expanded="true">
+ <span class="menu-text">Course Logistics</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../faq.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Frequently Asked Questions</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../syllabus.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Syllabus</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../syllabus.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Syllabus</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../calendar.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Calendar</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../handwritten-notes.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Handwritten notes</span></a>
+  </div>
+</li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" aria-expanded="true">
+ <span class="menu-text">Course Reader</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../reader/introduction.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Course introduction</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../reader/measure-theory-basics.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Measure Theory Basics</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../license.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">License</span></a>
+  </div>
+</li>
+    </ul>
+    </div>
+</nav>
+<div id="quarto-sidebar-glass" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass"></div>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#nuisance-parameters" id="toc-nuisance-parameters" class="nav-link active" data-scroll-target="#nuisance-parameters"><span class="header-section-number">1</span> Nuisance Parameters</a>
+  <ul class="collapse">
+  <li><a href="#common-setup" id="toc-common-setup" class="nav-link" data-scroll-target="#common-setup"><span class="header-section-number">1.1</span> Common Setup</a></li>
+  <li><a href="#examples" id="toc-examples" class="nav-link" data-scroll-target="#examples"><span class="header-section-number">1.2</span> Examples</a></li>
+  <li><a href="#idea-condition-on-sufficient-statistic-for-lambda" id="toc-idea-condition-on-sufficient-statistic-for-lambda" class="nav-link" data-scroll-target="#idea-condition-on-sufficient-statistic-for-lambda"><span class="header-section-number">1.3</span> Idea: Condition on Sufficient Statistic for <span class="math inline">\(\lambda\)</span></a></li>
+  </ul></li>
+  <li><a href="#theorem-informal" id="toc-theorem-informal" class="nav-link" data-scroll-target="#theorem-informal"><span class="header-section-number">2</span> Theorem (Informal)</a>
+  <ul class="collapse">
+  <li><a href="#example-poisson-ratio" id="toc-example-poisson-ratio" class="nav-link" data-scroll-target="#example-poisson-ratio"><span class="header-section-number">2.1</span> Example: Poisson Ratio</a></li>
+  </ul></li>
+  <li><a href="#proof-sketch" id="toc-proof-sketch" class="nav-link" data-scroll-target="#proof-sketch"><span class="header-section-number">3</span> Proof Sketch</a>
+  <ul class="collapse">
+  <li><a href="#detailed-proof" id="toc-detailed-proof" class="nav-link" data-scroll-target="#detailed-proof"><span class="header-section-number">3.1</span> Detailed Proof</a></li>
+  <li><a href="#example-normal-mean-with-unknown-variance" id="toc-example-normal-mean-with-unknown-variance" class="nav-link" data-scroll-target="#example-normal-mean-with-unknown-variance"><span class="header-section-number">3.2</span> Example: Normal Mean with Unknown Variance</a></li>
+  </ul></li>
+  <li><a href="#permutation-tests" id="toc-permutation-tests" class="nav-link" data-scroll-target="#permutation-tests"><span class="header-section-number">4</span> Permutation Tests</a></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">Testing with Nuisance Parameters</h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+    <div>
+    <div class="quarto-title-meta-heading">Published</div>
+    <div class="quarto-title-meta-contents">
+      <p class="date">October 24, 2023</p>
+    </div>
+  </div>
+  
+    
+  </div>
+  
+
+</header>
+
+<p><span class="math display">\[
+\newcommand{\cB}{\mathcal{B}}
+\newcommand{\cF}{\mathcal{F}}
+\newcommand{\cN}{\mathcal{N}}
+\newcommand{\cP}{\mathcal{P}}
+\newcommand{\cX}{\mathcal{X}}
+\newcommand{\EE}{\mathbb{E}}
+\newcommand{\PP}{\mathbb{P}}
+\newcommand{\RR}{\mathbb{R}}
+\newcommand{\ZZ}{\mathbb{Z}}
+\newcommand{\td}{\,\textrm{d}}
+\newcommand{\simiid}{\stackrel{\textrm{i.i.d.}}{\sim}}
+\newcommand{\eqas}{\stackrel{\textrm{a.s.}}{=}}
+\newcommand{\eqPas}{\stackrel{\cP\textrm{-a.s.}}{=}}
+\newcommand{\eqmuas}{\stackrel{\mu\textrm{-a.s.}}{=}}
+\newcommand{\eqD}{\stackrel{D}{=}}
+\newcommand{\indep}{\perp\!\!\!\!\perp}
+\DeclareMathOperator*{\minz}{minimize\;}
+\newcommand{\Var}{\textnormal{Var}}
+\newcommand{\Cov}{\textnormal{Cov}}
+\newcommand{\Corr}{\textnormal{Corr}}
+\]</span></p>
+<section id="nuisance-parameters" class="level2" data-number="1">
+<h2 data-number="1" class="anchored" data-anchor-id="nuisance-parameters"><span class="header-section-number">1</span> Nuisance Parameters</h2>
+<section id="common-setup" class="level3" data-number="1.1">
+<h3 data-number="1.1" class="anchored" data-anchor-id="common-setup"><span class="header-section-number">1.1</span> Common Setup</h3>
+<p>Extra unknown parameters which are not of direct interest:</p>
+<p><span class="math inline">\(\cP = \{P_{\theta, \lambda}: \theta \in \Theta, \lambda \in \Lambda\}\)</span></p>
+<p><span class="math inline">\(H_0: \theta \in \Theta_0\)</span> vs <span class="math inline">\(H_1: \theta \in \Theta_1\)</span></p>
+<ul>
+<li><span class="math inline">\(\theta\)</span>: parameter of interest</li>
+<li><span class="math inline">\(\lambda\)</span>: nuisance parameter</li>
+</ul>
+<p>Issue: <span class="math inline">\(\lambda\)</span> unknown but might affect type I error or power of a given test</p>
+</section>
+<section id="examples" class="level3" data-number="1.2">
+<h3 data-number="1.2" class="anchored" data-anchor-id="examples"><span class="header-section-number">1.2</span> Examples</h3>
+<ol type="1">
+<li><p><span class="math inline">\(X_1, \ldots, X_n \sim \text{iid } N(\mu, \sigma^2)\)</span>, <span class="math inline">\(Y_1, \ldots, Y_m \sim \text{iid } N(\nu, \sigma^2)\)</span> <span class="math inline">\(\mu, \nu, \sigma^2\)</span> unknown <span class="math inline">\(H_0: \mu = \nu\)</span> vs <span class="math inline">\(H_1: \mu \neq \nu\)</span> <span class="math inline">\(\theta = \mu - \nu\)</span>, <span class="math inline">\(\lambda = (\mu + \nu, \sigma^2)\)</span> or <span class="math inline">\((\mu, \sigma^2)\)</span></p></li>
+<li><p><span class="math inline">\(X \sim \text{Binom}(n_1, \pi_1)\)</span>, <span class="math inline">\(X_2 \sim \text{Binom}(n_2, \pi_2)\)</span> <span class="math inline">\(n_1, n_2\)</span> known (not nuisance parameters) <span class="math inline">\(H_0: \pi_1 = \pi_2\)</span> vs <span class="math inline">\(H_1: \pi_1 \neq \pi_2\)</span></p></li>
+<li><p><span class="math inline">\(X \sim N(\mu, \sigma^2)\)</span>, <span class="math inline">\(\theta \in \mathbb{R}\)</span>, <span class="math inline">\(\lambda \in \mathbb{R}\)</span>, both unknown How to test <span class="math inline">\(H_0: \theta = 0\)</span> vs <span class="math inline">\(H_1: \theta \neq 0\)</span>?</p></li>
+</ol>
+</section>
+<section id="idea-condition-on-sufficient-statistic-for-lambda" class="level3" data-number="1.3">
+<h3 data-number="1.3" class="anchored" data-anchor-id="idea-condition-on-sufficient-statistic-for-lambda"><span class="header-section-number">1.3</span> Idea: Condition on Sufficient Statistic for <span class="math inline">\(\lambda\)</span></h3>
+<p>Condition on <span class="math inline">\(U(X)\)</span> to eliminate dependence on <span class="math inline">\(\lambda\)</span></p>
+<p><span class="math display">\[p_{\theta, \lambda}(t|u) = \frac{p_{\theta, \lambda}(t, u)}{p_{\lambda}(u)} = \frac{e^{\theta \cdot t} g_\lambda(t, u)}{\int e^{\theta \cdot s} g_\lambda(s, u) ds}\]</span></p>
+<p>Evaluate <span class="math inline">\(H_0: \theta \in \Theta_0\)</span> vs <span class="math inline">\(H_1: \theta \in \Theta_1\)</span> in s-parameter model <span class="math inline">\(\{p_\theta(\cdot|u): \theta \in \Theta\}\)</span></p>
+<p>Note: If <span class="math inline">\(s=1\)</span>, this family has MLR in <span class="math inline">\(T\)</span>. Even if <span class="math inline">\(s&gt;1\)</span>, we have still gotten rid of <span class="math inline">\(\lambda\)</span>.</p>
+</section>
+</section>
+<section id="theorem-informal" class="level2" data-number="2">
+<h2 data-number="2" class="anchored" data-anchor-id="theorem-informal"><span class="header-section-number">2</span> Theorem (Informal)</h2>
+<p>Let <span class="math inline">\(\cP\)</span> be full rank exp. fam. with densities <span class="math inline">\(p_{\theta, \lambda}(x) = e^{\theta \cdot T(x) + \lambda \cdot U(x) - A(\theta, \lambda)}h(x)\)</span></p>
+<p><span class="math inline">\(\theta \in \mathbb{R}^s\)</span>, <span class="math inline">\(\lambda \in \mathbb{R}^r\)</span>, <span class="math inline">\((\theta_0, \lambda_0)\)</span> possible</p>
+<ol type="a">
+<li><p>To test <span class="math inline">\(H_0: \theta = \theta_0\)</span> vs <span class="math inline">\(H_1: \theta \neq \theta_0\)</span>, there is a UMPU test <span class="math inline">\(\phi(x) = \psi(T(x), U(x))\)</span> where</p>
+<p><span class="math display">\[\psi(t, u) = \begin{cases}
+1 &amp; \text{if } t &gt; c_2(u) \\
+\gamma_2(u) &amp; \text{if } t = c_2(u) \\
+0 &amp; \text{if } c_1(u) &lt; t &lt; c_2(u) \\
+\gamma_1(u) &amp; \text{if } t = c_1(u) \\
+1 &amp; \text{if } t &lt; c_1(u)
+\end{cases}\]</span></p>
+<p>with <span class="math inline">\(\gamma_1, \gamma_2, c_1, c_2\)</span> chosen to make <span class="math inline">\(\mathbb{E}_{\theta_0}[\phi] = \alpha\)</span> and <span class="math inline">\(\mathbb{E}_{\theta_0}[T\phi] = \theta_0\)</span></p></li>
+<li><p>To test <span class="math inline">\(H_0: \theta \leq \theta_0\)</span> vs <span class="math inline">\(H_1: \theta &gt; \theta_0\)</span>, there is a UMPU test <span class="math inline">\(\phi(x) = \psi(T(x), U(x))\)</span> where</p>
+<p><span class="math display">\[\psi(t, u) = \begin{cases}
+1 &amp; \text{if } t &gt; c(u) \\
+\gamma(u) &amp; \text{if } t = c(u) \\
+0 &amp; \text{if } t &lt; c(u)
+\end{cases}\]</span></p>
+<p>with <span class="math inline">\(\gamma, c\)</span> chosen to make <span class="math inline">\(\mathbb{E}_{\theta_0}[\phi] = \alpha\)</span></p></li>
+</ol>
+<p>Note: <span class="math inline">\(h\)</span> has disappeared from the problem.</p>
+<section id="example-poisson-ratio" class="level3" data-number="2.1">
+<h3 data-number="2.1" class="anchored" data-anchor-id="example-poisson-ratio"><span class="header-section-number">2.1</span> Example: Poisson Ratio</h3>
+<p><span class="math inline">\(X_i \sim \text{iid Poisson}(\mu_i)\)</span>, <span class="math inline">\(i=1,2\)</span></p>
+<p><span class="math inline">\(H_0: \mu_1 = \mu_2\)</span> vs <span class="math inline">\(H_1: \mu_1 \neq \mu_2\)</span></p>
+<p><span class="math display">\[p(x) = \frac{\mu_1^{x_1} e^{-\mu_1}}{x_1!} \cdot \frac{\mu_2^{x_2} e^{-\mu_2}}{x_2!} = e^{x_1 \log \mu_1 + x_2 \log \mu_2 - \mu_1 - \mu_2}\]</span></p>
+<p>Let <span class="math inline">\(\theta = \log \frac{\mu_1}{\mu_2}\)</span>, <span class="math inline">\(\lambda = \log \mu_2\)</span></p>
+<p><span class="math inline">\(H_0: \theta = 0\)</span> vs <span class="math inline">\(H_1: \theta \neq 0\)</span></p>
+<p>Reject for conditionally large values of <span class="math inline">\(X_1\)</span> given <span class="math inline">\(X_1 + X_2 = u\)</span>:</p>
+<p><span class="math display">\[P_\theta(X_1 = x_1 | X_1 + X_2 = u) = \frac{e^{\theta x_1}}{\sum_{i=0}^u e^{\theta i}} = \binom{u}{x_1} \left(\frac{e^\theta}{1+e^\theta}\right)^{x_1} \left(\frac{1}{1+e^\theta}\right)^{u-x_1}\]</span></p>
+<p><span class="math inline">\(X_1 | X_1 + X_2 \sim \text{Binom}(u, \frac{e^\theta}{1+e^\theta})\)</span></p>
+<p>So in the end, we do a Binomial test.</p>
+</section>
+</section>
+<section id="proof-sketch" class="level2" data-number="3">
+<h2 data-number="3" class="anchored" data-anchor-id="proof-sketch"><span class="header-section-number">3</span> Proof Sketch</h2>
+<ol type="1">
+<li>Any unbiased test has <span class="math inline">\(\mathbb{P}(\phi=1) \leq h(t,u)\)</span> (continuity)</li>
+<li>Power = 0 on boundary <span class="math inline">\(\implies \mathbb{E}_{\theta_0}[T\phi] = \theta_0\)</span> (UK complete sufficient on boundary sub-model)</li>
+<li><span class="math inline">\(\phi\)</span> optimal among all tests with conditional level <span class="math inline">\(\alpha\)</span> by reduction to univariate model</li>
+</ol>
+<section id="detailed-proof" class="level3" data-number="3.1">
+<h3 data-number="3.1" class="anchored" data-anchor-id="detailed-proof"><span class="header-section-number">3.1</span> Detailed Proof</h3>
+<p>Assume <span class="math inline">\(\phi\)</span> any unbiased test:</p>
+<ol type="1">
+<li><span class="math inline">\(\mathbb{E}_\theta[\phi] = \alpha + f(\theta)\)</span>, <span class="math inline">\(f(\theta_0) = 0\)</span>, <span class="math inline">\(f'(\theta_0) = 0\)</span> Keener Thm 12.4</li>
+<li><span class="math inline">\(\mathbb{E}_\theta[\phi]\)</span> infinitely diff on <span class="math inline">\(\mathbb{R}^s\)</span>, can diff under <span class="math inline">\(\int\)</span></li>
+<li><span class="math inline">\(\phi\)</span> unbiased <span class="math inline">\(\implies \mathbb{E}_\theta[T\phi] = \frac{\partial}{\partial \theta} \mathbb{E}_\theta[\phi] = \theta\)</span></li>
+</ol>
+<p>Step 1: Boundary sub-model <span class="math inline">\(\cP_0 = \{p_{\theta_0, \lambda}: \lambda \in \mathbb{R}^r\}\)</span></p>
+<p><span class="math inline">\(p_{\theta_0, \lambda}(x) = e^{\lambda \cdot U(x) - A(\theta_0, \lambda)}h(x)\)</span></p>
+<p><span class="math inline">\(\cP_0\)</span> is full rank <span class="math inline">\(r\)</span>-param exp fam, <span class="math inline">\(U(X)\)</span> complete suff</p>
+<p>Let <span class="math inline">\(f(\lambda) = \mathbb{E}_{\theta_0, \lambda}[\phi(X) | U(X)] = \alpha\)</span></p>
+<p><span class="math inline">\(\mathbb{E}_{\theta_0, \lambda}[\phi(X) T(X) | U(X)] = \theta_0\)</span> a.s.</p>
+<p><span class="math inline">\(\mathbb{E}_{\theta_0, \lambda}[\phi(X) | U(X)] = \alpha\)</span> a.s.</p>
+<p>Two-sided: <span class="math inline">\(\mathbb{E}_{\theta_0, \lambda}[g(U(X))\phi(X)] = \mathbb{E}_{\theta_0, \lambda}[T(X)\phi(X)] = \theta_0\)</span></p>
+<p><span class="math inline">\(\mathbb{E}_{\theta_0, \lambda}[g(U)\mathbb{E}_{\theta_0, \lambda}[\phi|U]] = \theta_0\)</span></p>
+<p><span class="math inline">\(\mathbb{E}_{\theta_0, \lambda}[g(U) \alpha] = \theta_0\)</span></p>
+<p><span class="math inline">\(\mathbb{E}_{\theta_0, \lambda}[g(U)] = \frac{\theta_0}{\alpha}\)</span></p>
+<p>One-sided: <span class="math inline">\(\mathbb{E}_{\theta_0, \lambda}[\phi] = \alpha\)</span> <span class="math inline">\(\forall \lambda\)</span></p>
+<p>Steps 2-3: For any value <span class="math inline">\(u\)</span>, the conditional model is:</p>
+<p><span class="math display">\[p_\theta(t|u) = e^{\theta \cdot t} g(t,u)\]</span></p>
+<p>1-param exp fam.</p>
+<p>In one/two-sided case, we have shown <span class="math inline">\(\psi(t,u)\)</span> is UMP/UMPU in <span class="math inline">\(\{p_\theta(\cdot|u)\}\)</span></p>
+<p>Let <span class="math inline">\(g(t,u) = \mathbb{E}_{\theta_0}[\phi(X) | T(X)=t, U(X)=u] \leq 1\)</span></p>
+<p><span class="math inline">\(\mathbb{E}_{\theta_0}[\psi(T,U) | U] = \mathbb{E}_{\theta_0}[\phi(X) | U(X)=u]\)</span></p>
+<p><span class="math inline">\(\psi\)</span> if <span class="math inline">\(\theta &gt; \theta_0\)</span> <span class="math inline">\(\phi(X)\)</span> is a conditional test of <span class="math inline">\(H_0\)</span> vs <span class="math inline">\(H_1\)</span> in <span class="math inline">\(\{p_\theta(\cdot|u)\}\)</span> with power <span class="math inline">\(\leq \alpha\)</span> at boundary</p>
+<p>One-sided case: For <span class="math inline">\(\theta &gt; \theta_0\)</span> <span class="math inline">\(\psi(t,u)\)</span> is the UMP test of <span class="math inline">\(\theta=\theta_0\)</span> vs <span class="math inline">\(\theta&gt;\theta_0\)</span> in <span class="math inline">\(\{p_\theta(\cdot|u)\}\)</span>, which is a 1-param exp fam</p>
+<p>Two-sided: <span class="math inline">\(\psi(t,u)\)</span> is the UMP test of <span class="math inline">\(\theta=\theta_0\)</span> vs <span class="math inline">\(\theta \neq \theta_0\)</span> among tests with power <span class="math inline">\(\alpha\)</span> over <span class="math inline">\(\theta=\theta_0\)</span> Keener Thm 12.22 (main thm for two-sided tests)</p>
+<p>In either case, <span class="math inline">\(\psi\)</span> has higher cond. power than <span class="math inline">\(\phi\)</span> a.s.</p>
+<p>For <span class="math inline">\(\theta \neq \theta_0\)</span>:</p>
+<p><span class="math display">\[\mathbb{E}_\theta[\phi] = \mathbb{E}_\theta[\mathbb{E}[\phi(X) | T(X), U(X)]]\]</span> <span class="math display">\[\leq \mathbb{E}_\theta[\mathbb{E}[\psi(T(X), U(X)) | T(X), U(X)]]\]</span> <span class="math display">\[= \mathbb{E}_\theta[\psi]\]</span></p>
+</section>
+<section id="example-normal-mean-with-unknown-variance" class="level3" data-number="3.2">
+<h3 data-number="3.2" class="anchored" data-anchor-id="example-normal-mean-with-unknown-variance"><span class="header-section-number">3.2</span> Example: Normal Mean with Unknown Variance</h3>
+<p><span class="math inline">\(X \sim N(\mu, \sigma^2)\)</span>, <span class="math inline">\(\sigma^2&gt;0\)</span> unknown <span class="math inline">\(H_0: \mu=0\)</span> vs <span class="math inline">\(H_1: \mu \neq 0\)</span></p>
+<p><span class="math inline">\(T = \frac{\bar{X}}{\|X\|}\)</span>, <span class="math inline">\(U = \|X\|^2\)</span></p>
+<p>Optimal test rejects when <span class="math inline">\(\bar{X}\)</span> is extreme given <span class="math inline">\(\|X\|^2\)</span></p>
+<p>If <span class="math inline">\(\mu=0\)</span>, <span class="math inline">\(\frac{X}{\|X\|}\)</span> is rotationally symmetric <span class="math inline">\(\frac{X}{\|X\|} \sim \text{Unif}(S^{n-1})\)</span>, <span class="math inline">\(\frac{X}{\|X\|}\)</span> indep of <span class="math inline">\(\|X\|\)</span></p>
+<p>Optimal test rejects when <span class="math inline">\(\frac{\bar{X}}{\|X\|}\)</span> extreme (marginally)</p>
+<p>Could stop here &amp; simulate</p>
+<section id="geometric-picture-n2" class="level4" data-number="3.2.1">
+<h4 data-number="3.2.1" class="anchored" data-anchor-id="geometric-picture-n2"><span class="header-section-number">3.2.1</span> Geometric Picture (n=2)</h4>
+<p>[Insert geometric picture here]</p>
+<p>Above test rejects for: - conditionally extreme <span class="math inline">\(\bar{X}\)</span> given <span class="math inline">\(\|X\|^2\)</span> OR - marginally extreme <span class="math inline">\(\frac{\bar{X}}{\|X\|}\)</span></p>
+<p>Fact: reject for marginally extreme <span class="math inline">\(T\)</span> where</p>
+<p><span class="math display">\[T^2 = \frac{(\sum X_i)^2}{\sum X_i^2 - \frac{1}{n}(\sum X_i)^2} = \frac{n\bar{X}^2}{\|X\|^2 - n\bar{X}^2} = \frac{n\bar{X}^2}{S^2}\]</span></p>
+<p>and <span class="math inline">\(S^2 = \frac{1}{n-1}\sum (X_i - \bar{X})^2\)</span></p>
+</section>
+<section id="geometric-picture" class="level4" data-number="3.2.2">
+<h4 data-number="3.2.2" class="anchored" data-anchor-id="geometric-picture"><span class="header-section-number">3.2.2</span> Geometric Picture</h4>
+<p>[Insert second geometric picture here]</p>
+<p><span class="math inline">\(T^2 = \frac{\|\text{Proj}_\mathbf{1}X\|^2}{\|\text{Proj}_{\mathbf{1}^\perp}X\|^2} \cdot \frac{n-1}{n}\)</span></p>
+<p>Next major theme: ratios of projections</p>
+</section>
+</section>
+</section>
+<section id="permutation-tests" class="level2" data-number="4">
+<h2 data-number="4" class="anchored" data-anchor-id="permutation-tests"><span class="header-section-number">4</span> Permutation Tests</h2>
+<p>Even if we don’t get a UMPU test at the end, conditioning on null suff. stat. still helps</p>
+<p>Example: <span class="math inline">\(X_1, \ldots, X_n \sim \text{iid } P\)</span>, <span class="math inline">\(Y_1, \ldots, Y_m \sim \text{iid } Q\)</span> <span class="math inline">\(H_0: P=Q\)</span> vs <span class="math inline">\(H_1: P \neq Q\)</span></p>
+<p>Under <span class="math inline">\(H_0\)</span>: <span class="math inline">\(P=Q\)</span>, <span class="math inline">\(X_1, \ldots, X_n, Y_1, \ldots, Y_m \sim P\)</span></p>
+<p>Let <span class="math inline">\(Z = (Z_1, \ldots, Z_{n+m}) = (X_1, \ldots, X_n, Y_1, \ldots, Y_m)\)</span></p>
+<p>Under <span class="math inline">\(H_0\)</span>, <span class="math inline">\(U = Z\)</span> is complete sufficient</p>
+<p>Let <span class="math inline">\(S_{n+m}\)</span> = Permutations on <span class="math inline">\(n+m\)</span> elements</p>
+<p><span class="math inline">\((X, Y) = (U_{\pi(1)}, \ldots, U_{\pi(n+m)})\)</span> for <span class="math inline">\(\pi \in S_{n+m}\)</span></p>
+<p>Thus for test stat <span class="math inline">\(T\)</span>, if <span class="math inline">\(P=Q\)</span>:</p>
+<p><span class="math display">\[\mathbb{P}(T \geq t | U) = \frac{1}{(n+m)!}\sum_{\pi \in S_{n+m}} 1\{T(Z_{\pi(1)}, \ldots, Z_{\pi(n+m)}) \geq t\}\]</span></p>
+<p>Monte Carlo test: In practice, we sample $_1, , _B </p>
+
+
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const isCodeAnnotation = (el) => {
+    for (const clz of el.classList) {
+      if (clz.startsWith('code-annotation-')) {                     
+        return true;
+      }
+    }
+    return false;
+  }
+  const clipboard = new window.ClipboardJS('.code-copy-button', {
+    text: function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+  });
+  clipboard.on('success', function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  });
+  function tippyHover(el, contentFn) {
+    const config = {
+      allowHTML: true,
+      content: contentFn,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start'
+    };
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      return note.innerHTML;
+    });
+  }
+      let selectedAnnoteEl;
+      const selectorForAnnotation = ( cell, annotation) => {
+        let cellAttr = 'data-code-cell="' + cell + '"';
+        let lineAttr = 'data-code-annotation="' +  annotation + '"';
+        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+        return selector;
+      }
+      const selectCodeLines = (annoteEl) => {
+        const doc = window.document;
+        const targetCell = annoteEl.getAttribute("data-target-cell");
+        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+        const lineIds = lines.map((line) => {
+          return targetCell + "-" + line;
+        })
+        let top = null;
+        let height = null;
+        let parent = null;
+        if (lineIds.length > 0) {
+            //compute the position of the single el (top and bottom and make a div)
+            const el = window.document.getElementById(lineIds[0]);
+            top = el.offsetTop;
+            height = el.offsetHeight;
+            parent = el.parentElement.parentElement;
+          if (lineIds.length > 1) {
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+            height = bottom - top;
+          }
+          if (top !== null && height !== null && parent !== null) {
+            // cook up a div (if necessary) and position it 
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            div.style.top = top - 2 + "px";
+            div.style.height = height + 4 + "px";
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            gutterDiv.style.top = top - 2 + "px";
+            gutterDiv.style.height = height + 4 + "px";
+          }
+          selectedAnnoteEl = annoteEl;
+        }
+      };
+      const unselectCodeLines = () => {
+        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+        elementsIds.forEach((elId) => {
+          const div = window.document.getElementById(elId);
+          if (div) {
+            div.remove();
+          }
+        });
+        selectedAnnoteEl = undefined;
+      };
+      // Attach click handler to the DT
+      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+      for (const annoteDlNode of annoteDls) {
+        annoteDlNode.addEventListener('click', (event) => {
+          const clickedEl = event.target;
+          if (clickedEl !== selectedAnnoteEl) {
+            unselectCodeLines();
+            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+            if (activeEl) {
+              activeEl.classList.remove('code-annotation-active');
+            }
+            selectCodeLines(clickedEl);
+            clickedEl.classList.add('code-annotation-active');
+          } else {
+            // Unselect the line
+            unselectCodeLines();
+            clickedEl.classList.remove('code-annotation-active');
+          }
+        });
+      }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+</div> <!-- /content -->
+
+
+
+</body></html>

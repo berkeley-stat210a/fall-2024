@@ -205,6 +205,10 @@ gtag('config', 'G-B8G2041HSB', { 'anonymize_ip': true});
   <ul>
   <li><a href="#what-is-the-theory-of-statistics" id="toc-what-is-the-theory-of-statistics" class="nav-link active" data-scroll-target="#what-is-the-theory-of-statistics">What is the theory of statistics?</a></li>
   <li><a href="#relationship-of-stat-210a-to-other-berkeley-courses" id="toc-relationship-of-stat-210a-to-other-berkeley-courses" class="nav-link" data-scroll-target="#relationship-of-stat-210a-to-other-berkeley-courses">Relationship of Stat 210A to other Berkeley courses</a></li>
+  <li><a href="#deductive-vs-inductive-reasoning" id="toc-deductive-vs-inductive-reasoning" class="nav-link" data-scroll-target="#deductive-vs-inductive-reasoning">Deductive vs inductive reasoning</a></li>
+  <li><a href="#the-problem-of-induction" id="toc-the-problem-of-induction" class="nav-link" data-scroll-target="#the-problem-of-induction">The problem of induction</a></li>
+  <li><a href="#statistical-evasions-of-the-problem-of-induction" id="toc-statistical-evasions-of-the-problem-of-induction" class="nav-link" data-scroll-target="#statistical-evasions-of-the-problem-of-induction">Statistical evasions of the problem of induction</a></li>
+  <li><a href="#coin-flipping" id="toc-coin-flipping" class="nav-link" data-scroll-target="#coin-flipping">Coin flipping</a></li>
   </ul>
 </nav>
     </div>
@@ -265,13 +269,106 @@ gtag('config', 'G-B8G2041HSB', { 'anonymize_ip': true});
 <section id="what-is-the-theory-of-statistics" class="level2">
 <h2 class="anchored" data-anchor-id="what-is-the-theory-of-statistics">What is the theory of statistics?</h2>
 <p>Statistics is the study of methods that use data to understand the world. Statistical methods are used throughout the natural and social sciences, in machine learning and artificial intelligence, and in engineering. Despite the ubiquitous use of statistics, its practitioners are perpetually accused of not actually understanding what they are doing. Statistics theory is, broadly speaking, about trying to understand what we are doing when we use statistical methods.</p>
-<p>While there are many possible ways to analyze data, most (but certainly not all) statistical methods are based on <strong>statistical modeling:</strong> treating the data as a realization of some <strong>random</strong> data-generating process with attributes, usually called <strong>parameters</strong><em>,</em> that are <em>a priori</em> unknown. The goal of the <strong>analyst</strong>, then, is to use the data to draw accurate inferences about these parameters and/or to make accurate predictions about future data. If the modeling has been done well (a very big “if”) then these unknown parameters will correspond well to whatever real-world questions initially motivated the analysis. Applied statistics courses like Stat 215A and B delve deeply into questions about how to ensure that the statistical modeling exercise successfully captures something interesting about reality.</p>
+<p>While there are many possible ways to analyze data, most (but certainly not all) statistical methods are based on <strong>statistical modeling:</strong> treating the data as a realization of some <strong>random</strong> data-generating process with attributes, usually called <strong>parameters</strong><em>,</em> that are <em>a priori</em> unknown. The goal of the <strong>analyst</strong>, then, is to use the data to draw accurate inferences about these parameters and/or to make accurate predictions about future data. If the modeling has been done well (a very big “if”) then these unknown parameters will correspond well to whatever real-world questions initially motivated the analysis. Applied statistics courses like Stat 215A and B concern questions about how to ensure that the statistical modeling exercise successfully captures something interesting about reality.</p>
 <p>In this course we will instead focus on how the analyst can use the data most effectively within the context of a given mathematical setup. We will discuss the structure of statistical models, how to evaluate the quality of a statistical method, how to design good methods for new settings, and the philosophy of Bayesian vs frequentist modeling frameworks. We will cover estimation, confidence intervals, and hypothesis testing, in parametric and nonparametric methods, in finite samples and asymptotic regimes.</p>
 </section>
 <section id="relationship-of-stat-210a-to-other-berkeley-courses" class="level2">
 <h2 class="anchored" data-anchor-id="relationship-of-stat-210a-to-other-berkeley-courses">Relationship of Stat 210A to other Berkeley courses</h2>
 <p>Stat 210A focuses on <em>classical</em> statistical contexts: either inference in finite samples, or in fixed-dimensional asymptotic regimes. Stat 210B (for which 210A is a prerequisite) is more technical and covers topics like empirical process theory and high-dimensional statistics.</p>
 <p>Berkeley’s graduate course on Statistical Learning Theory (CS 281A / Stat 241A) is also very popular and has some overlap in its topics. Roughly speaking, it is more tilted toward “machine learning”: it spends more time on topics in predictive modeling (i.e.&nbsp;classification and regression, which are covered in Stat 215A), optimization, and signal processing, but spends less time on inferential questions and (I believe) does not cover topics like hypothesis testing, confidence intervals, and causal inference. Both courses cover estimation and exponential families.</p>
+</section>
+<section id="deductive-vs-inductive-reasoning" class="level2">
+<h2 class="anchored" data-anchor-id="deductive-vs-inductive-reasoning">Deductive vs inductive reasoning</h2>
+<p>Most mathematics courses are entirely concerned with <strong>deductive reasoning</strong>: drawing conclusions that follow logically from premises. For example:</p>
+<ol type="1">
+<li><p>All real, symmetric matrices have real eigenvalues.</p></li>
+<li><p><span class="math inline">\(A\)</span> is a real, symmetric matrix.</p></li>
+<li><p><em>Therefore,</em> <span class="math inline">\(A\)</span> has real eigenvalues.</p></li>
+</ol>
+<p>Deductive reasoning comes up in everyday life, for example</p>
+<ol type="1">
+<li><p>No one in my daughter’s preschool class has a nut allergy.</p></li>
+<li><p>Zoe is in my daughter’s preschool class.</p></li>
+<li><p><em>Therefore</em>, Zoe is not allergic to peanuts.</p></li>
+</ol>
+<p>This type of argument is <em>risk-free</em> in the sense that, as long as the premises are true, the conclusions must hold. Of course, the premises could be false: I might be confusing my neighbor Zoe with a different Zoe who is in my daughter’s class. But that is the only way my conclusion could be wrong.</p>
+<p>Deductive arguments can involve statements about probability:</p>
+<ol type="1">
+<li>This die has six faces labeled 1, 2, 3, 4, 5, and 6.</li>
+<li>If I roll it, it is equally likely to land on any face.</li>
+<li><em>Therefore,</em> the chance of rolling a 4 is exactly 1/6.</li>
+</ol>
+<p>A probability course like <strong>Stat 205A</strong> is about statements like this.</p>
+<p>Statistics, on the other hand, is the mathematical science of <strong>inductive reasoning</strong>: reasoning from observations to make general claims about the world. Unlike deductive reasoning, such arguments are inherently <em>risky</em>: the conclusions we draw can be false even when the premises are correct.</p>
+<div class="callout callout-style-default callout-caution callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Caution
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Note that <strong>inductive proofs</strong> in mathematics are not an example of inductive reasoning as we mean it here. Inductive proofs are really examples of deductive reasoning because they provide a logically valid argument (i.e.&nbsp;the inductive step) for extending the conclusion to the entire class of objects under study.</p>
+</div>
+</div>
+<p>For example:</p>
+<ol type="1">
+<li>I ate a blueberry from the free sample tray at the supermarket.</li>
+<li>It was ripe and delicious.</li>
+<li><em>Therefore</em>, if I buy a carton of blueberries, they will <em>probably</em> be ripe and delicious.</li>
+</ol>
+<p>Here we have added the weasel word “probably” not to convey a rigorous quantitative statement about probability, but just to informally convey some uncertainty about the conclusion.</p>
+<p>This example would be more persuasive if we had taken a sample randomly from the carton we planned on buying:</p>
+<ol type="1">
+<li>I ate five blueberries at random from the carton I intended to buy.</li>
+<li>They were all ripe and delicious.</li>
+<li><em>Therefore</em>, if I buy the carton, the rest of the blueberries will <em>probably</em> be ripe and delicious.</li>
+</ol>
+<p>Of course, we could still always be wrong: maybe there were only five good blueberries in the whole carton and we just happened to take those. But that is not very likely.</p>
+<p>Scientists very often reason inductively. For example:</p>
+<ol type="1">
+<li><p>Water at 1atm of pressure has been observed to boil at 100°C every time it has been measured in the laboratory.</p></li>
+<li><p><em>Therefore,</em> water at 1atm of pressure <em>probably</em> always boils at 100°C.</p></li>
+</ol>
+<p>Inductive reasoning is the basis of all of the empirical sciences.</p>
+<p>We can also make inductive statements about probability:</p>
+<ol type="1">
+<li><p>I flipped this penny 1000 times and got 502 heads.</p></li>
+<li><p><em>Therefore</em>, it <em>probably</em> has about a 50% chance of landing heads.</p></li>
+</ol>
+<p>For now, we’ll assume we know what it means for a penny to have a 50% chance of landing heads; something like: it’s physical properties give it an equal chance of landing heads or tails (and a negligible chance of landing on its side or flying off into space). Generally, there is some controversy among different camps of philosophers and statisticians about what probability means, but not too much when it comes to coin flips. We’ll discuss this more later in the semester.</p>
+</section>
+<section id="the-problem-of-induction" class="level2">
+<h2 class="anchored" data-anchor-id="the-problem-of-induction">The problem of induction</h2>
+<p>Unfortunately, inductive reasoning is not <em>valid</em> in the sense meant by logicians or mathematicians. It doesn’t matter how many times I’ve seen real symmetric matrices that had real eigenvalues. Without a proof, I can’t make the general claim. There are entertaining examples of patterns being unexpectedly violated in math, such as:</p>
+<p><span class="math display">\[
+\begin{aligned}
+\int_0^\infty \frac{\sin x}{x}\,dx &amp;= \frac{\pi}{2}\\[10pt]
+\int_0^\infty \frac{\sin x}{x}\, \frac{\sin(x/3)}{x/3}\,dx &amp;= \frac{\pi}{2}\\[10pt]
+\int_0^\infty \frac{\sin x}{x}\, \frac{\sin(x/3)}{x/3}\, \frac{\sin(x/5)}{x/5}\,dx &amp;= \frac{\pi}{2}\\[10pt]
+&amp;\vdots\\[10pt]
+\int_0^\infty \frac{\sin x}{x}\, \frac{\sin(x/3)}{x/3}\,\cdots\, \frac{\sin(x/13)}{x/13}\,dx &amp;= \frac{\pi}{2}\\[10pt]
+\int_0^\infty \frac{\sin x}{x}\, \frac{\sin(x/3)}{x/3}\,\cdots\, \frac{\sin(x/15)}{x/15}\,dx &amp;= \frac{\pi}{2} - 2.31 \times 10^{-11}.
+\end{aligned}
+\]</span></p>
+<p>Bertrand Russell also warned about how inductive inference can go awry in real life:</p>
+<blockquote class="blockquote">
+<p>Domestic animals expect food when they see the person who usually feeds them. We know that all these rather crude expectations of uniformity are liable to be misleading. The man who has fed the chicken every day throughout its life at last wrings its neck instead, showing that more refined views as to the uniformity of nature would have been useful to the chicken.</p>
+</blockquote>
+<p>David Hume’s work <em>A Treatise of Human Nature</em> (1739) first proposed the <strong>problem of induction</strong>, namely that inductive reasoning presumes — seemingly without justification — that yet-to-be-observed cases will be similar to observed cases. This presumption is sometimes called the <strong>uniformity principle</strong>, and it is difficult to see how we can justify it. We can’t justify it through a direct logical argument, because it’s not logically justified. We could justify it by past experience — for example, at a low enough level, physical properties of the world generally seem to be uniform across space and time — but that argument is circular! Just because the future has been like the past in the past, doesn’t mean that it will be like the past in the future.</p>
+<p>Hume allowed that people have to reason inductively all the time, but he called it a “custom” or “habit” and challenged philosophers to justify it. Now almost 300 years later, there does not seem to have been a fully satisfactory answer; most philosophers of science (like Karl Popper, for example) admit that inductive reasoning is fallible, but think there are reasonable ways for scientists to deal with this.</p>
+</section>
+<section id="statistical-evasions-of-the-problem-of-induction" class="level2">
+<h2 class="anchored" data-anchor-id="statistical-evasions-of-the-problem-of-induction">Statistical evasions of the problem of induction</h2>
+<p>We seem to be in trouble if we are trying to build a mathematical science of inductive reasoning, when the first thing we know about induction is that it is not mathematically valid. Statisticians have two main ways of evading this problem, which lead to the two main mathematical frameworks for statistical inference:</p>
+<p><strong>Evasion 1: Bayesian reasoning</strong>. Bayesians respond to Hume that, whatever our <em>a priori</em> beliefs are about the world, we at least know how to update them in the light of experience using the mathematics of conditional probability. Our prior beliefs may not ultimately be justified, but there is only one rational way to update them (note this is somewhat disputed). We may hope that after enough experience they will “wash out” and observers with different prior beliefs will eventually converge in their beliefs after seeing enough data. We will study Bayesian statistics in a few weeks.</p>
+<p><strong>Evasion 2: Inductive behavior (frequentist statistics)</strong>. Another way of evading the problem is to design methods for inference whose fallibility can be quantified. As long as certain assumptions hold concerning the conditions under which the data were collected, we may be able to come up with methods that we can mathematically prove give correct conclusions with high probability.</p>
+</section>
+<section id="coin-flipping" class="level2">
+<h2 class="anchored" data-anchor-id="coin-flipping">Coin flipping</h2>
+<p>Although physical randomizers like coins and dice seem to be the firmest ground on which we can build a theory of probability, recent work has found surprising</p>
 
 
 </section>

@@ -1,0 +1,645 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.3.450">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="dcterms.date" content="2023-11-14">
+
+<title>Maximum Likelihood Estimation: Theory and Asymptotics</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+</style>
+
+
+<script src="../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../">
+<script src="../site_libs/quarto-html/quarto.js"></script>
+<script src="../site_libs/quarto-html/popper.min.js"></script>
+<script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "sidebar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "start",
+  "type": "textbox",
+  "limit": 20,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+<script async="" src="https://www.googletagmanager.com/gtag/js?id=G-B8G2041HSB"></script>
+
+<script type="text/javascript">
+
+window.dataLayer = window.dataLayer || [];
+function gtag(){dataLayer.push(arguments);}
+gtag('js', new Date());
+gtag('config', 'G-B8G2041HSB', { 'anonymize_ip': true});
+</script>
+
+  <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<link rel="stylesheet" href="../assets/styles.css">
+</head>
+
+<body class="nav-sidebar docked">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+  <nav class="quarto-secondary-nav">
+    <div class="container-fluid d-flex">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+        <i class="bi bi-layout-text-sidebar-reverse"></i>
+      </button>
+      <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item">
+      Stat 210a
+      </li></ol></nav>
+      <a class="flex-grow-1" role="button" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+      </a>
+      <button type="button" class="btn quarto-search-button" aria-label="" onclick="window.quartoOpenSearch();">
+        <i class="bi bi-search"></i>
+      </button>
+    </div>
+  </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal sidebar-navigation docked overflow-auto">
+    <div class="pt-lg-2 mt-2 text-left sidebar-header sidebar-header-stacked">
+      <a href="../index.html" class="sidebar-logo-link">
+      <img src="../assets/stat_bear.png" alt="" class="sidebar-logo py-0 d-lg-inline d-none">
+      </a>
+    <div class="sidebar-title mb-0 py-0">
+      <a href="../">Stat 210a</a> 
+        <div class="sidebar-tools-main">
+    <a href="https://github.com/berkeley-stat210a/fall-2024" rel="" title="" class="quarto-navigation-tool px-1" aria-label=""><i class="bi bi-github"></i></a>
+</div>
+    </div>
+      </div>
+        <div class="mt-2 flex-shrink-0 align-items-center">
+        <div class="sidebar-search">
+        <div id="quarto-search" class="" title="Search"></div>
+        </div>
+        </div>
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Home / Schedule</span></a>
+  </div>
+</li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" aria-expanded="true">
+ <span class="menu-text">Course Logistics</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../faq.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Frequently Asked Questions</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../syllabus.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Syllabus</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../syllabus.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Syllabus</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../calendar.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Calendar</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../handwritten-notes.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Handwritten notes</span></a>
+  </div>
+</li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" aria-expanded="true">
+ <span class="menu-text">Course Reader</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../reader/introduction.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Course introduction</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../reader/measure-theory-basics.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Measure Theory Basics</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../license.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">License</span></a>
+  </div>
+</li>
+    </ul>
+    </div>
+</nav>
+<div id="quarto-sidebar-glass" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass"></div>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#maximum-likelihood-estimation" id="toc-maximum-likelihood-estimation" class="nav-link active" data-scroll-target="#maximum-likelihood-estimation"><span class="header-section-number">1</span> Maximum Likelihood Estimation</a>
+  <ul class="collapse">
+  <li><a href="#example-exponential-family" id="toc-example-exponential-family" class="nav-link" data-scroll-target="#example-exponential-family"><span class="header-section-number">1.1</span> Example: Exponential Family</a></li>
+  <li><a href="#example-normal-distribution" id="toc-example-normal-distribution" class="nav-link" data-scroll-target="#example-normal-distribution"><span class="header-section-number">1.2</span> Example: Normal Distribution</a></li>
+  <li><a href="#example-poisson-distribution" id="toc-example-poisson-distribution" class="nav-link" data-scroll-target="#example-poisson-distribution"><span class="header-section-number">1.3</span> Example: Poisson Distribution</a></li>
+  <li><a href="#proof-convergence-in-distribution-with-probability-approaching-1" id="toc-proof-convergence-in-distribution-with-probability-approaching-1" class="nav-link" data-scroll-target="#proof-convergence-in-distribution-with-probability-approaching-1"><span class="header-section-number">1.4</span> Proof: Convergence in Distribution with Probability Approaching 1</a></li>
+  </ul></li>
+  <li><a href="#asymptotic-efficiency" id="toc-asymptotic-efficiency" class="nav-link" data-scroll-target="#asymptotic-efficiency"><span class="header-section-number">2</span> Asymptotic Efficiency</a></li>
+  <li><a href="#asymptotic-distribution-of-mle" id="toc-asymptotic-distribution-of-mle" class="nav-link" data-scroll-target="#asymptotic-distribution-of-mle"><span class="header-section-number">3</span> Asymptotic Distribution of MLE</a>
+  <ul class="collapse">
+  <li><a href="#informal-proof" id="toc-informal-proof" class="nav-link" data-scroll-target="#informal-proof"><span class="header-section-number">3.1</span> Informal Proof</a></li>
+  <li><a href="#quadratic-approximation" id="toc-quadratic-approximation" class="nav-link" data-scroll-target="#quadratic-approximation"><span class="header-section-number">3.2</span> Quadratic Approximation</a></li>
+  </ul></li>
+  <li><a href="#consistency-of-mle" id="toc-consistency-of-mle" class="nav-link" data-scroll-target="#consistency-of-mle"><span class="header-section-number">4</span> Consistency of MLE</a>
+  <ul class="collapse">
+  <li><a href="#definition-compact-convergence" id="toc-definition-compact-convergence" class="nav-link" data-scroll-target="#definition-compact-convergence"><span class="header-section-number">4.1</span> Definition: Compact Convergence</a></li>
+  <li><a href="#theorem-lln-for-random-functions" id="toc-theorem-lln-for-random-functions" class="nav-link" data-scroll-target="#theorem-lln-for-random-functions"><span class="header-section-number">4.2</span> Theorem: LLN for Random Functions</a></li>
+  <li><a href="#theorem-keener-9.4" id="toc-theorem-keener-9.4" class="nav-link" data-scroll-target="#theorem-keener-9.4"><span class="header-section-number">4.3</span> Theorem (Keener 9.4)</a></li>
+  <li><a href="#theorem-consistency-of-mle-for-compact-theta" id="toc-theorem-consistency-of-mle-for-compact-theta" class="nav-link" data-scroll-target="#theorem-consistency-of-mle-for-compact-theta"><span class="header-section-number">4.4</span> Theorem: Consistency of MLE for Compact <span class="math inline">\(\Theta\)</span></a></li>
+  </ul></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">Maximum Likelihood Estimation: Theory and Asymptotics</h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+    <div>
+    <div class="quarto-title-meta-heading">Published</div>
+    <div class="quarto-title-meta-contents">
+      <p class="date">November 14, 2023</p>
+    </div>
+  </div>
+  
+    
+  </div>
+  
+
+</header>
+
+<p><span class="math display">\[
+\newcommand{\cB}{\mathcal{B}}
+\newcommand{\cF}{\mathcal{F}}
+\newcommand{\cN}{\mathcal{N}}
+\newcommand{\cP}{\mathcal{P}}
+\newcommand{\cX}{\mathcal{X}}
+\newcommand{\EE}{\mathbb{E}}
+\newcommand{\PP}{\mathbb{P}}
+\newcommand{\RR}{\mathbb{R}}
+\newcommand{\ZZ}{\mathbb{Z}}
+\newcommand{\td}{\,\textrm{d}}
+\newcommand{\simiid}{\stackrel{\textrm{i.i.d.}}{\sim}}
+\newcommand{\eqas}{\stackrel{\textrm{a.s.}}{=}}
+\newcommand{\eqPas}{\stackrel{\cP\textrm{-a.s.}}{=}}
+\newcommand{\eqmuas}{\stackrel{\mu\textrm{-a.s.}}{=}}
+\newcommand{\eqD}{\stackrel{D}{=}}
+\newcommand{\indep}{\perp\!\!\!\!\perp}
+\DeclareMathOperator*{\minz}{minimize\;}
+\newcommand{\Var}{\textnormal{Var}}
+\newcommand{\Cov}{\textnormal{Cov}}
+\newcommand{\Corr}{\textnormal{Corr}}
+\]</span></p>
+<section id="maximum-likelihood-estimation" class="level2" data-number="1">
+<h2 data-number="1" class="anchored" data-anchor-id="maximum-likelihood-estimation"><span class="header-section-number">1</span> Maximum Likelihood Estimation</h2>
+<p>For a generic dominated family <span class="math inline">\(\cP = \{P_\theta: \theta \in \Theta\}\)</span> with densities <span class="math inline">\(f_\theta\)</span>, a simple estimator for <span class="math inline">\(\theta\)</span> is:</p>
+<p><span class="math display">\[\hat{\theta}_{\text{MLE}}(X) = \arg\max_{\theta \in \Theta} p_\theta(X) = \arg\max_{\theta \in \Theta} \prod_{i=1}^n f_\theta(X_i) = \arg\max_{\theta \in \Theta} \ell_n(\theta; X)\]</span></p>
+<p>Remarks: 1. <span class="math inline">\(\arg\max\)</span> may not exist, be unique, or be computable 2. Doesn’t depend on parameterization or base measure; MLE for <span class="math inline">\(g(\theta)\)</span> is <span class="math inline">\(g(\hat{\theta}_{\text{MLE}})\)</span></p>
+<section id="example-exponential-family" class="level3" data-number="1.1">
+<h3 data-number="1.1" class="anchored" data-anchor-id="example-exponential-family"><span class="header-section-number">1.1</span> Example: Exponential Family</h3>
+<p><span class="math display">\[\ell(\eta; X) = \eta^T T(X) - A(\eta) + \log h(X)\]</span></p>
+<p><span class="math inline">\(T(\bar{X}) = \mathbb{E}_\eta[T(X)]\)</span> if such <span class="math inline">\(\eta\)</span> exists</p>
+<p>Because <span class="math inline">\(\ell''(\eta; X) = -\text{Var}_\eta[T(X)]\)</span> is negative definite unless <span class="math inline">\(\eta \to T(\eta)\)</span> constant, in which case param redundant</p>
+<p>At most 1 solution exists</p>
+<p>Let <span class="math inline">\(m(X) = \mathbb{E}_\eta[T(X)] = \nabla A(\eta)\)</span></p>
+</section>
+<section id="example-normal-distribution" class="level3" data-number="1.2">
+<h3 data-number="1.2" class="anchored" data-anchor-id="example-normal-distribution"><span class="header-section-number">1.2</span> Example: Normal Distribution</h3>
+<p><span class="math inline">\(X_i \sim \text{iid } N(\theta, \sigma^2)\)</span>, <span class="math inline">\(h(x) = \frac{1}{\sqrt{2\pi\sigma^2}} e^{-x^2/(2\sigma^2)}\)</span>, <span class="math inline">\(\eta \in \mathbb{R}\)</span></p>
+<p><span class="math inline">\(T(X) = \frac{X}{\sigma^2}\)</span>, <span class="math inline">\(A(\eta) = \frac{\eta^2}{2\sigma^2}\)</span></p>
+<p>Assume <span class="math inline">\(\eta = \theta/\sigma^2\)</span>, <span class="math inline">\(\sigma^2\)</span> known</p>
+<p><span class="math inline">\(m(\eta) = \eta\sigma^2 = \theta\)</span>, <span class="math inline">\(m^{-1}(\theta) = \theta/\sigma^2\)</span></p>
+<p>Consistency: <span class="math inline">\(\bar{X} \xrightarrow{p} \theta\)</span> (LLN)</p>
+<p>Cts mapping: <span class="math inline">\(\hat{\eta} = m^{-1}(\bar{X}) \xrightarrow{p} \theta/\sigma^2\)</span></p>
+<p>Since <span class="math inline">\(\sqrt{n}(\bar{X} - \theta) \xrightarrow{d} N(0, \text{Var}_\eta[T(X)])\)</span>:</p>
+<p><span class="math inline">\(N(0, \sigma^2)\)</span></p>
+<p>Recall: <span class="math inline">\(J(\eta) = \text{Var}_\eta[T(X)]\)</span></p>
+<p>Delta method: <span class="math inline">\(\sqrt{n}(\hat{\eta} - \eta) \xrightarrow{d} N(0, [m^{-1'}(\theta)]^2 \sigma^2)\)</span></p>
+<p><span class="math inline">\(N(0, 1/\sigma^2)\)</span></p>
+<p>Recall: <span class="math inline">\(J(\eta) = \text{Var}_\eta[T(X)] = \sigma^2\)</span></p>
+<p><span class="math inline">\(N(0, J^{-1})\)</span></p>
+<p>Asymptotically unbiased Gaussian, achieves CRLB</p>
+</section>
+<section id="example-poisson-distribution" class="level3" data-number="1.3">
+<h3 data-number="1.3" class="anchored" data-anchor-id="example-poisson-distribution"><span class="header-section-number">1.3</span> Example: Poisson Distribution</h3>
+<p><span class="math inline">\(X_i \sim \text{iid Poisson}(\theta)\)</span>, <span class="math inline">\(\eta = \log \theta\)</span></p>
+<p><span class="math inline">\(T(X) = X\)</span>, <span class="math inline">\(\mathbb{E}[X] = \theta\)</span>, <span class="math inline">\(N(0, \theta)\)</span></p>
+<p><span class="math inline">\(\hat{\eta}_n = \log \bar{X}\)</span>, <span class="math inline">\(\sqrt{n}(\log \bar{X} - \log \theta) \xrightarrow{d} N(0, \theta^{-1})\)</span> (Delta method)</p>
+<p><span class="math inline">\(N(0, \theta^{-1})\)</span></p>
+<p>But for finite <span class="math inline">\(n\)</span>, <span class="math inline">\(\mathbb{P}(\bar{X} = 0) = \mathbb{P}(X_1 = 0)^n = e^{-n\theta} &gt; 0\)</span></p>
+<p>MLE can have embarrassing finite sample performance despite being asymptotically optimal</p>
+</section>
+<section id="proof-convergence-in-distribution-with-probability-approaching-1" class="level3" data-number="1.4">
+<h3 data-number="1.4" class="anchored" data-anchor-id="proof-convergence-in-distribution-with-probability-approaching-1"><span class="header-section-number">1.4</span> Proof: Convergence in Distribution with Probability Approaching 1</h3>
+<p>If <span class="math inline">\(\mathbb{P}(B_n) \to 1\)</span>, <span class="math inline">\(X_n \xrightarrow{d} X\)</span>, <span class="math inline">\(Z_n\)</span> arbitrary, then <span class="math inline">\(X_n 1_{B_n} + Z_n 1_{B_n^c} \xrightarrow{d} X\)</span></p>
+<p>Proof: <span class="math inline">\(\mathbb{P}(\|Z_n 1_{B_n^c}\| &gt; \epsilon) \leq \mathbb{P}(B_n^c) \to 0\)</span>, so <span class="math inline">\(Z_n 1_{B_n^c} \xrightarrow{p} 0\)</span> Also, <span class="math inline">\(1_{B_n} \xrightarrow{p} 1\)</span>, apply Slutsky</p>
+<p>Any zany behavior has no effect on convergence in distribution</p>
+</section>
+</section>
+<section id="asymptotic-efficiency" class="level2" data-number="2">
+<h2 data-number="2" class="anchored" data-anchor-id="asymptotic-efficiency"><span class="header-section-number">2</span> Asymptotic Efficiency</h2>
+<p>In the exponential family case, generalizes to a much broader class of models</p>
+<p>Setting: <span class="math inline">\(X_1, \ldots, X_n \stackrel{\text{iid}}{\sim} p_\theta(x)\)</span>, <span class="math inline">\(\theta \in \mathbb{R}^d\)</span></p>
+<p><span class="math inline">\(p_\theta\)</span> smooth in <span class="math inline">\(\theta\)</span> (e.g., 2 cts integrable derives, can be relaxed)</p>
+<p>Let <span class="math inline">\(\ell_i(\theta; X) = \log p_\theta(X_i)\)</span>, <span class="math inline">\(\ell_n(\theta; X) = \sum_{i=1}^n \ell_i(\theta; X)\)</span></p>
+<p><span class="math inline">\(S_n(\theta) = \nabla_\theta \ell_n(\theta; X)\)</span>, <span class="math inline">\(J_n(\theta) = \text{Var}_\theta[\nabla_\theta \ell_n(\theta; X)] = nJ_1(\theta)\)</span></p>
+<p>We say an estimator is asymptotically efficient if <span class="math inline">\(\sqrt{n}(\hat{\theta}_n - \theta) \xrightarrow{d} N(0, J_1^{-1}(\theta))\)</span></p>
+<p>Delta method for differentiable estimand <span class="math inline">\(g(\theta)\)</span>:</p>
+<p><span class="math inline">\(\sqrt{n}(g(\hat{\theta}_n) - g(\theta)) \xrightarrow{d} N(0, \nabla g(\theta)^T J_1^{-1}(\theta) \nabla g(\theta))\)</span></p>
+<p>Also achieves CRLB if <span class="math inline">\(\hat{\theta}_n\)</span> does, <span class="math inline">\(g\)</span> diff</p>
+</section>
+<section id="asymptotic-distribution-of-mle" class="level2" data-number="3">
+<h2 data-number="3" class="anchored" data-anchor-id="asymptotic-distribution-of-mle"><span class="header-section-number">3</span> Asymptotic Distribution of MLE</h2>
+<p>Under mild conditions, <span class="math inline">\(\hat{\theta}_n\)</span> is asymptotically Gaussian efficient</p>
+<p>We will be interested in <span class="math inline">\(\ell_n(\theta; X)\)</span> as a function of <span class="math inline">\(\theta\)</span> Notate true value as <span class="math inline">\(\theta_0\)</span>: <span class="math inline">\(X \sim P_{\theta_0}\)</span></p>
+<p>Derivatives of <span class="math inline">\(\ell_n\)</span> at <span class="math inline">\(\theta_0\)</span>: <span class="math inline">\(S_0\)</span>, <span class="math inline">\(S_1\)</span></p>
+<p><span class="math inline">\(S_n(\theta_0; X) = \sum_{i=1}^n \nabla \ell_i(\theta_0; X_i) \sim N(0, J_n(\theta_0))\)</span></p>
+<p><span class="math inline">\(\mathbb{E}[S_n(\theta; X)] = n\mathbb{E}[\nabla \ell_i(\theta_0; X_i)] = 0\)</span></p>
+<p><span class="math inline">\(\mathbb{E}[-\nabla^2 \ell_n(\theta; X)] = \mathbb{E}[\sum_{i=1}^n -\nabla^2 \ell_i(\theta_0; X_i)] = J_n(\theta_0)\)</span></p>
+<section id="informal-proof" class="level3" data-number="3.1">
+<h3 data-number="3.1" class="anchored" data-anchor-id="informal-proof"><span class="header-section-number">3.1</span> Informal Proof</h3>
+<p>Taylor expansion between <span class="math inline">\(\theta_0\)</span>, <span class="math inline">\(\hat{\theta}_n\)</span>:</p>
+<p><span class="math inline">\(S_n(\hat{\theta}_n; X) = S_n(\theta_0; X) + S_n'(\theta_0; X)(\hat{\theta}_n - \theta_0)\)</span></p>
+<p><span class="math inline">\(\sqrt{n}(\hat{\theta}_n - \theta_0) = J_n^{-1}(\theta_0) S_n(\theta_0; X)/\sqrt{n}\)</span></p>
+<p><span class="math inline">\(\xrightarrow{d} N(0, J_1^{-1}(\theta_0))\)</span></p>
+<p>More rigorous proof later, but note we need consistency of <span class="math inline">\(\hat{\theta}_n\)</span> first to even justify Taylor expansion</p>
+</section>
+<section id="quadratic-approximation" class="level3" data-number="3.2">
+<h3 data-number="3.2" class="anchored" data-anchor-id="quadratic-approximation"><span class="header-section-number">3.2</span> Quadratic Approximation</h3>
+<p>Quadratic approximation near <span class="math inline">\(\theta_0\)</span>:</p>
+<p><span class="math inline">\(\ell_n(\theta) \approx \ell_n(\theta_0) + (\theta - \theta_0)^T S_n(\theta_0) - \frac{1}{2}(\theta - \theta_0)^T J_n(\theta_0)(\theta - \theta_0)\)</span></p>
+<p><span class="math inline">\(N(J_n^{-1}(\theta_0)S_n(\theta_0), J_n^{-1}(\theta_0))\)</span></p>
+<p>Gaussian linear term + Deterministic curvature</p>
+<p><span class="math inline">\(\ell_n(\theta) - \ell_n(\theta_0) \approx -\frac{n}{2}(\theta - \hat{\theta}_n)^T J_1(\theta_0)(\theta - \hat{\theta}_n) + \text{const}\)</span></p>
+</section>
+</section>
+<section id="consistency-of-mle" class="level2" data-number="4">
+<h2 data-number="4" class="anchored" data-anchor-id="consistency-of-mle"><span class="header-section-number">4</span> Consistency of MLE</h2>
+<p><span class="math inline">\(X_1, \ldots, X_n \stackrel{\text{iid}}{\sim} f_{\theta_0}\)</span>, <span class="math inline">\(\theta_n \in \arg\max_{\theta \in \Theta} \ell_n(\theta; X)\)</span></p>
+<p>Will be ok if <span class="math inline">\(\theta_n\)</span> comes close to maximizing <span class="math inline">\(\ell_n\)</span></p>
+<p>Question: When does <span class="math inline">\(\ell_n \to \ell\)</span>?</p>
+<p>Assume model identifiable: <span class="math inline">\(P_\theta = P_{\theta_0}\)</span> for <span class="math inline">\(\theta \neq \theta_0\)</span></p>
+<p>Recall KL Divergence:</p>
+<p><span class="math inline">\(D(g\|f) = \mathbb{E}_g[\log \frac{g(X)}{f(X)}] = \int g(x) \log \frac{g(x)}{f(x)} dx\)</span> (note switch)</p>
+<p><span class="math inline">\(\log \frac{g}{f} \geq 1 - \frac{f}{g}\)</span> (strict ineq unless const, i.e., unless <span class="math inline">\(f=g\)</span>)</p>
+<p>Let <span class="math inline">\(W_i(\theta) = \ell_i(\theta; X_i) - \ell_i(\theta_0; X_i)\)</span>, <span class="math inline">\(W(\theta) = \mathbb{E}_{\theta_0}[W_i(\theta)]\)</span></p>
+<p>Note: <span class="math inline">\(\theta_0 = \arg\max_{\theta \in \Theta} W(\theta)\)</span></p>
+<p><span class="math inline">\(W(\theta_0) = 0\)</span></p>
+<p><span class="math inline">\(W(\theta) = -\mathbb{E}_{\theta_0}[\log \frac{f_{\theta_0}(X)}{f_\theta(X)}] = -D(f_{\theta_0}\|f_\theta) \leq 0\)</span></p>
+<p><span class="math inline">\(= 0\)</span> iff <span class="math inline">\(\theta = \theta_0\)</span></p>
+<p>But not enough: 1. MLE <span class="math inline">\(\hat{\theta}_n\)</span> depends on entire function <span class="math inline">\(\ell_n\)</span> 2. Need uniform convergence in <span class="math inline">\(\theta\)</span></p>
+<section id="definition-compact-convergence" class="level3" data-number="4.1">
+<h3 data-number="4.1" class="anchored" data-anchor-id="definition-compact-convergence"><span class="header-section-number">4.1</span> Definition: Compact Convergence</h3>
+<p>For compact <span class="math inline">\(K\)</span>, let <span class="math inline">\(C(K) = \{f: K \to \mathbb{R} \text{ cts}\}\)</span></p>
+<p>For <span class="math inline">\(f \in C(K)\)</span>, let <span class="math inline">\(\|f\| = \sup_{x \in K} |f(x)|\)</span></p>
+<p><span class="math inline">\(f_n \to f\)</span> in this norm if <span class="math inline">\(\|f_n - f\| \to 0\)</span></p>
+</section>
+<section id="theorem-lln-for-random-functions" class="level3" data-number="4.2">
+<h3 data-number="4.2" class="anchored" data-anchor-id="theorem-lln-for-random-functions"><span class="header-section-number">4.2</span> Theorem: LLN for Random Functions</h3>
+<p>Assume <span class="math inline">\(K\)</span> compact, <span class="math inline">\(W_i, W_2, \ldots \in C(K)\)</span> iid <span class="math inline">\(\mathbb{E}[\|W_i\|] &lt; \infty\)</span>, <span class="math inline">\(\mathbb{E}[W_i(\theta)] = W(\theta)\)</span></p>
+<p>Then <span class="math inline">\(\bar{W}_n \in C(K)\)</span> and <span class="math inline">\(\mathbb{P}(\|\bar{W}_n - W\| &gt; \epsilon) \to 0\)</span></p>
+<p>i.e., <span class="math inline">\(\ell_n \to \ell\)</span> in <span class="math inline">\(\|\cdot\|_\infty\)</span> norm</p>
+</section>
+<section id="theorem-keener-9.4" class="level3" data-number="4.3">
+<h3 data-number="4.3" class="anchored" data-anchor-id="theorem-keener-9.4"><span class="header-section-number">4.3</span> Theorem (Keener 9.4)</h3>
+<p>Let <span class="math inline">\(G_n, G\)</span> random functions in <span class="math inline">\(K\)</span> compact 1. <span class="math inline">\(G_n \to g\)</span> in <span class="math inline">\(\|\cdot\|_\infty\)</span>, some fixed <span class="math inline">\(g \in C(K)\)</span>. Then: a. If <span class="math inline">\(t^* \in K\)</span> fixed, then <span class="math inline">\(G_n(t^*) \xrightarrow{p} g(t^*)\)</span> b. If <span class="math inline">\(g\)</span> maximized at unique value <span class="math inline">\(t^*\)</span> and <span class="math inline">\(G_n(t_n) = \max_t G_n(t)\)</span>, then <span class="math inline">\(t_n \xrightarrow{p} t^*\)</span> 2. If <span class="math inline">\(K \subset \mathbb{R}\)</span>, <span class="math inline">\(g'(t) = 0\)</span> has unique sol. <span class="math inline">\(t^*\)</span> and <span class="math inline">\(t_n\)</span> solve <span class="math inline">\(G_n'(t) = 0\)</span>, then <span class="math inline">\(t_n \xrightarrow{p} t^*\)</span></p>
+<p>(Sketch of proof in purple) If <span class="math inline">\(G_n'(t_n) = 0\)</span>, get <span class="math inline">\(G_n'(t^*) = g'(t^*) + (g'(t_n) - g'(t^*)) + (G_n'(t^*) - g'(t^*))\)</span> <span class="math inline">\(\to 0 + 0 + 0\)</span> by assumptions + by cts mapping</p>
+<p>Fix <span class="math inline">\(\epsilon &gt; 0\)</span>, let <span class="math inline">\(B_\epsilon = \{t: \|t - t^*\| &lt; \epsilon\}\)</span> Let <span class="math inline">\(K_\epsilon = K \setminus B_\epsilon(t^*)\)</span>, <span class="math inline">\(K \setminus B_\epsilon\)</span> compact <span class="math inline">\(\delta = g(t^*) - \max_{t \in K_\epsilon} g(t) &gt; 0\)</span></p>
+<p>If <span class="math inline">\(t_n \notin K_\epsilon\)</span>, then <span class="math inline">\(G_n(t_n) &gt; G_n(t^*) - \frac{\delta}{2} &gt; g(t^*) - \delta = \max_{t \in K_\epsilon} g(t)\)</span></p>
+<p><span class="math inline">\(\mathbb{P}(t_n \notin K_\epsilon) \leq \mathbb{P}(\|G_n - g\|_\infty &gt; \frac{\delta}{2}) \to 0\)</span></p>
+<p>Analogous to <span class="math inline">\(\bar{X}_n \xrightarrow{p} \mu\)</span></p>
+</section>
+<section id="theorem-consistency-of-mle-for-compact-theta" class="level3" data-number="4.4">
+<h3 data-number="4.4" class="anchored" data-anchor-id="theorem-consistency-of-mle-for-compact-theta"><span class="header-section-number">4.4</span> Theorem: Consistency of MLE for Compact <span class="math inline">\(\Theta\)</span></h3>
+<p><span class="math inline">\(X_1, \ldots, X_n \stackrel{\text{iid}}{\sim} f_{\theta_0}\)</span>, <span class="math inline">\(\cP\)</span> has densities <span class="math inline">\(p_\theta\)</span>, <span class="math inline">\(\theta \in \Theta\)</span></p>
+<p>Assume: 1. <span class="math inline">\(p_\theta\)</span> cts in <span class="math inline">\(\theta\)</span> 2. <span class="math inline">\(\Theta\)</span> compact 3. <span class="math inline">\(\mathbb{E}_{\theta_0}[\sup_\theta |f_\theta(X)|/f_{\theta_0}(X)] &lt; \infty\)</span> 4. <span class="math inline">\(\mathbb{E}_{\theta_0}[\sup_\theta |W_i(\theta)|] &lt; \infty\)</span> 5. Model identifiable</p>
+<p>Then <span class="math inline">\(\hat{\theta}_n \xrightarrow{p} \theta_0\)</span> if $</p>
+
+
+</section>
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const isCodeAnnotation = (el) => {
+    for (const clz of el.classList) {
+      if (clz.startsWith('code-annotation-')) {                     
+        return true;
+      }
+    }
+    return false;
+  }
+  const clipboard = new window.ClipboardJS('.code-copy-button', {
+    text: function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+  });
+  clipboard.on('success', function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  });
+  function tippyHover(el, contentFn) {
+    const config = {
+      allowHTML: true,
+      content: contentFn,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start'
+    };
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      return note.innerHTML;
+    });
+  }
+      let selectedAnnoteEl;
+      const selectorForAnnotation = ( cell, annotation) => {
+        let cellAttr = 'data-code-cell="' + cell + '"';
+        let lineAttr = 'data-code-annotation="' +  annotation + '"';
+        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+        return selector;
+      }
+      const selectCodeLines = (annoteEl) => {
+        const doc = window.document;
+        const targetCell = annoteEl.getAttribute("data-target-cell");
+        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+        const lineIds = lines.map((line) => {
+          return targetCell + "-" + line;
+        })
+        let top = null;
+        let height = null;
+        let parent = null;
+        if (lineIds.length > 0) {
+            //compute the position of the single el (top and bottom and make a div)
+            const el = window.document.getElementById(lineIds[0]);
+            top = el.offsetTop;
+            height = el.offsetHeight;
+            parent = el.parentElement.parentElement;
+          if (lineIds.length > 1) {
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+            height = bottom - top;
+          }
+          if (top !== null && height !== null && parent !== null) {
+            // cook up a div (if necessary) and position it 
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            div.style.top = top - 2 + "px";
+            div.style.height = height + 4 + "px";
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            gutterDiv.style.top = top - 2 + "px";
+            gutterDiv.style.height = height + 4 + "px";
+          }
+          selectedAnnoteEl = annoteEl;
+        }
+      };
+      const unselectCodeLines = () => {
+        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+        elementsIds.forEach((elId) => {
+          const div = window.document.getElementById(elId);
+          if (div) {
+            div.remove();
+          }
+        });
+        selectedAnnoteEl = undefined;
+      };
+      // Attach click handler to the DT
+      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+      for (const annoteDlNode of annoteDls) {
+        annoteDlNode.addEventListener('click', (event) => {
+          const clickedEl = event.target;
+          if (clickedEl !== selectedAnnoteEl) {
+            unselectCodeLines();
+            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+            if (activeEl) {
+              activeEl.classList.remove('code-annotation-active');
+            }
+            selectCodeLines(clickedEl);
+            clickedEl.classList.add('code-annotation-active');
+          } else {
+            // Unselect the line
+            unselectCodeLines();
+            clickedEl.classList.remove('code-annotation-active');
+          }
+        });
+      }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+</div> <!-- /content -->
+
+
+
+</body></html>

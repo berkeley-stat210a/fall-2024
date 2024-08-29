@@ -1,0 +1,651 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.3.450">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="dcterms.date" content="2023-11-16">
+
+<title>Likelihood-Based Inference: Wald, Score, and Generalized Likelihood Ratio Tests</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+</style>
+
+
+<script src="../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../">
+<script src="../site_libs/quarto-html/quarto.js"></script>
+<script src="../site_libs/quarto-html/popper.min.js"></script>
+<script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "sidebar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "start",
+  "type": "textbox",
+  "limit": 20,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+<script async="" src="https://www.googletagmanager.com/gtag/js?id=G-B8G2041HSB"></script>
+
+<script type="text/javascript">
+
+window.dataLayer = window.dataLayer || [];
+function gtag(){dataLayer.push(arguments);}
+gtag('js', new Date());
+gtag('config', 'G-B8G2041HSB', { 'anonymize_ip': true});
+</script>
+
+  <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<link rel="stylesheet" href="../assets/styles.css">
+</head>
+
+<body class="nav-sidebar docked">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+  <nav class="quarto-secondary-nav">
+    <div class="container-fluid d-flex">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+        <i class="bi bi-layout-text-sidebar-reverse"></i>
+      </button>
+      <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item">
+      Stat 210a
+      </li></ol></nav>
+      <a class="flex-grow-1" role="button" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+      </a>
+      <button type="button" class="btn quarto-search-button" aria-label="" onclick="window.quartoOpenSearch();">
+        <i class="bi bi-search"></i>
+      </button>
+    </div>
+  </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal sidebar-navigation docked overflow-auto">
+    <div class="pt-lg-2 mt-2 text-left sidebar-header sidebar-header-stacked">
+      <a href="../index.html" class="sidebar-logo-link">
+      <img src="../assets/stat_bear.png" alt="" class="sidebar-logo py-0 d-lg-inline d-none">
+      </a>
+    <div class="sidebar-title mb-0 py-0">
+      <a href="../">Stat 210a</a> 
+        <div class="sidebar-tools-main">
+    <a href="https://github.com/berkeley-stat210a/fall-2024" rel="" title="" class="quarto-navigation-tool px-1" aria-label=""><i class="bi bi-github"></i></a>
+</div>
+    </div>
+      </div>
+        <div class="mt-2 flex-shrink-0 align-items-center">
+        <div class="sidebar-search">
+        <div id="quarto-search" class="" title="Search"></div>
+        </div>
+        </div>
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Home / Schedule</span></a>
+  </div>
+</li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" aria-expanded="true">
+ <span class="menu-text">Course Logistics</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../faq.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Frequently Asked Questions</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../syllabus.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Syllabus</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../syllabus.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Syllabus</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../calendar.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Calendar</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../handwritten-notes.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Handwritten notes</span></a>
+  </div>
+</li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" aria-expanded="true">
+ <span class="menu-text">Course Reader</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../reader/introduction.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Course introduction</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../reader/measure-theory-basics.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Measure Theory Basics</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../license.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">License</span></a>
+  </div>
+</li>
+    </ul>
+    </div>
+</nav>
+<div id="quarto-sidebar-glass" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass"></div>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#likelihood-based-inference" id="toc-likelihood-based-inference" class="nav-link active" data-scroll-target="#likelihood-based-inference"><span class="header-section-number">1</span> Likelihood-Based Inference</a>
+  <ul class="collapse">
+  <li><a href="#setting" id="toc-setting" class="nav-link" data-scroll-target="#setting"><span class="header-section-number">1.1</span> Setting</a></li>
+  </ul></li>
+  <li><a href="#wald-type-confidence-regions" id="toc-wald-type-confidence-regions" class="nav-link" data-scroll-target="#wald-type-confidence-regions"><span class="header-section-number">2</span> Wald-Type Confidence Regions</a>
+  <ul class="collapse">
+  <li><a href="#estimating-jtheta" id="toc-estimating-jtheta" class="nav-link" data-scroll-target="#estimating-jtheta"><span class="header-section-number">2.1</span> Estimating <span class="math inline">\(J(\theta)\)</span></a></li>
+  <li><a href="#wald-interval-for-theta_j" id="toc-wald-interval-for-theta_j" class="nav-link" data-scroll-target="#wald-interval-for-theta_j"><span class="header-section-number">2.2</span> Wald Interval for <span class="math inline">\(\theta_j\)</span></a></li>
+  <li><a href="#example-generalized-linear-model-with-fixed-design" id="toc-example-generalized-linear-model-with-fixed-design" class="nav-link" data-scroll-target="#example-generalized-linear-model-with-fixed-design"><span class="header-section-number">2.3</span> Example: Generalized Linear Model with Fixed Design</a></li>
+  </ul></li>
+  <li><a href="#score-test" id="toc-score-test" class="nav-link" data-scroll-target="#score-test"><span class="header-section-number">3</span> Score Test</a>
+  <ul class="collapse">
+  <li><a href="#remarks-1" id="toc-remarks-1" class="nav-link" data-scroll-target="#remarks-1"><span class="header-section-number">3.1</span> Remarks</a></li>
+  <li><a href="#score-test-is-invariant-to-reparameterization" id="toc-score-test-is-invariant-to-reparameterization" class="nav-link" data-scroll-target="#score-test-is-invariant-to-reparameterization"><span class="header-section-number">3.2</span> Score Test is Invariant to Reparameterization</a></li>
+  <li><a href="#example-1-parameter-exponential-family" id="toc-example-1-parameter-exponential-family" class="nav-link" data-scroll-target="#example-1-parameter-exponential-family"><span class="header-section-number">3.3</span> Example: 1-Parameter Exponential Family</a></li>
+  <li><a href="#example-x_1-ldots-x_n-stackreltextiidsim-textlaplacetheta-2sqrt2" id="toc-example-x_1-ldots-x_n-stackreltextiidsim-textlaplacetheta-2sqrt2" class="nav-link" data-scroll-target="#example-x_1-ldots-x_n-stackreltextiidsim-textlaplacetheta-2sqrt2"><span class="header-section-number">3.4</span> Example: <span class="math inline">\(X_1, \ldots, X_n \stackrel{\text{iid}}{\sim} \text{Laplace}(\theta, 2\sqrt{2})\)</span></a></li>
+  <li><a href="#example-pearsons-chi2-test-goodness-of-fit" id="toc-example-pearsons-chi2-test-goodness-of-fit" class="nav-link" data-scroll-target="#example-pearsons-chi2-test-goodness-of-fit"><span class="header-section-number">3.5</span> Example: Pearson’s <span class="math inline">\(\chi^2\)</span> Test (Goodness of Fit)</a></li>
+  </ul></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">Likelihood-Based Inference: Wald, Score, and Generalized Likelihood Ratio Tests</h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+    <div>
+    <div class="quarto-title-meta-heading">Published</div>
+    <div class="quarto-title-meta-contents">
+      <p class="date">November 16, 2023</p>
+    </div>
+  </div>
+  
+    
+  </div>
+  
+
+</header>
+
+<p><span class="math display">\[
+\newcommand{\cB}{\mathcal{B}}
+\newcommand{\cF}{\mathcal{F}}
+\newcommand{\cN}{\mathcal{N}}
+\newcommand{\cP}{\mathcal{P}}
+\newcommand{\cX}{\mathcal{X}}
+\newcommand{\EE}{\mathbb{E}}
+\newcommand{\PP}{\mathbb{P}}
+\newcommand{\RR}{\mathbb{R}}
+\newcommand{\ZZ}{\mathbb{Z}}
+\newcommand{\td}{\,\textrm{d}}
+\newcommand{\simiid}{\stackrel{\textrm{i.i.d.}}{\sim}}
+\newcommand{\eqas}{\stackrel{\textrm{a.s.}}{=}}
+\newcommand{\eqPas}{\stackrel{\cP\textrm{-a.s.}}{=}}
+\newcommand{\eqmuas}{\stackrel{\mu\textrm{-a.s.}}{=}}
+\newcommand{\eqD}{\stackrel{D}{=}}
+\newcommand{\indep}{\perp\!\!\!\!\perp}
+\DeclareMathOperator*{\minz}{minimize\;}
+\newcommand{\Var}{\textnormal{Var}}
+\newcommand{\Cov}{\textnormal{Cov}}
+\newcommand{\Corr}{\textnormal{Corr}}
+\]</span></p>
+<section id="likelihood-based-inference" class="level2" data-number="1">
+<h2 data-number="1" class="anchored" data-anchor-id="likelihood-based-inference"><span class="header-section-number">1</span> Likelihood-Based Inference</h2>
+<section id="setting" class="level3" data-number="1.1">
+<h3 data-number="1.1" class="anchored" data-anchor-id="setting"><span class="header-section-number">1.1</span> Setting</h3>
+<p><span class="math inline">\(X_1, \ldots, X_n \stackrel{\text{iid}}{\sim} p_\theta(x)\)</span>, <span class="math inline">\(p_\theta \in \cP\)</span>, smooth in <span class="math inline">\(\theta\)</span></p>
+<p>Assume: - <span class="math inline">\(\mathbb{E}_\theta[\nabla \ell_\theta(X)] = 0\)</span> - <span class="math inline">\(\text{Var}_\theta[\nabla \ell_\theta(X)] = \mathbb{E}_\theta[-\nabla^2 \ell_\theta(X)] = J(\theta) &gt; 0\)</span> - MLE <span class="math inline">\(\hat{\theta}\)</span> Consistent</p>
+<p>Then if <span class="math inline">\(\theta = \theta_0\)</span>: - <span class="math inline">\(\nabla \ell_n(\theta_0; X) \sim N(0, nJ(\theta_0))\)</span> - <span class="math inline">\(-\nabla^2 \ell_n(\theta_0; X) \xrightarrow{p} nJ(\theta_0)\)</span></p>
+<p>Used <span class="math inline">\(\theta = \hat{\theta} + J^{-1}(\theta_0) \nabla \ell_n(\theta_0; X)/n + o_p(n^{-1/2})\)</span> to get <span class="math inline">\(\sqrt{n}(\hat{\theta} - \theta_0) \sim N(0, J^{-1}(\theta_0))\)</span></p>
+<p>Can use this for inference on <span class="math inline">\(\theta_0\)</span></p>
+</section>
+</section>
+<section id="wald-type-confidence-regions" class="level2" data-number="2">
+<h2 data-number="2" class="anchored" data-anchor-id="wald-type-confidence-regions"><span class="header-section-number">2</span> Wald-Type Confidence Regions</h2>
+<p>Assume we have some estimator <span class="math inline">\(\hat{\theta}_n\)</span> s.t. <span class="math inline">\(\sqrt{n}(\hat{\theta}_n - \theta_0) \xrightarrow{d} N(0, J^{-1}(\theta_0))\)</span>. Then we can plug in:</p>
+<p>If <span class="math inline">\(\sqrt{n}(\hat{\theta}_n - \theta_0) \sim N_d(0, J^{-1}(\theta_0))\)</span>, then <span class="math inline">\(nJ(\theta_0)(\hat{\theta}_n - \theta_0) \sim N_d(0, I_d)\)</span></p>
+<p>So <span class="math inline">\(n(\hat{\theta}_n - \theta_0)^T J(\theta_0)(\hat{\theta}_n - \theta_0) \sim \chi^2_d\)</span> (Slutsky)</p>
+<p>Leads to test of <span class="math inline">\(H_0: \theta = \theta_0\)</span> <span class="math inline">\(H_1: \theta \neq \theta_0\)</span>: Reject if <span class="math inline">\(n(\hat{\theta}_n - \theta_0)^T J(\theta_0)(\hat{\theta}_n - \theta_0) &gt; \chi^2_{d,1-\alpha}\)</span></p>
+<p>So <span class="math inline">\(\mathbb{P}_{\theta_0}(n(\hat{\theta}_n - \theta_0)^T J(\theta_0)(\hat{\theta}_n - \theta_0) \leq \chi^2_{d,1-\alpha}) = 1-\alpha\)</span></p>
+<p>Note: we reject <span class="math inline">\(\theta_0\)</span> iff <span class="math inline">\(\{\theta_n: n(\hat{\theta}_n - \theta)^T J(\theta)(\hat{\theta}_n - \theta) \leq \chi^2_{d,1-\alpha}\}\)</span> reject <span class="math inline">\(\theta_0\)</span> iff <span class="math inline">\(\theta_0 \notin \{\theta: n(\hat{\theta}_n - \theta)^T J(\theta)(\hat{\theta}_n - \theta) \leq \chi^2_{d,1-\alpha}\}\)</span></p>
+<p>Region <span class="math inline">\(\{\theta: n(\hat{\theta}_n - \theta)^T J(\theta)(\hat{\theta}_n - \theta) \leq \chi^2_{d,1-\alpha}\}\)</span> is confidence ellipsoid</p>
+<p>More info = smaller ellipse (shrinks like <span class="math inline">\(\sqrt{n}\)</span>)</p>
+<section id="estimating-jtheta" class="level3" data-number="2.1">
+<h3 data-number="2.1" class="anchored" data-anchor-id="estimating-jtheta"><span class="header-section-number">2.1</span> Estimating <span class="math inline">\(J(\theta)\)</span></h3>
+<p>Two options is to plug-in the MLE: 1. MLE for <span class="math inline">\(J_n(\theta)\)</span>: <span class="math inline">\(J_n(\hat{\theta}_n) = -\frac{1}{n}\nabla^2 \ell_n(\hat{\theta}_n; X)\)</span> 2. <span class="math inline">\(\hat{J}_n(\theta) = \frac{1}{n}\text{Var}_\theta[\nabla \ell_n(\theta; X)] = \frac{1}{n}\sum_{i=1}^n \nabla \ell_\theta(X_i) \nabla \ell_\theta(X_i)^T\)</span></p>
+<p>NB: <span class="math inline">\(\text{Var}_\theta[\nabla \ell_n(\theta; X)] = n\text{Var}_\theta[\nabla \ell_\theta(X)] = 0\)</span></p>
+<p>Or <span class="math inline">\(\hat{J}_n = \mathbb{E}_{\hat{\theta}_n}[-\nabla^2 \ell_{\hat{\theta}_n}(X)]\)</span></p>
+<section id="remarks" class="level4" data-number="2.1.1">
+<h4 data-number="2.1.1" class="anchored" data-anchor-id="remarks"><span class="header-section-number">2.1.1</span> Remarks</h4>
+<ul>
+<li>Both have <span class="math inline">\(\hat{J}_n \xrightarrow{p} J(\theta_0)\)</span> in nice iid sampling setting</li>
+<li>Both make sense outside of iid setting</li>
+<li>Heuristically: plug-in measures info about <span class="math inline">\(\theta\)</span> in typical data set, but obs info measures info about <span class="math inline">\(\theta\)</span> in this data set</li>
+</ul>
+</section>
+</section>
+<section id="wald-interval-for-theta_j" class="level3" data-number="2.2">
+<h3 data-number="2.2" class="anchored" data-anchor-id="wald-interval-for-theta_j"><span class="header-section-number">2.2</span> Wald Interval for <span class="math inline">\(\theta_j\)</span></h3>
+<p>If <span class="math inline">\(\sqrt{n}(\hat{\theta}_n - \theta_0) \sim N_d(\theta_0, J_n^{-1}(\theta_0))\)</span> then <span class="math inline">\(\hat{\theta}_n \sim N_d(\theta_0, J_n^{-1}(\theta_0)/n)\)</span></p>
+<p>Leads to univariate interval: <span class="math inline">\(s.e.(\hat{\theta}_{n,j}) = \sqrt{[J_n^{-1}(\hat{\theta}_n)]_{jj}/n}\)</span></p>
+<p><span class="math inline">\(C_j = [\hat{\theta}_{n,j} \pm z_{1-\alpha/2} \cdot s.e.(\hat{\theta}_{n,j})]\)</span></p>
+<p><code>glm</code> function in R uses these intervals/p-values with <span class="math inline">\(\hat{J}_n = J_n(\hat{\theta}_n)\)</span></p>
+<p>Conf ellipsoid for <span class="math inline">\(\theta_0\)</span>: <span class="math inline">\(\{\theta: n(\hat{\theta}_n - \theta)^T \hat{J}_n(\hat{\theta}_n)(\hat{\theta}_n - \theta) \leq \chi^2_{d,1-\alpha}\}\)</span></p>
+<p>More generally, if <span class="math inline">\(\sqrt{n}(\hat{\theta}_n - \theta_0) \xrightarrow{d} N(0, \Sigma(\theta_0))\)</span> and <span class="math inline">\(\hat{\Sigma}_n(\theta) \xrightarrow{p} \Sigma(\theta_0)\)</span> (not nec. MLE) then we can do the same things</p>
+</section>
+<section id="example-generalized-linear-model-with-fixed-design" class="level3" data-number="2.3">
+<h3 data-number="2.3" class="anchored" data-anchor-id="example-generalized-linear-model-with-fixed-design"><span class="header-section-number">2.3</span> Example: Generalized Linear Model with Fixed Design</h3>
+<p><span class="math inline">\(X_1, \ldots, X_n \in \mathbb{R}^d\)</span> fixed <span class="math inline">\(Y_1, \ldots, Y_n \sim p_{\eta_i}(y)\)</span> indep, <span class="math inline">\(Y_i | X_i \sim p_{\eta_i}(y)\)</span> <span class="math inline">\(\eta_i = \beta^T X_i\)</span> (canonical form)</p>
+<p>Let <span class="math inline">\(\mu_i(\beta) = \mathbb{E}_\beta[Y_i] = \psi'(\eta_i)\)</span></p>
+<p>More general: <span class="math inline">\(\eta_i = f(\beta^T X_i)\)</span> for <span class="math inline">\(f\)</span> monotone</p>
+<p>Most common examples include: - Logistic regression: <span class="math inline">\(Y_i \sim \text{Bern}(e^{\eta_i}/(1+e^{\eta_i}))\)</span> - Poisson log-linear model: <span class="math inline">\(Y_i \sim \text{Pois}(e^{\eta_i})\)</span></p>
+<p><span class="math inline">\(\ell_n(\beta; Y) = \sum_{i=1}^n [Y_i \eta_i - \psi(\eta_i) + \log h(Y_i)]\)</span></p>
+<p><span class="math inline">\(\nabla \ell_n(\beta; Y) = \sum_{i=1}^n (Y_i - \mu_i(\beta)) X_i\)</span></p>
+<p><span class="math inline">\(\mathbb{E}_\beta[Y_i] = \mu_i(\beta) = \psi'(\eta_i)\)</span></p>
+<p><span class="math inline">\(\nabla^2 \ell_n(\beta; Y) = -\sum_{i=1}^n \psi''(\eta_i) X_i X_i^T\)</span></p>
+<p><span class="math inline">\(\text{Var}_\beta(Y_i) = \psi''(\eta_i)\)</span> (not random)</p>
+<p><span class="math inline">\(\hat{\beta} \stackrel{\cdot}{\sim} N(\beta, J_n^{-1}(\beta))\)</span> in finite samples <span class="math inline">\(\xrightarrow{d} N(0, J^{-1})\)</span></p>
+<p>Under regularity cond. on <span class="math inline">\(X\)</span>: Taylor expansion of <span class="math inline">\(\ell_n\)</span> leads to <span class="math inline">\(\sqrt{n}(\hat{\beta}_n - \beta) \xrightarrow{d} N(0, J^{-1})\)</span></p>
+<section id="advantages-of-wald-test" class="level4" data-number="2.3.1">
+<h4 data-number="2.3.1" class="anchored" data-anchor-id="advantages-of-wald-test"><span class="header-section-number">2.3.1</span> Advantages of Wald Test</h4>
+<ol type="1">
+<li>Easy to invert, simple conf regions</li>
+<li>Asymptotically correct</li>
+</ol>
+</section>
+<section id="disadvantages" class="level4" data-number="2.3.2">
+<h4 data-number="2.3.2" class="anchored" data-anchor-id="disadvantages"><span class="header-section-number">2.3.2</span> Disadvantages</h4>
+<ol type="1">
+<li>Have to compute MLE</li>
+<li>Depends on parameterization</li>
+<li>Relies on two approximations: <span class="math inline">\(\ell_n\)</span> Normal and <span class="math inline">\(\ell_n\)</span> quadratic</li>
+<li>Need MLE to be consistent</li>
+<li>Confidence interval/ellipsoid might go outside <span class="math inline">\(\Theta\)</span></li>
+</ol>
+</section>
+</section>
+</section>
+<section id="score-test" class="level2" data-number="3">
+<h2 data-number="3" class="anchored" data-anchor-id="score-test"><span class="header-section-number">3</span> Score Test</h2>
+<p>Test <span class="math inline">\(H_0: \theta = \theta_0\)</span> vs <span class="math inline">\(H_1: \theta \neq \theta_0\)</span></p>
+<p>We can bypass quadratic approximation entirely by using score as test stat:</p>
+<p><span class="math inline">\(\nabla \ell_n(\theta_0; X) \sim N(0, nJ(\theta_0))\)</span> or <span class="math inline">\(J_n^{-1/2}(\theta_0)\nabla \ell_n(\theta_0; X) \stackrel{\cdot}{\sim} N_d(0, I_d)\)</span></p>
+<p>So we can reject <span class="math inline">\(H_0: \theta = \theta_0\)</span> if <span class="math inline">\(\|\hat{J}_n^{-1/2}(\theta_0)\nabla \ell_n(\theta_0; X)\|^2 &gt; \chi^2_{d,1-\alpha}\)</span></p>
+<p><span class="math inline">\(\nabla \ell_n(\theta_0; X)^T \hat{J}_n^{-1}(\theta_0) \nabla \ell_n(\theta_0; X) \sim \chi^2_d\)</span></p>
+<p>Can do 1-sided tests</p>
+<section id="remarks-1" class="level3" data-number="3.1">
+<h3 data-number="3.1" class="anchored" data-anchor-id="remarks-1"><span class="header-section-number">3.1</span> Remarks</h3>
+<ul>
+<li>No quadratic approx, no MLE</li>
+<li>No need to estimate Fisher info at <span class="math inline">\(\theta_0\)</span></li>
+<li>Can be generalized to case with nuisance params</li>
+<li>Typically estimate via MLE on <span class="math inline">\(\Theta_0\)</span></li>
+</ul>
+</section>
+<section id="score-test-is-invariant-to-reparameterization" class="level3" data-number="3.2">
+<h3 data-number="3.2" class="anchored" data-anchor-id="score-test-is-invariant-to-reparameterization"><span class="header-section-number">3.2</span> Score Test is Invariant to Reparameterization</h3>
+<p>Assume <span class="math inline">\(\Theta \subset \mathbb{R}^d\)</span>, <span class="math inline">\(\eta = g(\theta)\)</span>, <span class="math inline">\(\Psi = g(\Theta)\)</span></p>
+<p><span class="math inline">\(q_\eta(x) = p_{g^{-1}(\eta)}(x)\)</span></p>
+<p><span class="math inline">\(\ell_\eta(x) = \log q_\eta(x) = \ell_\theta(x)\)</span></p>
+<p><span class="math inline">\(\nabla_\eta \ell_\eta(x) = \nabla_\theta \ell_\theta(x) \cdot \nabla g^{-1}(\eta)\)</span></p>
+<p><span class="math inline">\(J_\eta(\eta) = J_\theta(g^{-1}(\eta)) \cdot \nabla g^{-1}(\eta) \cdot \nabla g^{-1}(\eta)^T\)</span></p>
+<p>So <span class="math inline">\(\nabla_\eta \ell_\eta(x)^T J_\eta^{-1}(\eta) \nabla_\eta \ell_\eta(x) = \nabla_\theta \ell_\theta(x)^T J_\theta^{-1}(\theta) \nabla_\theta \ell_\theta(x)\)</span></p>
+<p>if <span class="math inline">\(\eta_0 = g(\theta_0)\)</span></p>
+</section>
+<section id="example-1-parameter-exponential-family" class="level3" data-number="3.3">
+<h3 data-number="3.3" class="anchored" data-anchor-id="example-1-parameter-exponential-family"><span class="header-section-number">3.3</span> Example: 1-Parameter Exponential Family</h3>
+<p><span class="math inline">\(X_1, \ldots, X_n \stackrel{\text{iid}}{\sim} e^{\eta T(x) - A(\eta)} h(x)\)</span></p>
+<p><span class="math inline">\(\nabla \ell_n(\eta; X) = \sum T(X_i) - n\mu(\eta)\)</span></p>
+<p><span class="math inline">\(\ell_n''(\eta; X) = -n\text{Var}_\eta[T(X)]\)</span></p>
+<p><span class="math inline">\(\hat{\eta}_n = \text{MLE} = A'^{-1}(\bar{T})\)</span></p>
+<p><span class="math inline">\(\frac{\sum T(X_i) - n\mu(\eta_0)}{\sqrt{n\text{Var}_{\eta_0}[T(X)]}} \sim N(0,1)\)</span></p>
+</section>
+<section id="example-x_1-ldots-x_n-stackreltextiidsim-textlaplacetheta-2sqrt2" class="level3" data-number="3.4">
+<h3 data-number="3.4" class="anchored" data-anchor-id="example-x_1-ldots-x_n-stackreltextiidsim-textlaplacetheta-2sqrt2"><span class="header-section-number">3.4</span> Example: <span class="math inline">\(X_1, \ldots, X_n \stackrel{\text{iid}}{\sim} \text{Laplace}(\theta, 2\sqrt{2})\)</span></h3>
+<p>Test <span class="math inline">\(H_0: \theta = 0\)</span> vs <span class="math inline">\(H_1: \theta \neq 0\)</span> (two-tailed)</p>
+<p><span class="math inline">\(\ell_n(\theta; X) = \sum |X_i - \theta| - n\log(4\sqrt{2})\)</span></p>
+<p><span class="math inline">\(\nabla \ell_n(\theta; X) = \sum \text{sgn}(\theta - X_i) = \sum [\mathbb{I}(X_i &lt; \theta) - \mathbb{I}(X_i &gt; \theta)]\)</span></p>
+<p><span class="math inline">\(\nabla \ell_n(0; X) = \sum [\mathbb{I}(X_i &lt; 0) - \mathbb{I}(X_i &gt; 0)] = \sum \text{sgn}(-X_i)\)</span></p>
+<p><span class="math inline">\(J_n(0) = n/2\)</span></p>
+<p><span class="math inline">\(\sqrt{2/n} \sum \text{sgn}(-X_i) \sim N(0,1)\)</span> (sign test)</p>
+<p>Note: this test is the exact NP/UMP test for <span class="math inline">\(H_0: \theta = 0\)</span> vs <span class="math inline">\(H_0: |\theta| = \epsilon\)</span> for <span class="math inline">\(\epsilon &gt; 0\)</span></p>
+<p>Intuition: Maximize power for nearby alternatives since we’ll have power for <span class="math inline">\(\theta \gg 0\)</span></p>
+<p>More generally, one-sided score test is almost UMP for nearby alternatives</p>
+<p><span class="math inline">\(p_\theta(x) \approx p_0(x)[1 + \epsilon \ell'_0(X)]\)</span> for small <span class="math inline">\(\epsilon &gt; 0\)</span></p>
+</section>
+<section id="example-pearsons-chi2-test-goodness-of-fit" class="level3" data-number="3.5">
+<h3 data-number="3.5" class="anchored" data-anchor-id="example-pearsons-chi2-test-goodness-of-fit"><span class="header-section-number">3.5</span> Example: Pearson’s <span class="math inline">\(\chi^2\)</span> Test (Goodness of Fit)</h3>
+<p><span class="math inline">\(N = (N_1, \ldots, N_d) \sim \text{Multi}(n, \pi)\)</span>, <span class="math inline">\(\pi_i \geq 0\)</span>, <span class="math inline">\(\sum \pi_i = 1\)</span></p>
+<p><span class="math inline">\(\ell_n(\pi; N) = \sum N_i \log \pi_i\)</span></p>
+<p>Note <span class="math inline">\(\mathbb{E}[\pi] = 1\)</span> so this is a full rank <span class="math inline">\(d-1\)</span> parameter exp family e.g. <span class="math inline">\(T_j = \mathbb{I}(\text{category} = j)\)</span>, <span class="math inline">\(j=1,\ldots,d-1\)</span></p>
+<p><span class="math inline">\(\nabla \ell_n(\pi; N) = (N_1/\pi_1, \ldots, N_d/\pi_d)^T - n1_d\)</span></p>
+<p><span class="math inline">\(\hat{\pi} = \text{MLE} = (N_1/n, \ldots, N_d/n)\)</span></p>
+<p>$J_n() = n[(_1^{-1}, , _d^{-1})</p>
+
+
+</section>
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const isCodeAnnotation = (el) => {
+    for (const clz of el.classList) {
+      if (clz.startsWith('code-annotation-')) {                     
+        return true;
+      }
+    }
+    return false;
+  }
+  const clipboard = new window.ClipboardJS('.code-copy-button', {
+    text: function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+  });
+  clipboard.on('success', function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  });
+  function tippyHover(el, contentFn) {
+    const config = {
+      allowHTML: true,
+      content: contentFn,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start'
+    };
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      return note.innerHTML;
+    });
+  }
+      let selectedAnnoteEl;
+      const selectorForAnnotation = ( cell, annotation) => {
+        let cellAttr = 'data-code-cell="' + cell + '"';
+        let lineAttr = 'data-code-annotation="' +  annotation + '"';
+        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+        return selector;
+      }
+      const selectCodeLines = (annoteEl) => {
+        const doc = window.document;
+        const targetCell = annoteEl.getAttribute("data-target-cell");
+        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+        const lineIds = lines.map((line) => {
+          return targetCell + "-" + line;
+        })
+        let top = null;
+        let height = null;
+        let parent = null;
+        if (lineIds.length > 0) {
+            //compute the position of the single el (top and bottom and make a div)
+            const el = window.document.getElementById(lineIds[0]);
+            top = el.offsetTop;
+            height = el.offsetHeight;
+            parent = el.parentElement.parentElement;
+          if (lineIds.length > 1) {
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+            height = bottom - top;
+          }
+          if (top !== null && height !== null && parent !== null) {
+            // cook up a div (if necessary) and position it 
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            div.style.top = top - 2 + "px";
+            div.style.height = height + 4 + "px";
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            gutterDiv.style.top = top - 2 + "px";
+            gutterDiv.style.height = height + 4 + "px";
+          }
+          selectedAnnoteEl = annoteEl;
+        }
+      };
+      const unselectCodeLines = () => {
+        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+        elementsIds.forEach((elId) => {
+          const div = window.document.getElementById(elId);
+          if (div) {
+            div.remove();
+          }
+        });
+        selectedAnnoteEl = undefined;
+      };
+      // Attach click handler to the DT
+      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+      for (const annoteDlNode of annoteDls) {
+        annoteDlNode.addEventListener('click', (event) => {
+          const clickedEl = event.target;
+          if (clickedEl !== selectedAnnoteEl) {
+            unselectCodeLines();
+            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+            if (activeEl) {
+              activeEl.classList.remove('code-annotation-active');
+            }
+            selectCodeLines(clickedEl);
+            clickedEl.classList.add('code-annotation-active');
+          } else {
+            // Unselect the line
+            unselectCodeLines();
+            clickedEl.classList.remove('code-annotation-active');
+          }
+        });
+      }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+</div> <!-- /content -->
+
+
+
+</body></html>
