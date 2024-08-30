@@ -22,6 +22,40 @@ ul.task-list li input[type="checkbox"] {
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
 }
+/* CSS for syntax highlighting */
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
 </style>
 
 
@@ -203,12 +237,10 @@ gtag('config', 'G-B8G2041HSB', { 'anonymize_ip': true});
     <h2 id="toc-title">On this page</h2>
    
   <ul>
-  <li><a href="#what-is-the-theory-of-statistics" id="toc-what-is-the-theory-of-statistics" class="nav-link active" data-scroll-target="#what-is-the-theory-of-statistics">What is the theory of statistics?</a></li>
-  <li><a href="#relationship-of-stat-210a-to-other-berkeley-courses" id="toc-relationship-of-stat-210a-to-other-berkeley-courses" class="nav-link" data-scroll-target="#relationship-of-stat-210a-to-other-berkeley-courses">Relationship of Stat 210A to other Berkeley courses</a></li>
+  <li><a href="#about-stat-210a" id="toc-about-stat-210a" class="nav-link active" data-scroll-target="#about-stat-210a">About Stat 210A</a></li>
   <li><a href="#deductive-vs-inductive-reasoning" id="toc-deductive-vs-inductive-reasoning" class="nav-link" data-scroll-target="#deductive-vs-inductive-reasoning">Deductive vs inductive reasoning</a></li>
   <li><a href="#the-problem-of-induction" id="toc-the-problem-of-induction" class="nav-link" data-scroll-target="#the-problem-of-induction">The problem of induction</a></li>
-  <li><a href="#statistical-evasions-of-the-problem-of-induction" id="toc-statistical-evasions-of-the-problem-of-induction" class="nav-link" data-scroll-target="#statistical-evasions-of-the-problem-of-induction">Statistical evasions of the problem of induction</a></li>
-  <li><a href="#coin-flipping" id="toc-coin-flipping" class="nav-link" data-scroll-target="#coin-flipping">Coin flipping</a></li>
+  <li><a href="#statistical-evasions-in-practice-coin-flipping" id="toc-statistical-evasions-in-practice-coin-flipping" class="nav-link" data-scroll-target="#statistical-evasions-in-practice-coin-flipping">Statistical evasions in practice: coin flipping</a></li>
   </ul>
 </nav>
     </div>
@@ -266,19 +298,24 @@ gtag('config', 'G-B8G2041HSB', { 'anonymize_ip': true});
 \newcommand{\Cov}{\textnormal{Cov}}
 \newcommand{\Corr}{\textnormal{Corr}}
 \]</span></p>
-<section id="what-is-the-theory-of-statistics" class="level2">
-<h2 class="anchored" data-anchor-id="what-is-the-theory-of-statistics">What is the theory of statistics?</h2>
+<section id="about-stat-210a" class="level2">
+<h2 class="anchored" data-anchor-id="about-stat-210a">About Stat 210A</h2>
+<section id="what-is-the-theory-of-statistics" class="level4">
+<h4 class="anchored" data-anchor-id="what-is-the-theory-of-statistics">What is the theory of statistics?</h4>
 <p>Statistics is the study of methods that use data to understand the world. Statistical methods are used throughout the natural and social sciences, in machine learning and artificial intelligence, and in engineering. Despite the ubiquitous use of statistics, its practitioners are perpetually accused of not actually understanding what they are doing. Statistics theory is, broadly speaking, about trying to understand what we are doing when we use statistical methods.</p>
 <p>While there are many possible ways to analyze data, most (but certainly not all) statistical methods are based on <strong>statistical modeling:</strong> treating the data as a realization of some <strong>random</strong> data-generating process with attributes, usually called <strong>parameters</strong><em>,</em> that are <em>a priori</em> unknown. The goal of the <strong>analyst</strong>, then, is to use the data to draw accurate inferences about these parameters and/or to make accurate predictions about future data. If the modeling has been done well (a very big “if”) then these unknown parameters will correspond well to whatever real-world questions initially motivated the analysis. Applied statistics courses like Stat 215A and B concern questions about how to ensure that the statistical modeling exercise successfully captures something interesting about reality.</p>
 <p>In this course we will instead focus on how the analyst can use the data most effectively within the context of a given mathematical setup. We will discuss the structure of statistical models, how to evaluate the quality of a statistical method, how to design good methods for new settings, and the philosophy of Bayesian vs frequentist modeling frameworks. We will cover estimation, confidence intervals, and hypothesis testing, in parametric and nonparametric methods, in finite samples and asymptotic regimes.</p>
 </section>
-<section id="relationship-of-stat-210a-to-other-berkeley-courses" class="level2">
-<h2 class="anchored" data-anchor-id="relationship-of-stat-210a-to-other-berkeley-courses">Relationship of Stat 210A to other Berkeley courses</h2>
+<section id="relationship-of-stat-210a-to-other-berkeley-courses" class="level4">
+<h4 class="anchored" data-anchor-id="relationship-of-stat-210a-to-other-berkeley-courses">Relationship of Stat 210A to other Berkeley courses</h4>
 <p>Stat 210A focuses on <em>classical</em> statistical contexts: either inference in finite samples, or in fixed-dimensional asymptotic regimes. Stat 210B (for which 210A is a prerequisite) is more technical and covers topics like empirical process theory and high-dimensional statistics.</p>
 <p>Berkeley’s graduate course on Statistical Learning Theory (CS 281A / Stat 241A) is also very popular and has some overlap in its topics. Roughly speaking, it is more tilted toward “machine learning”: it spends more time on topics in predictive modeling (i.e.&nbsp;classification and regression, which are covered in Stat 215A), optimization, and signal processing, but spends less time on inferential questions and (I believe) does not cover topics like hypothesis testing, confidence intervals, and causal inference. Both courses cover estimation and exponential families.</p>
 </section>
+</section>
 <section id="deductive-vs-inductive-reasoning" class="level2">
 <h2 class="anchored" data-anchor-id="deductive-vs-inductive-reasoning">Deductive vs inductive reasoning</h2>
+<section id="deductive-reasoning" class="level4">
+<h4 class="anchored" data-anchor-id="deductive-reasoning">Deductive reasoning</h4>
 <p>Most mathematics courses are entirely concerned with <strong>deductive reasoning</strong>: drawing conclusions that follow logically from premises. For example:</p>
 <ol type="1">
 <li><p>All real, symmetric matrices have real eigenvalues.</p></li>
@@ -299,6 +336,9 @@ gtag('config', 'G-B8G2041HSB', { 'anonymize_ip': true});
 <li><em>Therefore,</em> the chance of rolling a 4 is exactly 1/6.</li>
 </ol>
 <p>A probability course like <strong>Stat 205A</strong> is about statements like this.</p>
+</section>
+<section id="inductive-reasoning" class="level4">
+<h4 class="anchored" data-anchor-id="inductive-reasoning">Inductive reasoning</h4>
 <p>Statistics, on the other hand, is the mathematical science of <strong>inductive reasoning</strong>: reasoning from observations to make general claims about the world. Unlike deductive reasoning, such arguments are inherently <em>risky</em>: the conclusions we draw can be false even when the premises are correct.</p>
 <div class="callout callout-style-default callout-caution callout-titled">
 <div class="callout-header d-flex align-content-center">
@@ -340,9 +380,12 @@ Caution
 </ol>
 <p>For now, we’ll assume we know what it means for a penny to have a 50% chance of landing heads; something like: it’s physical properties give it an equal chance of landing heads or tails (and a negligible chance of landing on its side or flying off into space). Generally, there is some controversy among different camps of philosophers and statisticians about what probability means, but not too much when it comes to coin flips. We’ll discuss this more later in the semester.</p>
 </section>
+</section>
 <section id="the-problem-of-induction" class="level2">
 <h2 class="anchored" data-anchor-id="the-problem-of-induction">The problem of induction</h2>
-<p>Unfortunately, inductive reasoning is not <em>valid</em> in the sense meant by logicians or mathematicians. It doesn’t matter how many times I’ve seen real symmetric matrices that had real eigenvalues. Without a proof, I can’t make the general claim. There are entertaining examples of patterns being unexpectedly violated in math, such as:</p>
+<section id="humes-problem-of-induction" class="level4">
+<h4 class="anchored" data-anchor-id="humes-problem-of-induction">Hume’s problem of induction</h4>
+<p>Unfortunately, inductive reasoning is not <em>valid</em> in the sense meant by logicians or mathematicians. It doesn’t matter how many times I’ve seen real symmetric matrices that had real eigenvalues. Without a proof, I can’t make the general claim. There are entertaining examples of patterns being unexpectedly violated in math, such as the <a href="https://en.wikipedia.org/wiki/Borwein_integral">Borwein Integral</a>:</p>
 <p><span class="math display">\[
 \begin{aligned}
 \int_0^\infty \frac{\sin x}{x}\,dx &amp;= \frac{\pi}{2}\\[10pt]
@@ -360,17 +403,54 @@ Caution
 <p>David Hume’s work <em>A Treatise of Human Nature</em> (1739) first proposed the <strong>problem of induction</strong>, namely that inductive reasoning presumes — seemingly without justification — that yet-to-be-observed cases will be similar to observed cases. This presumption is sometimes called the <strong>uniformity principle</strong>, and it is difficult to see how we can justify it. We can’t justify it through a direct logical argument, because it’s not logically justified. We could justify it by past experience — for example, at a low enough level, physical properties of the world generally seem to be uniform across space and time — but that argument is circular! Just because the future has been like the past in the past, doesn’t mean that it will be like the past in the future.</p>
 <p>Hume allowed that people have to reason inductively all the time, but he called it a “custom” or “habit” and challenged philosophers to justify it. Now almost 300 years later, there does not seem to have been a fully satisfactory answer; most philosophers of science (like Karl Popper, for example) admit that inductive reasoning is fallible, but think there are reasonable ways for scientists to deal with this.</p>
 </section>
-<section id="statistical-evasions-of-the-problem-of-induction" class="level2">
-<h2 class="anchored" data-anchor-id="statistical-evasions-of-the-problem-of-induction">Statistical evasions of the problem of induction</h2>
+<section id="statistical-evasions-of-the-problem-of-induction" class="level4">
+<h4 class="anchored" data-anchor-id="statistical-evasions-of-the-problem-of-induction">Statistical evasions of the problem of induction</h4>
 <p>We seem to be in trouble if we are trying to build a mathematical science of inductive reasoning, when the first thing we know about induction is that it is not mathematically valid. Statisticians have two main ways of evading this problem, which lead to the two main mathematical frameworks for statistical inference:</p>
 <p><strong>Evasion 1: Bayesian reasoning</strong>. Bayesians respond to Hume that, whatever our <em>a priori</em> beliefs are about the world, we at least know how to update them in the light of experience using the mathematics of conditional probability. Our prior beliefs may not ultimately be justified, but there is only one rational way to update them (note this is somewhat disputed). We may hope that after enough experience they will “wash out” and observers with different prior beliefs will eventually converge in their beliefs after seeing enough data. We will study Bayesian statistics in a few weeks.</p>
 <p><strong>Evasion 2: Inductive behavior (frequentist statistics)</strong>. Another way of evading the problem is to design methods for inference whose fallibility can be quantified. As long as certain assumptions hold concerning the conditions under which the data were collected, we may be able to come up with methods that we can mathematically prove give correct conclusions with high probability.</p>
 </section>
-<section id="coin-flipping" class="level2">
-<h2 class="anchored" data-anchor-id="coin-flipping">Coin flipping</h2>
-<p>Although physical randomizers like coins and dice seem to be the firmest ground on which we can build a theory of probability, recent work has found surprising</p>
+</section>
+<section id="statistical-evasions-in-practice-coin-flipping" class="level2">
+<h2 class="anchored" data-anchor-id="statistical-evasions-in-practice-coin-flipping">Statistical evasions in practice: coin flipping</h2>
+<section id="are-coins-really-fair" class="level4">
+<h4 class="anchored" data-anchor-id="are-coins-really-fair">Are coins really fair?</h4>
+<p>Although physical randomizers like coins and dice seem to be the firmest ground on which we can build a theory of probability, recent work has made the surprising finding that most human flippers have a somewhat greater than 50% chance of seeing their coin land on the same side as it started, due to the physics of rotating objects. This was first hypothesized in a theoretical article by Diaconis, Holmes, and Montgomery in 2007, and confirmed in a large experiment by Bartos et al.&nbsp;(2023), in which 48 human coin flippers collectively flipped <span class="math inline">\(n=350,757\)</span> coins — finding, indeed, that <span class="math inline">\(178,079\)</span> (<span class="math inline">\(50.77\%\)</span>) of the coins landed on the same side as they started.</p>
+<p>In fact, Bartos et al.&nbsp;collected a lot more data than this: each of the 48 flippers recorded the full sequence of all of their coin flips, including which type of coin they were using (coins minted in 46 different countries were used). All flippers even had to submit video of themselves flipping the coins. But the analysis in the next section will use only the summary statistic <span class="math inline">\(X = 178,079\)</span>, which records the number of flips that landed same-side-up.</p>
+</section>
+<section id="frequentist-analysis-in-the-binomial-model" class="level4">
+<h4 class="anchored" data-anchor-id="frequentist-analysis-in-the-binomial-model">Frequentist analysis in the binomial model</h4>
+<p>The data set is simple to analyze if we make two seemingly innocuous simplifying assumptions: first, that the flips were statistically independent, and second, that every flip had an equal probability, which we will call <span class="math inline">\(\theta\)</span>, of landing on the same side it started on. In that case, we can conclude (deductively) that the probability that <span class="math inline">\(x\)</span> out of the <span class="math inline">\(n\)</span> flips land on the same side is exactly <span class="math inline">\(\binom{n}{x} \theta^x(1-\theta)^{n-x}\)</span>, for the realizable values <span class="math inline">\(x=0,\ldots,n\)</span>.</p>
+<p>If we accept these assumptions, we arrive at a one-parameter <strong>statistical model</strong> for the entire data set, called the <strong>binomial model</strong>. We abbreviate this by writing <span class="math inline">\(X \sim \text{Binom}(n,\theta)\)</span>. If DHM’s prediction was right and a same-side bias exists, then we should have <span class="math inline">\(\theta &gt; 0.5\)</span>; if they are wrong and the starting side makes no difference, we should have <span class="math inline">\(\theta = 0.5\)</span>.</p>
+<p>Following the frequentist paradigm, we can estimate the parameter <span class="math inline">\(\theta\)</span> via the <strong>estimator</strong> <span class="math inline">\(\hat\theta = X/n\)</span>, in this case <span class="math inline">\(0.5077\)</span>. One thing we will prove in this class is that <span class="math inline">\(X/n\)</span> is the best estimator of <span class="math inline">\(\theta\)</span>, among all <strong>unbiased</strong> estimators, meaning all estimators for which <span class="math inline">\(\EE_\theta \hat\theta = \theta\)</span>, for all possible values of the parameter <span class="math inline">\(\theta \in [0,1]\)</span>. This is an example of inductive behavior: if we use the estimator <span class="math inline">\(X/n\)</span> to estimate <span class="math inline">\(\theta\)</span>, we will get the answer right on average, and our estimate will be as precise (on average) as it could possibly be, for any unbiased estimator. We can also say how variable our estimator is: its standard error (the term of art we use for the standard deviation of an estimator) is <span class="math inline">\(\sqrt{\theta(1-\theta)}/n\)</span>. Substituting our estimator <span class="math inline">\(\hat\theta\)</span> for the true value <span class="math inline">\(\theta\)</span>, we estimate that <span class="math inline">\(\hat\theta\)</span> is typically off by about <span class="math inline">\(0.00084\)</span>, so we have good reason to believe <span class="math inline">\(0.0577\)</span> is about that close to the true value of <span class="math inline">\(\theta\)</span>. But we can’t necessarily say that it was close in this experiment; we could have gotten unlucky.</p>
+<p>Can we confidently conclude, <em>inductively</em>, that there is a same-side bias (<span class="math inline">\(\theta &gt; 0.5\)</span>)? Naturally, even if DHM were wrong and there were no same-side bias (<span class="math inline">\(\theta = 0.5\)</span>), we would expect <span class="math inline">\(X/n\)</span> to deviate somewhat from <span class="math inline">\(0.5\)</span> in any given experiment, just by random chance. Could it be that that is what happened in this experiment?</p>
+<p>Frequentist analysis evades this question and substitutes another question in its place. Using the <code>R</code> function <code>binom.test</code>, we can test the null hypothesis that <span class="math inline">\(\theta = 0.5\)</span> and calculate a <span class="math inline">\(95\%\)</span> confidence interval for <span class="math inline">\(\theta\)</span>:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">binom.test</span>(<span class="at">x =</span> <span class="dv">178079</span>, <span class="at">n =</span> <span class="dv">350757</span>, <span class="at">p =</span> <span class="fl">0.5</span>, <span class="at">alternative =</span> <span class="st">"greater"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+    Exact binomial test
+
+data:  178079 and 350757
+number of successes = 178079, number of trials = 350757, p-value &lt;
+2.2e-16
+alternative hypothesis: true probability of success is greater than 0.5
+95 percent confidence interval:
+ 0.5063091 1.0000000
+sample estimates:
+probability of success 
+             0.5076991 </code></pre>
+</div>
+</div>
+<p>The <span class="math inline">\(p\)</span>-value tells us the likelihood that we could observe as many same-side flips as we did, if <span class="math inline">\(\theta\)</span> really were <span class="math inline">\(0.5\)</span>. In this experiment the <span class="math inline">\(p\)</span>-value is so small (<span class="math inline">\(p &lt; 2.2\times 10^{-16}\)</span>) that <code>R</code> doesn’t bother to tell us its exact value. The probability involved in calculating the <span class="math inline">\(p\)</span>-value follows from our binomial assumptions, but most reasonable people would probably accept this as sufficient evidence to reject the null hypothesis; that is, to reach the inductive conclusion that <span class="math inline">\(\theta\)</span> is not really <span class="math inline">\(0.5\)</span>.</p>
+<p>This is a risky conclusion! Even if we were so conservative as to reject the null hypothesis only when <span class="math inline">\(p &lt; 10^{-10}\)</span>, say, there would still be some chance of our making a mistake in any given experiment. But we have quantified how likely this is, and we can decide whether it is high enough to trouble us.</p>
+<p>Beyond just knowing that a same-side bias exists, it is interesting to have some sense of how large it is. Using very similar logic to the hypothesis test, the <code>binom.test</code> function also returns a $95$ <strong>confidence interval</strong> <span class="math inline">\([50.6\%, 50.9\%]\)</span> for the parameter <span class="math inline">\(\theta\)</span>. We will explore how to construct confidence intervals later in the semester, but for now it is sufficient to know that the interval is defined so that it has at least a $95$ chance of covering (i.e., including) <span class="math inline">\(\theta\)</span> in any given experiment, no matter what value <span class="math inline">\(\theta\)</span> takes. This is another example of inductive behavior: in producing a confidence interval, we take a risk that the corresponding inductive conclusion “<span class="math inline">\(\theta\)</span> lies between <span class="math inline">\(0.056\)</span> and <span class="math inline">\(0.0509\)</span>” is wrong, but we are behaving in such a way that we can quantify and limit this risk.</p>
+</section>
+<section id="bayesian-analysis" class="level4">
+<h4 class="anchored" data-anchor-id="bayesian-analysis">Bayesian analysis</h4>
+<p>Another route we could take, if we have a more Bayesian bent, is to introduce another assumption about the distribution that <span class="math inline">\(\theta\)</span> has; for example, that $\theta [0,1]$. This is a stronger assumption than</p>
 
 
+</section>
 </section>
 
 </main> <!-- /main -->
