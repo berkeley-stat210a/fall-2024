@@ -46,7 +46,7 @@
     "href": "units/unit1.html#evaluated-python-code-chunk-with-a-plot",
     "title": "Unit 1: Intro",
     "section": "Evaluated Python code chunk, with a plot",
-    "text": "Evaluated Python code chunk, with a plot\n\n\nCode\nimport numpy as np\nx = np.random.normal(size=100)\nimport matplotlib.pyplot as plt\nplt.hist(x)\nplt.show()\nnp.mean(x)\n\n\n\n\n\n0.14277080806287296"
+    "text": "Evaluated Python code chunk, with a plot\n\n\nCode\nimport numpy as np\nx = np.random.normal(size=100)\nimport matplotlib.pyplot as plt\nplt.hist(x)\nplt.show()\nnp.mean(x)\n\n\n\n\n\n-0.04576214580085356"
   },
   {
     "objectID": "units/unit1.html#latex",
@@ -956,7 +956,7 @@
     "href": "units/unit3.html#evaluated-python-code-chunk-with-a-plot",
     "title": "Unit 3: More",
     "section": "Evaluated Python code chunk, with a plot",
-    "text": "Evaluated Python code chunk, with a plot\n\n\nCode\nimport numpy as np\nx = np.random.normal(size=100)\nimport matplotlib.pyplot as plt\nplt.hist(x)\nplt.show()\nnp.mean(x)\n\n\n\n\n\n0.04279730787508914"
+    "text": "Evaluated Python code chunk, with a plot\n\n\nCode\nimport numpy as np\nx = np.random.normal(size=100)\nimport matplotlib.pyplot as plt\nplt.hist(x)\nplt.show()\nnp.mean(x)\n\n\n\n\n\n-0.003076009708178359"
   },
   {
     "objectID": "units/unit3.html#latex",
@@ -991,7 +991,7 @@
     "href": "syllabus.html",
     "title": "Syllabus",
     "section": "",
-    "text": "[UNDER CONSTRUCTION]\nStat 210A is an introductory Ph.D.-level course in theoretical statistics. It is a fast-paced and demanding course intended to prepare students for research careers in statistics."
+    "text": "Stat 210A is an introductory Ph.D.-level course in theoretical statistics. It is a fast-paced and demanding course intended to prepare students for research careers in statistics."
   },
   {
     "objectID": "syllabus.html#course-information",
@@ -1012,7 +1012,7 @@
     "href": "syllabus.html#references",
     "title": "Syllabus",
     "section": "References",
-    "text": "References\nThe online notes for this course are self-contained, however it can be helpful to see a different presentation in the following supplementary texts (all links are to public websites or Springer Link):\n\nKeener, Theoretical Statistics: Topics for a Core Course, Springer 2010.\nLehmann and Casella, Theory of Point Estimation, Springer 1998.\nLehmann and Romano, Testing Statistical Hypotheses, Springer 2005.\nCandes, Stats 300C Lecture notes, Stanford 2016.\n\nUndergrad-level review texts for prerequisites:\n\nAxler, Linear Algebra Done Right\nAbbott, Understanding Analysis\nAdhikari & Pitman, Probability for Data Science"
+    "text": "References\nThe online notes for this course are self-contained, however it can be helpful to see a different presentation in the following supplementary texts (all links are to public websites or Springer Link):\n\nKeener, Theoretical Statistics: Topics for a Core Course, Springer 2010. The textbook that is closest in technical level and presentation style to our course reader.\nLehmann and Casella, Theory of Point Estimation, Springer 1998. A highly-detailed reference text that covers much of the estimation material in this course.\nLehmann and Romano, Testing Statistical Hypotheses, Springer 2005. A highly-detailed reference text covering much of the material on testing and confidence estimation.\nHacking, Probability and Inductive Logic, Cambridge University Press, 2001. A beautifully written book that treats probability and statistics from a philosophical point of view.\nCandes, Stats 300C Lecture notes, Stanford 2016. The course notes for a great course at Stanford that covers some of the later material in this course.\n\nUndergrad-level review texts for prerequisites:\n\nAxler, Linear Algebra Done Right\nAbbott, Understanding Analysis\nAdhikari & Pitman, Probability for Data Science"
   },
   {
     "objectID": "syllabus.html#grading",
