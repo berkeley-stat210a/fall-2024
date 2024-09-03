@@ -1,0 +1,163 @@
+---
+title: "Minimax Estimation"
+date: "2023-10-05"
+format:
+  html:
+    toc: true
+    number-sections: true
+---
+
+{{< include latex-macros.tex >}}
+
+## Minimax Risk Estimator
+
+### Definition of Minimax Risk
+
+The last idea for choosing an estimator: worst-case risk.
+
+Minimize $\sup_\theta R(\theta, \delta)$
+
+The minimum achievable sup risk is called the minimax risk of the estimation problem:
+
+$$r = \inf_\delta \sup_\theta R(\theta, \delta)$$
+
+An estimator $\delta$ is called minimax if it achieves the minimax risk, i.e.,
+
+$$\sup_\theta R(\theta, \delta) = r$$
+
+### Game Theory Interpretation
+
+1. Analyst chooses estimator $\delta$
+2. Nature chooses parameter $\theta$ to maximize risk
+
+Note: Nature chooses $\theta$ adversarially, not $X$.
+
+Compare to Bayes where Nature chooses prior from a known distribution (Nature plays a specific mixed strategy).
+
+We will look for Nature's Nash equilibrium strategy.
+
+## Least Favorable Priors
+
+Minimax is closely related to Bayes.
+
+Key observation: average case risk ≤ worst case risk
+
+For proper prior $\pi$, the Bayes risk is:
+
+$$r(\pi) = \int_\Theta R(\theta, \delta_\pi) d\pi(\theta)$$
+
+$$\leq \int_\Theta \sup_\theta R(\theta, \delta) d\pi(\theta) = \sup_\theta R(\theta, \delta)$$
+
+If $\delta_\pi$ is Bayes, then $r(\pi) = \inf_\delta \int_\Theta R(\theta, \delta) d\pi(\theta)$
+
+Bayes risk of any Bayes estimator lower bounds $r$.
+
+Least favorable prior $\pi$ gives best lower bound: $r(\pi) = \sup_\pi r(\pi)$
+
+Sup risk of any estimator upper bounds $r$:
+
+$$\sup_\theta R(\theta, \delta) \geq r \geq \sup_\pi r(\pi)$$
+
+Can exhibit minimax est. & LF prior by finding $\pi$ and $\delta$ that collapse these inequalities.
+
+### Theorem
+
+If $R(\delta_\pi) = \sup_\theta R(\theta, \delta_\pi)$ with Bayes estimator $\delta_\pi$, then:
+
+a) $\delta_\pi$ is minimax
+b) If $\delta_\pi$ is unique Bayes (up to $\pi$-a.e.), it is unique minimax
+c) $\pi$ is least favorable
+
+Proof:
+
+a) Any other $\delta$:
+   $$\sup_\theta R(\theta, \delta) \geq \int R(\theta, \delta) d\pi(\theta) \geq$$
+   $$\int R(\theta, \delta_\pi) d\pi(\theta) = r(\pi) = \sup_\theta R(\theta, \delta_\pi)$$
+   $r$ is minimax risk, $\delta_\pi$ is minimax
+
+b) Replace $\geq$ with $=$ in 2nd inequality ⟹ $\delta = \delta_\pi$ $\pi$-a.e.
+
+c) Any other prior $\pi'$:
+   $$\inf_\delta r(\pi') \leq \int R(\theta, \delta_\pi) d\pi'(\theta)$$
+   $$\leq \sup_\theta R(\theta, \delta_\pi) = r(\pi)$$
+
+The above theorem gives a checkable condition: does avg risk = sup risk?
+
+Note: If $R(\theta, \delta_\pi)$ is constant, it doesn't prove anything.
+
+1. $R(\theta, \delta_\pi)$ is constant
+2. Also $R(\theta, \delta_\pi) = \sup_\theta R(\theta, \delta_\pi) = r(\pi)$
+
+### Example: Binomial
+
+$X \sim \text{Binom}(n, \theta)$, estimate $\theta$ with squared error
+
+Try Beta($\alpha, \beta$), hope to get one with constant risk
+
+$$\delta_\pi(X) = \frac{X + \alpha}{n + \alpha + \beta}$$
+
+$$R(\theta, \delta_\pi) = \mathbb{E}[\theta^2] - \mathbb{E}[\delta_\pi(X)^2] + \text{Var}(\delta_\pi(X))$$
+
+$$= \theta - \frac{(\alpha + \beta + n + 1)(\alpha + n\theta)^2}{(\alpha + \beta + n)^2(n + \alpha + \beta + 1)} + \frac{(\alpha + n\theta)(\beta + n(1-\theta))}{(\alpha + \beta + n)^2(n + \alpha + \beta + 1)}$$
+
+Set $\alpha + \beta = n + 2$, $\alpha + \beta = \frac{n}{2}$
+
+$$\beta = \frac{n+2}{2}, \alpha = \frac{n+2}{2}$$
+
+Beta($\frac{n+2}{2}, \frac{n+2}{2}$) is LF, $\delta_\pi$ is minimax
+
+We got lucky.
+
+Question: Why so much prior weight on $\theta \approx \frac{1}{2}$?
+
+## Least Favorable Sequence
+
+Sometimes there is no least favorable prior, e.g., if parameter space isn't compact.
+
+$X \sim N(\theta, 1)$: LF prior should spread mass everywhere, but that is not a proper prior.
+
+Definition: A sequence $\{\pi_n\}$ is LF if $r(\pi_n) \to \sup_\pi r(\pi)$
+
+### Theorem
+
+Suppose $\{\pi_n\}$ is a prior sequence and $\delta$ satisfies $\sup_\theta R(\theta, \delta) = \lim_n r(\pi_n)$. Then:
+
+a) $\delta$ is minimax
+b) $\{\pi_n\}$ is LF
+
+Proof:
+
+a) Other est. $\delta'$. Then $\forall n$:
+   $$\sup_\theta R(\theta, \delta') \geq \int R(\theta, \delta') d\pi_n(\theta) \geq r(\pi_n)$$
+   $$\geq \lim_n r(\pi_n) = \sup_\theta R(\theta, \delta)$$
+
+b) Prior $\pi$:
+   $$r(\pi) = \inf_\delta \int R(\theta, \delta) d\pi(\theta) \leq \int R(\theta, \delta) d\pi(\theta)$$
+   $$\leq \sup_\theta R(\theta, \delta) = \lim_n r(\pi_n)$$
+
+### Basic Picture
+
+- $\sup_\theta R(\theta, \delta)$ (generic $\delta$)
+- $\inf_\delta \sup_\theta R(\theta, \delta)$ (minimax risk)
+- $\sup_\pi r(\pi)$ (if LF prior exists)
+- $r(\pi)$ (generic $\pi$)
+
+If minimax est. exists: $\inf_\delta \sup_\theta R(\theta, \delta) = \sup_\theta R(\theta, \delta^*)$
+
+If LF prior exists: $\sup_\pi r(\pi) = r(\pi^*)$
+
+## Practical Applications
+
+Minimax estimators are very hard to find, but minimax bounds are often used in statistical theory to characterize hardness, especially lower bounds.
+
+### Approach 1: Near-optimal Estimators
+
+1. Propose practical estimator $\delta$
+2. Find $\pi$ for which $r(\pi)$ close to $\sup_\theta R(\theta, \delta)$ (or same rate, or asymptotically)
+3. Conclude $\delta$ can't be improved much
+
+### Approach 2: Problem Hardness
+
+Quantify hardness of a problem by its minimax rate in some asymptotic regime.
+
+Caveat: A problem might be easy throughout most of parameter space but very hard in some bizarre corner we never encounter in practice.

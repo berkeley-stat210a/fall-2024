@@ -1,0 +1,14 @@
+---
+title: "Old exams"
+editor: visual
+---
+
+## Exams from previous semesters
+
+-   [Fall 2023](old-exams/final2023.pdf) [(Solutions)](old-exams/solution2023.pdf)
+
+-   [Fall 2021](old-exams/final2021.pdf) [(Solutions)](old-exams/solution2021.pdf)
+
+-   [Fall 2020](old-exams/final2020.pdf) [(Solutions)](old-exams/solution2020.pdf)
+
+-   [Fall 2019](old-exams/final2019.pdf) [(Solutions)](old-exams/solution2019.pdf)

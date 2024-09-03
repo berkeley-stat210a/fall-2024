@@ -1,0 +1,212 @@
+---
+title: "Likelihood-Based Inference: Wald, Score, and Generalized Likelihood Ratio Tests"
+date: "2023-11-16"
+format:
+  html:
+    toc: true
+    number-sections: true
+---
+
+{{< include latex-macros.tex >}}
+
+## Likelihood-Based Inference
+
+### Setting
+
+$X_1, \ldots, X_n \stackrel{\text{iid}}{\sim} p_\theta(x)$, $p_\theta \in \cP$, smooth in $\theta$
+
+Assume:
+- $\mathbb{E}_\theta[\nabla \ell_\theta(X)] = 0$
+- $\text{Var}_\theta[\nabla \ell_\theta(X)] = \mathbb{E}_\theta[-\nabla^2 \ell_\theta(X)] = J(\theta) > 0$
+- MLE $\hat{\theta}$ Consistent
+
+Then if $\theta = \theta_0$:
+- $\nabla \ell_n(\theta_0; X) \sim N(0, nJ(\theta_0))$
+- $-\nabla^2 \ell_n(\theta_0; X) \xrightarrow{p} nJ(\theta_0)$
+
+Used $\theta = \hat{\theta} + J^{-1}(\theta_0) \nabla \ell_n(\theta_0; X)/n + o_p(n^{-1/2})$
+to get $\sqrt{n}(\hat{\theta} - \theta_0) \sim N(0, J^{-1}(\theta_0))$
+
+Can use this for inference on $\theta_0$
+
+## Wald-Type Confidence Regions
+
+Assume we have some estimator $\hat{\theta}_n$ s.t. $\sqrt{n}(\hat{\theta}_n - \theta_0) \xrightarrow{d} N(0, J^{-1}(\theta_0))$. Then we can plug in:
+
+If $\sqrt{n}(\hat{\theta}_n - \theta_0) \sim N_d(0, J^{-1}(\theta_0))$,
+then $nJ(\theta_0)(\hat{\theta}_n - \theta_0) \sim N_d(0, I_d)$
+
+So $n(\hat{\theta}_n - \theta_0)^T J(\theta_0)(\hat{\theta}_n - \theta_0) \sim \chi^2_d$ (Slutsky)
+
+Leads to test of $H_0: \theta = \theta_0$
+$H_1: \theta \neq \theta_0$: Reject if $n(\hat{\theta}_n - \theta_0)^T J(\theta_0)(\hat{\theta}_n - \theta_0) > \chi^2_{d,1-\alpha}$
+
+So $\mathbb{P}_{\theta_0}(n(\hat{\theta}_n - \theta_0)^T J(\theta_0)(\hat{\theta}_n - \theta_0) \leq \chi^2_{d,1-\alpha}) = 1-\alpha$
+
+Note: we reject $\theta_0$ iff $\{\theta_n: n(\hat{\theta}_n - \theta)^T J(\theta)(\hat{\theta}_n - \theta) \leq \chi^2_{d,1-\alpha}\}$
+reject $\theta_0$ iff $\theta_0 \notin \{\theta: n(\hat{\theta}_n - \theta)^T J(\theta)(\hat{\theta}_n - \theta) \leq \chi^2_{d,1-\alpha}\}$
+
+Region $\{\theta: n(\hat{\theta}_n - \theta)^T J(\theta)(\hat{\theta}_n - \theta) \leq \chi^2_{d,1-\alpha}\}$ is confidence ellipsoid
+
+More info = smaller ellipse (shrinks like $\sqrt{n}$)
+
+### Estimating $J(\theta)$
+
+Two options is to plug-in the MLE:
+1. MLE for $J_n(\theta)$: $J_n(\hat{\theta}_n) = -\frac{1}{n}\nabla^2 \ell_n(\hat{\theta}_n; X)$
+2. $\hat{J}_n(\theta) = \frac{1}{n}\text{Var}_\theta[\nabla \ell_n(\theta; X)] = \frac{1}{n}\sum_{i=1}^n \nabla \ell_\theta(X_i) \nabla \ell_\theta(X_i)^T$
+
+NB: $\text{Var}_\theta[\nabla \ell_n(\theta; X)] = n\text{Var}_\theta[\nabla \ell_\theta(X)] = 0$
+
+Or $\hat{J}_n = \mathbb{E}_{\hat{\theta}_n}[-\nabla^2 \ell_{\hat{\theta}_n}(X)]$
+
+#### Remarks
+- Both have $\hat{J}_n \xrightarrow{p} J(\theta_0)$ in nice iid sampling setting
+- Both make sense outside of iid setting
+- Heuristically: plug-in measures info about $\theta$ in typical data set, but obs info measures info about $\theta$ in this data set
+
+### Wald Interval for $\theta_j$
+
+If $\sqrt{n}(\hat{\theta}_n - \theta_0) \sim N_d(\theta_0, J_n^{-1}(\theta_0))$
+then $\hat{\theta}_n \sim N_d(\theta_0, J_n^{-1}(\theta_0)/n)$
+
+Leads to univariate interval: $s.e.(\hat{\theta}_{n,j}) = \sqrt{[J_n^{-1}(\hat{\theta}_n)]_{jj}/n}$
+
+$C_j = [\hat{\theta}_{n,j} \pm z_{1-\alpha/2} \cdot s.e.(\hat{\theta}_{n,j})]$
+
+`glm` function in R uses these intervals/p-values with $\hat{J}_n = J_n(\hat{\theta}_n)$
+
+Conf ellipsoid for $\theta_0$: $\{\theta: n(\hat{\theta}_n - \theta)^T \hat{J}_n(\hat{\theta}_n)(\hat{\theta}_n - \theta) \leq \chi^2_{d,1-\alpha}\}$
+
+More generally, if $\sqrt{n}(\hat{\theta}_n - \theta_0) \xrightarrow{d} N(0, \Sigma(\theta_0))$
+and $\hat{\Sigma}_n(\theta) \xrightarrow{p} \Sigma(\theta_0)$ (not nec. MLE)
+then we can do the same things
+
+### Example: Generalized Linear Model with Fixed Design
+
+$X_1, \ldots, X_n \in \mathbb{R}^d$ fixed
+$Y_1, \ldots, Y_n \sim p_{\eta_i}(y)$ indep, $Y_i | X_i \sim p_{\eta_i}(y)$
+$\eta_i = \beta^T X_i$ (canonical form)
+
+Let $\mu_i(\beta) = \mathbb{E}_\beta[Y_i] = \psi'(\eta_i)$
+
+More general: $\eta_i = f(\beta^T X_i)$ for $f$ monotone
+
+Most common examples include:
+- Logistic regression: $Y_i \sim \text{Bern}(e^{\eta_i}/(1+e^{\eta_i}))$
+- Poisson log-linear model: $Y_i \sim \text{Pois}(e^{\eta_i})$
+
+$\ell_n(\beta; Y) = \sum_{i=1}^n [Y_i \eta_i - \psi(\eta_i) + \log h(Y_i)]$
+
+$\nabla \ell_n(\beta; Y) = \sum_{i=1}^n (Y_i - \mu_i(\beta)) X_i$
+
+$\mathbb{E}_\beta[Y_i] = \mu_i(\beta) = \psi'(\eta_i)$
+
+$\nabla^2 \ell_n(\beta; Y) = -\sum_{i=1}^n \psi''(\eta_i) X_i X_i^T$
+
+$\text{Var}_\beta(Y_i) = \psi''(\eta_i)$ (not random)
+
+$\hat{\beta} \stackrel{\cdot}{\sim} N(\beta, J_n^{-1}(\beta))$ in finite samples
+$\xrightarrow{d} N(0, J^{-1})$
+
+Under regularity cond. on $X$:
+Taylor expansion of $\ell_n$ leads to $\sqrt{n}(\hat{\beta}_n - \beta) \xrightarrow{d} N(0, J^{-1})$
+
+#### Advantages of Wald Test
+1. Easy to invert, simple conf regions
+2. Asymptotically correct
+
+#### Disadvantages
+1. Have to compute MLE
+2. Depends on parameterization
+3. Relies on two approximations:
+   $\ell_n$ Normal and $\ell_n$ quadratic
+4. Need MLE to be consistent
+5. Confidence interval/ellipsoid might go outside $\Theta$
+
+## Score Test
+
+Test $H_0: \theta = \theta_0$ vs $H_1: \theta \neq \theta_0$
+
+We can bypass quadratic approximation entirely by using score as test stat:
+
+$\nabla \ell_n(\theta_0; X) \sim N(0, nJ(\theta_0))$
+or $J_n^{-1/2}(\theta_0)\nabla \ell_n(\theta_0; X) \stackrel{\cdot}{\sim} N_d(0, I_d)$
+
+So we can reject $H_0: \theta = \theta_0$ if
+$\|\hat{J}_n^{-1/2}(\theta_0)\nabla \ell_n(\theta_0; X)\|^2 > \chi^2_{d,1-\alpha}$
+
+$\nabla \ell_n(\theta_0; X)^T \hat{J}_n^{-1}(\theta_0) \nabla \ell_n(\theta_0; X) \sim \chi^2_d$
+
+Can do 1-sided tests
+
+### Remarks
+- No quadratic approx, no MLE
+- No need to estimate Fisher info at $\theta_0$
+- Can be generalized to case with nuisance params
+- Typically estimate via MLE on $\Theta_0$
+
+### Score Test is Invariant to Reparameterization
+
+Assume $\Theta \subset \mathbb{R}^d$, $\eta = g(\theta)$, $\Psi = g(\Theta)$
+
+$q_\eta(x) = p_{g^{-1}(\eta)}(x)$
+
+$\ell_\eta(x) = \log q_\eta(x) = \ell_\theta(x)$
+
+$\nabla_\eta \ell_\eta(x) = \nabla_\theta \ell_\theta(x) \cdot \nabla g^{-1}(\eta)$
+
+$J_\eta(\eta) = J_\theta(g^{-1}(\eta)) \cdot \nabla g^{-1}(\eta) \cdot \nabla g^{-1}(\eta)^T$
+
+So $\nabla_\eta \ell_\eta(x)^T J_\eta^{-1}(\eta) \nabla_\eta \ell_\eta(x) = \nabla_\theta \ell_\theta(x)^T J_\theta^{-1}(\theta) \nabla_\theta \ell_\theta(x)$
+
+if $\eta_0 = g(\theta_0)$
+
+### Example: 1-Parameter Exponential Family
+
+$X_1, \ldots, X_n \stackrel{\text{iid}}{\sim} e^{\eta T(x) - A(\eta)} h(x)$
+
+$\nabla \ell_n(\eta; X) = \sum T(X_i) - n\mu(\eta)$
+
+$\ell_n''(\eta; X) = -n\text{Var}_\eta[T(X)]$
+
+$\hat{\eta}_n = \text{MLE} = A'^{-1}(\bar{T})$
+
+$\frac{\sum T(X_i) - n\mu(\eta_0)}{\sqrt{n\text{Var}_{\eta_0}[T(X)]}} \sim N(0,1)$
+
+### Example: $X_1, \ldots, X_n \stackrel{\text{iid}}{\sim} \text{Laplace}(\theta, 2\sqrt{2})$
+
+Test $H_0: \theta = 0$ vs $H_1: \theta \neq 0$ (two-tailed)
+
+$\ell_n(\theta; X) = \sum |X_i - \theta| - n\log(4\sqrt{2})$
+
+$\nabla \ell_n(\theta; X) = \sum \text{sgn}(\theta - X_i) = \sum [\mathbb{I}(X_i < \theta) - \mathbb{I}(X_i > \theta)]$
+
+$\nabla \ell_n(0; X) = \sum [\mathbb{I}(X_i < 0) - \mathbb{I}(X_i > 0)] = \sum \text{sgn}(-X_i)$
+
+$J_n(0) = n/2$
+
+$\sqrt{2/n} \sum \text{sgn}(-X_i) \sim N(0,1)$ (sign test)
+
+Note: this test is the exact NP/UMP test for $H_0: \theta = 0$ vs $H_0: |\theta| = \epsilon$ for $\epsilon > 0$
+
+Intuition: Maximize power for nearby alternatives since we'll have power for $\theta \gg 0$
+
+More generally, one-sided score test is almost UMP for nearby alternatives
+
+$p_\theta(x) \approx p_0(x)[1 + \epsilon \ell'_0(X)]$ for small $\epsilon > 0$
+
+### Example: Pearson's $\chi^2$ Test (Goodness of Fit)
+
+$N = (N_1, \ldots, N_d) \sim \text{Multi}(n, \pi)$, $\pi_i \geq 0$, $\sum \pi_i = 1$
+
+$\ell_n(\pi; N) = \sum N_i \log \pi_i$
+
+Note $\mathbb{E}[\pi] = 1$ so this is a full rank $d-1$ parameter exp family e.g.
+$T_j = \mathbb{I}(\text{category} = j)$, $j=1,\ldots,d-1$
+
+$\nabla \ell_n(\pi; N) = (N_1/\pi_1, \ldots, N_d/\pi_d)^T - n1_d$
+
+$\hat{\pi} = \text{MLE} = (N_1/n, \ldots, N_d/n)$
+
+$J_n(\pi) = n[\text{diag}(\pi_1^{-1}, \ldots, \pi_d^{-1})

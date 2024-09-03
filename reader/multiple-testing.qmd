@@ -1,0 +1,220 @@
+---
+title: "Multiple Testing: FWER, FDR, and Related Procedures"
+date: "2023-11-30"
+format:
+  html:
+    toc: true
+    number-sections: true
+---
+
+{{< include latex-macros.tex >}}
+
+## Multiple Testing
+
+In many testing problems, we want to test many hypotheses at a time, e.g.:
+
+- Test $H_0: \beta_j = 0$ for $j = 1,\ldots,d$ in linear regression
+- Test whether each of 20K single nucleotide polymorphisms (SNPs) is associated with a given phenotype (e.g., diabetes, schizophrenia)
+- Test whether each of 2000 website tweaks affect user engagement
+
+### Setup
+
+$X \sim P_\theta \in \cP$, $H_{0i}: \theta \in \Theta_i$, $i = 1,\ldots,m$
+
+Commonly, $H_{0i}: \theta_i = 0$
+
+Goal: Return accept/reject decision for each $i$
+
+Let $R = \{i: H_{0i} \text{ rejected}\}$, $|R| \leq m$
+
+$H_{0c} = \{i: H_{0i} \text{ true}\}$, $|H_{0c}| = m_0 \leq m$
+
+$R \cap H_{0c}$ = false rejections
+
+## Family-wise Error Rate (FWER)
+
+Problem: Even if all $H_{0i}$ true, might have:
+
+$\mathbb{P}(\text{any } H_{0i} \text{ rejected}) \leq 1 - (1-\alpha)^m \approx m\alpha$
+
+Example: $X_i \sim N(\theta_i, 1)$ iid, $i = 1,\ldots,m$, $H_{0i}: \theta_i = 0$
+
+$\mathbb{P}_0(\text{any } H_{0i} \text{ rejected}) = 1 - (1-\alpha)^m \approx m\alpha$
+
+Is this a problem? Yes, if all attention will be focused on the false rejections and none on the correct non-rejections.
+
+Classical solution is to control the family-wise error rate (FWER):
+
+FWER = $\mathbb{P}_\theta(\text{any false rejections}) = \mathbb{P}_\theta(R \cap H_{0c} \neq \emptyset)$
+
+Want:
+$\sup_\theta \text{FWER}(\theta) \leq \alpha$
+
+Typically achieved by correcting marginal p-values: $p_1(X), \ldots, p_m(X)$, $p_i \sim U(0,1)$
+
+e.g., $\phi_i = 1\{\alpha/(2m)|X_i| > \Phi^{-1}(1-\alpha/(2m))\}$ for Gaussian
+
+## Bonferroni Correction
+
+Assume $p_1,\ldots,p_m$ are p-values for $H_{01},\ldots,H_{0m}$ with $p_i \sim U(0,1)$ under $H_{0i}$
+
+For general dependence, can guarantee control by rejecting $H_{0i}$ iff $p_i \leq \alpha/m$:
+
+$\mathbb{P}_\theta(\text{any false rejections}) \leq \mathbb{P}_\theta(\text{any } H_{0i} \text{ rejected}) \leq \sum_{i \in H_{0c}} \mathbb{P}_\theta(H_{0i} \text{ rejected}) \leq m_0\alpha/m \leq \alpha$
+
+If p-values independent, can improve to $1-(1-\alpha)^{1/m}$ (Šidák correction)
+
+Then $\mathbb{P}_\theta(\text{no false rejections}) = \prod_{i \in H_{0c}} \mathbb{P}_\theta(p_i > (1-(1-\alpha)^{1/m})) \geq (1-\alpha)^{m_0/m} \geq 1-\alpha$
+
+For small $\alpha$: $1-(1-\alpha)^{1/m} \approx \alpha/m$
+
+Šidák doesn't improve much on Bonferroni
+
+## Testing with Dependence
+
+Bonferroni isn't much worse than Šidák
+e.g., $\alpha = 0.05$, $m = 20$: $0.0025$ vs $0.00256$
+
+But when tests are highly dependent, can often do much better
+
+### Example: Scheffé's S-method
+
+$X \sim N(\theta, I_d)$, $\theta \in \mathbb{R}^d$
+$H_0: a_j^T \theta = 0$ for $j = 1,\ldots,m$, $\|a_j\| = 1$
+
+Reject $H_{0j}$ if $|a_j^T X| > \sqrt{d F_{d,\infty,1-\alpha}}$
+
+Controls FWER:
+
+$\mathbb{P}(\|X - \theta\|^2 \leq dF_{d,\infty,1-\alpha}) = 1-\alpha$
+
+Can view as deduction from confidence region:
+$C(X) = \{\theta: \|X - \theta\|^2 \leq dF_{d,\infty,1-\alpha}\}$
+
+## Deduced Inference
+
+Given any joint confidence region $C(X)$ for $\theta \in \Theta$, we may freely assume $\theta \in C(X)$ and deduce any and all implied conclusions without any FWER inflation:
+
+$\mathbb{P}_\theta(\text{any deduced inference is wrong}) \leq \mathbb{P}_\theta(\theta \notin C(X)) \leq \alpha$
+
+Deduction is often a good paradigm for deriving simultaneous intervals
+
+We say $C_1(X),\ldots,C_m(X)$ are simultaneous $1-\alpha$ confidence intervals for $g_1(\theta),\ldots,g_m(\theta)$ if:
+
+$\mathbb{P}_\theta(g_i(\theta) \in C_i(X) \text{ for all } i = 1,\ldots,m) \geq 1-\alpha$
+
+### Example: Simultaneous Intervals for Multivariate Gaussian
+
+Assume $X \sim N_d(\theta, \Sigma)$, $\Sigma$ known, $\Sigma_{ii} = 1$
+
+Let $t_\alpha$ be upper $\alpha$ quantile of $\|X - \theta\|_\Sigma = \sqrt{(X-\theta)^T \Sigma^{-1}(X-\theta)}$
+
+$C_i(X) = [\theta_i: |X_i - \theta_i| \leq t_\alpha \sqrt{\Sigma_{ii}}]$ for all $i$
+
+$\mathbb{P}(C(X) \ni \theta_i \text{ for any } i) = \mathbb{P}(\|X - \theta\|_\Sigma \leq t_\alpha) = 1-\alpha$
+
+$t_\alpha = \sqrt{\chi^2_{d,1-\alpha}}$ if $\Sigma = I_d$
+
+Note: we could have instead constructed an elliptical conf. region, but then the intervals would be conservative:
+
+$\mathbb{P}(\|X - \theta\|_\Sigma^2 \leq \chi^2_{d,1-\alpha}) = 1-\alpha$
+
+### Example: Linear Regression (n obs, d variables)
+
+$X \in \mathbb{R}^{n \times d}$ design, $\beta \in \mathbb{R}^d$, $Y \sim N(X\beta, \sigma^2 I_n)$
+
+Estimate $\hat{\beta} = (X^T X)^{-1} X^T Y$
+
+where $\hat{\beta} \sim N(\beta, \sigma^2 (X^T X)^{-1})$
+
+$S^2 = \|Y - X\hat{\beta}\|^2/(n-d)$, $V = RS^2$, $R = (X^T X)^{-1}$
+
+Distr. of $\hat{\beta}_j/\sqrt{V_{jj}}$ fully known
+
+Assume w.l.o.g. $X^T X = I_d$
+
+Let $t_\alpha$ denote upper $\alpha$ quantile of $\|\hat{\beta} - \beta\|/\sqrt{S^2}$
+
+Then $C_j = \hat{\beta}_j \pm t_\alpha \sqrt{V_{jj}}$ are simultaneous CIs for $\beta_j$, $j = 1,\ldots,d$ (compute $t_\alpha$ by simulation)
+
+$\mathbb{P}(|\hat{\beta}_j - \beta_j| \leq t_\alpha \sqrt{V_{jj}} \text{ for all } j) = 1-\alpha$
+
+## False Discovery Rate (FDR)
+
+Problem: With 10K independent test statistics, all at level $\alpha = 0.001$, we expect 10 rejections just by chance. What if we get 50? Probably only ~20 of them are false rejections.
+
+Can we accept 10 false rejections as long as most rejections are valid?
+
+Benjamini-Hochberg (1995) proposed a more liberal error control criterion called FDR:
+
+$R(X) = |R(X)|$ = rejections ("discoveries")
+$V(X) = |R(X) \cap H_{0c}|$ = false discoveries
+
+The FDP is:
+$\text{FDP} = \begin{cases} V(X)/R(X) & \text{if } R(X) > 0 \\ 0 & \text{if } R(X) = 0 \end{cases}$
+
+The FDR is $\mathbb{E}[\text{FDP}]$
+
+## Benjamini-Hochberg Procedure
+
+B-H also proposed a method to control FDR given ordered p-values $p_{(1)} \leq p_{(2)} \leq \cdots \leq p_{(m)}$:
+
+$R(X) = \max\{r: p_{(r)} \leq \alpha r/m\}$ (called step-up procedure)
+
+Reject $H_{0(1)},\ldots,H_{0(R)}$
+
+This is much more liberal than Bonferroni procedure:
+When $\alpha = 0.05$, B-H rejects at least $r$ p-values if $p_{(r)} \leq 0.05r/m$
+
+### B-H as Empirical Bayes
+
+Equivalent formulation for $R(t) = \#\{p_i \leq t\}$:
+Let $\hat{F}(t) = R(t)/m$ = estimate of CDF of p-values
+
+B-H rejects $H_i$ if $p_i \leq T(X) = \max\{t: \hat{F}(t) \geq t/\alpha\}$
+
+When $\hat{F}(t)$ is continuously increasing in $t$ except at jump values where it jumps down:
+
+$\hat{F}(T(X)) = T(X)/\alpha$
+
+[Insert graph showing $\hat{F}(t)$ vs $t/\alpha$]
+
+Only values of $t$ that matter for the algorithm are $t = p_i$ where $\hat{F}(t) = t/\alpha$, i.e., $\alpha i/m = p_{(i)}$
+
+## FDR Control
+
+Elegant but fragile proof due to Storey, Taylor, Siegmund (2002)
+
+Assume $\#\{i: H_{0i} \text{ true}\} = m_0$ indep. $p_i \sim U[0,1]$ under $H_{0i}$
+
+Let $V(t) = \#\{i \in H_{0c}: p_i \leq t\}$
+
+$\text{FDR} = \mathbb{E}[\text{FDP}] = \mathbb{E}\left[\frac{V(T)}{R(T)} \cdot 1\{R(T) > 0\}\right]$
+
+Then FDR $= \mathbb{E}[\text{FDP}] = \mathbb{E}[\mathbb{E}[\text{FDP} | T]] \leq \mathbb{E}[m_0T/(mT)] = \alpha m_0/m \leq \alpha$
+
+Note: $Q(t) = V(t)/(mt)$ is a martingale when $t$ runs backwards from $t=1$ to $t=0$
+
+$\mathbb{E}[V(s) | V(t)] = V(t) \cdot s/t$
+
+$\mathbb{E}[1\{p_i \leq s\} | 1\{p_i \leq t\}, V(t)] = s/t \cdot 1\{p_i \leq t\}$
+
+And $T$ is a stopping time w.r.t. the filtration $\mathcal{F}_t$ of $\{V(t), R(t)\}$ (again, filtration with $t=1 \to t=0$)
+
+Why? For $s<t$, $R(s) = \#\{i: p_i \leq s\}$
+
+$\mathbb{E}[1\{p_i \leq s\} | \mathcal{F}_t] = s/t \cdot 1\{p_i \leq t\}$
+
+$\hat{F}(s) = R(s)/m$
+
+[Insert graph showing $\hat{F}(t)$ vs $t/\alpha$ and $Q(t)$]
+
+$\text{FDR} = \alpha \mathbb{E}[V(T)/(mT)] = \alpha \mathbb{E}[Q(T)] = \alpha \mathbb{E}[Q(1)] = \alpha m_0/m$
+
+### Remarks
+
+- Proof only works if p-values indep., null ones exactly uniform
+- More robust proof shows FDR controlled when null p-values conservative
+- Can be extended to positive dependence
+- FDR controlled under general dependence if we use corrected level $\alpha m / (m+1-i)$
+- $\sum_{i=1}^m 1/i \approx \log m + 0.577$

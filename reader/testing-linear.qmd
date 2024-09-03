@@ -1,0 +1,203 @@
+---
+title: "t and F Distributions, Canonical and General Linear Models"
+date: "2023-10-26"
+format:
+  html:
+    toc: true
+    number-sections: true
+---
+
+{{< include latex-macros.tex >}}
+
+## t and F Distributions
+
+### Definitions and Properties
+
+1. $\chi^2_d$: If $X_i \sim N(0,1)$ iid, then $V = \sum_{i=1}^d X_i^2 \sim \chi^2_d$
+   - $\mathbb{E}[V] = d$, $\text{Var}(V) = 2d$
+   - CLT: $V \approx N(d, 2d)$ for large $d$
+
+2. $t_d$: If $Z \sim N(0,1)$ and $V \sim \chi^2_d$ independent, then $T = \frac{Z}{\sqrt{V/d}} \sim t_d$
+   - Informally: $Y \sim N(\mu, 1)$, $\hat{\sigma}^2 \sim \frac{\chi^2_d}{d}$, $\frac{Y - \mu}{\hat{\sigma}} \sim t_d$
+
+3. If $Z \sim N(0,1)$ and $V \sim \chi^2_d$, $Z/\sqrt{V} \sim t_d$ as $d \to \infty$
+
+4. If $V \sim \chi^2_d$ and $V_2 \sim \chi^2_{d_2}$ independent, $V/V_2 \sim F_{d,d_2}$, then:
+   
+   $\frac{V/d}{V_2/d_2} \sim F_{d,d_2}$ as $d,d_2 \to \infty$
+
+Note: If $T \sim t_d$, then $T^2 \sim F_{1,d}$
+
+Recall: $Z \sim N_d(\mu, \Sigma)$ iff $A Z + b \sim N_d(A\mu + b, A\Sigma A^T)$
+
+### Geometric Interpretation
+
+Let $X \sim N_n(\mu, I_n)$, $\mu = \alpha e_1$, where $\{e_1, \ldots, e_n\}$ is a complete orthonormal basis (e.g., via Gram-Schmidt)
+
+$X = \sum_{i=1}^n \langle X, e_i \rangle e_i = \alpha e_1 + \sum_{i=1}^n Z_i e_i$, $Z_i \sim N(0,1)$ iid
+
+New basis: $Z = Q'X$, $\|X\|^2 = \|Z\|^2$
+
+$\begin{pmatrix} Z_1 \\ Z_{2:n} \end{pmatrix} = \begin{pmatrix} Q_1' \\ Q_{2:n}' \end{pmatrix} X \sim N\left(\begin{pmatrix} \alpha \\ 0 \end{pmatrix}, I_n\right)$
+
+$Z_1 = Q_1' X \sim N(\alpha, 1)$
+$Z_{2:n} = Q_{2:n}' X \sim N(0, I_{n-1})$
+
+$S^2 = \|Z_{2:n}\|^2 = \sum_{i=2}^n Z_i^2$ and $Z_1$ independent (we already knew from Basu)
+
+### Geometric Interpretation (continued)
+
+Independent of total magnitude under $H_0$:
+
+- $n\bar{X}^2 = \alpha^2 \sim \text{Gamma}(\frac{1}{2}, \frac{2}{n})$
+- $\sum_{i=1}^n (X_i - \bar{X})^2 \sim \text{Gamma}(\frac{n-1}{2}, 2)$
+- $\|X\|^2 = n\bar{X}^2 + \sum_{i=1}^n (X_i - \bar{X})^2 \sim \text{Gamma}(\frac{n}{2}, 2)$
+
+$\frac{n\bar{X}^2}{\sum_{i=1}^n (X_i - \bar{X})^2} \sim \text{Beta}(\frac{1}{2}, \frac{n-1}{2})$ independent of $\|X\|^2$
+
+$F_{1,n-1}$ related to $\text{Beta}(\frac{1}{2}, \frac{n-1}{2})$: If $U \sim \text{Beta}(\frac{a}{2}, \frac{b}{2})$, then $\frac{b}{a} \cdot \frac{U}{1-U} \sim F_{a,b}$
+
+## Canonical Linear Model
+
+Assume $Z = \begin{pmatrix} Z_1 \\ Z_2 \end{pmatrix} \sim N\left(\begin{pmatrix} \mu \\ 0 \end{pmatrix}, \sigma^2 I_d\right)$, $d = d_0 + d_1$, $\mu \in \mathbb{R}^{d_0}$, $\sigma^2 > 0$
+
+Test $H_0: \mu = 0$ vs $H_1: \mu \neq 0$ (or possibly one-sided if $d_0 = 1$)
+
+Exponential Family:
+
+$$f(z) = f(z_0, z_1) = \frac{1}{(2\pi\sigma^2)^{d/2}} \exp\left(-\frac{\|z_1\|^2 + \|z_0 - \mu\|^2}{2\sigma^2}\right)$$
+
+### Case 1: $\sigma^2$ Known
+
+Condition on $Z_1$, reject for large/small/extreme $Z_0$
+
+$Z_0 \sim N(\mu, \sigma^2 I_{d_0})$
+
+$\chi^2$ test: Reject for large $\|Z_0\|^2$
+
+t-test: If $d_0 = 1$, reject for large $|Z_0|$
+
+### Case 2: $\sigma^2$ Unknown
+
+Condition on $Z_1$, $\|Z_1\|^2$, $\|Z_0\|^2$ sufficient
+
+Reject for large/small/extreme $Z_0$
+
+Reject for large $\frac{\|Z_0\|^2/d_0}{\|Z_1\|^2/d_1} \sim F_{d_0,d_1}$ under $H_0$
+
+F-test: $d_0 > 1$, Reject for conditionally large $\|Z_0\|^2$
+
+Reject for large $\frac{\|Z_0\|^2/d_0}{\|Z_1\|^2/d_1} \sim F_{d_0,d_1}$
+
+t-test: $d_0 = 1$, Reject for conditionally large $|Z_0|$
+
+Reject for large $\frac{|Z_0|}{\sqrt{\|Z_1\|^2/d_1}} \sim t_{d_1}$
+
+Here, $\frac{\|Z_1\|^2}{d_1}$ functioning as estimator of $\sigma^2$:
+$\mathbb{E}[\frac{\|Z_1\|^2}{d_1}] = \sigma^2$, $\text{Var}(\frac{\|Z_1\|^2}{d_1}) = \frac{2\sigma^4}{d_1}$
+
+General case: $Z \sim N(\mu, \sigma^2 I_d)$, $\mu \not\in \mathbb{R}^{d_0} \times \{0\}^{d_1}$
+
+Translate problem:
+
+$Z_0 \sim N_{d_0}(\mu_0, \sigma^2 I_{d_0})$
+$Z_1 \sim N_{d_1}(\mu_1, \sigma^2 I_{d_1})$
+
+Can do some tests with $Z - \mu_1$ replacing $Z$
+
+Invert:
+$1-\alpha$ CI: $\mu_0 \in Z_0 \pm \sigma t_{d_1,1-\alpha/2} \sqrt{\frac{\|Z_1 - \mu_1\|^2}{d_1}}$
+
+$1-\alpha$ confidence ellipsoid: $\|\mu_0 - Z_0\|^2 \leq \frac{d_0}{d_1} \|Z_1 - \mu_1\|^2 F_{d_0,d_1,1-\alpha}$
+
+$1-\alpha$ prediction interval: $Z_{\text{new}} \in Z_0 \pm \sigma t_{d_1,1-\alpha/2} \sqrt{1 + \frac{\|Z_1 - \mu_1\|^2}{d_1}}$
+
+## General Linear Model
+
+Many problems can be put into canonical linear model after change of basis.
+
+### Basic Setup
+
+Observe $Y \sim N(X\beta, \sigma^2 I_n)$, $\sigma^2$ known or unknown
+Test $\beta \in \Theta_0$ vs $\beta \in \Theta_1$
+where $\Theta_0 \subset \Theta_1$ are subspaces of $\mathbb{R}^p$
+$\text{dim}(\Theta_0) = d_0$, $\text{dim}(\Theta_1) = d = d_0 + d_1$
+
+Idea: rotate into canonical form
+
+$d_0$, $d_1$, $n-d$
+$\Theta_0$, $\Theta_1 \setminus \Theta_0$, $\mathbb{R}^n \setminus \Theta_1$
+
+$Q = (Q_0 | Q_1 | Q_2)$ orthonormal basis for $(\Theta_0 | \Theta_1 \setminus \Theta_0 | \mathbb{R}^n \setminus \Theta_1)$
+
+$Z = Q'Y \sim N_n(Q'\beta, \sigma^2 I_n)$
+
+$H_0: Q_1'\beta = 0$
+
+Do $Z$ $\chi^2$ or $F$ test as appropriate
+
+### Example 1: Linear Regression
+
+$Y_i = X_i'\beta + \epsilon_i$, $\epsilon_i \sim N(0, \sigma^2)$
+$Y \sim N_n(X\beta, \sigma^2 I_n)$, $X \in \mathbb{R}^{n \times p}$
+
+Assume $X$ has full column rank
+$\Theta = X\beta \in \Theta = \text{Span}(X_1, \ldots, X_p)$
+
+$H_0: \beta = (\beta_0', 0')' \in \Theta_0 = \text{Span}(X_1, \ldots, X_q)$ or $\beta_q = 0$ if $d_1 = 1$
+
+$\|\hat{\beta} - \beta\|^2 = \|Y - \text{Proj}_\Theta Y\|^2$
+$\hat{\beta} = \arg\min_\beta \|Y - X\beta\|^2 = (X'X)^{-1}X'Y$
+
+$\hat{Y} = X\hat{\beta}$
+
+Residual sum of squares (RSS): $\|Y - \hat{Y}\|^2 = \|Y - X\hat{\beta}\|^2$
+$\text{RSS}_0 - \text{RSS}_1$
+
+F-statistic is:
+
+$$F = \frac{(\text{RSS}_0 - \text{RSS}_1)/d_1}{\text{RSS}_1/(n-d)} \sim F_{d_1,n-d}$$
+
+$n-d$ called residual degrees of freedom
+
+Let $X = (X_0 | X_1)$, $X \in \mathbb{R}^{n \times p}$
+Let $X_1^\perp = X_1 - \text{Proj}_{X_0} X_1$
+$X = (X_0 | X_0^\perp)$
+
+Reparametrize: $X_1^\perp \beta_1 = X_1 \beta_1 - X_0 \beta_0$
+$\Theta = X\beta = X_0 \beta_0 + X_1^\perp \beta_1$
+
+$\hat{\beta}_1 = (X_1^{\perp'} X_1^\perp)^{-1} X_1^{\perp'} Y$
+$\|\hat{\beta}_1\|^2 = \text{RSS}_0 - \text{RSS}_1$
+$\text{SE}(\hat{\beta}_1) = \hat{\sigma}^2 (X_1^{\perp'} X_1^\perp)^{-1}$
+
+t-statistic: $t = \frac{\hat{\beta}_1}{\text{SE}(\hat{\beta}_1)} \sim t_{n-d}$
+
+### Example 2: Two-sample t-test (equal variance)
+
+$Y_1, \ldots, Y_n \sim N(\mu_1, \sigma^2)$, $Y_{n+1}, \ldots, Y_{n+m} \sim N(\mu_2, \sigma^2)$
+
+$Y = (Y_1, \ldots, Y_{n+m})'$, $\mathbb{E}[Y] = \mu_1 1_n + \mu_2 1_m$
+Model: $\Theta = \text{Span}(1_{n+m}, (1_n', 0_m')')$
+
+$H_0: \mu_1 = \mu_2 \implies \Theta_0 = \text{Span}(1_{n+m})$
+
+$d_0 = 1$, $d = 2$, $d_1 = n+m-2$
+
+Orthogonalize $1_{n+m}$
+
+Reject for large:
+
+$$t = \frac{\bar{Y}_1 - \bar{Y}_2}{\hat{\sigma}\sqrt{\frac{1}{n} + \frac{1}{m}}} \sim t_{n+m-2}$$
+
+where $\hat{\sigma}^2 = \frac{\sum_{i=1}^n (Y_i - \bar{Y}_1)^2 + \sum_{i=1}^m (Y_i - \bar{Y}_2)^2}{n+m-2}$
+
+### Example 3: One-way ANOVA (fixed effects)
+
+$Y_{ki} \sim N(\mu_k, \sigma^2)$, $k=1,\ldots,m$, $i=1,\ldots,n$
+
+$H_0: \mu_1 = \cdots = \mu_m$
+
+$Y_{ki} = \mu + \alpha_k + \epsilon_{ki}$, $\sum \alpha_k = 0$
+
+$\bar{Y}_{k\cdot} = \frac{1}{n} \sum_{i=1}^n Y_{ki}$, $\bar{Y} = \frac{1}{mn

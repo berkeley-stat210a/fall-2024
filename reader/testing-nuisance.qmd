@@ -1,0 +1,230 @@
+---
+title: "Testing with Nuisance Parameters"
+date: "2023-10-24"
+format:
+  html:
+    toc: true
+    number-sections: true
+---
+
+{{< include latex-macros.tex >}}
+
+## Nuisance Parameters
+
+### Common Setup
+
+Extra unknown parameters which are not of direct interest:
+
+$\cP = \{P_{\theta, \lambda}: \theta \in \Theta, \lambda \in \Lambda\}$
+
+$H_0: \theta \in \Theta_0$ vs $H_1: \theta \in \Theta_1$
+
+- $\theta$: parameter of interest
+- $\lambda$: nuisance parameter
+
+Issue: $\lambda$ unknown but might affect type I error or power of a given test
+
+### Examples
+
+1. $X_1, \ldots, X_n \sim \text{iid } N(\mu, \sigma^2)$, $Y_1, \ldots, Y_m \sim \text{iid } N(\nu, \sigma^2)$
+   $\mu, \nu, \sigma^2$ unknown
+   $H_0: \mu = \nu$ vs $H_1: \mu \neq \nu$
+   $\theta = \mu - \nu$, $\lambda = (\mu + \nu, \sigma^2)$ or $(\mu, \sigma^2)$
+
+2. $X \sim \text{Binom}(n_1, \pi_1)$, $X_2 \sim \text{Binom}(n_2, \pi_2)$
+   $n_1, n_2$ known (not nuisance parameters)
+   $H_0: \pi_1 = \pi_2$ vs $H_1: \pi_1 \neq \pi_2$
+
+3. $X \sim N(\mu, \sigma^2)$, $\theta \in \mathbb{R}$, $\lambda \in \mathbb{R}$, both unknown
+   How to test $H_0: \theta = 0$ vs $H_1: \theta \neq 0$?
+
+### Idea: Condition on Sufficient Statistic for $\lambda$
+
+Condition on $U(X)$ to eliminate dependence on $\lambda$
+
+$$p_{\theta, \lambda}(t|u) = \frac{p_{\theta, \lambda}(t, u)}{p_{\lambda}(u)} = \frac{e^{\theta \cdot t} g_\lambda(t, u)}{\int e^{\theta \cdot s} g_\lambda(s, u) ds}$$
+
+Evaluate $H_0: \theta \in \Theta_0$ vs $H_1: \theta \in \Theta_1$ in s-parameter model $\{p_\theta(\cdot|u): \theta \in \Theta\}$
+
+Note: If $s=1$, this family has MLR in $T$. Even if $s>1$, we have still gotten rid of $\lambda$.
+
+## Theorem (Informal)
+
+Let $\cP$ be full rank exp. fam. with densities $p_{\theta, \lambda}(x) = e^{\theta \cdot T(x) + \lambda \cdot U(x) - A(\theta, \lambda)}h(x)$
+
+$\theta \in \mathbb{R}^s$, $\lambda \in \mathbb{R}^r$, $(\theta_0, \lambda_0)$ possible
+
+a) To test $H_0: \theta = \theta_0$ vs $H_1: \theta \neq \theta_0$, there is a UMPU test $\phi(x) = \psi(T(x), U(x))$ where
+
+   $$\psi(t, u) = \begin{cases}
+   1 & \text{if } t > c_2(u) \\
+   \gamma_2(u) & \text{if } t = c_2(u) \\
+   0 & \text{if } c_1(u) < t < c_2(u) \\
+   \gamma_1(u) & \text{if } t = c_1(u) \\
+   1 & \text{if } t < c_1(u)
+   \end{cases}$$
+
+   with $\gamma_1, \gamma_2, c_1, c_2$ chosen to make $\mathbb{E}_{\theta_0}[\phi] = \alpha$ and $\mathbb{E}_{\theta_0}[T\phi] = \theta_0$
+
+b) To test $H_0: \theta \leq \theta_0$ vs $H_1: \theta > \theta_0$, there is a UMPU test $\phi(x) = \psi(T(x), U(x))$ where
+
+   $$\psi(t, u) = \begin{cases}
+   1 & \text{if } t > c(u) \\
+   \gamma(u) & \text{if } t = c(u) \\
+   0 & \text{if } t < c(u)
+   \end{cases}$$
+
+   with $\gamma, c$ chosen to make $\mathbb{E}_{\theta_0}[\phi] = \alpha$
+
+Note: $h$ has disappeared from the problem.
+
+### Example: Poisson Ratio
+
+$X_i \sim \text{iid Poisson}(\mu_i)$, $i=1,2$
+
+$H_0: \mu_1 = \mu_2$ vs $H_1: \mu_1 \neq \mu_2$
+
+$$p(x) = \frac{\mu_1^{x_1} e^{-\mu_1}}{x_1!} \cdot \frac{\mu_2^{x_2} e^{-\mu_2}}{x_2!} = e^{x_1 \log \mu_1 + x_2 \log \mu_2 - \mu_1 - \mu_2}$$
+
+Let $\theta = \log \frac{\mu_1}{\mu_2}$, $\lambda = \log \mu_2$
+
+$H_0: \theta = 0$ vs $H_1: \theta \neq 0$
+
+Reject for conditionally large values of $X_1$ given $X_1 + X_2 = u$:
+
+$$P_\theta(X_1 = x_1 | X_1 + X_2 = u) = \frac{e^{\theta x_1}}{\sum_{i=0}^u e^{\theta i}} = \binom{u}{x_1} \left(\frac{e^\theta}{1+e^\theta}\right)^{x_1} \left(\frac{1}{1+e^\theta}\right)^{u-x_1}$$
+
+$X_1 | X_1 + X_2 \sim \text{Binom}(u, \frac{e^\theta}{1+e^\theta})$
+
+So in the end, we do a Binomial test.
+
+## Proof Sketch
+
+1. Any unbiased test has $\mathbb{P}(\phi=1) \leq h(t,u)$ (continuity)
+2. Power = 0 on boundary $\implies \mathbb{E}_{\theta_0}[T\phi] = \theta_0$ (UK complete sufficient on boundary sub-model)
+3. $\phi$ optimal among all tests with conditional level $\alpha$ by reduction to univariate model
+
+### Detailed Proof
+
+Assume $\phi$ any unbiased test:
+
+1. $\mathbb{E}_\theta[\phi] = \alpha + f(\theta)$, $f(\theta_0) = 0$, $f'(\theta_0) = 0$
+   Keener Thm 12.4
+2. $\mathbb{E}_\theta[\phi]$ infinitely diff on $\mathbb{R}^s$, can diff under $\int$
+3. $\phi$ unbiased $\implies \mathbb{E}_\theta[T\phi] = \frac{\partial}{\partial \theta} \mathbb{E}_\theta[\phi] = \theta$
+
+Step 1: Boundary sub-model $\cP_0 = \{p_{\theta_0, \lambda}: \lambda \in \mathbb{R}^r\}$
+
+$p_{\theta_0, \lambda}(x) = e^{\lambda \cdot U(x) - A(\theta_0, \lambda)}h(x)$
+
+$\cP_0$ is full rank $r$-param exp fam, $U(X)$ complete suff
+
+Let $f(\lambda) = \mathbb{E}_{\theta_0, \lambda}[\phi(X) | U(X)] = \alpha$
+
+$\mathbb{E}_{\theta_0, \lambda}[\phi(X) T(X) | U(X)] = \theta_0$ a.s.
+
+$\mathbb{E}_{\theta_0, \lambda}[\phi(X) | U(X)] = \alpha$ a.s.
+
+Two-sided: $\mathbb{E}_{\theta_0, \lambda}[g(U(X))\phi(X)] = \mathbb{E}_{\theta_0, \lambda}[T(X)\phi(X)] = \theta_0$
+
+$\mathbb{E}_{\theta_0, \lambda}[g(U)\mathbb{E}_{\theta_0, \lambda}[\phi|U]] = \theta_0$
+
+$\mathbb{E}_{\theta_0, \lambda}[g(U) \alpha] = \theta_0$
+
+$\mathbb{E}_{\theta_0, \lambda}[g(U)] = \frac{\theta_0}{\alpha}$
+
+One-sided: $\mathbb{E}_{\theta_0, \lambda}[\phi] = \alpha$ $\forall \lambda$
+
+Steps 2-3: For any value $u$, the conditional model is:
+
+$$p_\theta(t|u) = e^{\theta \cdot t} g(t,u)$$
+
+1-param exp fam.
+
+In one/two-sided case, we have shown $\psi(t,u)$ is UMP/UMPU in $\{p_\theta(\cdot|u)\}$
+
+Let $g(t,u) = \mathbb{E}_{\theta_0}[\phi(X) | T(X)=t, U(X)=u] \leq 1$
+
+$\mathbb{E}_{\theta_0}[\psi(T,U) | U] = \mathbb{E}_{\theta_0}[\phi(X) | U(X)=u]$
+
+$\psi$ if $\theta > \theta_0$
+$\phi(X)$ is a conditional test of $H_0$ vs $H_1$ in $\{p_\theta(\cdot|u)\}$ with power $\leq \alpha$ at boundary
+
+One-sided case: For $\theta > \theta_0$
+$\psi(t,u)$ is the UMP test of $\theta=\theta_0$ vs $\theta>\theta_0$
+in $\{p_\theta(\cdot|u)\}$, which is a 1-param exp fam
+
+Two-sided:
+$\psi(t,u)$ is the UMP test of $\theta=\theta_0$ vs $\theta \neq \theta_0$
+among tests with power $\alpha$ over $\theta=\theta_0$
+Keener Thm 12.22 (main thm for two-sided tests)
+
+In either case, $\psi$ has higher cond. power than $\phi$ a.s.
+
+For $\theta \neq \theta_0$:
+
+$$\mathbb{E}_\theta[\phi] = \mathbb{E}_\theta[\mathbb{E}[\phi(X) | T(X), U(X)]]$$
+$$\leq \mathbb{E}_\theta[\mathbb{E}[\psi(T(X), U(X)) | T(X), U(X)]]$$
+$$= \mathbb{E}_\theta[\psi]$$
+
+### Example: Normal Mean with Unknown Variance
+
+$X \sim N(\mu, \sigma^2)$, $\sigma^2>0$ unknown
+$H_0: \mu=0$ vs $H_1: \mu \neq 0$
+
+$T = \frac{\bar{X}}{\|X\|}$, $U = \|X\|^2$
+
+Optimal test rejects when $\bar{X}$ is extreme given $\|X\|^2$
+
+If $\mu=0$, $\frac{X}{\|X\|}$ is rotationally symmetric
+$\frac{X}{\|X\|} \sim \text{Unif}(S^{n-1})$, $\frac{X}{\|X\|}$ indep of $\|X\|$
+
+Optimal test rejects when $\frac{\bar{X}}{\|X\|}$ extreme (marginally)
+
+Could stop here & simulate
+
+#### Geometric Picture (n=2)
+
+[Insert geometric picture here]
+
+Above test rejects for:
+- conditionally extreme $\bar{X}$ given $\|X\|^2$
+OR
+- marginally extreme $\frac{\bar{X}}{\|X\|}$
+
+Fact: reject for marginally extreme $T$ where
+
+$$T^2 = \frac{(\sum X_i)^2}{\sum X_i^2 - \frac{1}{n}(\sum X_i)^2} = \frac{n\bar{X}^2}{\|X\|^2 - n\bar{X}^2} = \frac{n\bar{X}^2}{S^2}$$
+
+and $S^2 = \frac{1}{n-1}\sum (X_i - \bar{X})^2$
+
+#### Geometric Picture
+
+[Insert second geometric picture here]
+
+$T^2 = \frac{\|\text{Proj}_\mathbf{1}X\|^2}{\|\text{Proj}_{\mathbf{1}^\perp}X\|^2} \cdot \frac{n-1}{n}$
+
+Next major theme: ratios of projections
+
+## Permutation Tests
+
+Even if we don't get a UMPU test at the end, conditioning on null suff. stat. still helps
+
+Example: $X_1, \ldots, X_n \sim \text{iid } P$, $Y_1, \ldots, Y_m \sim \text{iid } Q$
+$H_0: P=Q$ vs $H_1: P \neq Q$
+
+Under $H_0$: $P=Q$, $X_1, \ldots, X_n, Y_1, \ldots, Y_m \sim P$
+
+Let $Z = (Z_1, \ldots, Z_{n+m}) = (X_1, \ldots, X_n, Y_1, \ldots, Y_m)$
+
+Under $H_0$, $U = Z$ is complete sufficient
+
+Let $S_{n+m}$ = Permutations on $n+m$ elements
+
+$(X, Y) = (U_{\pi(1)}, \ldots, U_{\pi(n+m)})$ for $\pi \in S_{n+m}$
+
+Thus for test stat $T$, if $P=Q$:
+
+$$\mathbb{P}(T \geq t | U) = \frac{1}{(n+m)!}\sum_{\pi \in S_{n+m}} 1\{T(Z_{\pi(1)}, \ldots, Z_{\pi(n+m)}) \geq t\}$$
+
+Monte Carlo test: In practice, we sample $\pi_1, \ldots, \pi_B \sim

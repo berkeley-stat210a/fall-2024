@@ -1,0 +1,216 @@
+---
+title: "Testing with One Real Parameter"
+date: "2023-10-12"
+format:
+  html:
+    toc: true
+    number-sections: true
+---
+
+{{< include latex-macros.tex >}}
+
+## Uniformly Most Powerful Tests
+
+### Definition of UMP Test
+
+If $\phi(x)$ has significance level $\alpha$ and for any other level $\alpha$ test $\psi$, we have:
+
+$$\beta_\phi(\theta) \geq \beta_\psi(\theta) \quad \forall \theta \in \Theta_1$$
+
+then $\phi$ is uniformly most powerful (UMP).
+
+Typically, UMP tests only exist for 1-sided testing in certain 1-parameter families.
+
+### Identifiability and Monotone Likelihood Ratio
+
+**Definition (Identifiability):** A model $\cP$ is identifiable if:
+
+$$\forall \theta_1 \neq \theta_2, \, \exists A \text{ s.t. } P_{\theta_1}(A) \neq P_{\theta_2}(A)$$
+
+**Definition (Monotone Likelihood Ratio):** Assume $\cP = \{P_\theta: \theta \in \Theta \subseteq \mathbb{R}\}$ has densities $p_\theta$ and is identifiable. We say $\cP$ has monotone likelihood ratios (MLR) if there is some statistic $T(X)$ s.t. $\frac{p_{\theta_2}(x)}{p_{\theta_1}(x)}$ is a non-decreasing function of $T(X)$ for any $\theta_2 > \theta_1$ (same $T(\cdot)$ for all $\theta$'s).
+
+Example: Exponential family $e^{\eta \cdot T(x) - A(\eta)}h(x)$ has MLR in $\eta \cdot T(x)$.
+
+### Theorem: UMP for One-Sided Tests
+
+Assume $\cP$ has MLR. Test $H_0: \theta \leq \theta_0$ vs $H_1: \theta > \theta_0$ at level $\alpha$. Let:
+
+$$\phi(x) = \begin{cases}
+1 & \text{if } T(x) > c \\
+\gamma & \text{if } T(x) = c \\
+0 & \text{if } T(x) < c
+\end{cases}$$
+
+with $c, \gamma$ chosen so that $\mathbb{E}_{\theta_0}[\phi(X)] = \alpha$.
+
+Then:
+
+a) $\phi$ is a UMP level $\alpha$ test
+b) If $\theta < \theta_0$, then $\phi$ minimizes $\mathbb{E}_\theta[\phi(X)]$ among all tests with $\mathbb{E}_{\theta_0}[\phi(X)] = \alpha$
+
+Proof:
+
+a) Suppose $\theta > \theta_0$ and $\psi$ has level $\alpha$:
+   
+   $\mathbb{E}_\theta[\phi(X)] \geq \mathbb{E}_\theta[\psi(X)]$ since $\phi$ is a LRT for $H_0: \theta = \theta_0$ vs $H_1: \theta = \theta$.
+
+b) If $\theta < \theta_0$, assume $\mathbb{E}_\theta[\psi] = \mathbb{E}_\theta[\phi] + \delta$, $\delta > 0$
+   
+   Both $\frac{1}{1+\delta}\psi$ and $\phi$ are tests of $H_0: \theta = \theta_0$ vs $H_1: \theta = \theta$, both have significance level $\alpha$.
+   
+   $\phi$ is a LRT since $\frac{p_\theta(x)}{p_{\theta_0}(x)}$ is non-increasing in $T(X)$.
+   
+   Therefore, $\mathbb{E}_\theta[\phi] \geq \mathbb{E}_\theta[\frac{1}{1+\delta}\psi] = \frac{1}{1+\delta}(\mathbb{E}_\theta[\phi] + \delta)$
+
+Intuition: $\phi$ is a LRT for $H_0: \theta = \theta_0$ vs $H_1: \theta = \theta$ for any pair $\theta, \theta_0$. Significance level depends on $\theta_0$.
+
+### UMP Test Picture
+
+[Insert visual representation of UMP test here]
+
+Best on $\theta > \theta_0$, exactly level $\alpha$ at $\theta_0$, best among tests with $\mathbb{E}_{\theta_0}[\phi] = \alpha$.
+
+## One-Sided Tests in General
+
+$\cP = \{P_\theta: \theta \in \Theta \subseteq \mathbb{R}\}$, $\Theta \subseteq \mathbb{R}$
+
+$H_0: \theta \leq \theta_0$ vs $H_1: \theta > \theta_0$ called one-sided hypothesis.
+
+Often no UMP test exists.
+
+Example 1: $p_\theta(x) = \theta e^{-\theta x} 1_{x>0} + (1-\theta)\delta_0(x)$, $\theta \in [0,1]$
+
+LRT for $H_0: \theta = \theta_0$ vs $H_1: \theta = \theta_1 > \theta_0$:
+
+$$\log LR(x) = \begin{cases}
+\log \frac{\theta_1}{\theta_0} - (\theta_1 - \theta_0)x & \text{if } x > 0 \\
+\log \frac{1-\theta_1}{1-\theta_0} & \text{if } x = 0
+\end{cases}$$
+
+Reject for:
+- $x \leq \theta_0$ if $\theta_1 < \frac{1}{2}$
+- $x \geq \theta_0$ if $\theta_1 > \frac{1}{2}$
+
+Very dependent on specific values of $\theta_0$ and $\theta_1$.
+
+Test $H_0: \theta \leq \theta_0$ vs $H_1: \theta > \theta_0$: No UMP test.
+
+Example 2: Test $H_0: \theta \leq 0$ vs $H_1: \theta > 0$ for $X_i \in \{-1,0,1\}$
+
+$\mathbb{E}[X_i] = \theta$, $\text{Var}(X_i) = 1 - \theta^2$
+
+$T = \sum X_i$, $\sum |X_i|$, $\frac{T}{\sum |X_i|}$
+
+Tail $\{X_i\}$ vs $\{|X_i|\}$ vs $\{\text{sign}(X_i)\}$
+
+$n^{-1/2} \sum X_i \sim N(0,1)$ vs $\text{Binom}(n, \frac{1}{2})$ (sign test)
+
+### Stochastically Increasing
+
+**Definition:** A real-valued statistic $T(X)$ is stochastically increasing in $\theta$ if $\mathbb{P}_\theta(T(X) > t)$ is non-decreasing in $\theta$, $\forall t$.
+
+If $\phi_t$ is right-tailed test based on $T(X)$:
+
+$$\phi_t(x) = 1\{T(x) > c\} + \gamma 1\{T(x) = c\}$$
+
+and $T(X)$ is stochastically increasing in $\theta$:
+
+$$\beta_{\phi_t}(\theta) = \mathbb{P}_\theta(T(X) > c) + \gamma\mathbb{P}_\theta(T(X) = c)$$
+
+is increasing in $\theta$.
+
+Example 1: $X_i \sim \text{iid}$ location family
+$T(X) = $ sample mean, median, sign statistic
+
+Example 2: $X_i \sim \text{iid}$ scale family
+$T(X) = \sum |X_i|$ or median $\{|X_1|, \ldots, |X_n|\}$
+
+## Two-Sided Alternatives
+
+Setup: $\cP = \{P_\theta: \theta \in \Theta \subseteq \mathbb{R}\}$, $\Theta \subseteq \mathbb{R}$
+
+Test $H_0: \theta = \theta_0$ vs $H_1: \theta \neq \theta_0$
+
+Can be generalized naturally to $H_0: \theta \in [\theta_0, \theta_1]$
+
+Two-tailed test rejects when $T(X)$ is extreme:
+
+$$\phi(x) = \begin{cases}
+1 & \text{if } T(X) > c_2 \text{ or } T(X) < c_1 \\
+\gamma_2 & \text{if } T(X) = c_2 \\
+\gamma_1 & \text{if } T(X) = c_1 \\
+0 & \text{if } c_1 < T(X) < c_2
+\end{cases}$$
+
+Two ways to reject. How to balance?
+
+For symmetric distributions like $N(\theta, 1)$, natural choice is to equalize lobes of rejection region: $\alpha/2 = \mathbb{P}(\text{left lobe}) = \mathbb{P}(\text{right lobe})$ for $H_0: \theta = \theta_0$.
+
+For asymmetric distributions or interval null $H_0: \theta \in [\theta_0, \theta_1]$, more complicated.
+
+### Equal-Tailed Unbiased Tests
+
+Recall $H_0: \theta = \theta_0$
+
+Let $\alpha_1 = \mathbb{P}_{\theta_0}(T < c_1) + \gamma_1\mathbb{P}_{\theta_0}(T = c_1)$
+    $\alpha_2 = \mathbb{P}_{\theta_0}(T > c_2) + \gamma_2\mathbb{P}_{\theta_0}(T = c_2)$
+
+Valid if $\alpha_1 + \alpha_2 = \alpha$ ($\alpha_2$ is free parameter)
+
+Idea 1: Equal-tailed test $\alpha_1 = \alpha_2 = \frac{\alpha}{2}$
+
+Example: $X \sim \text{Exp}(\theta)$, test $H_0: \theta = 1$
+
+Solve for cutoffs: $1 - e^{-c_1} = e^{-c_2} = \frac{\alpha}{2}$
+
+$c_1 = -\log(1-\frac{\alpha}{2})$, $c_2 = -\log(\frac{\alpha}{2})$
+
+$\phi(x) = 1\{x < -\log(1-\frac{\alpha}{2}) \text{ or } x > -\log(\frac{\alpha}{2})\}$
+
+$\beta(\theta) = \mathbb{P}_\theta(X < c_1) + \mathbb{P}_\theta(X > c_2)$
+
+$= 1 - e^{-\theta c_1} + e^{-\theta c_2}$
+
+$= 1 - (1-\frac{\alpha}{2})^\theta + (\frac{\alpha}{2})^\theta$
+
+Power curve for $\theta \in [0,2]$:
+
+[Insert power curve graph here]
+
+### Unbiased Tests
+
+**Definition:** $\phi(x)$ is unbiased if $\forall \theta \neq \theta_0$, $\mathbb{E}_\theta[\phi(X)] \geq \alpha$
+
+Idea 2 (Unbiased): ensure min $\beta(\theta) = \alpha$
+
+Choose $\gamma_1, \gamma_2, c_1, c_2$ to solve:
+
+$\beta(\theta_0) = \alpha$
+$\beta'(\theta_0) = 0$
+
+2 equations, 2 unknowns
+
+Example: 1-parameter exponential family, $H_0: \eta = \eta_0$ vs $H_1: \eta \neq \eta_0$
+
+$p_\eta(x) = e^{\eta T(x) - A(\eta)}h(x)$ (MLR in $T(x)$)
+
+Assume $T(x)$ continuous, set $c_1 < c_2$:
+
+$\alpha = \mathbb{P}_{\eta_0}(T < c_1) + \mathbb{P}_{\eta_0}(T > c_2)$
+$0 = \mathbb{E}_{\eta_0}[T \cdot 1\{T < c_1\}] + \mathbb{E}_{\eta_0}[T \cdot 1\{T > c_2\}]$
+
+### Theorem: UMPU Tests
+
+Assume $X_1, \ldots, X_n \sim p_\eta(x) = e^{\eta T(x) - A(\eta)}h(x)$
+
+$H_0: \eta \in [\eta_1, \eta_2]$ vs $H_1: \eta < \eta_1 \text{ or } \eta > \eta_2$
+
+(possibly $\eta_1 = \eta_2$)
+
+Then:
+
+a) The unbiased test rejecting for $T(X) \notin [c_1, c_2]$ with significance level $\alpha$ is UMP among all unbiased tests (UMPU)
+b) If $\eta_1 = \eta_2$, the UMPU test can be found by solving for $c_1, c_2$ s.t. $\mathbb{E}_{\eta_0}[\phi] = \alpha$, $\mathbb{E}_{\eta_0}[T\phi] = \alpha\mathbb{E}_{\eta_0}[T]$
+c) If $\eta_1 < \eta_2$, the UMPU test can be found by solving for $c_1, c_2$ s.t. $\mathbb{E}_{\eta_1}[\phi] = \alpha$ and $\mathbb{E}_{\eta_2}[\phi] = \alpha$
+
+Proof in Keener.

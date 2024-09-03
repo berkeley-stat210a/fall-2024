@@ -1,0 +1,214 @@
+---
+title: "Empirical Bayes and the James-Stein Paradox"
+date: "2023-10-03"
+format:
+  html:
+    toc: true
+    number-sections: true
+---
+
+{{< include latex-macros.tex >}}
+
+## Empirical Bayes
+
+### Common Situation in Hierarchical Bayes Models
+
+1. $\theta \sim G$, one draw: hard to justify prior
+2. Lots of info: prior doesn't matter
+3. $\theta_i \sim G$, only $X_i$ informative: prior helps
+4. Many draws: can check fit
+
+$$X_i \sim p_{\theta_i}(x), \quad i = 1,\ldots,d$$
+
+### Hybrid Approach
+
+Treat $G$ as fixed:
+
+1. Estimate $G$ based on observed data
+2. Plug in $\hat{G}$ as though known
+
+### Example
+
+$\theta_i \sim N(0, \tau^2)$, $\tau^2$ fixed unknown
+$X_i|\theta_i \sim N(\theta_i, 1)$, $i = 1,\ldots,d$
+
+Bayes estimator if we knew $\tau^2$ is:
+
+$$\delta(X) = \frac{\tau^2}{\tau^2 + 1}X_i$$
+
+$\tau^2$ is sufficient.
+
+To estimate $\tau^2$, use $X \sim N(0, \tau^2 I_d + I_d)$:
+
+$$\mathbb{E}\|X\|^2 = d(\tau^2 + 1)$$
+
+$$\hat{\tau}^2 = \max\{\frac{1}{d}\|X\|^2 - 1, 0\}$$
+
+Plug in: $\hat{\delta}(X) = (1 - \frac{d}{\|X\|^2})_+ X_i$
+
+If $d$ large, should be near optimal.
+
+## James-Stein Estimator
+
+$$\delta_{JS}(X) = (1 - \frac{d-2}{\|X\|^2})X$$
+
+Proof:
+If $Y \sim \text{Gamma}(\frac{d}{2}, \frac{1}{2})$, then:
+
+$$\mathbb{P}(Y > \frac{d-2}{2}) = 1$$
+
+Now use $f(x) = x - \frac{d-2}{x}$, $\frac{1}{2}\|X\|^2 \sim \text{Gamma}(\frac{d}{2}, \frac{1}{2})$
+
+$$\mathbb{E}[f(\frac{1}{2}\|X\|^2)] > f(\mathbb{E}[\frac{1}{2}\|X\|^2]) = \frac{d}{2} - \frac{d-2}{\frac{d}{2}} = 1$$
+
+### James-Stein Paradox
+
+For $d \geq 3$, the sample mean $\bar{X} = \frac{1}{n}\sum X_i$ is inadmissible as an estimator of $\theta$ under squared error loss.
+
+For $\delta_{JS}(X) = (1 - \frac{d-2}{\|X\|^2})X$:
+
+$$\text{MSE}(\theta, \delta_{JS}) < \text{MSE}(\theta, \bar{X}) \quad \forall \theta \in \mathbb{R}^d$$
+
+Notes:
+- $\bar{X}$ is UMVU, Minimax, objective Bayes
+- Might as well take $n=1$ (Sufficiency reduction)
+- This result holds without assumption of Bayes model on $\theta$: true for $\theta = (50, 10, 94, \ldots)$
+- Nothing special about 0: for any $\theta_0 \in \mathbb{R}^d$, $\delta(X) = \theta_0 + (1 - \frac{d-2}{\|X-\theta_0\|^2})(X-\theta_0)$ also dominates $X$
+
+Deep implication: shrinkage makes sense even without Bayes justification.
+
+### General Form
+
+Let $\delta(X) = (1 - \frac{c}{\|X\|^2})X$, $c$ is tuning parameter
+
+$$R(\theta, \delta) = \mathbb{E}_\theta\|\delta(X) - \theta\|^2 = \mathbb{E}_\theta\|X - \theta\|^2 + \mathbb{E}_\theta[\frac{c^2}{\|X\|^2} - 2c]$$
+
+What is optimal $c$?
+
+$$R(\theta, \delta) = d + \mathbb{E}_\theta[\frac{c^2}{\|X\|^2}] - 2c$$
+
+$$\frac{\partial R}{\partial c} = 2\mathbb{E}_\theta[\frac{c}{\|X\|^2}] - 2 = 0$$
+
+$$c = \frac{\mathbb{E}_\theta[\|X\|^2]}{\mathbb{E}_\theta[\frac{1}{\|X\|^2}]}$$
+
+$c$ always > 0, but → 0 as $\|\theta\| → \infty$
+
+What if we estimate $c$? How does adaptivity of $c(X)$ affect MSE?
+
+## Stein's Lemma
+
+Useful tool for computing/estimating risk in Gaussian estimation problems.
+
+### Theorem (Stein's Lemma - Univariate)
+
+Suppose $X \sim N(\theta, \sigma^2)$
+$h: \mathbb{R} → \mathbb{R}$ differentiable, $\mathbb{E}|h'(X)| < \infty$
+
+Then $\mathbb{E}[(X-\theta)h(X)] = \sigma^2\mathbb{E}[h'(X)]$
+
+$\text{Cov}(X, h(X)) = \sigma^2\mathbb{E}[h'(X)]$
+
+Proof:
+Note we can assume w.l.o.g. $h(0) = 0$ (why?)
+First assume $\theta = 0$, $\sigma^2 = 1$
+
+$$\mathbb{E}[Xh(X)] = \int xh(x)\phi(x)dx = \int xh(x)\phi(x)dx - \int h(x)\phi'(x)dx = \int h'(x)\phi(x)dx$$
+
+In the last step we have used $\phi'(x) = -x\phi(x)$
+
+Similar argument shows $\int h(x)\phi(x)dx = \int h'(x)\phi(x)dx$
+
+Result holds for $\theta = 0$, $\sigma^2 = 1$
+
+General $\theta$, $\sigma^2 \neq 1$:
+write $X = \theta + \sigma Z$, $Z \sim N(0,1)$
+
+$$\mathbb{E}[(X-\theta)h(X)] = \sigma\mathbb{E}[Zh(\theta+\sigma Z)] = \sigma^2\mathbb{E}[h'(\theta+\sigma Z)] = \sigma^2\mathbb{E}[h'(X)]$$
+
+### Multivariate Version
+
+Define Frobenius norm: $\|A\|_F^2 = \sum_{i,j} A_{ij}^2 = \text{tr}(A^TA)$
+
+### Theorem (Stein's Lemma - Multivariate)
+
+$X \sim N_d(\theta, \sigma^2 I_d)$, $\theta \in \mathbb{R}^d$
+$h: \mathbb{R}^d → \mathbb{R}^d$ differentiable, $\mathbb{E}\|Dh(X)\|_F < \infty$
+
+Then $\mathbb{E}[(X-\theta)^Th(X)] = \sigma^2\mathbb{E}[\text{tr}(Dh(X))]$
+
+$\mathbb{E}[(X-\theta)h(X)^T] = \sigma^2\mathbb{E}[Dh(X)]$
+
+Proof:
+
+$$\mathbb{E}[(X_i-\theta_i)h_i(X)] = \mathbb{E}[\mathbb{E}[(X_i-\theta_i)h_i(X)|X_{-i}]]$$
+$$= \sigma^2\mathbb{E}[\frac{\partial h_i}{\partial x_i}(X)]$$
+
+## Stein's Unbiased Risk Estimator (SURE)
+
+Unbiased estimator of the MSE of any $\delta(X)$
+
+Apply Stein's Lemma with $h(x) = X - \delta(x)$
+
+Assume $\sigma^2 = 1$:
+
+$$R(\theta, \delta) = \mathbb{E}_\theta\|\delta(X) - \theta\|^2 = \mathbb{E}_\theta\|X - \theta\|^2 + \mathbb{E}_\theta\|\delta(X) - X\|^2 - 2\mathbb{E}_\theta[(X-\theta)^T(X-\delta(X))]$$
+$$= d + \mathbb{E}_\theta\|\delta(X) - X\|^2 - 2\mathbb{E}_\theta[\text{tr}(D(X-\delta(X)))]$$
+
+$$\hat{R}(X) = d + \|\delta(X) - X\|^2 - 2\text{tr}(D\delta(X))$$
+
+is unbiased for the MSE estimator $\delta(X)$
+
+Only depends on X
+
+Can also compute MSE via $R = \mathbb{E}_\theta[\hat{R}]$
+
+$$\mathbb{E}_\theta[\|\delta(X) - h(X)\|^2] = \mathbb{E}_\theta[\|\delta(X) - \theta\|^2] + \mathbb{E}_\theta[\|h(X) - \theta\|^2] - 2\mathbb{E}_\theta[(\delta(X) - \theta)^T(h(X) - \theta)]$$
+
+$$R = d + R(\theta, \delta) - 2\mathbb{E}_\theta[\text{tr}(D\delta(X))]$$
+
+Example: $\delta(X) = (1-c)X$ for fixed $c$
+
+$h(x) = cX$, $Dh = cI_d$
+
+$\hat{R} = d + c^2\|X\|^2 - 2cd$
+
+### Risk of James-Stein
+
+$\delta_{JS}(X) = (1 - \frac{d-2}{\|X\|^2})X$
+
+$h(X) = \frac{d-2}{\|X\|^2}X$, $Dh(X) = \frac{d-2}{\|X\|^2}I_d - 2(d-2)\frac{XX^T}{\|X\|^4}$
+
+$\|h(X)\|^2 = \frac{(d-2)^2}{\|X\|^2}$
+
+$$\text{tr}(Dh(X)) = \frac{d(d-2)}{\|X\|^2} - \frac{2(d-2)}{\|X\|^2} = \frac{(d-2)^2}{\|X\|^2}$$
+
+$$\hat{R} = d + \frac{(d-2)^2}{\|X\|^2} - 2\frac{(d-2)^2}{\|X\|^2} = d - \frac{(d-2)^2}{\|X\|^2}$$
+
+$$R(\theta) = \mathbb{E}_\theta[\hat{R}] = d - (d-2)^2\mathbb{E}_\theta[\frac{1}{\|X\|^2}]$$
+
+If $\theta = 0$ then $\mathbb{E}_0[\frac{1}{\|X\|^2}] = \frac{1}{d-2}$
+
+$$R(0) = d - (d-2) = 2$$
+
+Possibly surprising
+
+If $\theta \neq 0$ then $\mathbb{E}_\theta[\frac{1}{\|X\|^2}] < \frac{1}{\|\theta\|^2}$
+
+$$R(\theta) < d - \frac{(d-2)^2}{\|\theta\|^2 + d}$$
+
+Smaller and smaller advantage, but always better
+
+Note: $\delta_{JS}(X)$ also inadmissible
+
+$\delta_{+}(X) = (1 - \frac{d-2}{\|X\|^2})_+ X$ is strictly better
+
+Practically more useful version:
+
+$$\delta_{JS+}(X) = (1 - \frac{d-3}{\|X\|^2})_+ X$$
+
+Dominates $\delta(X) = X$ for $d \geq 4$
+
+Taken to logical extreme, suggestion seems dumb:
+should everyone at Berkeley pool their estimates?
+
+Note: $\mathbb{E}\|\hat{\theta}\|^2$ is improved, but $\mathbb{E}[(\hat{\theta}_i - \theta_i)^2]$ may get worse for individual coordinates.

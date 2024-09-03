@@ -1,0 +1,190 @@
+---
+title: "p-Values, Confidence Regions, and Misinterpreting Tests"
+date: "2023-10-17"
+format:
+  html:
+    toc: true
+    number-sections: true
+---
+
+{{< include latex-macros.tex >}}
+
+## p-Values
+
+### Informal Definition
+
+Suppose $\phi(x)$ rejects for $T(x) > c$. The p-value is:
+
+$$p(x) = \mathbb{P}_0(T(X) \geq T(x)_{\text{observed}}) = \mathbb{P}_0(T(X) \geq t)$$
+
+Example: $X \sim N(\theta, 1)$, $H_0: \theta = 0$ vs $H_1: \theta \neq 0$
+
+Two-sided test rejects for large $|T(X)| = |X|$:
+
+$$p(x) = \mathbb{P}_0(|X| \geq |x|) = 2(1 - \Phi(|x|))$$
+
+The two-sided p-value is $p(X)$, where:
+
+$$p(x) = \mathbb{P}_0(|X| \geq |x|) = 2\min\{\Phi(x), 1-\Phi(x)\}$$
+
+### Formal Definition
+
+Assume we have a test $\phi_\alpha$ for each significance level $\alpha$: $\mathbb{E}_0[\phi_\alpha(X)] \leq \alpha$
+
+In the non-randomized case: $\phi_\alpha(x) = 1\{x \in R_\alpha\}$
+
+Assume tests are monotone in $\alpha$: if $\alpha \leq \alpha'$, then $\phi_\alpha(x) \leq \phi_{\alpha'}(x)$
+
+(In non-randomized case: $R_\alpha \subseteq R_{\alpha'}$)
+
+Then:
+
+$$p(x) = \inf\{\alpha \in [0,1]: \phi_\alpha(x) = 1\} = \inf\{\alpha: x \in R_\alpha\}$$
+
+It's possible to define randomized p-value, but not worth it.
+
+Note: $p(x) \leq \alpha \iff \phi_\alpha(x) = 1$
+
+For $\theta = \theta_0$: $\mathbb{P}_0(p(X) \leq \alpha) = \mathbb{E}_0[\phi_\alpha(X)] \leq \alpha$
+
+p-value stochastically dominates $U(0,1)$
+
+If $\phi_\alpha$ rejects for large $T(X)$, reduces to original definition.
+
+Note: The p-value depends on:
+- The model
+- Null hypothesis
+- The data AND
+- The choice of test
+
+Example: $X \sim N(\theta, I_d)$, $H_0: \theta = 0$ vs $H_1: \theta \neq 0$
+
+We can use $T(x) = \|x\|_2^2$ ($\chi^2$ test)
+or $T(x) = \max_i |x_i|$ (max test)
+
+Very different p-values, power if $d$ large
+Choice reflects belief about whether $\theta$ is sparse
+
+### Accept/Reject Decisions
+
+Accept/reject decisions are not interesting
+Usually, we care how big $\theta$ is
+Tiny p-value doesn't imply big $\theta$
+Big p-value doesn't imply small $\theta$ either
+
+## Confidence Regions
+
+Definition: $C: \cX \to \cP(\Theta)$ is a $1-\alpha$ confidence set for $g(\theta)$ if:
+
+$$\mathbb{P}_\theta(C(X) \ni g(\theta)) \geq 1-\alpha \quad \forall \theta \in \Theta$$
+
+We say $C(x)$ covers $g(\theta)$ if $C(x) \ni g(\theta)$
+
+Coverage probability: $\mathbb{P}_\theta(C(X) \ni g(\theta))$
+
+$\inf_\theta \mathbb{P}_\theta(C(X) \ni g(\theta))$ is confidence level
+
+Note: $C(X)$ is random, not $g(\theta)$
+
+Often misinterpreted as Bayesian guarantee
+Say "$C(x)$ has a 95% chance of covering"
+Not "$g(\theta)$ has a 95% chance of being in $C$"
+NEVER "95% chance $g(\theta) \in [0.5, 1.5]$" e.g.
+
+### Duality of Tests/Confidence Sets
+
+Suppose we have a level $\alpha$ test $\phi(\cdot, a)$ of $H_0: g(\theta) = a$ vs $H_1: g(\theta) \neq a$, $\forall a \in \Theta$
+
+We can use it to make a confidence set for $g(\theta)$:
+
+Let $C(X) = \{a: \phi(X, a) = 0\}$ (all non-rejected values of $a$)
+
+Then $\mathbb{P}_\theta(C(X) \ni g(\theta)) = \mathbb{P}_\theta(\phi(X, g(\theta)) = 0) \geq 1-\alpha$
+
+Alternatively, suppose $C(X)$ is a $1-\alpha$ confidence set for $g(\theta)$
+
+We can use $C$ to construct a test $\phi$ of $H_0: g(\theta) = a$ vs $H_1: g(\theta) \neq a$:
+
+$\phi(x) = 1\{a \notin C(x)\}$
+
+For $\theta$ s.t. $g(\theta) = a$:
+
+$$\mathbb{E}_\theta[\phi(X)] = \mathbb{P}_\theta(a \notin C(X)) = \mathbb{P}_\theta(C(X) \not\ni g(\theta)) \leq \alpha$$
+
+This is called inverting a test.
+
+### Confidence Intervals/Bounds
+
+If $C(X) = [C_L(X), C_U(X)]$, we say:
+- $C(X)$ is a confidence interval (CI)
+- $C_L(X)$ is a lower confidence bound (LCB)
+- $C_U(X)$ is an upper confidence bound (UCB)
+
+We usually get LCB, UCB by inverting a one-sided test in appropriate direction
+Called uniformly most accurate (UMA) if test UMP
+
+Get CI by inverting a two-sided test
+Called UMAU if test is UMPU
+
+Example: $X \sim \text{Exp}(\theta)$, $n=1$, $\mathbb{E}[X] = \frac{1}{\theta}$, $\theta > 0$
+
+CDF: $\mathbb{P}_\theta(X \leq x) = 1 - e^{-\theta x}$
+
+LCB: Invert test for $H_0: \theta \leq \theta_0$
+Solve $\alpha = 1 - \mathbb{P}_{\theta_0}(X \leq x) = e^{-\theta_0 x}$
+
+$\theta_0 = -\frac{1}{x}\log(\alpha)$
+
+$C_L(X) = -\frac{1}{X}\log(\alpha)$, $\mathbb{P}_\theta(\theta \geq C_L(X)) = 1-\alpha$
+
+UCB: Similar $C_U(X) = -\frac{1}{X}\log(1-\alpha)$
+
+Equal-tailed: Invert equal-tailed test of $H_0: \theta = \theta_0$
+
+$\theta_0 e^{-\theta_0 x} = \frac{\alpha}{2}$, $1 - e^{-\theta_0 x} = 1 - \frac{\alpha}{2}$
+
+$C(X) = [\frac{-\log(\alpha/2)}{X}, \frac{-\log(\alpha/2)}{X}]$
+
+Similar for UMPU 2-sided test
+
+## Misinterpreting Hypothesis Tests
+
+Hypothesis tests ubiquitous in science
+Common misinterpretations:
+
+1. p < 0.05, therefore there is an effect (or the effect size = the estimate)
+2. p > 0.05, therefore there is no effect
+3. p = 10^-6, therefore the effect is huge
+4. p < 10^-6, therefore the data are significant and everything about our model is correct (in most naive interpretation)
+5. Effect CI for men is [0.2, 3.2], for women is [-0.2, 2.8], therefore there is an effect for men and not for women
+
+Dichotomous test doesn't eliminate uncertainty
+CIs usually less misleading to novices
+
+Interpreting tests is not easy or automatic
+Hypothesis tests let us ask specific questions under specific modeling assumptions
+Interpreting them requires care and experience
+
+Top-tier medical journals let people publish claims reporting p-values without saying what model was used or what test was employed
+Pretty bad when you think about it
+
+Hyp. tests can be a good companion to critical thinking, never a substitute
+All models are wrong, some are useful, but need experience and theory to understand when assumptions do or don't cause real trouble
+
+### Common Objections to Hypothesis Testing
+
+1. Why should I test $\theta = 0$? Is $\theta$ ever exactly 0?
+
+   A: a. Test $H_0: |\theta| < \epsilon$ if you want
+      If $\sigma_{\hat{\theta}} \ll \epsilon$, not much difference
+   
+   b. Most two-sided tests justify directional interest:
+      If $T > c$, declare $\theta > 0$, if $T < -c$, declare $\theta < 0$ with $\mathbb{P}(\text{false claim}) < \alpha$
+   
+   c. Harder to answer in non-parametric problems
+      e.g. $H_0: P = Q$ vs $H_1: P \neq Q$ for perm test, but alternative frameworks like Bayes force very strong assumptions on us
+
+2. People only like frequentist results like p-values, CIs because they mistake them for Bayesian results
+   "95% chance $\theta > 0$" is misinterpreted as a claim about $\mathbb{P}(\theta > 0 | X)$
+
+   A: True, but subjective Bayesian results often misinterpreted as the posterior dist. of $\theta$ when really should be "posterior opinion about $\theta$"

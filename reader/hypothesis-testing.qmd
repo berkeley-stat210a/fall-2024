@@ -1,0 +1,209 @@
+---
+title: "Hypothesis Testing and the Neyman-Pearson Lemma"
+date: "2023-10-10"
+format:
+  html:
+    toc: true
+    number-sections: true
+---
+
+{{< include latex-macros.tex >}}
+
+## Hypothesis Testing
+
+In hypothesis testing, we use data $X$ to infer which of two sub-models generated the data.
+
+Model: $\cP = \{P_\theta: \theta \in \Theta\}$
+
+- Null hypothesis: $H_0: \theta \in \Theta_0$
+- Alternative hypothesis: $H_1: \theta \in \Theta_1$
+
+Whenever $H_1$ is unspecified, assume $\Theta_1 = \Theta_0^c$.
+
+$H_0$ is the default choice. We either:
+1. Accept $H_0$ (fail to reject, no definite conclusion)
+2. Reject $H_0$ (conclude false / $H_1$ true)
+
+### Examples
+
+1. $X \sim N(\theta, 1)$, $H_0: \theta = \theta_0$ vs $H_1: \theta \neq \theta_0$
+2. $H_0: \theta = 0$ vs $H_1: \theta > 0$
+3. $X_1, \ldots, X_n \sim P$, $Y_1, \ldots, Y_m \sim Q$, $H_0: P = Q$ vs $H_1: P \neq Q$
+
+Common conceptual objection: We know $\theta \neq \theta_0$ or $P \neq Q$ already, why bother? (We will return to this.)
+
+### Critical Function
+
+Can describe a test by its critical function (a.k.a. test function):
+
+$$
+\phi(x) = \begin{cases}
+0 & \text{accept } H_0 \\
+\gamma \in (0,1) & \text{reject w.p. } \gamma \\
+1 & \text{reject } H_0
+\end{cases}
+$$
+
+In practice, randomization is rarely used ($\phi(x) \in \{0,1\}$).
+In theory, it simplifies discussions.
+
+A non-randomized test partitions $\cX$ into:
+- $R = \{x: \phi(x) = 1\}$
+- $A = \{x: \phi(x) = 0\}$
+
+### Power Function
+
+Power function: $\beta(\theta) = \mathbb{E}_\theta[\phi(X)]$ (rejection probability)
+$\beta(\theta) = P_\theta(\text{Reject } H_0)$
+
+Fully summarizes test's behavior.
+
+$\phi$ is a level $\alpha$ test if $\forall \theta \in \Theta_0$, $\beta(\theta) \leq \alpha$.
+
+Ubiquitous choice is $\alpha = 0.05$ (most influential offhand remark in history of science).
+
+Goal: Maximize $\beta(\theta)$ on $\Theta_1$ subject to level $\alpha$ constraint.
+
+### Example: Normal Distribution Test
+
+$X \sim N(\theta, 1)$, $\theta_0 = 0$, $H_1: \theta \neq 0$
+
+Let $\Phi(z)$ be standard normal CDF.
+
+$\phi(x) = 1\{|x| > z_{\alpha/2}\}$ (2-sided test)
+
+$\beta(\theta) = 1 - \Phi(z_{\alpha/2} - \theta) + \Phi(-z_{\alpha/2} - \theta)$
+
+Sometimes a unique best test exists.
+
+Example: $X \sim N(\theta, 1)$, $H_0: \theta = 0$, $H_1: \theta = \theta_1$
+
+$\phi(x) = 1\{x > c\}$ is best possible level $\alpha$ test.
+
+$\beta(\theta) = \begin{cases}
+\alpha & \text{if } \theta = 0 \\
+1 - \Phi(c - \theta_1) & \text{if } \theta = \theta_1
+\end{cases}$
+
+## Likelihood Ratio Test
+
+When null and alternative are both simple, there exists a unique best test, which rejects for large values of the likelihood ratio.
+
+Let $LR(x) = \frac{p_1(x)}{p_0(x)}$ where $p_0, p_1$ are densities (note: dominating measure always exists, e.g., $P_0 + P_1$)
+
+Likelihood Ratio Test (LRT):
+$$
+\phi(x) = \begin{cases}
+1 & \text{if } LR(x) > C \\
+\gamma & \text{if } LR(x) = C \\
+0 & \text{if } LR(x) < C
+\end{cases}
+$$
+
+$C, \gamma$ chosen to make $\mathbb{E}_0[\phi(X)] = \alpha$
+
+Intuitions (discrete case):
+- Power under $H_1$: $\sum_x \phi(x) p_1(x) = \mathbb{E}_1[\phi(X)]$
+- Significance level: $\sum_x \phi(x) p_0(x) = \mathbb{E}_0[\phi(X)]$
+
+Analogy: $\$100 to buy as much flour as possible
+
+## Neyman-Pearson Lemma
+
+### Theorem (Neyman-Pearson Lemma)
+
+LRT with significance level $\alpha$ is optimal for testing $H_0: X \sim p_0$ vs $H_1: X \sim p_1$
+
+Proof:
+We are interested in maximization problem:
+
+$$
+\begin{aligned}
+&\text{maximize } \mathbb{E}_1[\phi(X)] \\
+&\text{subject to } \mathbb{E}_0[\phi(X)] \leq \alpha, \quad \phi(x) \in [0,1]
+\end{aligned}
+$$
+
+Lagrange form:
+
+$$
+\text{maximize } \mathbb{E}_1[\phi(X)] - \lambda(\mathbb{E}_0[\phi(X)] - \alpha)
+$$
+
+$$
+= \int \phi(x)[p_1(x) - \lambda p_0(x)]d\mu(x) + \lambda\alpha
+$$
+
+Solution:
+$$
+\phi^*(x) = \begin{cases}
+1 & \text{if } LR(x) > C \\
+\gamma & \text{if } LR(x) = C \\
+0 & \text{if } LR(x) < C
+\end{cases}
+$$
+
+$\phi^*$ maximizes Lagrangian for $\lambda = C$
+
+Consider any other test $\phi(x) \in [0,1]$:
+
+$$
+\begin{aligned}
+\mathbb{E}_1[\phi^*] - \lambda\mathbb{E}_0[\phi^*] &= \int \phi^*(x)[p_1(x) - \lambda p_0(x)]d\mu(x) \\
+&\geq \int \phi(x)[p_1(x) - \lambda p_0(x)]d\mu(x) \\
+&= \mathbb{E}_1[\phi] - \lambda\mathbb{E}_0[\phi]
+\end{aligned}
+$$
+
+Therefore, $\mathbb{E}_1[\phi^*] - \mathbb{E}_1[\phi] \geq \lambda(\mathbb{E}_0[\phi^*] - \mathbb{E}_0[\phi])$
+
+We can choose two free parameters. We need both to solve one equation:
+
+$$
+\alpha = \mathbb{E}_0[\phi^*(X)] = P_0(LR > C) + \gamma P_0(LR = C)
+$$
+
+Case 1: $C$ is upper $\alpha$-quantile of $LR$
+Case 2: $C$ and $\gamma$ discrete
+
+$P_0(LR > c)$ jumps down at discrete values $c_1 < c_2 < \cdots$
+Set $i = \max\{i: P_0(LR > c_i) \geq \alpha\}$
+Then $P_0(LR > c_i) \geq \alpha > P_0(LR \geq c_{i+1})$
+
+$$
+\gamma = \frac{\alpha - P_0(LR > c_i)}{P_0(LR = c_i)}
+$$
+
+### Example 1: Exponential Family
+
+$p_\eta(x) = e^{\eta^T T(x) - A(\eta)}h(x)$
+
+$H_0: \eta = \eta_0$ vs $H_1: \eta = \eta_1 > \eta_0$
+
+$$
+LR(x) = e^{(\eta_1 - \eta_0)^T T(x) - [A(\eta_1) - A(\eta_0)]}
+$$
+
+$\phi^*$ rejects for large $T(X)$:
+
+$$
+\phi^*(x) = \begin{cases}
+1 & \text{if } T(X) > c \\
+\gamma & \text{if } T(X) = c \\
+0 & \text{if } T(X) < c
+\end{cases}
+$$
+
+Choose $c, \gamma$ to make:
+
+$$
+\beta(\eta_0) = P_{\eta_0}(T(X) > c) + \gamma P_{\eta_0}(T(X) = c) = \alpha
+$$
+
+### Example 2: $X_1, \ldots, X_n \sim p(x; \theta)$ (same $H_0, H_1$)
+
+Reject for large $\sum_i T(X_i)$
+
+Important: $\phi^*$ depends only on $\eta_0$ and sufficient statistic $T(\cdot)$, not on $\eta_1$.
+
+Next topic: Uniformly most powerful (UMP) tests.

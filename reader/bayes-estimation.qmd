@@ -1,0 +1,173 @@
+---
+title: "Bayes Estimation"
+format:
+  html:
+    toc: true
+    number-sections: true
+---
+
+{{< include latex-macros.tex >}}
+
+## Bayes Risk and Bayes Estimator
+
+### Definitions
+
+The Bayes risk is the average case risk:
+
+$$
+r(\pi, \delta) = \EE_\pi[R(\theta, \delta)] = \int R(\theta, \delta) \,d\pi(\theta)
+$$
+
+where $\pi(\theta)$ is a probability measure (for now, we assume it's proper; later we will allow it to be improper).
+
+Note: $\pi$ and $\delta$ are functionally equivalent for average risk, which makes sense even if we don't believe $\pi$.
+
+$$
+r(\pi, \delta) = \EE_\pi[\EE_\theta[L(\theta, \delta(X))]] = \EE[L(\theta, \delta(X))]
+$$
+
+where $(\theta, X) \sim p(\theta, x) = p(x|\theta)\pi(\theta)$
+
+An estimator $\delta$ minimizing $r_\text{Bayes}(\delta)$ is called a Bayes estimator. It depends on $\pi$ and $L$.
+
+$$
+\delta_\pi = \argmin_\delta \EE[L(\theta, \delta(X))]
+$$
+
+### Prior and Posterior
+
+- The usual interpretation of $\pi$ is the prior belief about $\theta$ before seeing the data.
+- The conditional distribution $\pi(\theta|X)$ is called the posterior distribution (belief after seeing the data).
+
+Densities:
+- Prior: $\pi(\theta)$
+- Likelihood: $p(x|\theta)$
+- Joint density: $p(\theta, x) = \pi(\theta)p(x|\theta)$
+- Marginal density: $q(x) = \int p(\theta, x) \,d\theta$
+- Posterior density: $\pi(\theta|x) = \frac{p(\theta, x)}{q(x)}$
+
+The Bayes estimator depends on the posterior:
+
+$$
+\delta_\pi(x) = \argmin_d \EE[L(\theta, d)|X=x] = \argmin_d \int L(\theta, d) \pi(\theta|x) \,d\theta
+$$
+
+### Theorem: Characterization of Bayes Estimators
+
+Suppose $X \sim p_\theta(x)$ and $\delta_\pi(x) = \delta(x)$ for some function $\delta$. Then $\delta$ is Bayes with respect to $\pi$ if and only if $\delta(x) \in \argmin_d \EE[L(\theta, d)|X=x]$ for almost every $x$.
+
+Proof:
+1. Let $\delta'$ be any other estimator.
+2. $r(\pi, \delta') = \int \EE[L(\theta, \delta'(X))|X=x] q(x) \,dx$
+3. $r(\pi, \delta) = \int \EE[L(\theta, \delta(X))|X=x] q(x) \,dx$
+4. Define $E_x(d) = \EE[L(\theta, d)|X=x]$
+5. If $\delta(x) \in \argmin_d E_x(d)$, then $E_x(\delta(x)) \leq E_x(\delta'(x))$ for all $x$
+6. This implies $r(\pi, \delta) \leq r(\pi, \delta')$
+
+## Special Cases and Examples
+
+### Squared Error Loss
+
+If $L(\theta, d) = (\theta - d)^2$, then the Bayes estimator is the posterior mean:
+
+$$
+\delta_\pi(x) = \EE[\theta|X=x]
+$$
+
+Proof:
+$$
+\begin{aligned}
+\EE[(\theta - d)^2|X=x] &= \EE[\theta^2|X=x] - 2d\EE[\theta|X=x] + d^2 \\
+&= \Var(\theta|X=x) + (\EE[\theta|X=x] - d)^2 + \EE[\theta|X=x]^2 - 2d\EE[\theta|X=x] + d^2
+\end{aligned}
+$$
+
+The minimum occurs when $d = \EE[\theta|X=x]$.
+
+### Weighted Squared Error
+
+For $L(\theta, d) = w(\theta)(\theta - d)^2$ (e.g., squared relative error), the Bayes estimator is:
+
+$$
+\delta_\pi(x) = \frac{\EE[w(\theta)\theta|X=x]}{\EE[w(\theta)|X=x]}
+$$
+
+## Examples
+
+### Beta-Binomial
+
+- $X|\theta \sim \text{Binomial}(n, \theta)$, $\theta \in [0,1]$
+- $\theta \sim \text{Beta}(\alpha, \beta)$, $\alpha, \beta > 0$
+
+The marginal distribution of $X$ is called Beta-Binomial.
+
+Posterior:
+$$
+\pi(\theta|x) \propto \theta^x (1-\theta)^{n-x} \cdot \theta^{\alpha-1}(1-\theta)^{\beta-1} \propto \theta^{x+\alpha-1}(1-\theta)^{n-x+\beta-1}
+$$
+
+Therefore, $\theta|X \sim \text{Beta}(x+\alpha, n-x+\beta)$
+
+$$
+\EE[\theta|X] = \frac{x+\alpha}{n+\alpha+\beta}
+$$
+
+Interpret $\alpha+\beta$ as pseudo-trials and $\alpha$ as pseudo-successes.
+
+### Normal Mean
+
+- $X_i|\theta \sim N(\theta, \sigma^2)$, $\sigma^2$ known
+- $\theta \sim N(\mu, \tau^2)$
+
+Posterior:
+$$
+\pi(\theta|x) \propto \exp\left(-\frac{1}{2\sigma^2}\sum_{i=1}^n(x_i-\theta)^2\right) \exp\left(-\frac{1}{2\tau^2}(\theta-\mu)^2\right)
+$$
+
+Complete the square:
+
+$$
+\theta|X \sim N\left(\frac{\frac{n}{\sigma^2}\bar{x} + \frac{1}{\tau^2}\mu}{\frac{n}{\sigma^2} + \frac{1}{\tau^2}}, \frac{1}{\frac{n}{\sigma^2} + \frac{1}{\tau^2}}\right)
+$$
+
+$$
+\EE[\theta|X] = \frac{\frac{n}{\sigma^2}\bar{x} + \frac{1}{\tau^2}\mu}{\frac{n}{\sigma^2} + \frac{1}{\tau^2}} = w\bar{x} + (1-w)\mu
+$$
+
+where $w = \frac{n\tau^2}{n\tau^2 + \sigma^2}$
+
+If $\frac{1}{\tau^2} = k$, interpret as $k$ pseudo-observations with mean $\mu$.
+
+## Conjugate Priors
+
+In both examples, the prior and likelihood have a similar functional form, and the posterior comes from the same exponential family as the prior. When the posterior is from the same family as the prior, we say the prior is conjugate to the likelihood.
+
+### Conjugate Priors for Exponential Families
+
+Suppose $p_\theta(x) = h(x)\exp(\eta(\theta)'T(x) - A(\theta))$ for carrier $h$. Define:
+
+$$
+\pi(\theta) = g(\theta)\exp(\lambda'u(\theta) - \psi(\lambda))
+$$
+
+Then:
+
+$$
+\pi(\theta|x) \propto \exp((\lambda + T(x))'u(\theta) - (A(\theta) + \psi(\lambda)))
+$$
+
+Often, $u(\theta) = \eta(\theta)$ and $\lambda$ is interpreted as pseudo-observations.
+
+### Conjugate Prior Examples
+
+1. Normal-Normal:
+   - $X_i|\theta \sim N(\theta, \sigma^2)$, $\sigma^2$ known
+   - $\theta \sim N(\mu, \tau^2)$
+   
+2. Poisson-Gamma:
+   - $X|\theta \sim \text{Poisson}(\theta)$, $\theta > 0$
+   - $\theta \sim \text{Gamma}(\alpha, \beta)$, $\alpha, \beta > 0$
+   
+   Posterior: $\theta|X \sim \text{Gamma}(\alpha + \sum x_i, \beta + n)$
+
+   Interpret $\alpha$ as pseudo-counts and $\beta$ as pseudo-exposure.
