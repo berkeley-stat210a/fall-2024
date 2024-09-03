@@ -9,9 +9,9 @@ Stat 210A is an introductory Ph.D.-level course in theoretical statistics. It is
 ### Instructors
 
 -   **Primary Instructor** [Prof. Will Fithian](http://www.stat.berkeley.edu/~wfithian/)
-    -   **Office Hours:** Tuesday 3:30-4:30pm [on Zoom](https://berkeley.zoom.us/j/96319412431?pwd=2OYujkSXdsNuTD1QQ25UGV1bL4CJI0.1), Thursday 9:30-10:30am in Evans 301
+    -   **Office Hours:** Tuesday 3:30-4:30pm on Zoom, Thursday 9:30-10:30am in Evans 301
     -   **Email:** [wfithian\@berkeley.edu](mailto:wfithian@berkeley.edu)
--   **GSI** [Dohyeong Ki]()
+-   **GSI** [Dohyeong Ki](https://statistics.berkeley.edu/people/dohyeong-ki)
     -   **Office Hours:** Wednesday 9-10am, Friday 4:30-5:30pm in 444 Evans
     -   **Email:** [dohyeong_ki\@berkeley.edu](mailto:dohyeong_ki@berkeley.edu)
 
