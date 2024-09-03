@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>Measure Theory Basics</title>
+<title>Probability as a measure</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -84,9 +84,7 @@ gtag('config', 'G-B8G2041HSB', { 'anonymize_ip': true});
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-      <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item">
-      Stat 210a
-      </li></ol></nav>
+      <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../reader/introduction.html">Course Reader</a></li><li class="breadcrumb-item"><a href="../reader/probability.html">Probability as a measure</a></li></ol></nav>
       <a class="flex-grow-1" role="button" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
       </a>
       <button type="button" class="btn quarto-search-button" aria-label="" onclick="window.quartoOpenSearch();">
@@ -175,7 +173,7 @@ gtag('config', 'G-B8G2041HSB', { 'anonymize_ip': true});
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../reader/probability.html" class="sidebar-item-text sidebar-link">
+  <a href="../reader/probability.html" class="sidebar-item-text sidebar-link active">
  <span class="menu-text">Probability as a measure</span></a>
   </div>
 </li>
@@ -197,7 +195,9 @@ gtag('config', 'G-B8G2041HSB', { 'anonymize_ip': true});
     <h2 id="toc-title">On this page</h2>
    
   <ul>
-  <li><a href="#measure-theory-a-rigorous-grounding-for-probability" id="toc-measure-theory-a-rigorous-grounding-for-probability" class="nav-link active" data-scroll-target="#measure-theory-a-rigorous-grounding-for-probability">Measure theory: a rigorous grounding for probability</a></li>
+  <li><a href="#outline" id="toc-outline" class="nav-link active" data-scroll-target="#outline">Outline</a></li>
+  <li><a href="#what-is-a-probability" id="toc-what-is-a-probability" class="nav-link" data-scroll-target="#what-is-a-probability">What is a probability?</a></li>
+  <li><a href="#measure-theory-a-rigorous-grounding-for-probability" id="toc-measure-theory-a-rigorous-grounding-for-probability" class="nav-link" data-scroll-target="#measure-theory-a-rigorous-grounding-for-probability">Measure theory: a rigorous grounding for probability</a></li>
   <li><a href="#measures" id="toc-measures" class="nav-link" data-scroll-target="#measures">Measures</a></li>
   <li><a href="#integrals" id="toc-integrals" class="nav-link" data-scroll-target="#integrals">Integrals</a></li>
   <li><a href="#densities" id="toc-densities" class="nav-link" data-scroll-target="#densities">Densities</a></li>
@@ -212,7 +212,7 @@ gtag('config', 'G-B8G2041HSB', { 'anonymize_ip': true});
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title">Measure Theory Basics</h1>
+<h1 class="title">Probability as a measure</h1>
 </div>
 
 
@@ -249,6 +249,37 @@ gtag('config', 'G-B8G2041HSB', { 'anonymize_ip': true});
 \newcommand{\Cov}{\textnormal{Cov}}
 \newcommand{\Corr}{\textnormal{Corr}}
 \]</span></p>
+<section id="outline" class="level2">
+<h2 class="anchored" data-anchor-id="outline">Outline</h2>
+<ol type="1">
+<li><p>What is probability?</p></li>
+<li><p>Measures and integrals</p></li>
+<li><p>Densities</p></li>
+<li><p>Probability spaces and random variables</p></li>
+</ol>
+</section>
+<section id="what-is-a-probability" class="level2">
+<h2 class="anchored" data-anchor-id="what-is-a-probability">What is a probability?</h2>
+<ul>
+<li>There is some philosophical controversy about what probability is. Roughly speaking, there are two common answers:</li>
+</ul>
+<ol type="1">
+<li><p><strong>Frequentist answer:</strong> Probability represents a relative frequency of an outcome when an experiment is repeated many times.</p></li>
+<li><p><strong>Bayesian answer:</strong> Probability represents a degree of belief that something is true, or that something will happen.</p></li>
+</ol>
+<p>People who give the first answer tend to be doubtful that we can meaningfully assign probabilities to everything. There is no sense in which the 2024 presidential election is an experiment that we can repeat. Below is a list of outcomes that seem more and more difficult to assign probabilities to. Think about where you would stop agreeing that probability is a meaningful construct:</p>
+<ul>
+<li><p>The probability that a (roughly) physically symmetrical die will roll 4 on the next toss.</p></li>
+<li><p>The probability that a common surgery will be successful for a given patient.</p></li>
+<li><p>The probability that the Democratic candidate will win the next presidential election.</p></li>
+<li><p>The probability that a given subatomic particle has the mass predicted by a certain physical theory.</p></li>
+<li><p>The probability that P = NP (as a statement about complexity theory)</p></li>
+<li><p>The probability that the 20th digit of <span class="math inline">\(\sqrt{2}\)</span> is 5.</p></li>
+</ul>
+<p>The two great statistical frameworks of frequentist and Bayesian statistics loosely correspond to the two views about probability above. Generally speaking, Bayesians get a lot of mileage out of being willing to assign probabilities to everything, while frequentists try to take a more conservative course where possible, allowing some quantities to simply be unknown.</p>
+<p>A great deal of ink has been spilled about whether one approach is superior to another. Fifty years ago, it was more common for statisticians to be dogmatically committed to one or the other view, but nowadays the mainstream view is that both approaches have strengths and weaknesses.</p>
+<p>Fortunately, the philosophical and methodological disagreements between frequentists and Bayesians are not disagreements about the mathematical construct of probability, only questions about how and when these mathematical formalisms should be connected to real-world questions. There is very little controversy about how we should conceive of probability mathematically.</p>
+</section>
 <section id="measure-theory-a-rigorous-grounding-for-probability" class="level2">
 <h2 class="anchored" data-anchor-id="measure-theory-a-rigorous-grounding-for-probability">Measure theory: a rigorous grounding for probability</h2>
 <p><strong>Measure theory</strong> is an area of mathematics concerned with measuring the “size” of subsets of a certain set. Soon after it was developed in the the early twentieth century, the great Soviet mathematician Kolmogorov realized it could be applied to give a rigorous grounding to probability theory, it was a major advance in understanding and resolving certain <a href="https://en.wikipedia.org/wiki/Bertrand_paradox_(probability)">paradoxes</a> in probability theory. David Aldous gives a nice <a href="https://www.stat.berkeley.edu/~aldous/Real_World/kolmogorov.html">discussion</a> of this history.</p>

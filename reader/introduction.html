@@ -6,8 +6,6 @@
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
-<meta name="author" content="Will Fithian">
-<meta name="dcterms.date" content="2023-08-24">
 
 <title>Course introduction</title>
 <style>
@@ -209,8 +207,8 @@ gtag('config', 'G-B8G2041HSB', { 'anonymize_ip': true});
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../reader/measure-theory-basics.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Measure Theory Basics</span></a>
+  <a href="../reader/probability.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Probability as a measure</span></a>
   </div>
 </li>
       </ul>
@@ -250,19 +248,7 @@ gtag('config', 'G-B8G2041HSB', { 'anonymize_ip': true});
 
 <div class="quarto-title-meta">
 
-    <div>
-    <div class="quarto-title-meta-heading">Author</div>
-    <div class="quarto-title-meta-contents">
-             <p>Will Fithian </p>
-          </div>
-  </div>
     
-    <div>
-    <div class="quarto-title-meta-heading">Published</div>
-    <div class="quarto-title-meta-contents">
-      <p class="date">August 24, 2023</p>
-    </div>
-  </div>
   
     
   </div>
@@ -437,11 +423,18 @@ probability of success
 </div>
 <p>The <span class="math inline">\(p\)</span>-value tells us the likelihood that we could observe as many same-side flips as we did, if <span class="math inline">\(\theta\)</span> really were <span class="math inline">\(0.5\)</span>. In this experiment the <span class="math inline">\(p\)</span>-value is so small (<span class="math inline">\(p &lt; 2.2\times 10^{-16}\)</span>) that <code>R</code> doesn’t bother to tell us its exact value. The probability involved in calculating the <span class="math inline">\(p\)</span>-value follows from our binomial assumptions, but most reasonable people would probably accept this as sufficient evidence to reject the null hypothesis; that is, to reach the inductive conclusion that <span class="math inline">\(\theta\)</span> is not really <span class="math inline">\(0.5\)</span>.</p>
 <p>This is a risky conclusion! Even if we were so conservative as to reject the null hypothesis only when <span class="math inline">\(p &lt; 10^{-10}\)</span>, say, there would still be some chance of our making a mistake in any given experiment. But we have quantified how likely this is, and we can decide whether it is high enough to trouble us.</p>
-<p>Beyond just knowing that a same-side bias exists, it is interesting to have some sense of how large it is. Using very similar logic to the hypothesis test, the <code>binom.test</code> function also returns a $95$ <strong>confidence interval</strong> <span class="math inline">\([50.6\%, 50.9\%]\)</span> for the parameter <span class="math inline">\(\theta\)</span>. We will explore how to construct confidence intervals later in the semester, but for now it is sufficient to know that the interval is defined so that it has at least a $95$ chance of covering (i.e., including) <span class="math inline">\(\theta\)</span> in any given experiment, no matter what value <span class="math inline">\(\theta\)</span> takes. This is another example of inductive behavior: in producing a confidence interval, we take a risk that the corresponding inductive conclusion “<span class="math inline">\(\theta\)</span> lies between <span class="math inline">\(0.056\)</span> and <span class="math inline">\(0.0509\)</span>” is wrong, but we are behaving in such a way that we can quantify and limit this risk.</p>
+<p>Beyond just knowing that a same-side bias exists, it is interesting to have some sense of how large it is. Using very similar logic to the hypothesis test, the <code>binom.test</code> function also returns a <span class="math inline">\(95\%\)</span> <strong>confidence interval</strong> <span class="math inline">\([50.6\%, 50.9\%]\)</span> for the parameter <span class="math inline">\(\theta\)</span>. We will explore how to construct confidence intervals later in the semester, but for now it is sufficient to know that the interval is defined so that it has at least a $95$ chance of covering (i.e., including) <span class="math inline">\(\theta\)</span> in any given experiment, no matter what value <span class="math inline">\(\theta\)</span> takes. This is another example of inductive behavior: in producing a confidence interval, we take a risk that the corresponding inductive conclusion “<span class="math inline">\(\theta\)</span> lies between <span class="math inline">\(0.056\)</span> and <span class="math inline">\(0.0509\)</span>” is wrong, but we are behaving in such a way that we can quantify and limit this risk.</p>
 </section>
 <section id="bayesian-analysis" class="level4">
 <h4 class="anchored" data-anchor-id="bayesian-analysis">Bayesian analysis</h4>
-<p>Another route we could take, if we have a more Bayesian bent, is to introduce another assumption about the distribution that <span class="math inline">\(\theta\)</span> has; for example, that $\theta [0,1]$. This is a stronger assumption than</p>
+<p>Another route we could take, if we have a more Bayesian bent, is to introduce another assumption about the distribution that <span class="math inline">\(\theta\)</span> has; for example, that <span class="math inline">\(\theta \sim \text{Unif}[0,1]\)</span>. This is a stronger assumption than we made before: in what sense does <span class="math inline">\(\theta\)</span> have this distribution? Compared with the other assumptions, it is very difficult to test: there is only one draw from the distribution of <span class="math inline">\(\theta\)</span>, and it is observed only indirectly through the coin flips. However, it turns out in this case not to matter much what prior we picked, in the sense that many other prior distributions would result in almost the same posterior distribution.</p>
+<p>If we make this assumption about the distribution of <span class="math inline">\(\theta\)</span>, then we can directly calculate the conditional distribution after observing <span class="math inline">\(X = 178,079\)</span>. The posterior distribution for <span class="math inline">\(\theta\)</span> can be calculated analytically, giving probability density <span class="math display">\[
+\theta \mid X = x \sim  \frac{(n + 1)!}{x!(n-x)!} \theta^x (1-\theta)^{n-x}, \quad \text{ for } \theta \in [0,1].
+\]</span> This distribution is called the <strong>Beta distribution</strong> with parameters <span class="math inline">\(\alpha = x+1\)</span> and <span class="math inline">\(\beta = n-x+1\)</span>. Note that this expression is a probability density for the parameter <span class="math inline">\(\theta\)</span>, not the . Once we know the distribution of <span class="math inline">\(\theta\)</span> we can make claims about it: for example, after seeing the data, there is only a <span class="math inline">\(3.8 \times 10^{-20}\)</span> chance that <span class="math inline">\(\theta \leq 0.5\)</span>. We can also calculate a <span class="math inline">\(95\%\)</span> Bayesian <strong>credible interval</strong>, which includes <span class="math inline">\(95\%\)</span> of the posterior probability mass. In this case, the interval is <span class="math inline">\([50.6\%, 50.9\%]\)</span>, coinciding with the frequentist confidence interval to several decimal points. The credible interval is making a stronger claim than the confidence interval: it is saying, <em>for this</em> <span class="math inline">\(\theta\)</span>, there is a <span class="math inline">\(95\%\)</span> chance that it falls in that range.</p>
+</section>
+<section id="questioning-the-binomial-model" class="level4">
+<h4 class="anchored" data-anchor-id="questioning-the-binomial-model">Questioning the binomial model</h4>
+<p>Bartos et al.&nbsp;stated in their paper that the binomial model is not quite correct: some human flippers had more same-side bias than others. We can modify the binomial model to allow for a different same-side probability <span class="math inline">\(\theta_i\)</span></p>
 
 
 </section>
