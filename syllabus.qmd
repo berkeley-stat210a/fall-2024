@@ -2,9 +2,6 @@
 title: "Syllabus"
 ---
 
-\[UNDER CONSTRUCTION\]
-
-
 Stat 210A is an introductory Ph.D.-level course in theoretical statistics. It is a fast-paced and demanding course intended to prepare students for research careers in statistics.
 
 ## Course information
@@ -12,17 +9,23 @@ Stat 210A is an introductory Ph.D.-level course in theoretical statistics. It is
 ### Instructors
 
 -   **Primary Instructor** [Prof. Will Fithian](http://www.stat.berkeley.edu/~wfithian/)
-    -   **Office Hours:** TBD
+    -   **Office Hours:** Tuesday 3:30-4:30pm [on Zoom](https://berkeley.zoom.us/j/96319412431?pwd=2OYujkSXdsNuTD1QQ25UGV1bL4CJI0.1), Thursday 9:30-10:30am in Evans 301
     -   **Email:** [wfithian\@berkeley.edu](mailto:wfithian@berkeley.edu)
--   **GSI** Dohyeong Ki
-    -   **Office Hours:** TBD
+-   **GSI** [Dohyeong Ki]()
+    -   **Office Hours:** Wednesday 9-10am, Friday 4:30-5:30pm in 444 Evans
     -   **Email:** [dohyeong_ki\@berkeley.edu](mailto:dohyeong_ki@berkeley.edu)
 
 ### Course schedule
 
--   **Lectures:** TuTh 11-12:30, Evans 60
--   **Recitation sections:** Every second F 11am-12pm, location TBD, beginning week 2
--   **Final exam review:** TBD
+-   **Lectures:** Tuesday and Thursday 11am-12:30pm, Evans 60
+-   **Recitation sections:** Every second F 3:30-4:30pm (location TBD), starting September 6
+-   **Election week:**
+    -   Blanket 2-day extension on homework 9 (due Friday November 8, 11:59pm)
+-   **Thanksgiving week:**
+    -   Tuesday November 26: lecture 11-12:30 on Zoom, 3:30-4:30 OH on Zoom
+    -   No lecture Thursday November 28
+    -   No in-person office hours
+-   **Final exam review:** (a.k.a. last recitation section) Friday, December
 -   **Final exam:** Wed December 18, 8-11am
 
 ### Course communications
@@ -60,13 +63,15 @@ Berkeley's graduate course on Statistical Learning Theory (CS 281A / Stat 241A) 
 
 The online notes for this course are self-contained, however it can be helpful to see a different presentation in the following supplementary texts (all links are to public websites or Springer Link):
 
--   [Keener, *Theoretical Statistics: Topics for a Core Course*, Springer 2010.](http://link.springer.com/book/10.1007%2F978-0-387-93839-4)
+-   [Keener, *Theoretical Statistics: Topics for a Core Course*, Springer 2010.](http://link.springer.com/book/10.1007%2F978-0-387-93839-4) The textbook that is closest in technical level and presentation style to our course reader.
 
--   [Lehmann and Casella, *Theory of Point Estimation*, Springer 1998.](http://link.springer.com/book/10.1007%2Fb98854)
+-   [Lehmann and Casella, *Theory of Point Estimation*, Springer 1998.](http://link.springer.com/book/10.1007%2Fb98854) A highly-detailed reference text that covers much of the estimation material in this course.
 
--   [Lehmann and Romano, *Testing Statistical Hypotheses*, Springer 2005.](http://link.springer.com/book/10.1007%2F0-387-27605-X)
+-   [Lehmann and Romano, *Testing Statistical Hypotheses*, Springer 2005.](http://link.springer.com/book/10.1007%2F0-387-27605-X) A highly-detailed reference text covering much of the material on testing and confidence estimation.
 
--   [Candes, Stats 300C Lecture notes, Stanford 2016.](https://statweb.stanford.edu/~candes/stats300c/lectures.html)
+-   [Hacking, *Probability and Inductive Logic*, Cambridge University Press, 2001.](http://fitelson.org/confirmation/hacking_introduction_to_probability_and_inductive_logic.pdf) A beautifully written book that treats probability and statistics from a philosophical point of view.
+
+-   [Candes, Stats 300C Lecture notes, Stanford 2016.](https://statweb.stanford.edu/~candes/stats300c/lectures.html) The course notes for a great course at Stanford that covers some of the later material in this course.
 
 Undergrad-level review texts for prerequisites:
 
@@ -80,28 +85,32 @@ Undergrad-level review texts for prerequisites:
 
 Your final grade is based on:
 
-- Weekly problem sets: 50\%
+-   Weekly problem sets: 50%
 
-- Final exam: 50\%
-
-While the final exam is nominally one half of the grade, it is quite difficult and typically accounts for most of the variance in final course grades. If you take shortcuts on the homework, you will save yourself time in the short run, but you may do quite poorly on the exam!
+-   Final exam: 50%
 
 **Lateness policy:** Homework must be submitted to Gradescope at 11:59pm on Wednesday nights. Late problem sets will not be accepted, but we will drop your lowest two grades.
 
 **Collaboration policy:** For homework, you are welcome to work with each other or consult articles or textbooks online, with the following caveats:
 
-- You must write up your solution by yourself.
+-   You must write up your solution by yourself.
 
-- You may **NOT** consult any solutions from previous iterations of this course.
+-   You may **NOT** consult any solutions from previous iterations of this course.
 
-- No generative AI allowed for problem sets.
+-   No generative AI allowed for problem sets.
 
-- If you collaborate or use any resources other than course texts, you must **acknowledge** your collaborators and the resources you used.
+-   If you collaborate or use any resources other than course texts, you must **acknowledge** your collaborators and the resources you used.
 
 **Academic integrity:** You are expected to abide by the [Berkeley honor code](http://teaching.berkeley.edu/berkeley-honor-code). Violating the collaboration policy, or cheating in any other way, will result in a failing grade for the semester and you will be reported to the University Office of Student Conduct.
+
+While the final exam is nominally one half of the grade, it is quite difficult and typically accounts for most of the variance in final course grades. If you take shortcuts on the homework, you will save yourself time in the short run, but you may do quite poorly on the final.
+
+<!-- ![Homework and final exam grades for a recent semester, with letter grade cutoffs](assets/gradescatter.png) -->
 
 ## Accommodations
 
 **Students with disabilities:** Please see me as soon as possible if you need particular accommodations, and we will work out the necessary arrangements.
 
-**Scheduling conflicts:** Please notify me in writing by the **second week of the term** about any known or potential extracurricular conflicts (such as religious observances, graduate or medical school interviews, or team activities). I will try my best to help you with making accommodations, but cannot promise them in all cases. In the event there is no mutually-workable solution, you may be dropped from the class.
+**Scheduling conflicts:** Please notify me in writing by the second week of the semester about any known or potential extracurricular conflicts (such as religious observances, graduate or medical school interviews, or team activities). I will try my best to help you with making accommodations, but cannot promise them in all cases. In the event there is no mutually-workable solution, you may be dropped from the class.
+
+**Exam accommodations:** If you need accommodations on the final exam due to disability, or unavoidable travel or time conflict, please fill out the exam [exam accommodation form](https://forms.gle/jM42sqruRMkMNsa6A) **by Friday, October 4** so that I can make arrangements. To ensure exam integrity I much prefer for all students to take the exam in Berkeley at the regularly scheduled time (8am December 18th), but will try to work with you if you have a conflict.

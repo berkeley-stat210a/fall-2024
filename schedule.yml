@@ -5,72 +5,31 @@
         - type: "Lecture"
           id: "1"
           name: Introduction
-          href: faq.qmd
+          href: reader/introduction.qmd
           auxil:
             - id: "Handwritten notes"
-              href: "handwritten/lecture01-F24.pdf"
+              href: handwritten/lecture01-intro.pdf
 - week: 2
   days:
     - date: "Sep 3"
       items:
         - type: "Lecture"
           id: "2"
-          name: Probability
-          href: faq.qmd
+          name: "Probability"
+          href: reader/probability.qmd
           auxil:
             - id: "Handwritten notes"
-              href: "handwritten/lecture02-F24.pdf"
-    - date: "Sep 5"
-      items:
-        - type: "Lecture"
-          id: "3"
-          name: "Decision theory"
-          href: faq.qmd
-          auxil:
-            - id: "Handwritten notes"
-              href: "handwritten/lecture03-F24.pdf"
+              href: handwritten/lecture02-probability.pdf
     - date: "Sep 6"
       items:
         - type: "Recitation"
           id: "1"
           name: "Probability review"
-          href: faq.qmd
-          auxil:
-            - id: "Handwritten notes"
-              href: "handwritten/lecture03-F24.pdf"
-- week: 3
-  days:
-    - date: "Sep 10"
-      items:
-        - type: "Lecture"
-          id: "4"
-          name: Estimation
-          href: faq.qmd
-          auxil:
-            - id: "Handwritten notes"
-              href: "handwritten/lecture04-F24.pdf"
-    - date: "Sep 11"
-      items:
-        - type: "Homework"
-          id: "1"
-          name: "Homework 1 due 11:59pm"
-          href: faq.qmd
-          auxil:
-            - id: "LaTeX template"
-              href: "homework/hw1.tex"
-    - date: "Sep 12"
-      items:
-        - type: "Lecture"
-          id: "5"
-          name: Sufficiency
-          href: faq.qmd
-          auxil:
-            - id: "Handwritten notes"
-              href: "handwritten/lecture05-F24.pdf"
+          href: recitation/recitation1-probability.pdf
 - week: 17
   days:
     - date: "Dec 18"
       items:
         - type: "Exam"
           name: "Final Exam, 8-11am"
-          href: faq.qmd
+          href: old-exams.qmd

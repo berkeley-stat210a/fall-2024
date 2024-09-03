@@ -5,6 +5,6 @@ editor: visual
 
 ## Handwritten lecture notes
 
--   [Lecture 1](lectures/lecture01-F24.pdf)
+-   [Lecture 1](lectures/lecture01-intro.pdf)
 
--   [Lecture 2](lectures/lecture02-F24.pdf)
+-   [Lecture 2](lectures/lecture02-probability.pdf)

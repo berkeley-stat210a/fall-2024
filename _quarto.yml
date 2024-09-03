@@ -18,21 +18,12 @@ website:
         contents:
           - faq.qmd
           - syllabus.qmd
-      - href: syllabus.qmd
-        text: Syllabus
-      - href: calendar.qmd
-        text: Calendar
+          - calendar.qmd
       - handwritten-notes.qmd
       - section: "Course Reader"
         contents:
           - reader/introduction.qmd
-          - reader/measure-theory-basics.qmd
-          - reader/models.qmd
-          - reader/exponential-families.qmd
-          - reader/sufficiency.qmd
-          - reader/completeness.qmd
-          - reader/unbiased-estimation.qmd
-          - reader/score-fisher.qmd
+          - reader/probability.qmd
       - href: license.qmd
         text: License
 

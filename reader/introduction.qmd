@@ -1,23 +1,168 @@
 ---
 title: "Course introduction"
-author: "Will Fithian"
-date: 08-24-2023
 format: html
 editor: visual
 ---
 
 {{< include latex-macros.tex >}}
 
-## What is the theory of statistics?
+## About Stat 210A
+
+#### What is the theory of statistics?
 
 Statistics is the study of methods that use data to understand the world. Statistical methods are used throughout the natural and social sciences, in machine learning and artificial intelligence, and in engineering. Despite the ubiquitous use of statistics, its practitioners are perpetually accused of not actually understanding what they are doing. Statistics theory is, broadly speaking, about trying to understand what we are doing when we use statistical methods.
 
-While there are many possible ways to analyze data, most (but certainly not all) statistical methods are based on **statistical modeling:** treating the data as a realization of some **random** data-generating process with attributes, usually called **parameters***,* that are *a priori* unknown. The goal of the **analyst**, then, is to use the data to draw accurate inferences about these parameters and/or to make accurate predictions about future data. If the modeling has been done well (a very big "if") then these unknown parameters will correspond well to whatever real-world questions initially motivated the analysis. Applied statistics courses like Stat 215A and B delve deeply into questions about how to ensure that the statistical modeling exercise successfully captures something interesting about reality.
+While there are many possible ways to analyze data, most (but certainly not all) statistical methods are based on **statistical modeling:** treating the data as a realization of some **random** data-generating process with attributes, usually called **parameters***,* that are *a priori* unknown. The goal of the **analyst**, then, is to use the data to draw accurate inferences about these parameters and/or to make accurate predictions about future data. If the modeling has been done well (a very big "if") then these unknown parameters will correspond well to whatever real-world questions initially motivated the analysis. Applied statistics courses like Stat 215A and B concern questions about how to ensure that the statistical modeling exercise successfully captures something interesting about reality.
 
 In this course we will instead focus on how the analyst can use the data most effectively within the context of a given mathematical setup. We will discuss the structure of statistical models, how to evaluate the quality of a statistical method, how to design good methods for new settings, and the philosophy of Bayesian vs frequentist modeling frameworks. We will cover estimation, confidence intervals, and hypothesis testing, in parametric and nonparametric methods, in finite samples and asymptotic regimes.
 
-## Relationship of Stat 210A to other Berkeley courses
+#### Relationship of Stat 210A to other Berkeley courses
 
 Stat 210A focuses on *classical* statistical contexts: either inference in finite samples, or in fixed-dimensional asymptotic regimes. Stat 210B (for which 210A is a prerequisite) is more technical and covers topics like empirical process theory and high-dimensional statistics.
 
 Berkeley's graduate course on Statistical Learning Theory (CS 281A / Stat 241A) is also very popular and has some overlap in its topics. Roughly speaking, it is more tilted toward "machine learning": it spends more time on topics in predictive modeling (i.e. classification and regression, which are covered in Stat 215A), optimization, and signal processing, but spends less time on inferential questions and (I believe) does not cover topics like hypothesis testing, confidence intervals, and causal inference. Both courses cover estimation and exponential families.
+
+## Deductive vs inductive reasoning
+
+#### Deductive reasoning
+
+Most mathematics courses are entirely concerned with **deductive reasoning**: drawing conclusions that follow logically from premises. For example:
+
+1.  All real, symmetric matrices have real eigenvalues.
+
+2.  $A$ is a real, symmetric matrix.
+
+3.  *Therefore,* $A$ has real eigenvalues.
+
+Deductive reasoning comes up in everyday life, for example
+
+1.  No one in my daughter's preschool class has a nut allergy.
+
+2.  Zoe is in my daughter's preschool class.
+
+3.  *Therefore*, Zoe is not allergic to peanuts.
+
+This type of argument is *risk-free* in the sense that, as long as the premises are true, the conclusions must hold. Of course, the premises could be false: I might be confusing my neighbor Zoe with a different Zoe who is in my daughter's class. But that is the only way my conclusion could be wrong.
+
+Deductive arguments can involve statements about probability:
+
+1.  This die has six faces labeled 1, 2, 3, 4, 5, and 6.
+2.  If I roll it, it is equally likely to land on any face.
+3.  *Therefore,* the chance of rolling a 4 is exactly 1/6.
+
+A probability course like **Stat 205A** is about statements like this.
+
+#### Inductive reasoning
+
+Statistics, on the other hand, is the mathematical science of **inductive reasoning**: reasoning from observations to make general claims about the world. Unlike deductive reasoning, such arguments are inherently *risky*: the conclusions we draw can be false even when the premises are correct.
+
+::: callout-caution
+Note that **inductive proofs** in mathematics are not an example of inductive reasoning as we mean it here. Inductive proofs are really examples of deductive reasoning because they provide a logically valid argument (i.e. the inductive step) for extending the conclusion to the entire class of objects under study.
+:::
+
+For example:
+
+1.  I ate a blueberry from the free sample tray at the supermarket.
+2.  It was ripe and delicious.
+3.  *Therefore*, if I buy a carton of blueberries, they will *probably* be ripe and delicious.
+
+Here we have added the weasel word "probably" not to convey a rigorous quantitative statement about probability, but just to informally convey some uncertainty about the conclusion.
+
+This example would be more persuasive if we had taken a sample randomly from the carton we planned on buying:
+
+1.  I ate five blueberries at random from the carton I intended to buy.
+2.  They were all ripe and delicious.
+3.  *Therefore*, if I buy the carton, the rest of the blueberries will *probably* be ripe and delicious.
+
+Of course, we could still always be wrong: maybe there were only five good blueberries in the whole carton and we just happened to take those. But that is not very likely.
+
+Scientists very often reason inductively. For example:
+
+1.  Water at 1atm of pressure has been observed to boil at 100°C every time it has been measured in the laboratory.
+
+2.  *Therefore,* water at 1atm of pressure *probably* always boils at 100°C.
+
+Inductive reasoning is the basis of all of the empirical sciences.
+
+We can also make inductive statements about probability:
+
+1.  I flipped this penny 1000 times and got 502 heads.
+
+2.  *Therefore*, it *probably* has about a 50% chance of landing heads.
+
+For now, we'll assume we know what it means for a penny to have a 50% chance of landing heads; something like: it's physical properties give it an equal chance of landing heads or tails (and a negligible chance of landing on its side or flying off into space). Generally, there is some controversy among different camps of philosophers and statisticians about what probability means, but not too much when it comes to coin flips. We'll discuss this more later in the semester.
+
+## The problem of induction
+
+#### Hume's problem of induction
+
+Unfortunately, inductive reasoning is not *valid* in the sense meant by logicians or mathematicians. It doesn't matter how many times I've seen real symmetric matrices that had real eigenvalues. Without a proof, I can't make the general claim. There are entertaining examples of patterns being unexpectedly violated in math, such as the [Borwein Integral](https://en.wikipedia.org/wiki/Borwein_integral):
+
+$$
+\begin{aligned}
+\int_0^\infty \frac{\sin x}{x}\,dx &= \frac{\pi}{2}\\[10pt]
+\int_0^\infty \frac{\sin x}{x}\, \frac{\sin(x/3)}{x/3}\,dx &= \frac{\pi}{2}\\[10pt]
+\int_0^\infty \frac{\sin x}{x}\, \frac{\sin(x/3)}{x/3}\, \frac{\sin(x/5)}{x/5}\,dx &= \frac{\pi}{2}\\[10pt]
+&\vdots\\[10pt]
+\int_0^\infty \frac{\sin x}{x}\, \frac{\sin(x/3)}{x/3}\,\cdots\, \frac{\sin(x/13)}{x/13}\,dx &= \frac{\pi}{2}\\[10pt]
+\int_0^\infty \frac{\sin x}{x}\, \frac{\sin(x/3)}{x/3}\,\cdots\, \frac{\sin(x/15)}{x/15}\,dx &= \frac{\pi}{2} - 2.31 \times 10^{-11}.
+\end{aligned}
+$$
+
+Bertrand Russell also warned about how inductive inference can go awry in real life:
+
+> Domestic animals expect food when they see the person who usually feeds them. We know that all these rather crude expectations of uniformity are liable to be misleading. The man who has fed the chicken every day throughout its life at last wrings its neck instead, showing that more refined views as to the uniformity of nature would have been useful to the chicken.
+
+David Hume's work *A Treatise of Human Nature* (1739) first proposed the **problem of induction**, namely that inductive reasoning presumes — seemingly without justification — that yet-to-be-observed cases will be similar to observed cases. This presumption is sometimes called the **uniformity principle**, and it is difficult to see how we can justify it. We can't justify it through a direct logical argument, because it's not logically justified. We could justify it by past experience — for example, at a low enough level, physical properties of the world generally seem to be uniform across space and time — but that argument is circular! Just because the future has been like the past in the past, doesn't mean that it will be like the past in the future.
+
+Hume allowed that people have to reason inductively all the time, but he called it a "custom" or "habit" and challenged philosophers to justify it. Now almost 300 years later, there does not seem to have been a fully satisfactory answer; most philosophers of science (like Karl Popper, for example) admit that inductive reasoning is fallible, but think there are reasonable ways for scientists to deal with this.
+
+#### Statistical evasions of the problem of induction
+
+We seem to be in trouble if we are trying to build a mathematical science of inductive reasoning, when the first thing we know about induction is that it is not mathematically valid. Statisticians have two main ways of evading this problem, which lead to the two main mathematical frameworks for statistical inference:
+
+**Evasion 1: Bayesian reasoning**. Bayesians respond to Hume that, whatever our *a priori* beliefs are about the world, we at least know how to update them in the light of experience using the mathematics of conditional probability. Our prior beliefs may not ultimately be justified, but there is only one rational way to update them (note this is somewhat disputed). We may hope that after enough experience they will "wash out" and observers with different prior beliefs will eventually converge in their beliefs after seeing enough data. We will study Bayesian statistics in a few weeks.
+
+**Evasion 2: Inductive behavior (frequentist statistics)**. Another way of evading the problem is to design methods for inference whose fallibility can be quantified. As long as certain assumptions hold concerning the conditions under which the data were collected, we may be able to come up with methods that we can mathematically prove give correct conclusions with high probability.
+
+## Statistical evasions in practice: coin flipping
+
+#### Are coins really fair?
+
+Although physical randomizers like coins and dice seem to be the firmest ground on which we can build a theory of probability, recent work has made the surprising finding that most human flippers have a somewhat greater than 50% chance of seeing their coin land on the same side as it started, due to the physics of rotating objects. This was first hypothesized in a theoretical article by Diaconis, Holmes, and Montgomery in 2007, and confirmed in a large experiment by Bartos et al. (2023), in which 48 human coin flippers collectively flipped $n=350,757$ coins — finding, indeed, that $178,079$ ($50.77\%$) of the coins landed on the same side as they started.
+
+In fact, Bartos et al. collected a lot more data than this: each of the 48 flippers recorded the full sequence of all of their coin flips, including which type of coin they were using (coins minted in 46 different countries were used). All flippers even had to submit video of themselves flipping the coins. But the analysis in the next section will use only the summary statistic $X = 178,079$, which records the number of flips that landed same-side-up.
+
+#### Frequentist analysis in the binomial model
+
+The data set is simple to analyze if we make two seemingly innocuous simplifying assumptions: first, that the flips were statistically independent, and second, that every flip had an equal probability, which we will call $\theta$, of landing on the same side it started on. In that case, we can conclude (deductively) that the probability that $x$ out of the $n$ flips land on the same side is exactly $\binom{n}{x} \theta^x(1-\theta)^{n-x}$, for the realizable values $x=0,\ldots,n$.
+
+If we accept these assumptions, we arrive at a one-parameter **statistical model** for the entire data set, called the **binomial model**. We abbreviate this by writing $X \sim \text{Binom}(n,\theta)$. If DHM's prediction was right and a same-side bias exists, then we should have $\theta > 0.5$; if they are wrong and the starting side makes no difference, we should have $\theta = 0.5$.
+
+Following the frequentist paradigm, we can estimate the parameter $\theta$ via the **estimator** $\hat\theta = X/n$, in this case $0.5077$. One thing we will prove in this class is that $X/n$ is the best estimator of $\theta$, among all **unbiased** estimators, meaning all estimators for which $\EE_\theta \hat\theta = \theta$, for all possible values of the parameter $\theta \in [0,1]$. This is an example of inductive behavior: if we use the estimator $X/n$ to estimate $\theta$, we will get the answer right on average, and our estimate will be as precise (on average) as it could possibly be, for any unbiased estimator. We can also say how variable our estimator is: its standard error (the term of art we use for the standard deviation of an estimator) is $\sqrt{\theta(1-\theta)}/n$. Substituting our estimator $\hat\theta$ for the true value $\theta$, we estimate that $\hat\theta$ is typically off by about $0.00084$, so we have good reason to believe $0.0577$ is about that close to the true value of $\theta$. But we can't necessarily say that it was close in this experiment; we could have gotten unlucky.
+
+Can we confidently conclude, *inductively*, that there is a same-side bias ($\theta > 0.5$)? Naturally, even if DHM were wrong and there were no same-side bias ($\theta = 0.5$), we would expect $X/n$ to deviate somewhat from $0.5$ in any given experiment, just by random chance. Could it be that that is what happened in this experiment?
+
+Frequentist analysis evades this question and substitutes another question in its place. Using the `R` function `binom.test`, we can test the null hypothesis that $\theta = 0.5$ and calculate a $95\%$ confidence interval for $\theta$:
+
+```{R, eval=TRUE}
+binom.test(x = 178079, n = 350757, p = 0.5, alternative = "greater")
+```
+
+The $p$-value tells us the likelihood that we could observe as many same-side flips as we did, if $\theta$ really were $0.5$. In this experiment the $p$-value is so small ($p < 2.2\times 10^{-16}$) that `R` doesn't bother to tell us its exact value. The probability involved in calculating the $p$-value follows from our binomial assumptions, but most reasonable people would probably accept this as sufficient evidence to reject the null hypothesis; that is, to reach the inductive conclusion that $\theta$ is not really $0.5$.
+
+This is a risky conclusion! Even if we were so conservative as to reject the null hypothesis only when $p < 10^{-10}$, say, there would still be some chance of our making a mistake in any given experiment. But we have quantified how likely this is, and we can decide whether it is high enough to trouble us.
+
+Beyond just knowing that a same-side bias exists, it is interesting to have some sense of how large it is. Using very similar logic to the hypothesis test, the `binom.test` function also returns a $95\%$ **confidence interval** $[50.6\%, 50.9\%]$ for the parameter $\theta$. We will explore how to construct confidence intervals later in the semester, but for now it is sufficient to know that the interval is defined so that it has at least a \$95\$ chance of covering (i.e., including) $\theta$ in any given experiment, no matter what value $\theta$ takes. This is another example of inductive behavior: in producing a confidence interval, we take a risk that the corresponding inductive conclusion "$\theta$ lies between $0.056$ and $0.0509$" is wrong, but we are behaving in such a way that we can quantify and limit this risk.
+
+#### Bayesian analysis
+
+Another route we could take, if we have a more Bayesian bent, is to introduce another assumption about the distribution that $\theta$ has; for example, that $\theta \sim \text{Unif}[0,1]$. This is a stronger assumption than we made before: in what sense does $\theta$ have this distribution? Compared with the other assumptions, it is very difficult to test: there is only one draw from the distribution of $\theta$, and it is observed only indirectly through the coin flips. However, it turns out in this case not to matter much what prior we picked, in the sense that many other prior distributions would result in almost the same posterior distribution.
+
+If we make this assumption about the distribution of $\theta$, then we can directly calculate the conditional distribution after observing $X = 178,079$. The posterior distribution for $\theta$ can be calculated analytically, giving probability density $$
+\theta \mid X = x \sim  \frac{(n + 1)!}{x!(n-x)!} \theta^x (1-\theta)^{n-x}, \quad \text{ for } \theta \in [0,1].
+$$ This distribution is called the **Beta distribution** with parameters $\alpha = x+1$ and $\beta = n-x+1$. Note that this expression is a probability density for the parameter $\theta$, not the . Once we know the distribution of $\theta$ we can make claims about it: for example, after seeing the data, there is only a $3.8 \times 10^{-20}$ chance that $\theta \leq 0.5$. We can also calculate a $95\%$ Bayesian **credible interval**, which includes $95\%$ of the posterior probability mass. In this case, the interval is $[50.6\%, 50.9\%]$, coinciding with the frequentist confidence interval to several decimal points. The credible interval is making a stronger claim than the confidence interval: it is saying, *for this* $\theta$, there is a $95\%$ chance that it falls in that range.
+
+#### Questioning the binomial model
+
+Bartos et al. stated in their paper that the binomial model is not quite correct: some human flippers had more same-side bias than others. We can modify the binomial model to allow for a different same-side probability $\theta_i$
