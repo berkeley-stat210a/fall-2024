@@ -1,0 +1,210 @@
+\documentclass{article}
+
+\usepackage[margin=1.2in]{geometry}
+\usepackage{graphicx}
+\usepackage{amsmath,amssymb,amsthm,bm}
+\usepackage{latexsym,color,minipage-marginpar,caption,multirow,verbatim}
+\usepackage{enumerate}
+\usepackage{times}
+
+\newcommand{\cP}{\mathcal{P}}
+\newcommand{\cX}{\mathcal{X}}
+\newcommand{\cR}{\mathcal{R}}
+
+\newcommand{\EE}{\mathbb{E}}
+\newcommand{\PP}{\mathbb{P}}
+\newcommand{\QQ}{\mathbb{Q}}
+\newcommand{\RR}{\mathbb{R}}
+\newcommand{\ZZ}{\mathbb{Z}}
+
+\newcommand{\Var}{\textnormal{Var}}
+
+
+
+\newcommand{\simiid}{\overset{\text{i.i.d.}}{\sim}}
+\newcommand{\ep}{\varepsilon}
+
+\definecolor{darkblue}{rgb}{0.2, 0.2, 0.5}
+\newcommand{\sol}{~\\\color{darkblue}{\bf Solution:~\\}}
+
+\theoremstyle{definition}
+\newtheorem{problem}{Problem}
+
+
+\begin{document}
+
+\title{Stats 210A, Fall 2024\\
+  Homework 1\\
+  {\large {\bf Due on}: Wednesday, Sep. 11}}
+\date{}
+
+\maketitle
+
+\paragraph{Instructions:} You may disregard measure-theoretic niceties about conditioning on measure-zero sets, almost-sure equality vs. actual equality, ``all functions'' vs. ``all measurable functions,'' etc. (unless the problem is explicitly asking about such issues).
+
+\begin{problem}[Non-measurable sets]
+\label{prob:non-measurable}
+This problem goes through a construction of a non-measurable set, meant to motivate measure theory from a real analysis perspective. It concerns the impossibility of defining ``volume'' for every subset of the unit interval $U=[0,1)$.
+
+For $x,y \in \RR$ define the ``wraparound addition'' (modulo 1) as the fractional part of their sum:
+\[
+x \oplus y = x + y - \lfloor x + y \rfloor.
+\]
+
+Recall that for $x \in \RR$ and $A \subseteq \RR$ we define the set $x + A = \{x + a:\; a \in A\}$. Analogously, we can define 
+\[
+x \oplus A = \{x \oplus a:\; a \in A\} \subseteq U
+\]
+
+Any reasonable definition of ``volume'' on the interval should have several properties:
+\begin{enumerate}[(i)]
+\item Additivity: $\lambda(\bigcup_{i=1}^\infty A_i) = \sum_{i=1}^\infty \lambda(A_i)$ if all $A_i\subseteq U$ and $A_i \cap A_j = \emptyset$ for all $i \neq j$.
+\item Translation invariance: $\lambda(x \oplus A) = \lambda(A), \;\forall x\in U, A\subseteq U$.
+\item Interval length: $\lambda([x,y]) = y - x, \;\forall 0 \leq x \leq y < 1$.
+\end{enumerate}
+Assume that some measure $\lambda$ exists which satisfies (i)--(iii) and which is defined for all subsets of $U$. We will go through several steps to derive a contradiction.
+
+\begin{enumerate}[(a)]
+\item Define the function $A(x)$ mapping elements of $U$ to subsets of $U$, via $A(x) = x \oplus \QQ$, where $\QQ$ is the set of rational numbers. Show that $\lambda(A(x)) = 0$ for any $x$.
+
+
+\item Consider the range $\cR_A = \{A(x):\; x\in U\}$. Show that $\cR_A$ is a collection of uncountably many subsets of $U$, all of which are disjoint from each other. That is, show that for any $x,y\in U$, we have either $A(x)=A(y)$ or $A(x) \cap A(y) = \emptyset$.
+
+
+
+\item Now, let $B\subseteq U$ denote a new set, which we construct by selecting a {\em single element} from each set $R\in\cR_A$ (it doesn't matter which element; note this step uses the axiom of choice.)
+
+Define a new function $C(x) = x \oplus B$ and define $\cR_C = \{C(x):\; x \in \QQ\}$. Show that $\cR_C$ is a collection of {\em countably} many subsets of $U$, all of which are disjoint from each other, and whose union is $U$.
+
+
+\item Show that no matter what value $\lambda(B)$ takes, $\lambda$ will have to violate one of the properties (i)--(iii) ({\bf Hint:} what does the value of $\lambda(B)$ imply about $\lambda(U)$?)
+
+\end{enumerate}
+
+Because the Lebesgue measure satisfies properties (i)--(iii), it follows that $\lambda$ must not be defined for every subset of $U$.
+
+\paragraph{Moral:} One motivation for measure theory is to find a way to exclude counterexamples like this. The pathological sets we're constructing here do not make it into the Borel $\sigma$-field.
+
+\end{problem}
+
+\begin{problem}[A conditional probability paradox]
+\label{prob:conditional-paradox}
+
+Let $X,Y \simiid N(0,1)$. This problem is meant to show that by carelessly conditioning on probability-zero events we can get ourselves into trouble. It is directly inspired by a calculation I personally flubbed in graduate school.
+
+\begin{enumerate}[(a)]
+\item Defining $S = X + Y$ and $D = X - Y$, show $S$ and $D$ are independent and conclude that
+\[
+\EE[X^2 + Y^2 \mid D] = D^2/2 + 1
+\]
+
+\item Now define the polar parameterization $(R,\Theta)$ with $R = \sqrt{X^2 + Y^2}$ and $\Theta \in [0,2\pi)$ such that $X  = R\cos \Theta$ and $Y = R\sin \Theta$. Show that $R$ is independent of $\Theta$ and conclude that
+\[
+\EE[X^2 + Y^2 \mid \Theta] = 2
+\]
+
+\item Use (a) and then (b) to find the expectation of $X^2 + Y^2$ conditional on the event $X = Y$. Can you come up with an intuitive explanation for how we could have arrived at two different answers?
+
+\end{enumerate}
+
+\paragraph{Moral:} Intuition may fail us when we condition on a measure-zero event, and in cases like this the meaning can be ambiguous and give different answers. Conditioning on a random variable, on the other hand, tends to give less ambiguous answers (there are still some ambiguities, similar to those we encounter in defining densities, but they don't really matter).
+\end{problem}
+
+
+\begin{problem}[Non-uniqueness of densities]
+\label{prob:density-uniqueness}
+
+It can be good to keep in mind that, in general, densities are not unique. For example, depending on what textbook you look in you might find the standard exponential distribution $\text{Exp}(1)$ defined as the distribution with probability density function ${e^{-x}\cdot 1\{x > 0\}}$ or as the distribution with probability density function $e^{-x}\cdot 1\{x \geq 0\}$. Which one is the real exponential distribution?
+
+The answer is that both are: the two densities are different functions but they result in exactly the same probability distribution because changing the integrand at a single point never affects a (Lebesgue or Riemann) integral. If we wanted to be perverse for some reason we could even define the density as something like $e^{-x}\cdot 1\{x > 0\} \cdot 1\{x \notin \QQ\}$, and we'd still end up with exactly the same probability measure. So, while there is only one $\text{Exp}(1)$ distribution, there are many densities that equivalently describe its relationship to the Lebesgue measure.
+
+However, you will show in this problem that any two density functions do have to be equal {\em almost everywhere}, meaning the set of points where they differ has to have measure $0$.
+
+\begin{enumerate}[(a)]
+
+\item 
+Consider two densities $p_1$ and $p_2$ with respect to some common measure $\mu$ on a sample space $\cX$. Suppose $p_1$ and $p_2$ both result in the same probability measure $P$ defined by $P(A) = \int 1_A(x)p_i(x)\,d \mu(x)$.
+
+Define the set $A = \{x:\; p_1(x) \neq p_2(x)\}$, and show that $\mu(A) = 0$.
+
+{\bf Hint:} consider sets like 
+\[A_{n} = \left\{x:\; p_1(x) - p_2(x) \in \left[\frac{1}{n+1}, \;\frac{1}{n}\right)\right\}\]
+for $n=1,2,\ldots$. Don't worry about whether the sets $A_n$ are measurable (they are).
+
+\item
+If $\cX$ is countable, show that any probability measure $P$ on the sample space $\cX$ has a unique density with respect to the counting measure $\#$ on $\cX$.
+
+\item
+Let $P$ be a probability measure on $\RR$, which has a density with respect to the Lebesgue measure. Show that $P$ has at most one continuous density $p$.
+
+\end{enumerate}
+
+\end{problem}
+
+\begin{problem}[Densities for continuous-discrete mixtures]
+\label{prob:densities}
+Suppose $\mu_1$ and $\mu_2$ are both measures on $\cX$, and $a_1,a_2 \geq 0$. You may use without proof that the sum $\nu = a_1\mu_1 + a_2\mu_2$ is also a measure, and that we have
+\[
+\int f(x)\,d \nu(x) = a_1\int f(x)\,d \mu_1(x) + a_2\int f(x)\,d \mu_2(x),
+\]
+provided the two integrals on the right are well-defined and finite.
+
+\begin{enumerate}[(a)]
+\item For $\cX = [0,\infty)$, define the measure $\mu(A) = \lambda(A) + \#(A)$, where $\lambda$ represents the Lebesgue measure and $\#$ still represents the counting measure on the set of integers $\ZZ$. For fixed $\theta \in \RR$, define the random variable 
+\[
+X = \max(0,Z) \text{ where } Z \sim N(\theta, 1),
+\]
+Let $P_\theta$ represent the probability distribution of $X$. Show that $P_\theta$ has no density with respect to $\lambda$ or $\#$. Find a density of $P_\theta$ with respect to $\mu$.
+
+\item Find a density for $P_\theta$ with respect to $P_0$, or show that none exists.
+
+\end{enumerate}
+
+\paragraph{Moral:} Our more general definition of densities extends to situations where there is no probability mass function or probability density function.
+\end{problem}
+
+
+
+\begin{problem}[Bias-variance tradeoff]
+\label{prob:bias-var}
+  
+  Consider a generic estimation setting where we observe $X \sim P_\theta$, for a model $\cP = \{P_\theta:\; \theta \in \Theta \subseteq \Theta\}$, and we want to estimate $\theta$ using some estimator $\delta(X) \in \RR^d$. The {\em bias} of $\delta$ (under sampling from $P_\theta$) is defined as
+  \[
+  \text{Bias}_\theta(\delta(X)) = \EE_\theta[\delta(X)] - \theta. 
+  \]
+  For $d=1$, it is well-known that the mean squared error $\text{MSE}(\theta; \delta)$ can be decomposed as the sum of the squared bias of $\delta$ and its variance:
+  \begin{equation}\label{eq:biasvar}
+  \text{MSE}(\theta; \delta) = \text{Bias}_\theta(\delta)^2 + \Var_\theta(\delta).
+  \end{equation}
+    
+
+  \begin{enumerate}[(a)]
+  \item Derive the correct generalization of \eqref{eq:biasvar} for general $d \geq 1$, where the MSE is defined as
+    \[
+    \text{MSE}(\theta; \delta) = \EE_\theta \|\delta(X) - \theta\|_2^2.
+    \]
+    It might help to start with $d=1$.
+
+  \item Suppose that we are estimating the false positive rate of a new diagnostic test for some disease, using a sample of $n$ specimens taken from a population known not to have the disease we are testing for. If $X$ is the number of false positives and $\theta \in (0,1)$ is the false positive rate, assume $X \sim \text{Binom}(n, \theta)$. The ``obvious'' estimator is $\delta_0(X) = X/n$.
+
+    However, biological samples are expensive to obtain and the new test is a slightly modified version of an old test whose false positive rate is known to be $\theta_0 \in (0,1)$, so we might want to ``shrink'' the estimator toward $\theta_0$ as follows:
+    \[
+    \delta_{\gamma}(X) = \gamma \theta_0 + (1-\gamma) \frac{X}{n}, \quad \text{ for } \gamma \in [0,1],
+    \]
+    where taking $\gamma = 0$ reduces to the ``obvious'' estimator $\delta_0(X) = X/n$.
+
+    Find the MSE of $\delta_\gamma(X)$ as an explicit expression in $\theta_0, \theta, n$, and $\gamma$.
+    
+
+  \item Find the parameter $\gamma^*$ for which the MSE is minimized, as an expression in $n, \theta$, and $\theta_0$. What happens to $\gamma^*$ if we send $\theta \to \theta_0$ holding $\theta_0$ and $n$ fixed? What if we send $n\to\infty$ holding $\theta$ and $\theta_0$ fixed instead? Explain why these limits make sense.
+
+  \item In our calculation above, $\gamma^*$ is never exactly zero. That is, a smidgeon of shrinkage always beats no shrinkage. Does this prove that $\delta_0$ is inadmissible? Prove or disprove whether $\delta_0$ is dominated by any $\delta_\gamma$.
+
+\paragraph{Moral:} Shading our estimate toward some ``hunch'' value can be an effective technique to improve an estimator's performance. This is a central idea in statistics and machine learning that goes by many names: regularization, shrinkage, and inductive bias, to name a few. The optimal amount of bias in an estimator depends on the sample size, and the accuracy of our hunch, but is rarely zero. This may give us pause about insisting that estimators should be unbiased, a theme to which we will return later.
+
+  \end{enumerate}
+\end{problem}
+
+
+
+\end{document}

@@ -1,0 +1,46 @@
+\documentclass{article}
+
+\usepackage[margin=1.2in]{geometry}
+\usepackage{graphicx}
+\usepackage{amsmath,amssymb,amsthm,bm}
+\usepackage{latexsym,color,minipage-marginpar,caption,multirow,verbatim}
+\usepackage{enumerate}
+\usepackage{times}
+
+\newcommand{\cP}{\mathcal{P}}
+\newcommand{\cX}{\mathcal{X}}
+\newcommand{\cR}{\mathcal{R}}
+\newcommand{\cF}{\mathcal{F}}
+
+\newcommand{\EE}{\mathbb{E}}
+\newcommand{\PP}{\mathbb{P}}
+\newcommand{\QQ}{\mathbb{Q}}
+\newcommand{\RR}{\mathbb{R}}
+\newcommand{\ZZ}{\mathbb{Z}}
+
+\newcommand{\td}{\,\textrm{d}}
+
+\newcommand{\simiid}{\overset{\text{i.i.d.}}{\sim}}
+\newcommand{\ep}{\varepsilon}
+
+\newcommand{\red}{\color{red}}
+\newcommand{\blue}{\color{blue}}
+\definecolor{darkblue}{rgb}{0.2, 0.2, 0.5}
+
+
+\newcommand{\sol}{~\\\color{darkblue}{\bf Solution:~\\}}
+
+\title{Stats 210A, Fall 2024\\
+  Homework 1\\
+  {\large {\bf Due on}: Wednesday, Sep. 11}}
+\date{}
+
+\begin{document}
+
+\maketitle
+
+
+
+
+
+\end{document}
