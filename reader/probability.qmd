@@ -43,6 +43,12 @@ A great deal of ink has been spilled about whether one approach is superior to a
 
 Fortunately, the philosophical and methodological disagreements between frequentists and Bayesians are not disagreements about the mathematical construct of probability, only questions about how and when these mathematical formalisms should be connected to real-world questions. There is very little controversy about how we should conceive of probability mathematically.
 
+3.  **Mathematical answer:** a probability is a function $P$ mapping (some) subsets a sample space $\cX$ to a number in $[0,1]$, for which $P(\cX) = 1$ and which is **additive** over disjoint subsets, meaning
+
+$$
+P\left(\bigcup_{i=1}^\infty A_i\right) = \sum_{i=1}^\infty P(A_i), \quad \text{ if } A_i \cap A_j = \emptyset \text{ for all } i \neq j.
+$$
+
 ## Measure theory: a rigorous grounding for probability
 
 **Measure theory** is an area of mathematics concerned with measuring the "size" of subsets of a certain set. Soon after it was developed in the the early twentieth century, the great Soviet mathematician Kolmogorov realized it could be applied to give a rigorous grounding to probability theory, it was a major advance in understanding and resolving certain [paradoxes](https://en.wikipedia.org/wiki/Bertrand_paradox_(probability)) in probability theory. David Aldous gives a nice [discussion](https://www.stat.berkeley.edu/~aldous/Real_World/kolmogorov.html) of this history.
@@ -226,5 +232,3 @@ Finally, this section includes some scattered definitions to remind you of a few
 If $\PP(A) = 1$, we say $A$ occurs *almost surely*.
 
 The variance of a random variable $X$ is $\textrm{Var}(X) = \EE[X^2] - \EE [X]$
-
-See Keener Ch. 1 for more on probability.

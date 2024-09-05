@@ -5,6 +5,8 @@ editor: visual
 
 ## Handwritten lecture notes
 
--   [Lecture 1](lectures/lecture01-intro.pdf)
+-   [Lecture 1: Induction](handwritten/lecture01-intro.pdf)
 
--   [Lecture 2](lectures/lecture02-probability.pdf)
+-   [Lecture 2: Probability](handwritten/lecture02-probability.pdf)
+
+-   [Lecture 3: Estimation](handwritten/lecture03-estimation.pdf)
