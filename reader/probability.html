@@ -279,6 +279,12 @@ gtag('config', 'G-B8G2041HSB', { 'anonymize_ip': true});
 <p>The two great statistical frameworks of frequentist and Bayesian statistics loosely correspond to the two views about probability above. Generally speaking, Bayesians get a lot of mileage out of being willing to assign probabilities to everything, while frequentists try to take a more conservative course where possible, allowing some quantities to simply be unknown.</p>
 <p>A great deal of ink has been spilled about whether one approach is superior to another. Fifty years ago, it was more common for statisticians to be dogmatically committed to one or the other view, but nowadays the mainstream view is that both approaches have strengths and weaknesses.</p>
 <p>Fortunately, the philosophical and methodological disagreements between frequentists and Bayesians are not disagreements about the mathematical construct of probability, only questions about how and when these mathematical formalisms should be connected to real-world questions. There is very little controversy about how we should conceive of probability mathematically.</p>
+<ol start="3" type="1">
+<li><strong>Mathematical answer:</strong> a probability is a function <span class="math inline">\(P\)</span> mapping (some) subsets a sample space <span class="math inline">\(\cX\)</span> to a number in <span class="math inline">\([0,1]\)</span>, for which <span class="math inline">\(P(\cX) = 1\)</span> and which is <strong>additive</strong> over disjoint subsets, meaning</li>
+</ol>
+<p><span class="math display">\[
+P\left(\bigcup_{i=1}^\infty A_i\right) = \sum_{i=1}^\infty P(A_i), \quad \text{ if } A_i \cap A_j = \emptyset \text{ for all } i \neq j.
+\]</span></p>
 </section>
 <section id="measure-theory-a-rigorous-grounding-for-probability" class="level2">
 <h2 class="anchored" data-anchor-id="measure-theory-a-rigorous-grounding-for-probability">Measure theory: a rigorous grounding for probability</h2>
@@ -408,7 +414,6 @@ P(A) = \int 1_A(x) p(x)\td\mu(x), \quad \text{ for all } A \in \cF,
 <p>Finally, this section includes some scattered definitions to remind you of a few more useful definitions which you likely have already seen in your previous probability courses.</p>
 <p>If <span class="math inline">\(\PP(A) = 1\)</span>, we say <span class="math inline">\(A\)</span> occurs <em>almost surely</em>.</p>
 <p>The variance of a random variable <span class="math inline">\(X\)</span> is <span class="math inline">\(\textrm{Var}(X) = \EE[X^2] - \EE [X]\)</span></p>
-<p>See Keener Ch. 1 for more on probability.</p>
 
 
 </section>
