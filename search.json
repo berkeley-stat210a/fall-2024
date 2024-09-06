@@ -46,7 +46,7 @@
     "href": "units/unit1.html#evaluated-python-code-chunk-with-a-plot",
     "title": "Unit 1: Intro",
     "section": "Evaluated Python code chunk, with a plot",
-    "text": "Evaluated Python code chunk, with a plot\n\n\nCode\nimport numpy as np\nx = np.random.normal(size=100)\nimport matplotlib.pyplot as plt\nplt.hist(x)\nplt.show()\nnp.mean(x)\n\n\n\n\n\n0.0027309939846907366"
+    "text": "Evaluated Python code chunk, with a plot\n\n\nCode\nimport numpy as np\nx = np.random.normal(size=100)\nimport matplotlib.pyplot as plt\nplt.hist(x)\nplt.show()\nnp.mean(x)\n\n\n\n\n\n-0.06895854651450223"
   },
   {
     "objectID": "units/unit1.html#latex",
@@ -1047,7 +1047,7 @@
     "href": "units/unit3.html#evaluated-python-code-chunk-with-a-plot",
     "title": "Unit 3: More",
     "section": "Evaluated Python code chunk, with a plot",
-    "text": "Evaluated Python code chunk, with a plot\n\n\nCode\nimport numpy as np\nx = np.random.normal(size=100)\nimport matplotlib.pyplot as plt\nplt.hist(x)\nplt.show()\nnp.mean(x)\n\n\n\n\n\n-0.0920732719218701"
+    "text": "Evaluated Python code chunk, with a plot\n\n\nCode\nimport numpy as np\nx = np.random.normal(size=100)\nimport matplotlib.pyplot as plt\nplt.hist(x)\nplt.show()\nnp.mean(x)\n\n\n\n\n\n-0.06577720592772328"
   },
   {
     "objectID": "units/unit3.html#latex",
@@ -1089,7 +1089,7 @@
     "href": "syllabus.html#course-information",
     "title": "Syllabus",
     "section": "Course information",
-    "text": "Course information\n\nInstructors\n\nPrimary Instructor Prof. Will Fithian\n\nOffice Hours: Tuesday 3:30-4:30pm on Zoom, Thursday 9:30-10:30am in Evans 301\nEmail: wfithian@berkeley.edu\n\nGSI Dohyeong Ki\n\nOffice Hours: Wednesday 9-10am, Friday 4:30-5:30pm in 444 Evans\nEmail: dohyeong_ki@berkeley.edu\n\n\n\n\nCourse schedule\n\nLectures: Tuesday and Thursday 11am-12:30pm, Evans 60\nRecitation sections: Every second F 3:30-4:30pm (location TBD), starting September 6\nElection week:\n\nBlanket 2-day extension on homework 9 (due Friday November 8, 11:59pm)\n\nThanksgiving week:\n\nTuesday November 26: lecture 11-12:30 on Zoom, 3:30-4:30 OH on Zoom\nNo lecture Thursday November 28\nNo in-person office hours\n\nFinal exam review: (a.k.a. last recitation section) Friday, December\nFinal exam: Wed December 18, 8-11am\n\n\n\nCourse communications\n\nLecture videos and homework solutions at [https://bcourses.berkeley.edu bCourses]\nEmail policy: You can email me or Dohyeong about administrative questions, with “[Stat 210A]” in the subject line. No math over email, please.\nEd page for announcements and technical discussion (no homework spoilers!)\nGradescope for turning in homework"
+    "text": "Course information\n\nInstructors\n\nPrimary Instructor Prof. Will Fithian\n\nOffice Hours: Tuesday 3:30-4:30pm on Zoom, Thursday 9:30-10:30am in 301 Evans\nEmail: wfithian@berkeley.edu\n\nGSI Dohyeong Ki\n\nOffice Hours: Wednesday 9-10am, Friday 4:30-5:30pm in 444 Evans\nEmail: dohyeong_ki@berkeley.edu\n\n\n\n\nCourse schedule\n\nLectures: Tuesday and Thursday 11am-12:30pm, Evans 60\nRecitation sections: Every second F 3:30-4:30pm in 444 Evans, starting September 6\nElection week:\n\nBlanket 2-day extension on homework 9 (due Friday November 8, 11:59pm)\n\nThanksgiving week:\n\nTuesday November 26: lecture 11-12:30 on Zoom, 3:30-4:30 OH on Zoom\nNo lecture Thursday November 28\nNo in-person office hours\n\nFinal exam review: (a.k.a. last recitation section) Friday, December\nFinal exam: Wed December 18, 8-11am\n\n\n\nCourse communications\n\nLecture videos and homework solutions at [https://bcourses.berkeley.edu bCourses]\nEmail policy: You can email me or Dohyeong about administrative questions, with “[Stat 210A]” in the subject line. No math over email, please.\nEd page for announcements and technical discussion (no homework spoilers!)\nGradescope for turning in homework"
   },
   {
     "objectID": "syllabus.html#about-stat-210a",
