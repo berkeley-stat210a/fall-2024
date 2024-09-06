@@ -2,146 +2,146 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
     <loc>https://stat210a.berkeley.edu/fall-2024/data.html</loc>
-    <lastmod>2024-09-06T00:09:46.361Z</lastmod>
+    <lastmod>2024-09-06T00:11:55.112Z</lastmod>
   </url>
   <url>
     <loc>https://stat210a.berkeley.edu/fall-2024/license.html</loc>
-    <lastmod>2024-09-06T00:09:45.830Z</lastmod>
+    <lastmod>2024-09-06T00:11:54.527Z</lastmod>
   </url>
   <url>
     <loc>https://stat210a.berkeley.edu/fall-2024/faq.html</loc>
-    <lastmod>2024-09-06T00:09:45.082Z</lastmod>
+    <lastmod>2024-09-06T00:11:53.798Z</lastmod>
   </url>
   <url>
     <loc>https://stat210a.berkeley.edu/fall-2024/units/unit1.html</loc>
-    <lastmod>2024-09-06T00:09:44.501Z</lastmod>
+    <lastmod>2024-09-06T00:11:53.201Z</lastmod>
   </url>
   <url>
     <loc>https://stat210a.berkeley.edu/fall-2024/units/unit2.html</loc>
-    <lastmod>2024-09-06T00:09:31.957Z</lastmod>
+    <lastmod>2024-09-06T00:11:41.198Z</lastmod>
   </url>
   <url>
     <loc>https://stat210a.berkeley.edu/fall-2024/index.html</loc>
-    <lastmod>2024-09-06T00:09:31.066Z</lastmod>
-  </url>
-  <url>
-    <loc>https://stat210a.berkeley.edu/fall-2024/reader/testing-linear.html</loc>
-    <lastmod>2024-09-06T00:09:30.482Z</lastmod>
-  </url>
-  <url>
-    <loc>https://stat210a.berkeley.edu/fall-2024/reader/convergence.html</loc>
-    <lastmod>2024-09-06T00:09:29.478Z</lastmod>
-  </url>
-  <url>
-    <loc>https://stat210a.berkeley.edu/fall-2024/reader/testing-interpretation.html</loc>
-    <lastmod>2024-09-06T00:09:28.720Z</lastmod>
-  </url>
-  <url>
-    <loc>https://stat210a.berkeley.edu/fall-2024/reader/bayes-interpretation.html</loc>
-    <lastmod>2024-09-06T00:09:27.993Z</lastmod>
-  </url>
-  <url>
-    <loc>https://stat210a.berkeley.edu/fall-2024/reader/introduction.html</loc>
-    <lastmod>2024-09-06T00:09:27.198Z</lastmod>
-  </url>
-  <url>
-    <loc>https://stat210a.berkeley.edu/fall-2024/reader/bayes-estimation.html</loc>
-    <lastmod>2024-09-06T00:09:25.532Z</lastmod>
-  </url>
-  <url>
-    <loc>https://stat210a.berkeley.edu/fall-2024/reader/testing-one-parameter.html</loc>
-    <lastmod>2024-09-06T00:09:24.613Z</lastmod>
-  </url>
-  <url>
-    <loc>https://stat210a.berkeley.edu/fall-2024/reader/probability.html</loc>
-    <lastmod>2024-09-06T00:09:23.866Z</lastmod>
-  </url>
-  <url>
-    <loc>https://stat210a.berkeley.edu/fall-2024/reader/exponential-families.html</loc>
-    <lastmod>2024-09-06T00:09:22.886Z</lastmod>
-  </url>
-  <url>
-    <loc>https://stat210a.berkeley.edu/fall-2024/reader/estimation.html</loc>
-    <lastmod>2024-09-06T00:09:21.609Z</lastmod>
-  </url>
-  <url>
-    <loc>https://stat210a.berkeley.edu/fall-2024/reader/empirical-bayes.html</loc>
-    <lastmod>2024-09-06T00:09:19.910Z</lastmod>
-  </url>
-  <url>
-    <loc>https://stat210a.berkeley.edu/fall-2024/reader/multiple-testing.html</loc>
-    <lastmod>2024-09-06T00:09:19.123Z</lastmod>
-  </url>
-  <url>
-    <loc>https://stat210a.berkeley.edu/fall-2024/reader/unbiased-estimation.html</loc>
-    <lastmod>2024-09-06T00:09:18.669Z</lastmod>
-  </url>
-  <url>
-    <loc>https://stat210a.berkeley.edu/fall-2024/reader/testing-nuisance.html</loc>
-    <lastmod>2024-09-06T00:09:19.525Z</lastmod>
-  </url>
-  <url>
-    <loc>https://stat210a.berkeley.edu/fall-2024/reader/maximum-likelihood.html</loc>
-    <lastmod>2024-09-06T00:09:20.292Z</lastmod>
-  </url>
-  <url>
-    <loc>https://stat210a.berkeley.edu/fall-2024/reader/likelihood-inference.html</loc>
-    <lastmod>2024-09-06T00:09:22.031Z</lastmod>
-  </url>
-  <url>
-    <loc>https://stat210a.berkeley.edu/fall-2024/reader/homework.html</loc>
-    <lastmod>2024-09-06T00:09:23.186Z</lastmod>
-  </url>
-  <url>
-    <loc>https://stat210a.berkeley.edu/fall-2024/reader/sufficiency.html</loc>
-    <lastmod>2024-09-06T00:09:24.226Z</lastmod>
-  </url>
-  <url>
-    <loc>https://stat210a.berkeley.edu/fall-2024/reader/completeness.html</loc>
-    <lastmod>2024-09-06T00:09:25.204Z</lastmod>
-  </url>
-  <url>
-    <loc>https://stat210a.berkeley.edu/fall-2024/reader/score-fisher.html</loc>
-    <lastmod>2024-09-06T00:09:25.945Z</lastmod>
-  </url>
-  <url>
-    <loc>https://stat210a.berkeley.edu/fall-2024/reader/hierarchical-bayes.html</loc>
-    <lastmod>2024-09-06T00:09:27.572Z</lastmod>
-  </url>
-  <url>
-    <loc>https://stat210a.berkeley.edu/fall-2024/reader/hypothesis-testing.html</loc>
-    <lastmod>2024-09-06T00:09:28.336Z</lastmod>
-  </url>
-  <url>
-    <loc>https://stat210a.berkeley.edu/fall-2024/reader/minimax-estimation.html</loc>
-    <lastmod>2024-09-06T00:09:29.096Z</lastmod>
-  </url>
-  <url>
-    <loc>https://stat210a.berkeley.edu/fall-2024/reader/measure-theory-basics.html</loc>
-    <lastmod>2024-09-06T00:09:30.118Z</lastmod>
+    <lastmod>2024-09-06T00:11:40.308Z</lastmod>
   </url>
   <url>
     <loc>https://stat210a.berkeley.edu/fall-2024/handwritten-notes.html</loc>
-    <lastmod>2024-09-06T00:09:30.753Z</lastmod>
+    <lastmod>2024-09-06T00:11:39.686Z</lastmod>
+  </url>
+  <url>
+    <loc>https://stat210a.berkeley.edu/fall-2024/reader/measure-theory-basics.html</loc>
+    <lastmod>2024-09-06T00:11:39.051Z</lastmod>
+  </url>
+  <url>
+    <loc>https://stat210a.berkeley.edu/fall-2024/reader/minimax-estimation.html</loc>
+    <lastmod>2024-09-06T00:11:38.078Z</lastmod>
+  </url>
+  <url>
+    <loc>https://stat210a.berkeley.edu/fall-2024/reader/hypothesis-testing.html</loc>
+    <lastmod>2024-09-06T00:11:37.314Z</lastmod>
+  </url>
+  <url>
+    <loc>https://stat210a.berkeley.edu/fall-2024/reader/hierarchical-bayes.html</loc>
+    <lastmod>2024-09-06T00:11:36.449Z</lastmod>
+  </url>
+  <url>
+    <loc>https://stat210a.berkeley.edu/fall-2024/reader/score-fisher.html</loc>
+    <lastmod>2024-09-06T00:11:34.412Z</lastmod>
+  </url>
+  <url>
+    <loc>https://stat210a.berkeley.edu/fall-2024/reader/completeness.html</loc>
+    <lastmod>2024-09-06T00:11:33.656Z</lastmod>
+  </url>
+  <url>
+    <loc>https://stat210a.berkeley.edu/fall-2024/reader/sufficiency.html</loc>
+    <lastmod>2024-09-06T00:11:32.675Z</lastmod>
+  </url>
+  <url>
+    <loc>https://stat210a.berkeley.edu/fall-2024/reader/exponential-families.html</loc>
+    <lastmod>2024-09-06T00:11:31.595Z</lastmod>
+  </url>
+  <url>
+    <loc>https://stat210a.berkeley.edu/fall-2024/reader/estimation.html</loc>
+    <lastmod>2024-09-06T00:11:30.253Z</lastmod>
+  </url>
+  <url>
+    <loc>https://stat210a.berkeley.edu/fall-2024/reader/empirical-bayes.html</loc>
+    <lastmod>2024-09-06T00:11:28.547Z</lastmod>
+  </url>
+  <url>
+    <loc>https://stat210a.berkeley.edu/fall-2024/reader/multiple-testing.html</loc>
+    <lastmod>2024-09-06T00:11:27.762Z</lastmod>
+  </url>
+  <url>
+    <loc>https://stat210a.berkeley.edu/fall-2024/reader/unbiased-estimation.html</loc>
+    <lastmod>2024-09-06T00:11:27.330Z</lastmod>
+  </url>
+  <url>
+    <loc>https://stat210a.berkeley.edu/fall-2024/reader/testing-nuisance.html</loc>
+    <lastmod>2024-09-06T00:11:28.171Z</lastmod>
+  </url>
+  <url>
+    <loc>https://stat210a.berkeley.edu/fall-2024/reader/maximum-likelihood.html</loc>
+    <lastmod>2024-09-06T00:11:28.925Z</lastmod>
+  </url>
+  <url>
+    <loc>https://stat210a.berkeley.edu/fall-2024/reader/likelihood-inference.html</loc>
+    <lastmod>2024-09-06T00:11:30.678Z</lastmod>
+  </url>
+  <url>
+    <loc>https://stat210a.berkeley.edu/fall-2024/reader/probability.html</loc>
+    <lastmod>2024-09-06T00:11:32.306Z</lastmod>
+  </url>
+  <url>
+    <loc>https://stat210a.berkeley.edu/fall-2024/reader/testing-one-parameter.html</loc>
+    <lastmod>2024-09-06T00:11:33.063Z</lastmod>
+  </url>
+  <url>
+    <loc>https://stat210a.berkeley.edu/fall-2024/reader/bayes-estimation.html</loc>
+    <lastmod>2024-09-06T00:11:33.992Z</lastmod>
+  </url>
+  <url>
+    <loc>https://stat210a.berkeley.edu/fall-2024/reader/introduction.html</loc>
+    <lastmod>2024-09-06T00:11:36.020Z</lastmod>
+  </url>
+  <url>
+    <loc>https://stat210a.berkeley.edu/fall-2024/reader/bayes-interpretation.html</loc>
+    <lastmod>2024-09-06T00:11:36.959Z</lastmod>
+  </url>
+  <url>
+    <loc>https://stat210a.berkeley.edu/fall-2024/reader/testing-interpretation.html</loc>
+    <lastmod>2024-09-06T00:11:37.712Z</lastmod>
+  </url>
+  <url>
+    <loc>https://stat210a.berkeley.edu/fall-2024/reader/convergence.html</loc>
+    <lastmod>2024-09-06T00:11:38.442Z</lastmod>
+  </url>
+  <url>
+    <loc>https://stat210a.berkeley.edu/fall-2024/reader/testing-linear.html</loc>
+    <lastmod>2024-09-06T00:11:39.417Z</lastmod>
+  </url>
+  <url>
+    <loc>https://stat210a.berkeley.edu/fall-2024/homework.html</loc>
+    <lastmod>2024-09-06T00:11:39.970Z</lastmod>
   </url>
   <url>
     <loc>https://stat210a.berkeley.edu/fall-2024/units/macros.html</loc>
-    <lastmod>2024-09-06T00:09:31.318Z</lastmod>
+    <lastmod>2024-09-06T00:11:40.553Z</lastmod>
   </url>
   <url>
     <loc>https://stat210a.berkeley.edu/fall-2024/units/unit3.html</loc>
-    <lastmod>2024-09-06T00:09:41.741Z</lastmod>
+    <lastmod>2024-09-06T00:11:50.492Z</lastmod>
   </url>
   <url>
     <loc>https://stat210a.berkeley.edu/fall-2024/old-exams.html</loc>
-    <lastmod>2024-09-06T00:09:44.771Z</lastmod>
+    <lastmod>2024-09-06T00:11:53.487Z</lastmod>
   </url>
   <url>
     <loc>https://stat210a.berkeley.edu/fall-2024/syllabus.html</loc>
-    <lastmod>2024-09-06T00:09:45.571Z</lastmod>
+    <lastmod>2024-09-06T00:11:54.254Z</lastmod>
   </url>
   <url>
     <loc>https://stat210a.berkeley.edu/fall-2024/calendar.html</loc>
-    <lastmod>2024-09-06T00:09:46.096Z</lastmod>
+    <lastmod>2024-09-06T00:11:54.814Z</lastmod>
   </url>
 </urlset>
