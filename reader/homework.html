@@ -6,9 +6,8 @@
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
-<meta name="dcterms.date" content="2023-10-03">
 
-<title>Empirical Bayes and the James-Stein Paradox</title>
+<title>Homework</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -248,27 +247,8 @@ gtag('config', 'G-B8G2041HSB', { 'anonymize_ip': true});
     <h2 id="toc-title">On this page</h2>
    
   <ul>
-  <li><a href="#empirical-bayes" id="toc-empirical-bayes" class="nav-link active" data-scroll-target="#empirical-bayes"><span class="header-section-number">1</span> Empirical Bayes</a>
-  <ul class="collapse">
-  <li><a href="#common-situation-in-hierarchical-bayes-models" id="toc-common-situation-in-hierarchical-bayes-models" class="nav-link" data-scroll-target="#common-situation-in-hierarchical-bayes-models"><span class="header-section-number">1.1</span> Common Situation in Hierarchical Bayes Models</a></li>
-  <li><a href="#hybrid-approach" id="toc-hybrid-approach" class="nav-link" data-scroll-target="#hybrid-approach"><span class="header-section-number">1.2</span> Hybrid Approach</a></li>
-  <li><a href="#example" id="toc-example" class="nav-link" data-scroll-target="#example"><span class="header-section-number">1.3</span> Example</a></li>
-  </ul></li>
-  <li><a href="#james-stein-estimator" id="toc-james-stein-estimator" class="nav-link" data-scroll-target="#james-stein-estimator"><span class="header-section-number">2</span> James-Stein Estimator</a>
-  <ul class="collapse">
-  <li><a href="#james-stein-paradox" id="toc-james-stein-paradox" class="nav-link" data-scroll-target="#james-stein-paradox"><span class="header-section-number">2.1</span> James-Stein Paradox</a></li>
-  <li><a href="#general-form" id="toc-general-form" class="nav-link" data-scroll-target="#general-form"><span class="header-section-number">2.2</span> General Form</a></li>
-  </ul></li>
-  <li><a href="#steins-lemma" id="toc-steins-lemma" class="nav-link" data-scroll-target="#steins-lemma"><span class="header-section-number">3</span> Stein’s Lemma</a>
-  <ul class="collapse">
-  <li><a href="#theorem-steins-lemma---univariate" id="toc-theorem-steins-lemma---univariate" class="nav-link" data-scroll-target="#theorem-steins-lemma---univariate"><span class="header-section-number">3.1</span> Theorem (Stein’s Lemma - Univariate)</a></li>
-  <li><a href="#multivariate-version" id="toc-multivariate-version" class="nav-link" data-scroll-target="#multivariate-version"><span class="header-section-number">3.2</span> Multivariate Version</a></li>
-  <li><a href="#theorem-steins-lemma---multivariate" id="toc-theorem-steins-lemma---multivariate" class="nav-link" data-scroll-target="#theorem-steins-lemma---multivariate"><span class="header-section-number">3.3</span> Theorem (Stein’s Lemma - Multivariate)</a></li>
-  </ul></li>
-  <li><a href="#steins-unbiased-risk-estimator-sure" id="toc-steins-unbiased-risk-estimator-sure" class="nav-link" data-scroll-target="#steins-unbiased-risk-estimator-sure"><span class="header-section-number">4</span> Stein’s Unbiased Risk Estimator (SURE)</a>
-  <ul class="collapse">
-  <li><a href="#risk-of-james-stein" id="toc-risk-of-james-stein" class="nav-link" data-scroll-target="#risk-of-james-stein"><span class="header-section-number">4.1</span> Risk of James-Stein</a></li>
-  </ul></li>
+  <li><a href="#standing-homework-instructions" id="toc-standing-homework-instructions" class="nav-link active" data-scroll-target="#standing-homework-instructions">Standing homework instructions</a></li>
+  <li><a href="#assignments" id="toc-assignments" class="nav-link" data-scroll-target="#assignments">Assignments</a></li>
   </ul>
 </nav>
     </div>
@@ -277,7 +257,7 @@ gtag('config', 'G-B8G2041HSB', { 'anonymize_ip': true});
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title">Empirical Bayes and the James-Stein Paradox</h1>
+<h1 class="title">Homework</h1>
 </div>
 
 
@@ -285,12 +265,6 @@ gtag('config', 'G-B8G2041HSB', { 'anonymize_ip': true});
 <div class="quarto-title-meta">
 
     
-    <div>
-    <div class="quarto-title-meta-heading">Published</div>
-    <div class="quarto-title-meta-contents">
-      <p class="date">October 3, 2023</p>
-    </div>
-  </div>
   
     
   </div>
@@ -298,156 +272,20 @@ gtag('config', 'G-B8G2041HSB', { 'anonymize_ip': true});
 
 </header>
 
-<p><span class="math display">\[
-\newcommand{\cB}{\mathcal{B}}
-\newcommand{\cF}{\mathcal{F}}
-\newcommand{\cN}{\mathcal{N}}
-\newcommand{\cP}{\mathcal{P}}
-\newcommand{\cX}{\mathcal{X}}
-\newcommand{\EE}{\mathbb{E}}
-\newcommand{\PP}{\mathbb{P}}
-\newcommand{\RR}{\mathbb{R}}
-\newcommand{\ZZ}{\mathbb{Z}}
-\newcommand{\td}{\,\textrm{d}}
-\newcommand{\simiid}{\stackrel{\textrm{i.i.d.}}{\sim}}
-\newcommand{\eqas}{\stackrel{\textrm{a.s.}}{=}}
-\newcommand{\eqPas}{\stackrel{\cP\textrm{-a.s.}}{=}}
-\newcommand{\eqmuas}{\stackrel{\mu\textrm{-a.s.}}{=}}
-\newcommand{\eqD}{\stackrel{D}{=}}
-\newcommand{\indep}{\perp\!\!\!\!\perp}
-\DeclareMathOperator*{\minz}{minimize\;}
-\newcommand{\Var}{\textnormal{Var}}
-\newcommand{\Cov}{\textnormal{Cov}}
-\newcommand{\Corr}{\textnormal{Corr}}
-\]</span></p>
-<section id="empirical-bayes" class="level2" data-number="1">
-<h2 data-number="1" class="anchored" data-anchor-id="empirical-bayes"><span class="header-section-number">1</span> Empirical Bayes</h2>
-<section id="common-situation-in-hierarchical-bayes-models" class="level3" data-number="1.1">
-<h3 data-number="1.1" class="anchored" data-anchor-id="common-situation-in-hierarchical-bayes-models"><span class="header-section-number">1.1</span> Common Situation in Hierarchical Bayes Models</h3>
-<ol type="1">
-<li><span class="math inline">\(\theta \sim G\)</span>, one draw: hard to justify prior</li>
-<li>Lots of info: prior doesn’t matter</li>
-<li><span class="math inline">\(\theta_i \sim G\)</span>, only <span class="math inline">\(X_i\)</span> informative: prior helps</li>
-<li>Many draws: can check fit</li>
-</ol>
-<p><span class="math display">\[X_i \sim p_{\theta_i}(x), \quad i = 1,\ldots,d\]</span></p>
+<section id="standing-homework-instructions" class="level2">
+<h2 class="anchored" data-anchor-id="standing-homework-instructions">Standing homework instructions</h2>
+<p>You may disregard measure-theoretic niceties about conditioning on measure-zero sets, almost-sure equality vs.&nbsp;actual equality, “all functions” vs.&nbsp;“all measurable functions,” etc. (unless the problem is explicitly asking about such issues).</p>
+<p>If you need to write code to answer a question, show your code. If you need to include a plot, make sure the plot is readable, with appropriate axis labels and a legend if necessary. Points will be deducted for very hard-to-read code or plots.</p>
+<p>Anytime I ask you to calculate things numerically, it is implicit that Monte Carlo integration (calculating an expectation by repeatedly sampling data from an appropriate distribution and taking the average) is a valid numerical method. There is no need to ask permission, but please use good judgment about how many samples to take so that your numerical error is not too high: if you report a number it should be correct to a few significant digits; if you are comparing two numbers, the precision of your calculation should be high enough for the difference to be meaningful; and plots of smooth functions should appear smooth enough for the plot to be readable.</p>
+<p>Unless otherwise stated, assume asymptotic limits are taken as <span class="math inline">\(n\to \infty\)</span>. If I ask for a “limiting distribution,” I mean do an appropriate centering and scaling to find a limiting distribution that is non-degenerate (not converging in probability to a constant). That is, find sequences <span class="math inline">\(a_n\)</span> and <span class="math inline">\(b_n\)</span> such that <span class="math inline">\(b_n(X_n−a_n)\)</span> converges to a non-degenerate limiting distribution.</p>
 </section>
-<section id="hybrid-approach" class="level3" data-number="1.2">
-<h3 data-number="1.2" class="anchored" data-anchor-id="hybrid-approach"><span class="header-section-number">1.2</span> Hybrid Approach</h3>
-<p>Treat <span class="math inline">\(G\)</span> as fixed:</p>
-<ol type="1">
-<li>Estimate <span class="math inline">\(G\)</span> based on observed data</li>
-<li>Plug in <span class="math inline">\(\hat{G}\)</span> as though known</li>
-</ol>
-</section>
-<section id="example" class="level3" data-number="1.3">
-<h3 data-number="1.3" class="anchored" data-anchor-id="example"><span class="header-section-number">1.3</span> Example</h3>
-<p><span class="math inline">\(\theta_i \sim N(0, \tau^2)\)</span>, <span class="math inline">\(\tau^2\)</span> fixed unknown <span class="math inline">\(X_i|\theta_i \sim N(\theta_i, 1)\)</span>, <span class="math inline">\(i = 1,\ldots,d\)</span></p>
-<p>Bayes estimator if we knew <span class="math inline">\(\tau^2\)</span> is:</p>
-<p><span class="math display">\[\delta(X) = \frac{\tau^2}{\tau^2 + 1}X_i\]</span></p>
-<p><span class="math inline">\(\tau^2\)</span> is sufficient.</p>
-<p>To estimate <span class="math inline">\(\tau^2\)</span>, use <span class="math inline">\(X \sim N(0, \tau^2 I_d + I_d)\)</span>:</p>
-<p><span class="math display">\[\mathbb{E}\|X\|^2 = d(\tau^2 + 1)\]</span></p>
-<p><span class="math display">\[\hat{\tau}^2 = \max\{\frac{1}{d}\|X\|^2 - 1, 0\}\]</span></p>
-<p>Plug in: <span class="math inline">\(\hat{\delta}(X) = (1 - \frac{d}{\|X\|^2})_+ X_i\)</span></p>
-<p>If <span class="math inline">\(d\)</span> large, should be near optimal.</p>
-</section>
-</section>
-<section id="james-stein-estimator" class="level2" data-number="2">
-<h2 data-number="2" class="anchored" data-anchor-id="james-stein-estimator"><span class="header-section-number">2</span> James-Stein Estimator</h2>
-<p><span class="math display">\[\delta_{JS}(X) = (1 - \frac{d-2}{\|X\|^2})X\]</span></p>
-<p>Proof: If <span class="math inline">\(Y \sim \text{Gamma}(\frac{d}{2}, \frac{1}{2})\)</span>, then:</p>
-<p><span class="math display">\[\mathbb{P}(Y &gt; \frac{d-2}{2}) = 1\]</span></p>
-<p>Now use <span class="math inline">\(f(x) = x - \frac{d-2}{x}\)</span>, <span class="math inline">\(\frac{1}{2}\|X\|^2 \sim \text{Gamma}(\frac{d}{2}, \frac{1}{2})\)</span></p>
-<p><span class="math display">\[\mathbb{E}[f(\frac{1}{2}\|X\|^2)] &gt; f(\mathbb{E}[\frac{1}{2}\|X\|^2]) = \frac{d}{2} - \frac{d-2}{\frac{d}{2}} = 1\]</span></p>
-<section id="james-stein-paradox" class="level3" data-number="2.1">
-<h3 data-number="2.1" class="anchored" data-anchor-id="james-stein-paradox"><span class="header-section-number">2.1</span> James-Stein Paradox</h3>
-<p>For <span class="math inline">\(d \geq 3\)</span>, the sample mean <span class="math inline">\(\bar{X} = \frac{1}{n}\sum X_i\)</span> is inadmissible as an estimator of <span class="math inline">\(\theta\)</span> under squared error loss.</p>
-<p>For <span class="math inline">\(\delta_{JS}(X) = (1 - \frac{d-2}{\|X\|^2})X\)</span>:</p>
-<p><span class="math display">\[\text{MSE}(\theta, \delta_{JS}) &lt; \text{MSE}(\theta, \bar{X}) \quad \forall \theta \in \mathbb{R}^d\]</span></p>
-<p>Notes: - <span class="math inline">\(\bar{X}\)</span> is UMVU, Minimax, objective Bayes - Might as well take <span class="math inline">\(n=1\)</span> (Sufficiency reduction) - This result holds without assumption of Bayes model on <span class="math inline">\(\theta\)</span>: true for <span class="math inline">\(\theta = (50, 10, 94, \ldots)\)</span> - Nothing special about 0: for any <span class="math inline">\(\theta_0 \in \mathbb{R}^d\)</span>, <span class="math inline">\(\delta(X) = \theta_0 + (1 - \frac{d-2}{\|X-\theta_0\|^2})(X-\theta_0)\)</span> also dominates <span class="math inline">\(X\)</span></p>
-<p>Deep implication: shrinkage makes sense even without Bayes justification.</p>
-</section>
-<section id="general-form" class="level3" data-number="2.2">
-<h3 data-number="2.2" class="anchored" data-anchor-id="general-form"><span class="header-section-number">2.2</span> General Form</h3>
-<p>Let <span class="math inline">\(\delta(X) = (1 - \frac{c}{\|X\|^2})X\)</span>, <span class="math inline">\(c\)</span> is tuning parameter</p>
-<p><span class="math display">\[R(\theta, \delta) = \mathbb{E}_\theta\|\delta(X) - \theta\|^2 = \mathbb{E}_\theta\|X - \theta\|^2 + \mathbb{E}_\theta[\frac{c^2}{\|X\|^2} - 2c]\]</span></p>
-<p>What is optimal <span class="math inline">\(c\)</span>?</p>
-<p><span class="math display">\[R(\theta, \delta) = d + \mathbb{E}_\theta[\frac{c^2}{\|X\|^2}] - 2c\]</span></p>
-<p><span class="math display">\[\frac{\partial R}{\partial c} = 2\mathbb{E}_\theta[\frac{c}{\|X\|^2}] - 2 = 0\]</span></p>
-<p><span class="math display">\[c = \frac{\mathbb{E}_\theta[\|X\|^2]}{\mathbb{E}_\theta[\frac{1}{\|X\|^2}]}\]</span></p>
-<p><span class="math inline">\(c\)</span> always &gt; 0, but → 0 as <span class="math inline">\(\|\theta\| → \infty\)</span></p>
-<p>What if we estimate <span class="math inline">\(c\)</span>? How does adaptivity of <span class="math inline">\(c(X)\)</span> affect MSE?</p>
-</section>
-</section>
-<section id="steins-lemma" class="level2" data-number="3">
-<h2 data-number="3" class="anchored" data-anchor-id="steins-lemma"><span class="header-section-number">3</span> Stein’s Lemma</h2>
-<p>Useful tool for computing/estimating risk in Gaussian estimation problems.</p>
-<section id="theorem-steins-lemma---univariate" class="level3" data-number="3.1">
-<h3 data-number="3.1" class="anchored" data-anchor-id="theorem-steins-lemma---univariate"><span class="header-section-number">3.1</span> Theorem (Stein’s Lemma - Univariate)</h3>
-<p>Suppose <span class="math inline">\(X \sim N(\theta, \sigma^2)\)</span> <span class="math inline">\(h: \mathbb{R} → \mathbb{R}\)</span> differentiable, <span class="math inline">\(\mathbb{E}|h'(X)| &lt; \infty\)</span></p>
-<p>Then <span class="math inline">\(\mathbb{E}[(X-\theta)h(X)] = \sigma^2\mathbb{E}[h'(X)]\)</span></p>
-<p><span class="math inline">\(\text{Cov}(X, h(X)) = \sigma^2\mathbb{E}[h'(X)]\)</span></p>
-<p>Proof: Note we can assume w.l.o.g. <span class="math inline">\(h(0) = 0\)</span> (why?) First assume <span class="math inline">\(\theta = 0\)</span>, <span class="math inline">\(\sigma^2 = 1\)</span></p>
-<p><span class="math display">\[\mathbb{E}[Xh(X)] = \int xh(x)\phi(x)dx = \int xh(x)\phi(x)dx - \int h(x)\phi'(x)dx = \int h'(x)\phi(x)dx\]</span></p>
-<p>In the last step we have used <span class="math inline">\(\phi'(x) = -x\phi(x)\)</span></p>
-<p>Similar argument shows <span class="math inline">\(\int h(x)\phi(x)dx = \int h'(x)\phi(x)dx\)</span></p>
-<p>Result holds for <span class="math inline">\(\theta = 0\)</span>, <span class="math inline">\(\sigma^2 = 1\)</span></p>
-<p>General <span class="math inline">\(\theta\)</span>, <span class="math inline">\(\sigma^2 \neq 1\)</span>: write <span class="math inline">\(X = \theta + \sigma Z\)</span>, <span class="math inline">\(Z \sim N(0,1)\)</span></p>
-<p><span class="math display">\[\mathbb{E}[(X-\theta)h(X)] = \sigma\mathbb{E}[Zh(\theta+\sigma Z)] = \sigma^2\mathbb{E}[h'(\theta+\sigma Z)] = \sigma^2\mathbb{E}[h'(X)]\]</span></p>
-</section>
-<section id="multivariate-version" class="level3" data-number="3.2">
-<h3 data-number="3.2" class="anchored" data-anchor-id="multivariate-version"><span class="header-section-number">3.2</span> Multivariate Version</h3>
-<p>Define Frobenius norm: <span class="math inline">\(\|A\|_F^2 = \sum_{i,j} A_{ij}^2 = \text{tr}(A^TA)\)</span></p>
-</section>
-<section id="theorem-steins-lemma---multivariate" class="level3" data-number="3.3">
-<h3 data-number="3.3" class="anchored" data-anchor-id="theorem-steins-lemma---multivariate"><span class="header-section-number">3.3</span> Theorem (Stein’s Lemma - Multivariate)</h3>
-<p><span class="math inline">\(X \sim N_d(\theta, \sigma^2 I_d)\)</span>, <span class="math inline">\(\theta \in \mathbb{R}^d\)</span> <span class="math inline">\(h: \mathbb{R}^d → \mathbb{R}^d\)</span> differentiable, <span class="math inline">\(\mathbb{E}\|Dh(X)\|_F &lt; \infty\)</span></p>
-<p>Then <span class="math inline">\(\mathbb{E}[(X-\theta)^Th(X)] = \sigma^2\mathbb{E}[\text{tr}(Dh(X))]\)</span></p>
-<p><span class="math inline">\(\mathbb{E}[(X-\theta)h(X)^T] = \sigma^2\mathbb{E}[Dh(X)]\)</span></p>
-<p>Proof:</p>
-<p><span class="math display">\[\mathbb{E}[(X_i-\theta_i)h_i(X)] = \mathbb{E}[\mathbb{E}[(X_i-\theta_i)h_i(X)|X_{-i}]]\]</span> <span class="math display">\[= \sigma^2\mathbb{E}[\frac{\partial h_i}{\partial x_i}(X)]\]</span></p>
-</section>
-</section>
-<section id="steins-unbiased-risk-estimator-sure" class="level2" data-number="4">
-<h2 data-number="4" class="anchored" data-anchor-id="steins-unbiased-risk-estimator-sure"><span class="header-section-number">4</span> Stein’s Unbiased Risk Estimator (SURE)</h2>
-<p>Unbiased estimator of the MSE of any <span class="math inline">\(\delta(X)\)</span></p>
-<p>Apply Stein’s Lemma with <span class="math inline">\(h(x) = X - \delta(x)\)</span></p>
-<p>Assume <span class="math inline">\(\sigma^2 = 1\)</span>:</p>
-<p><span class="math display">\[R(\theta, \delta) = \mathbb{E}_\theta\|\delta(X) - \theta\|^2 = \mathbb{E}_\theta\|X - \theta\|^2 + \mathbb{E}_\theta\|\delta(X) - X\|^2 - 2\mathbb{E}_\theta[(X-\theta)^T(X-\delta(X))]\]</span> <span class="math display">\[= d + \mathbb{E}_\theta\|\delta(X) - X\|^2 - 2\mathbb{E}_\theta[\text{tr}(D(X-\delta(X)))]\]</span></p>
-<p><span class="math display">\[\hat{R}(X) = d + \|\delta(X) - X\|^2 - 2\text{tr}(D\delta(X))\]</span></p>
-<p>is unbiased for the MSE estimator <span class="math inline">\(\delta(X)\)</span></p>
-<p>Only depends on X</p>
-<p>Can also compute MSE via <span class="math inline">\(R = \mathbb{E}_\theta[\hat{R}]\)</span></p>
-<p><span class="math display">\[\mathbb{E}_\theta[\|\delta(X) - h(X)\|^2] = \mathbb{E}_\theta[\|\delta(X) - \theta\|^2] + \mathbb{E}_\theta[\|h(X) - \theta\|^2] - 2\mathbb{E}_\theta[(\delta(X) - \theta)^T(h(X) - \theta)]\]</span></p>
-<p><span class="math display">\[R = d + R(\theta, \delta) - 2\mathbb{E}_\theta[\text{tr}(D\delta(X))]\]</span></p>
-<p>Example: <span class="math inline">\(\delta(X) = (1-c)X\)</span> for fixed <span class="math inline">\(c\)</span></p>
-<p><span class="math inline">\(h(x) = cX\)</span>, <span class="math inline">\(Dh = cI_d\)</span></p>
-<p><span class="math inline">\(\hat{R} = d + c^2\|X\|^2 - 2cd\)</span></p>
-<section id="risk-of-james-stein" class="level3" data-number="4.1">
-<h3 data-number="4.1" class="anchored" data-anchor-id="risk-of-james-stein"><span class="header-section-number">4.1</span> Risk of James-Stein</h3>
-<p><span class="math inline">\(\delta_{JS}(X) = (1 - \frac{d-2}{\|X\|^2})X\)</span></p>
-<p><span class="math inline">\(h(X) = \frac{d-2}{\|X\|^2}X\)</span>, <span class="math inline">\(Dh(X) = \frac{d-2}{\|X\|^2}I_d - 2(d-2)\frac{XX^T}{\|X\|^4}\)</span></p>
-<p><span class="math inline">\(\|h(X)\|^2 = \frac{(d-2)^2}{\|X\|^2}\)</span></p>
-<p><span class="math display">\[\text{tr}(Dh(X)) = \frac{d(d-2)}{\|X\|^2} - \frac{2(d-2)}{\|X\|^2} = \frac{(d-2)^2}{\|X\|^2}\]</span></p>
-<p><span class="math display">\[\hat{R} = d + \frac{(d-2)^2}{\|X\|^2} - 2\frac{(d-2)^2}{\|X\|^2} = d - \frac{(d-2)^2}{\|X\|^2}\]</span></p>
-<p><span class="math display">\[R(\theta) = \mathbb{E}_\theta[\hat{R}] = d - (d-2)^2\mathbb{E}_\theta[\frac{1}{\|X\|^2}]\]</span></p>
-<p>If <span class="math inline">\(\theta = 0\)</span> then <span class="math inline">\(\mathbb{E}_0[\frac{1}{\|X\|^2}] = \frac{1}{d-2}\)</span></p>
-<p><span class="math display">\[R(0) = d - (d-2) = 2\]</span></p>
-<p>Possibly surprising</p>
-<p>If <span class="math inline">\(\theta \neq 0\)</span> then <span class="math inline">\(\mathbb{E}_\theta[\frac{1}{\|X\|^2}] &lt; \frac{1}{\|\theta\|^2}\)</span></p>
-<p><span class="math display">\[R(\theta) &lt; d - \frac{(d-2)^2}{\|\theta\|^2 + d}\]</span></p>
-<p>Smaller and smaller advantage, but always better</p>
-<p>Note: <span class="math inline">\(\delta_{JS}(X)\)</span> also inadmissible</p>
-<p><span class="math inline">\(\delta_{+}(X) = (1 - \frac{d-2}{\|X\|^2})_+ X\)</span> is strictly better</p>
-<p>Practically more useful version:</p>
-<p><span class="math display">\[\delta_{JS+}(X) = (1 - \frac{d-3}{\|X\|^2})_+ X\]</span></p>
-<p>Dominates <span class="math inline">\(\delta(X) = X\)</span> for <span class="math inline">\(d \geq 4\)</span></p>
-<p>Taken to logical extreme, suggestion seems dumb: should everyone at Berkeley pool their estimates?</p>
-<p>Note: <span class="math inline">\(\mathbb{E}\|\hat{\theta}\|^2\)</span> is improved, but <span class="math inline">\(\mathbb{E}[(\hat{\theta}_i - \theta_i)^2]\)</span> may get worse for individual coordinates.</p>
+<section id="assignments" class="level2">
+<h2 class="anchored" data-anchor-id="assignments">Assignments</h2>
+<ul>
+<li><a href="homework/homework1.pdf">Homework 1</a> (<a href="homework/homework1.tex">LaTeX source</a>)</li>
+</ul>
 
 
-</section>
 </section>
 
 </main> <!-- /main -->
