@@ -7,7 +7,6 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 <meta name="author" content="Will Fithian">
-<meta name="dcterms.date" content="2023-08-29">
 
 <title>Sufficiency</title>
 <style>
@@ -21,6 +20,40 @@ ul.task-list li input[type="checkbox"] {
   width: 0.8em;
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
 }
 </style>
 
@@ -70,6 +103,8 @@ function gtag(){dataLayer.push(arguments);}
 gtag('js', new Date());
 gtag('config', 'G-B8G2041HSB', { 'anonymize_ip': true});
 </script>
+<script type="module" src="../site_libs/quarto-ojs/quarto-ojs-runtime.js"></script>
+<link href="../site_libs/quarto-ojs/quarto-ojs.css" rel="stylesheet">
 
   <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
   <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
@@ -199,13 +234,13 @@ gtag('config', 'G-B8G2041HSB', { 'anonymize_ip': true});
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../reader/probability.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Probability as a measure</span></a>
+ <span class="menu-text">Probability</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../reader/estimation.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Statistical decision theory</span></a>
+ <span class="menu-text">Statistical models and estimation</span></a>
   </div>
 </li>
           <li class="sidebar-item">
@@ -251,8 +286,12 @@ gtag('config', 'G-B8G2041HSB', { 'anonymize_ip': true});
    
   <ul>
   <li><a href="#sufficiency" id="toc-sufficiency" class="nav-link active" data-scroll-target="#sufficiency">Sufficiency</a></li>
+  <li><a href="#visualization-of-sufficiency-for-two-binomials" id="toc-visualization-of-sufficiency-for-two-binomials" class="nav-link" data-scroll-target="#visualization-of-sufficiency-for-two-binomials">Visualization of sufficiency for two binomials</a></li>
   <li><a href="#factorization-theorem" id="toc-factorization-theorem" class="nav-link" data-scroll-target="#factorization-theorem">Factorization theorem</a></li>
-  <li><a href="#sufficient-statistics-in-exponential-families" id="toc-sufficient-statistics-in-exponential-families" class="nav-link" data-scroll-target="#sufficient-statistics-in-exponential-families">Sufficient statistics in exponential families</a></li>
+  <li><a href="#examples" id="toc-examples" class="nav-link" data-scroll-target="#examples">Examples</a></li>
+  <li><a href="#interpretations-of-sufficiency" id="toc-interpretations-of-sufficiency" class="nav-link" data-scroll-target="#interpretations-of-sufficiency">Interpretations of sufficiency</a></li>
+  <li><a href="#sufficient-statistics-under-i.i.d.-sampling" id="toc-sufficient-statistics-under-i.i.d.-sampling" class="nav-link" data-scroll-target="#sufficient-statistics-under-i.i.d.-sampling">Sufficient statistics under i.i.d. sampling</a></li>
+  <li><a href="#minimal-sufficiency" id="toc-minimal-sufficiency" class="nav-link" data-scroll-target="#minimal-sufficiency">Minimal sufficiency</a></li>
   </ul>
 </nav>
     </div>
@@ -275,12 +314,6 @@ gtag('config', 'G-B8G2041HSB', { 'anonymize_ip': true});
           </div>
   </div>
     
-    <div>
-    <div class="quarto-title-meta-heading">Published</div>
-    <div class="quarto-title-meta-contents">
-      <p class="date">August 29, 2023</p>
-    </div>
-  </div>
   
     
   </div>
@@ -334,10 +367,211 @@ p_\theta(x) = \prod_{i=1}^n \theta^{x_i}(1-\theta)^{1-x_i} = \theta^{\sum_i x_i}
 \end{aligned}
 \]</span></p>
 <p>Since the conditional distribution does not depend on <span class="math inline">\(\theta\)</span>, <span class="math inline">\(T(X)\)</span> is sufficient for the model <span class="math inline">\(\cP\)</span>.</p>
-<p>As we will see next, we didn’t really need to go to the trouble of calculating the conditional distribution. Once we noticed that the density depends on <span class="math inline">\(x\)</span> only through <span class="math inline">\(T(x)\)</span>, we could have concluded that <span class="math inline">\(T(X)\)</span> was sufficient.</p>
+</section>
+<section id="visualization-of-sufficiency-for-two-binomials" class="level2">
+<h2 class="anchored" data-anchor-id="visualization-of-sufficiency-for-two-binomials">Visualization of sufficiency for two binomials</h2>
+<p>We now illustrate the concept of sufficiency with a visualization for a closely related example where now the initial data set is a pair of independent binomial random variables <span class="math inline">\(X_1, X_2 \simiid \text{Binom}(n, \theta)\)</span>. We can make a similar calculation to show that <span class="math inline">\(T(X) = X_1 + X_2\)</span> is sufficient:</p>
+<p><span class="math display">\[
+p_\theta(x) = \binom{n}{x_1} \theta^{x_1}(1-\theta)^{n-x_1} \cdot \binom{n}{x_2} \theta^{x_2}(1-\theta)^{n-x_2} = \theta^{T(x)}(1-\theta)^{2n-T(x)} \binom{n}{x_1}\binom{n}{x_2}.
+\]</span></p>
+<div class="cell">
+<div class="sourceCode cell-code hidden" id="cb1" data-startfrom="57" data-source-offset="-19"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 56;"><span id="cb1-57"><a href="#cb1-57" aria-hidden="true" tabindex="-1"></a><span class="fu">html</span><span class="vs">`</span></span>
+<span id="cb1-58"><a href="#cb1-58" aria-hidden="true" tabindex="-1"></a><span class="vs">&lt;style&gt;</span></span>
+<span id="cb1-59"><a href="#cb1-59" aria-hidden="true" tabindex="-1"></a><span class="vs">  .plot-container {</span></span>
+<span id="cb1-60"><a href="#cb1-60" aria-hidden="true" tabindex="-1"></a><span class="vs">    display: flex;</span></span>
+<span id="cb1-61"><a href="#cb1-61" aria-hidden="true" tabindex="-1"></a><span class="vs">    justify-content: space-around;</span></span>
+<span id="cb1-62"><a href="#cb1-62" aria-hidden="true" tabindex="-1"></a><span class="vs">    flex-wrap: wrap;</span></span>
+<span id="cb1-63"><a href="#cb1-63" aria-hidden="true" tabindex="-1"></a><span class="vs">  }</span></span>
+<span id="cb1-64"><a href="#cb1-64" aria-hidden="true" tabindex="-1"></a><span class="vs">  .plot {</span></span>
+<span id="cb1-65"><a href="#cb1-65" aria-hidden="true" tabindex="-1"></a><span class="vs">    flex: 0 1 450px;</span></span>
+<span id="cb1-66"><a href="#cb1-66" aria-hidden="true" tabindex="-1"></a><span class="vs">    margin: 10px;</span></span>
+<span id="cb1-67"><a href="#cb1-67" aria-hidden="true" tabindex="-1"></a><span class="vs">  }</span></span>
+<span id="cb1-68"><a href="#cb1-68" aria-hidden="true" tabindex="-1"></a><span class="vs">  .plot-title {</span></span>
+<span id="cb1-69"><a href="#cb1-69" aria-hidden="true" tabindex="-1"></a><span class="vs">    text-align: center;</span></span>
+<span id="cb1-70"><a href="#cb1-70" aria-hidden="true" tabindex="-1"></a><span class="vs">    font-size: 20px;</span></span>
+<span id="cb1-71"><a href="#cb1-71" aria-hidden="true" tabindex="-1"></a><span class="vs">    font-weight: bold;</span></span>
+<span id="cb1-72"><a href="#cb1-72" aria-hidden="true" tabindex="-1"></a><span class="vs">    margin-bottom: 10px;</span></span>
+<span id="cb1-73"><a href="#cb1-73" aria-hidden="true" tabindex="-1"></a><span class="vs">  }</span></span>
+<span id="cb1-74"><a href="#cb1-74" aria-hidden="true" tabindex="-1"></a><span class="vs">&lt;/style&gt;</span></span>
+<span id="cb1-75"><a href="#cb1-75" aria-hidden="true" tabindex="-1"></a><span class="vs">`</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<div>
+<div id="ojs-cell-1-1" data-nodetype="expression">
+
+</div>
+</div>
+</div>
+<div class="sourceCode cell-code hidden" id="cb2" data-startfrom="78" data-source-offset="-330"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 77;"><span id="cb2-78"><a href="#cb2-78" aria-hidden="true" tabindex="-1"></a><span class="kw">function</span> <span class="fu">binomialProbability</span>(n<span class="op">,</span> k<span class="op">,</span> p) {</span>
+<span id="cb2-79"><a href="#cb2-79" aria-hidden="true" tabindex="-1"></a>  <span class="cf">return</span> <span class="fu">combination</span>(n<span class="op">,</span> k) <span class="op">*</span> <span class="bu">Math</span><span class="op">.</span><span class="fu">pow</span>(p<span class="op">,</span> k) <span class="op">*</span> <span class="bu">Math</span><span class="op">.</span><span class="fu">pow</span>(<span class="dv">1</span> <span class="op">-</span> p<span class="op">,</span> n <span class="op">-</span> k)<span class="op">;</span></span>
+<span id="cb2-80"><a href="#cb2-80" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb2-81"><a href="#cb2-81" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-82"><a href="#cb2-82" aria-hidden="true" tabindex="-1"></a><span class="kw">function</span> <span class="fu">combination</span>(n<span class="op">,</span> k) {</span>
+<span id="cb2-83"><a href="#cb2-83" aria-hidden="true" tabindex="-1"></a>  <span class="cf">return</span> <span class="fu">factorial</span>(n) <span class="op">/</span> (<span class="fu">factorial</span>(k) <span class="op">*</span> <span class="fu">factorial</span>(n <span class="op">-</span> k))<span class="op">;</span></span>
+<span id="cb2-84"><a href="#cb2-84" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb2-85"><a href="#cb2-85" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-86"><a href="#cb2-86" aria-hidden="true" tabindex="-1"></a><span class="kw">function</span> <span class="fu">factorial</span>(n) {</span>
+<span id="cb2-87"><a href="#cb2-87" aria-hidden="true" tabindex="-1"></a>  <span class="cf">if</span> (n <span class="op">===</span> <span class="dv">0</span> <span class="op">||</span> n <span class="op">===</span> <span class="dv">1</span>) <span class="cf">return</span> <span class="dv">1</span><span class="op">;</span></span>
+<span id="cb2-88"><a href="#cb2-88" aria-hidden="true" tabindex="-1"></a>  <span class="cf">return</span> n <span class="op">*</span> <span class="fu">factorial</span>(n <span class="op">-</span> <span class="dv">1</span>)<span class="op">;</span></span>
+<span id="cb2-89"><a href="#cb2-89" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb2-90"><a href="#cb2-90" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-91"><a href="#cb2-91" aria-hidden="true" tabindex="-1"></a><span class="co">// Input parameters</span></span>
+<span id="cb2-92"><a href="#cb2-92" aria-hidden="true" tabindex="-1"></a>viewof n <span class="op">=</span> Inputs<span class="op">.</span><span class="fu">range</span>([<span class="dv">2</span><span class="op">,</span> <span class="dv">10</span>]<span class="op">,</span> {<span class="dt">step</span><span class="op">:</span> <span class="dv">1</span><span class="op">,</span> <span class="dt">value</span><span class="op">:</span> <span class="dv">5</span><span class="op">,</span> <span class="dt">label</span><span class="op">:</span> <span class="st">"n:"</span>})</span>
+<span id="cb2-93"><a href="#cb2-93" aria-hidden="true" tabindex="-1"></a>viewof theta <span class="op">=</span> Inputs<span class="op">.</span><span class="fu">range</span>([<span class="dv">0</span><span class="op">,</span> <span class="dv">1</span>]<span class="op">,</span> {<span class="dt">step</span><span class="op">:</span> <span class="fl">0.01</span><span class="op">,</span> <span class="dt">value</span><span class="op">:</span> <span class="fl">0.5</span><span class="op">,</span> <span class="dt">label</span><span class="op">:</span> <span class="st">"θ:"</span>})</span>
+<span id="cb2-94"><a href="#cb2-94" aria-hidden="true" tabindex="-1"></a>viewof t <span class="op">=</span> Inputs<span class="op">.</span><span class="fu">range</span>([<span class="dv">0</span><span class="op">,</span> <span class="dv">2</span> <span class="op">*</span> n]<span class="op">,</span> {<span class="dt">step</span><span class="op">:</span> <span class="dv">1</span><span class="op">,</span> <span class="dt">value</span><span class="op">:</span> n<span class="op">,</span> <span class="dt">label</span><span class="op">:</span> <span class="st">"T(X) = X₁ + X₂:"</span>})</span>
+<span id="cb2-95"><a href="#cb2-95" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-96"><a href="#cb2-96" aria-hidden="true" tabindex="-1"></a><span class="co">// Calculate probabilities</span></span>
+<span id="cb2-97"><a href="#cb2-97" aria-hidden="true" tabindex="-1"></a>probabilities <span class="op">=</span> {</span>
+<span id="cb2-98"><a href="#cb2-98" aria-hidden="true" tabindex="-1"></a>  <span class="kw">let</span> probs <span class="op">=</span> []<span class="op">;</span></span>
+<span id="cb2-99"><a href="#cb2-99" aria-hidden="true" tabindex="-1"></a>  <span class="cf">for</span> (<span class="kw">let</span> x1 <span class="op">=</span> <span class="dv">0</span><span class="op">;</span> x1 <span class="op">&lt;=</span> n<span class="op">;</span> x1<span class="op">++</span>) {</span>
+<span id="cb2-100"><a href="#cb2-100" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> (<span class="kw">let</span> x2 <span class="op">=</span> <span class="dv">0</span><span class="op">;</span> x2 <span class="op">&lt;=</span> n<span class="op">;</span> x2<span class="op">++</span>) {</span>
+<span id="cb2-101"><a href="#cb2-101" aria-hidden="true" tabindex="-1"></a>      <span class="kw">let</span> prob <span class="op">=</span> <span class="fu">binomialProbability</span>(n<span class="op">,</span> x1<span class="op">,</span> theta) <span class="op">*</span> <span class="fu">binomialProbability</span>(n<span class="op">,</span> x2<span class="op">,</span> theta)<span class="op">;</span></span>
+<span id="cb2-102"><a href="#cb2-102" aria-hidden="true" tabindex="-1"></a>      probs<span class="op">.</span><span class="fu">push</span>({x1<span class="op">,</span> x2<span class="op">,</span> prob<span class="op">,</span> <span class="dt">sum</span><span class="op">:</span> x1 <span class="op">+</span> x2})<span class="op">;</span></span>
+<span id="cb2-103"><a href="#cb2-103" aria-hidden="true" tabindex="-1"></a>    }</span>
+<span id="cb2-104"><a href="#cb2-104" aria-hidden="true" tabindex="-1"></a>  }</span>
+<span id="cb2-105"><a href="#cb2-105" aria-hidden="true" tabindex="-1"></a>  <span class="cf">return</span> probs<span class="op">;</span></span>
+<span id="cb2-106"><a href="#cb2-106" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb2-107"><a href="#cb2-107" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-108"><a href="#cb2-108" aria-hidden="true" tabindex="-1"></a><span class="co">// Calculate conditional probabilities</span></span>
+<span id="cb2-109"><a href="#cb2-109" aria-hidden="true" tabindex="-1"></a>conditionalProbs <span class="op">=</span> {</span>
+<span id="cb2-110"><a href="#cb2-110" aria-hidden="true" tabindex="-1"></a>  <span class="kw">let</span> totalProb <span class="op">=</span> probabilities<span class="op">.</span><span class="fu">filter</span>(p <span class="kw">=&gt;</span> p<span class="op">.</span><span class="at">sum</span> <span class="op">===</span> t)<span class="op">.</span><span class="fu">reduce</span>((sum<span class="op">,</span> p) <span class="kw">=&gt;</span> sum <span class="op">+</span> p<span class="op">.</span><span class="at">prob</span><span class="op">,</span> <span class="dv">0</span>)<span class="op">;</span></span>
+<span id="cb2-111"><a href="#cb2-111" aria-hidden="true" tabindex="-1"></a>  <span class="cf">return</span> <span class="bu">Array</span><span class="op">.</span><span class="fu">from</span>({<span class="dt">length</span><span class="op">:</span> n <span class="op">+</span> <span class="dv">1</span>}<span class="op">,</span> (_<span class="op">,</span> x1) <span class="kw">=&gt;</span> {</span>
+<span id="cb2-112"><a href="#cb2-112" aria-hidden="true" tabindex="-1"></a>    <span class="kw">let</span> x2 <span class="op">=</span> t <span class="op">-</span> x1<span class="op">;</span></span>
+<span id="cb2-113"><a href="#cb2-113" aria-hidden="true" tabindex="-1"></a>    <span class="kw">let</span> prob <span class="op">=</span> (x2 <span class="op">&gt;=</span> <span class="dv">0</span> <span class="op">&amp;&amp;</span> x2 <span class="op">&lt;=</span> n) <span class="op">?</span> probabilities<span class="op">.</span><span class="fu">find</span>(p <span class="kw">=&gt;</span> p<span class="op">.</span><span class="at">x1</span> <span class="op">===</span> x1 <span class="op">&amp;&amp;</span> p<span class="op">.</span><span class="at">x2</span> <span class="op">===</span> x2)<span class="op">?.</span><span class="at">prob</span> <span class="op">||</span> <span class="dv">0</span> <span class="op">:</span> <span class="dv">0</span><span class="op">;</span></span>
+<span id="cb2-114"><a href="#cb2-114" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> {x1<span class="op">,</span> <span class="dt">prob</span><span class="op">:</span> prob <span class="op">/</span> totalProb}<span class="op">;</span></span>
+<span id="cb2-115"><a href="#cb2-115" aria-hidden="true" tabindex="-1"></a>  })<span class="op">;</span></span>
+<span id="cb2-116"><a href="#cb2-116" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb2-117"><a href="#cb2-117" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-118"><a href="#cb2-118" aria-hidden="true" tabindex="-1"></a><span class="co">// Create plot container</span></span>
+<span id="cb2-119"><a href="#cb2-119" aria-hidden="true" tabindex="-1"></a><span class="fu">html</span><span class="vs">`&lt;div class="plot-container"&gt;</span></span>
+<span id="cb2-120"><a href="#cb2-120" aria-hidden="true" tabindex="-1"></a><span class="vs">  &lt;div class="plot"&gt;</span></span>
+<span id="cb2-121"><a href="#cb2-121" aria-hidden="true" tabindex="-1"></a><span class="vs">    &lt;div class="plot-title"&gt;P(X₁, X₂)&lt;/div&gt;</span></span>
+<span id="cb2-122"><a href="#cb2-122" aria-hidden="true" tabindex="-1"></a><span class="vs">    </span><span class="sc">${</span></span>
+<span id="cb2-123"><a href="#cb2-123" aria-hidden="true" tabindex="-1"></a>      Plot<span class="op">.</span><span class="fu">plot</span>({</span>
+<span id="cb2-124"><a href="#cb2-124" aria-hidden="true" tabindex="-1"></a>        <span class="dt">width</span><span class="op">:</span> <span class="dv">450</span><span class="op">,</span></span>
+<span id="cb2-125"><a href="#cb2-125" aria-hidden="true" tabindex="-1"></a>        <span class="dt">height</span><span class="op">:</span> <span class="dv">450</span><span class="op">,</span></span>
+<span id="cb2-126"><a href="#cb2-126" aria-hidden="true" tabindex="-1"></a>        <span class="dt">margin</span><span class="op">:</span> <span class="dv">60</span><span class="op">,</span></span>
+<span id="cb2-127"><a href="#cb2-127" aria-hidden="true" tabindex="-1"></a>        <span class="dt">style</span><span class="op">:</span> {</span>
+<span id="cb2-128"><a href="#cb2-128" aria-hidden="true" tabindex="-1"></a>          <span class="dt">fontSize</span><span class="op">:</span> <span class="st">"14px"</span><span class="op">,</span></span>
+<span id="cb2-129"><a href="#cb2-129" aria-hidden="true" tabindex="-1"></a>          <span class="dt">fontWeight</span><span class="op">:</span> <span class="st">"normal"</span></span>
+<span id="cb2-130"><a href="#cb2-130" aria-hidden="true" tabindex="-1"></a>        }<span class="op">,</span></span>
+<span id="cb2-131"><a href="#cb2-131" aria-hidden="true" tabindex="-1"></a>        <span class="dt">x</span><span class="op">:</span> {</span>
+<span id="cb2-132"><a href="#cb2-132" aria-hidden="true" tabindex="-1"></a>          <span class="dt">label</span><span class="op">:</span> <span class="st">"X₂"</span><span class="op">,</span></span>
+<span id="cb2-133"><a href="#cb2-133" aria-hidden="true" tabindex="-1"></a>          <span class="dt">domain</span><span class="op">:</span> [<span class="op">-</span><span class="dv">1</span><span class="op">,</span> n]<span class="op">,</span></span>
+<span id="cb2-134"><a href="#cb2-134" aria-hidden="true" tabindex="-1"></a>          <span class="dt">tickFormat</span><span class="op">:</span> d <span class="kw">=&gt;</span> d <span class="op">&gt;=</span> <span class="dv">0</span> <span class="op">?</span> d <span class="op">:</span> <span class="st">""</span><span class="op">,</span></span>
+<span id="cb2-135"><a href="#cb2-135" aria-hidden="true" tabindex="-1"></a>        }<span class="op">,</span></span>
+<span id="cb2-136"><a href="#cb2-136" aria-hidden="true" tabindex="-1"></a>        <span class="dt">y</span><span class="op">:</span> {</span>
+<span id="cb2-137"><a href="#cb2-137" aria-hidden="true" tabindex="-1"></a>          <span class="dt">label</span><span class="op">:</span> <span class="st">"X₁"</span><span class="op">,</span></span>
+<span id="cb2-138"><a href="#cb2-138" aria-hidden="true" tabindex="-1"></a>          <span class="dt">domain</span><span class="op">:</span> [<span class="op">-</span><span class="dv">1</span><span class="op">,</span> n]<span class="op">,</span></span>
+<span id="cb2-139"><a href="#cb2-139" aria-hidden="true" tabindex="-1"></a>          <span class="dt">tickFormat</span><span class="op">:</span> d <span class="kw">=&gt;</span> d <span class="op">&gt;=</span> <span class="dv">0</span> <span class="op">?</span> d <span class="op">:</span> <span class="st">""</span><span class="op">,</span></span>
+<span id="cb2-140"><a href="#cb2-140" aria-hidden="true" tabindex="-1"></a>        }<span class="op">,</span></span>
+<span id="cb2-141"><a href="#cb2-141" aria-hidden="true" tabindex="-1"></a>        <span class="dt">marks</span><span class="op">:</span> [</span>
+<span id="cb2-142"><a href="#cb2-142" aria-hidden="true" tabindex="-1"></a>          Plot<span class="op">.</span><span class="fu">dot</span>(probabilities<span class="op">,</span> {</span>
+<span id="cb2-143"><a href="#cb2-143" aria-hidden="true" tabindex="-1"></a>            <span class="dt">x</span><span class="op">:</span> <span class="st">"x2"</span><span class="op">,</span></span>
+<span id="cb2-144"><a href="#cb2-144" aria-hidden="true" tabindex="-1"></a>            <span class="dt">y</span><span class="op">:</span> <span class="st">"x1"</span><span class="op">,</span></span>
+<span id="cb2-145"><a href="#cb2-145" aria-hidden="true" tabindex="-1"></a>            <span class="dt">r</span><span class="op">:</span> d <span class="kw">=&gt;</span> <span class="bu">Math</span><span class="op">.</span><span class="fu">sqrt</span>(d<span class="op">.</span><span class="at">prob</span>) <span class="op">*</span> <span class="dv">200</span><span class="op">,</span></span>
+<span id="cb2-146"><a href="#cb2-146" aria-hidden="true" tabindex="-1"></a>            <span class="dt">fill</span><span class="op">:</span> d <span class="kw">=&gt;</span> d<span class="op">.</span><span class="at">sum</span> <span class="op">===</span> t <span class="op">?</span> <span class="st">"red"</span> <span class="op">:</span> <span class="st">"black"</span><span class="op">,</span></span>
+<span id="cb2-147"><a href="#cb2-147" aria-hidden="true" tabindex="-1"></a>          })<span class="op">,</span></span>
+<span id="cb2-148"><a href="#cb2-148" aria-hidden="true" tabindex="-1"></a>          Plot<span class="op">.</span><span class="fu">text</span>([{<span class="dt">x</span><span class="op">:</span> n<span class="op">/</span><span class="dv">2</span><span class="op">,</span> <span class="dt">y</span><span class="op">:</span> <span class="op">-</span><span class="fl">1.5</span>}]<span class="op">,</span> {</span>
+<span id="cb2-149"><a href="#cb2-149" aria-hidden="true" tabindex="-1"></a>            <span class="dt">text</span><span class="op">:</span> [<span class="st">"Distribution of (X₁, X₂)"</span>]<span class="op">,</span></span>
+<span id="cb2-150"><a href="#cb2-150" aria-hidden="true" tabindex="-1"></a>            <span class="dt">fontSize</span><span class="op">:</span> <span class="dv">16</span><span class="op">,</span></span>
+<span id="cb2-151"><a href="#cb2-151" aria-hidden="true" tabindex="-1"></a>          })<span class="op">,</span></span>
+<span id="cb2-152"><a href="#cb2-152" aria-hidden="true" tabindex="-1"></a>        ]</span>
+<span id="cb2-153"><a href="#cb2-153" aria-hidden="true" tabindex="-1"></a>      })</span>
+<span id="cb2-154"><a href="#cb2-154" aria-hidden="true" tabindex="-1"></a>    <span class="sc">}</span></span>
+<span id="cb2-155"><a href="#cb2-155" aria-hidden="true" tabindex="-1"></a><span class="vs">  &lt;/div&gt;</span></span>
+<span id="cb2-156"><a href="#cb2-156" aria-hidden="true" tabindex="-1"></a><span class="vs">  &lt;div class="plot"&gt;</span></span>
+<span id="cb2-157"><a href="#cb2-157" aria-hidden="true" tabindex="-1"></a><span class="vs">    &lt;div class="plot-title"&gt;P(X₁ | T(X))&lt;/div&gt;</span></span>
+<span id="cb2-158"><a href="#cb2-158" aria-hidden="true" tabindex="-1"></a><span class="vs">    </span><span class="sc">${</span></span>
+<span id="cb2-159"><a href="#cb2-159" aria-hidden="true" tabindex="-1"></a>      Plot<span class="op">.</span><span class="fu">plot</span>({</span>
+<span id="cb2-160"><a href="#cb2-160" aria-hidden="true" tabindex="-1"></a>        <span class="dt">width</span><span class="op">:</span> <span class="dv">450</span><span class="op">,</span></span>
+<span id="cb2-161"><a href="#cb2-161" aria-hidden="true" tabindex="-1"></a>        <span class="dt">height</span><span class="op">:</span> <span class="dv">450</span><span class="op">,</span></span>
+<span id="cb2-162"><a href="#cb2-162" aria-hidden="true" tabindex="-1"></a>        <span class="dt">margin</span><span class="op">:</span> <span class="dv">60</span><span class="op">,</span></span>
+<span id="cb2-163"><a href="#cb2-163" aria-hidden="true" tabindex="-1"></a>        <span class="dt">style</span><span class="op">:</span> {</span>
+<span id="cb2-164"><a href="#cb2-164" aria-hidden="true" tabindex="-1"></a>          <span class="dt">fontSize</span><span class="op">:</span> <span class="st">"14px"</span><span class="op">,</span></span>
+<span id="cb2-165"><a href="#cb2-165" aria-hidden="true" tabindex="-1"></a>          <span class="dt">fontWeight</span><span class="op">:</span> <span class="st">"normal"</span></span>
+<span id="cb2-166"><a href="#cb2-166" aria-hidden="true" tabindex="-1"></a>        }<span class="op">,</span></span>
+<span id="cb2-167"><a href="#cb2-167" aria-hidden="true" tabindex="-1"></a>        <span class="dt">x</span><span class="op">:</span> {</span>
+<span id="cb2-168"><a href="#cb2-168" aria-hidden="true" tabindex="-1"></a>          <span class="dt">label</span><span class="op">:</span> <span class="st">"X₁"</span><span class="op">,</span></span>
+<span id="cb2-169"><a href="#cb2-169" aria-hidden="true" tabindex="-1"></a>        }<span class="op">,</span></span>
+<span id="cb2-170"><a href="#cb2-170" aria-hidden="true" tabindex="-1"></a>        <span class="dt">y</span><span class="op">:</span> {</span>
+<span id="cb2-171"><a href="#cb2-171" aria-hidden="true" tabindex="-1"></a>          <span class="dt">label</span><span class="op">:</span> <span class="st">"Probability"</span><span class="op">,</span></span>
+<span id="cb2-172"><a href="#cb2-172" aria-hidden="true" tabindex="-1"></a>          <span class="dt">domain</span><span class="op">:</span> [<span class="dv">0</span><span class="op">,</span> <span class="bu">Math</span><span class="op">.</span><span class="fu">max</span>(<span class="op">...</span>conditionalProbs<span class="op">.</span><span class="fu">map</span>(d <span class="kw">=&gt;</span> d<span class="op">.</span><span class="at">prob</span>)) <span class="op">*</span> <span class="fl">1.1</span>]<span class="op">,</span></span>
+<span id="cb2-173"><a href="#cb2-173" aria-hidden="true" tabindex="-1"></a>        }<span class="op">,</span></span>
+<span id="cb2-174"><a href="#cb2-174" aria-hidden="true" tabindex="-1"></a>        <span class="dt">marks</span><span class="op">:</span> [</span>
+<span id="cb2-175"><a href="#cb2-175" aria-hidden="true" tabindex="-1"></a>          Plot<span class="op">.</span><span class="fu">barY</span>(conditionalProbs<span class="op">,</span> {<span class="dt">x</span><span class="op">:</span> <span class="st">"x1"</span><span class="op">,</span> <span class="dt">y</span><span class="op">:</span> <span class="st">"prob"</span><span class="op">,</span> <span class="dt">fill</span><span class="op">:</span> <span class="st">"red"</span>})<span class="op">,</span></span>
+<span id="cb2-176"><a href="#cb2-176" aria-hidden="true" tabindex="-1"></a>        ]</span>
+<span id="cb2-177"><a href="#cb2-177" aria-hidden="true" tabindex="-1"></a>      })</span>
+<span id="cb2-178"><a href="#cb2-178" aria-hidden="true" tabindex="-1"></a>    <span class="sc">}</span></span>
+<span id="cb2-179"><a href="#cb2-179" aria-hidden="true" tabindex="-1"></a><span class="vs">  &lt;/div&gt;</span></span>
+<span id="cb2-180"><a href="#cb2-180" aria-hidden="true" tabindex="-1"></a><span class="vs">&lt;/div&gt;`</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<div>
+<div id="ojs-cell-1-2" data-nodetype="declaration">
+
+</div>
+</div>
+</div>
+<div class="cell-output cell-output-display">
+<div>
+<div id="ojs-cell-1-3" data-nodetype="declaration">
+
+</div>
+</div>
+</div>
+<div class="cell-output cell-output-display">
+<div>
+<div id="ojs-cell-1-4" data-nodetype="declaration">
+
+</div>
+</div>
+</div>
+<div class="cell-output cell-output-display">
+<div>
+<div id="ojs-cell-1-5" data-nodetype="declaration">
+
+</div>
+</div>
+</div>
+<div class="cell-output cell-output-display">
+<div>
+<div id="ojs-cell-1-6" data-nodetype="declaration">
+
+</div>
+</div>
+</div>
+<div class="cell-output cell-output-display">
+<div>
+<div id="ojs-cell-1-7" data-nodetype="declaration">
+
+</div>
+</div>
+</div>
+<div class="cell-output cell-output-display">
+<div>
+<div id="ojs-cell-1-8" data-nodetype="declaration">
+
+</div>
+</div>
+</div>
+<div class="cell-output cell-output-display">
+<div>
+<div id="ojs-cell-1-9" data-nodetype="declaration">
+
+</div>
+</div>
+</div>
+<div class="cell-output cell-output-display">
+<div>
+<div id="ojs-cell-1-10" data-nodetype="expression">
+
+</div>
+</div>
+</div>
+</div>
 </section>
 <section id="factorization-theorem" class="level2">
 <h2 class="anchored" data-anchor-id="factorization-theorem">Factorization theorem</h2>
+<p>As we will see next, we didn’t really need to go to the trouble of calculating the conditional distribution in the first example. Once we noticed that the density depends on <span class="math inline">\(x\)</span> only through <span class="math inline">\(T(x)\)</span>, we could have concluded that <span class="math inline">\(T(X)\)</span> was sufficient.</p>
 <p>The easiest way to verify that a statistic is sufficient is to show that the density <span class="math inline">\(p_\theta\)</span> factorizes into a part that involves only <span class="math inline">\(\theta\)</span> and <span class="math inline">\(T(x)\)</span>, and a part that involves only <span class="math inline">\(h(x)\)</span>.</p>
 <p><strong>Factorization Theorem:</strong> Let <span class="math inline">\(\cP\)</span> be a model having densities <span class="math inline">\(p_\theta(x)\)</span> with respect to a common dominating measure <span class="math inline">\(\mu\)</span>. Then <span class="math inline">\(T(X)\)</span> is sufficient for <span class="math inline">\(\cP\)</span> if and only if there exist non-negative functions <span class="math inline">\(g_\theta\)</span> and <span class="math inline">\(h\)</span> for which</p>
 <p><span class="math display">\[
@@ -348,39 +582,108 @@ p_\theta(x) = g_\theta(T(x)) h(x),
 <p><span class="math display">\[
 \mu\left(\{x:\; p_\theta(x) \neq g_\theta(T(x))h(x)\}\right) = 0.
 \]</span></p>
-<p>It is needed to avoid counterexamples with continuous distributions where we could arbitrarily change the value of <span class="math inline">\(p_{\theta_0}(x_0)\)</span> for a single <span class="math inline">\(\theta_0\)</span> and <span class="math inline">\(x_0\)</span> without actually changing any of the distributions.</p>
-<p><strong>Proof:</strong> The proof is easiest in the discrete case, so we don’t have to deal with conditioning on measure-zero events.</p>
-<p>First, assume that there exists a factorization <span class="math inline">\(p_\theta(x) = g_\theta(T(x)) h(x)\)</span>. Then we</p>
+<p>It is needed to avoid counterexamples where we mess with the densities on a set of points that the base measure doesn’t assign any mass, which would let us destroy the factorization structure without changing any of the distributions.</p>
+<p><strong>Proof (discrete</strong> <span class="math inline">\(\cX\)</span>): The proof is easiest in the discrete case, so that we don’t have to deal with conditioning on measure-zero events and worry about things like Jacobians for change of variables.</p>
+<p>We’ll assume without loss of generality that <span class="math inline">\(\mu\)</span> is the counting measure: if <span class="math inline">\(\mu\)</span> were some other measure, it would have to have a density <span class="math inline">\(m\)</span> with respect to the counting measure and we would just have to carry around <span class="math inline">\(m(x)\)</span> in all of our expressions.</p>
+<p>First, assume that there exists a factorization <span class="math inline">\(p_\theta(x) = g_\theta(T(x)) h(x)\)</span>. Then we have</p>
 <p><span class="math display">\[
 \begin{aligned}
 \PP_\theta(X = x \mid T(X) = t)
-&amp;= \frac{p_\theta(x)1\{T(x) = t\}}{\displaystyle\sum_{z:\;T(z) = t} p_\theta(z)}\\[7pt]
+&amp;= \frac{\PP_\theta(X = x, T(X) = t)}{\PP_\theta(T(X) = t)}\\[7pt]
 &amp;= \frac{g_\theta(t) h(x) 1\{T(x) = t\}}{g_\theta(t)\displaystyle\sum_{z:\;T(z) = t} h(z)}\\[7pt]
 &amp;= \frac{h(x) 1\{T(x) = t\}}{\displaystyle\sum_{z:\;T(z) = t} h(z)},
 \end{aligned}
 \]</span></p>
 <p>which we see does not depend on <span class="math inline">\(\theta\)</span>.</p>
 <p>Next consider the opposite direction. If <span class="math inline">\(T(X)\)</span> is sufficient, then we can construct a factorization by writing</p>
-<p>. First, define</p>
 <p><span class="math display">\[
-g_\theta(t) = \PP_\theta(T(X)=t) = \sum_{x:\;T(x) = t} p_\theta(x).
-\]</span></p>
-<p>Then, let</p>
+\begin{aligned}
+g_\theta(t) &amp;= \PP_\theta(T(X)=t)\\
+h(x) &amp;= \PP(X = x \mid T(X) = T(x)),
+\end{aligned}
+\]</span> noting that the conditional probability in the definition of <span class="math inline">\(h(x)\)</span> does not depend on <span class="math inline">\(\theta\)</span> by sufficiency. Then we have</p>
 <p><span class="math display">\[
-h(x) = \PP(X = x \mid T(X) = T(x)),
-\]</span></p>
-<p>which does not depend on <span class="math inline">\(\theta\)</span> by sufficiency. Then we have</p>
-<p><span class="math display">\[
-\PP_\theta(X = x) = \PP_\theta(T(X) = T(x)) \;\cdot\;\PP_\theta(X = x \mid T(X) = T(x)) = g_\theta(T(x)) h(x)
-\]</span></p>
+\PP_\theta(X = x) = \PP_\theta(T(X) = T(x)) \;\cdot\;\PP_\theta(X = x \mid T(X) = T(x)) = g_\theta(T(x)) h(x),
+\]</span> so <span class="math inline">\(g_\theta(T(x))h(x)\)</span> is indeed the pmf <span class="math inline">\(p_\theta(x)\)</span>.</p>
 </section>
-<section id="sufficient-statistics-in-exponential-families" class="level2">
-<h2 class="anchored" data-anchor-id="sufficient-statistics-in-exponential-families">Sufficient statistics in exponential families</h2>
+<section id="examples" class="level2">
+<h2 class="anchored" data-anchor-id="examples">Examples</h2>
+<p>Some initial examples:</p>
+<p><strong>Example: Normal location family</strong> Assume we observe an i.i.d. sample from a normal distribution with unit variance and unknown mean:</p>
+<p><span class="math display">\[
+X_1,\ldots,X_n \simiid N(\theta,1) = \frac{1}{\sqrt{2\pi}} e^{-(x-\theta)^2/2} = \frac{1}{\sqrt{2\pi}} e^{-x^2/2 + \theta x - \theta^2/2}
+\]</span></p>
+<p>The joint density function for the full data set <span class="math inline">\(X = (X_1,\ldots,X_n)\)</span> over <span class="math inline">\(\RR^n\)</span> is</p>
+<p><span class="math display">\[
+\begin{aligned}
+p_\theta(x) &amp;= (2\pi)^{-n/2} \cdot \prod_{i=1}^n e^{-x_i^2/2 + \theta x_i - \theta^2/2}\\[7pt]
+&amp;= \underbrace{e^{\theta \left(\sum_i x_i\right) -n\theta^2/2}}_{g_\theta\left(\sum_i x_i\right)}\cdot \underbrace{\frac{\prod_{i=1}^n e^{-x_i^2/2}}{(2\pi)^{-n/2}}}_{h(x)},
+\end{aligned}
+\]</span> which by the factorization theorem shows that <span class="math inline">\(\sum_i X_i\)</span> is sufficient.</p>
+<p><strong>Example: Poisson family</strong> Next assume we observe an i.i.d. sample from a Poisson distribution with unknown mean <span class="math inline">\(\theta\)</span>:</p>
+<p><span class="math display">\[
+X_1,\ldots,X_n \simiid \text{Pois}(\theta) = \frac{\theta^x e^{-\theta}}{x!}, \quad \text{ for } x = 0,1,\ldots
+\]</span> The joint pmf for the full data set <span class="math inline">\(X = (X_1,\ldots,X_n)\)</span> over <span class="math inline">\(\{0,1,\ldots\}^n\)</span> is</p>
+<p><span class="math display">\[
+\begin{aligned}
+p_\theta(x) &amp;= \prod_{i=1}^n \frac{\theta^{x_i}e^{-\theta}}{x_i!}\\[7pt]
+&amp;= \underbrace{e^{\theta \left(\sum_i x_i\right) -n\theta}}_{g_\theta\left(\sum_i x_i\right)}\cdot \underbrace{\left(\prod_{i=1}^n x_i!\right)^{-1}}_{h(x)},
+\end{aligned}
+\]</span> Showing once again that <span class="math inline">\(T(X) = \sum_i X_i\)</span> is sufficient. As we’ll find out in the next lecture, there is a good reason why these calculations turned out so similarly: both of these models have what is called an <em>exponential family</em> structure.</p>
+<p><strong>Example: Uniform location family</strong> As a third example, suppose we observe an i.i.d. sample from a uniform distribution on the interval <span class="math inline">\([\theta, \theta + 1]\)</span>:</p>
+<p><span class="math display">\[
+X_1,\ldots, X_n \simiid U[\theta, \theta+1] = 1\{\theta \leq x \leq \theta + 1\}.
+\]</span> The joint density function for the full data set is</p>
+<p><span class="math display">\[
+p_\theta(x) = \prod_{i=1}^n 1\{\theta \leq x \leq \theta + 1} = 1\{\theta \leq \min_i x_i\} 1\{\max_i x_i \leq \theta + 1\},
+\]</span> so <span class="math inline">\(T(X) = (\min_i X_i, \max_i X_i)\)</span> is sufficient.</p>
+</section>
+<section id="interpretations-of-sufficiency" class="level2">
+<h2 class="anchored" data-anchor-id="interpretations-of-sufficiency">Interpretations of sufficiency</h2>
+</section>
+<section id="sufficient-statistics-under-i.i.d.-sampling" class="level2">
+<h2 class="anchored" data-anchor-id="sufficient-statistics-under-i.i.d.-sampling">Sufficient statistics under i.i.d. sampling</h2>
+</section>
+<section id="minimal-sufficiency" class="level2">
+<h2 class="anchored" data-anchor-id="minimal-sufficiency">Minimal sufficiency</h2>
+<p>Consider again the example with <span class="math inline">\(X_1,\ldots,X_n \simiid N(\theta,1)\)</span>. We have shown that <span class="math inline">\(\sum_i X_i\)</span> is sufficient. It follows that <span class="math inline">\(\overline{X} = \frac{1}{n}\sum_i X_i\)</span> is also sufficient. But we have also shown that the vector of order statistics <span class="math inline">\(S(X) = (X_{(1)}, \ldots, X_{(n)})\)</span> is another sufficient statistic. Finally, the full data set <span class="math inline">\(X\)</span> is always a sufficient statistic, by definition.</p>
+<p>While these are indeed all sufficient statistics, some of them represent more significant compressions of the data than others. We can see this from the fact that <span class="math inline">\(\sum_i X_i\)</span> and <span class="math inline">\(\overline{X}\)</span> are recoverable from each other, and can also be recovered from either <span class="math inline">\(S(X)\)</span> or <span class="math inline">\(X\)</span> itself, but <span class="math inline">\(S(X)\)</span> cannot be recovered from <span class="math inline">\(\sum_i X_i\)</span> or <span class="math inline">\(\overline{X}\)</span>. The full data <span class="math inline">\(X\)</span> cannot be recovered from any of the other three, but any of the other three can be recovered from it. Among these statistics, the first two represent the greatest reduction of the data, and <span class="math inline">\(X\)</span> represents no reduction at all, while <span class="math inline">\(S(X)\)</span> sits in the middle.</p>
+<p>Any statistic from which a sufficient statistic can be recovered is immediately a sufficient statistic:</p>
+<p><strong>Proposition:</strong> If <span class="math inline">\(T(X)\)</span> is sufficient and <span class="math inline">\(T(X) = f(S(X))\)</span> then <span class="math inline">\(S(X)\)</span> is also sufficient.</p>
+<p><em>Proof:</em> By the factorization theorem we can find densities with <span class="math display">\[
+p_\theta(x) = g_\theta(T(x))h(x) = (g_\theta \circ f)(S(x)) h(x),
+\]</span> showing that <span class="math inline">\(S(X)\)</span> is sufficient as well.</p>
+<p>We say that a sufficient statistic is <strong>minimal</strong> if it can be recovered from any other sufficient statistic. That is, <span class="math inline">\(T(X)\)</span> is <strong>minimal sufficient</strong> if</p>
+<ol type="1">
+<li><p><span class="math inline">\(T(X)\)</span> is sufficient, and</p></li>
+<li><p>For any other sufficient statistic <span class="math inline">\(S(X)\)</span>, we have <span class="math inline">\(T(X) = f(S(X))\)</span> for some <span class="math inline">\(f\)</span> (almost surely in <span class="math inline">\(\cP\)</span>).</p></li>
+</ol>
+<p>We would like to be able to recognize minimal sufficient statistics when we can. For a model <span class="math inline">\(\cP\)</span> with densities <span class="math inline">\(p_\theta\)</span>, we can say that two data sets <span class="math inline">\(x,y\in \cX\)</span> are <em>equivalent</em> (with respect to statistical inference in <span class="math inline">\(\cP\)</span>) if <span class="math inline">\(p_\theta(x)/p_\theta(y)\)</span> does not depend on <span class="math inline">\(\theta\)</span>. We can write <span class="math inline">\(x \equiv_{\cP} y\)</span> if this is the case.</p>
+<p>Note that, for any sufficient statistic <span class="math inline">\(T(X)\)</span>, values that map to the same output value <span class="math inline">\(t\)</span> must be equivalent: if <span class="math inline">\(T(x)=T(y)=t\)</span>, we have <span class="math display">\[
+\frac{p_\theta(x)}{p_\theta(y)} = \frac{\PP_\theta(X = x \text{ and } T(X) = t)}{\PP_\theta(X = y \text{ and } T(X) = t)} = \frac{\PP(X = x \mid T(X) = t)}{\PP(X = y \mid T(X) = t)},
+\]</span> which does not depend on <span class="math inline">\(\theta\)</span> by sufficiency of <span class="math inline">\(T(X)\)</span>. Thus, for <em>any</em> sufficient statistic we have <span class="math inline">\(T(x) = T(y) \Rightarrow x \equiv_{\cP} y\)</span>: the function <span class="math inline">\(T\)</span> is only allowed to collapse values that are equivalent to each other. For a <em>minimal sufficient statistic</em>, this implication goes both ways since <span class="math inline">\(T\)</span> collapses the sample space as much as possible. That is,</p>
+<p><strong>Proposition:</strong> Assume <span class="math inline">\(\cP\)</span> has densities <span class="math inline">\(p_\theta(x)\)</span>, and <span class="math inline">\(T(X)\)</span> is any statistic. If we have <span class="math display">\[x \equiv_{\cP} y \iff T(x) = T(y),\]</span> then <span class="math inline">\(T(X)\)</span> is minimal sufficient.</p>
+<p><em>Proof (discrete <span class="math inline">\(\cX\)</span>):</em> First, we show <span class="math inline">\(T(X)\)</span> is sufficient. For any <span class="math inline">\(x\)</span> with <span class="math inline">\(T(x) = t\)</span>, we have</p>
+<p><span class="math display">\[
+\PP_\theta(X = x \mid T(X) = t) = \frac{p_\theta(x)}{\sum_{z: T(z) = t} p_\theta(z)} = \frac{1}{\sum_{z:\; T(z) = t} p_\theta(z)/p_\theta(x)},
+\]</span> which does not depend on <span class="math inline">\(\theta\)</span> because all of the values <span class="math inline">\(z\)</span> that we sum over in the denominator map to the same <span class="math inline">\(t\)</span>, and are therefore equivalent to <span class="math inline">\(x\)</span> by assumption.</p>
+<p>Next, assume <span class="math inline">\(S(X)\)</span> is any other sufficient statistic. If <span class="math inline">\(S(x) = S(y) = s\)</span>, then <span class="math inline">\(x \equiv_{\cP} y\)</span>, by the argument above the theorem, and consequently <span class="math inline">\(T(x) = T(y)\)</span> by assumption. Then we can set <span class="math inline">\(f(s) = T(x)\)</span>. For any other value <span class="math inline">\(z\)</span> with <span class="math inline">\(S(z) = s\)</span>, we must also have <span class="math inline">\(x \equiv_{\cP} z\)</span> so <span class="math inline">\(T(z) = T(x) = f(S(z))\)</span>. Since <span class="math inline">\(s\)</span> was arbitrary, we have the result.</p>
 
 
 </section>
 
 </main> <!-- /main -->
+<script type="ojs-module-contents">
+{"contents":[{"methodName":"interpret","cellName":"ojs-cell-1","inline":false,"source":"\n// CSS for layout\nhtml`\n<style>\n  .plot-container {\n    display: flex;\n    justify-content: space-around;\n    flex-wrap: wrap;\n  }\n  .plot {\n    flex: 0 1 450px;\n    margin: 10px;\n  }\n  .plot-title {\n    text-align: center;\n    font-size: 20px;\n    font-weight: bold;\n    margin-bottom: 10px;\n  }\n</style>\n`\n\n// Helper functions\nfunction binomialProbability(n, k, p) {\n  return combination(n, k) * Math.pow(p, k) * Math.pow(1 - p, n - k);\n}\n\nfunction combination(n, k) {\n  return factorial(n) / (factorial(k) * factorial(n - k));\n}\n\nfunction factorial(n) {\n  if (n === 0 || n === 1) return 1;\n  return n * factorial(n - 1);\n}\n\n// Input parameters\nviewof n = Inputs.range([2, 10], {step: 1, value: 5, label: \"n:\"})\nviewof theta = Inputs.range([0, 1], {step: 0.01, value: 0.5, label: \"θ:\"})\nviewof t = Inputs.range([0, 2 * n], {step: 1, value: n, label: \"T(X) = X₁ + X₂:\"})\n\n// Calculate probabilities\nprobabilities = {\n  let probs = [];\n  for (let x1 = 0; x1 <= n; x1++) {\n    for (let x2 = 0; x2 <= n; x2++) {\n      let prob = binomialProbability(n, x1, theta) * binomialProbability(n, x2, theta);\n      probs.push({x1, x2, prob, sum: x1 + x2});\n    }\n  }\n  return probs;\n}\n\n// Calculate conditional probabilities\nconditionalProbs = {\n  let totalProb = probabilities.filter(p => p.sum === t).reduce((sum, p) => sum + p.prob, 0);\n  return Array.from({length: n + 1}, (_, x1) => {\n    let x2 = t - x1;\n    let prob = (x2 >= 0 && x2 <= n) ? probabilities.find(p => p.x1 === x1 && p.x2 === x2)?.prob || 0 : 0;\n    return {x1, prob: prob / totalProb};\n  });\n}\n\n// Create plot container\nhtml`<div class=\"plot-container\">\n  <div class=\"plot\">\n    <div class=\"plot-title\">P(X₁, X₂)</div>\n    ${\n      Plot.plot({\n        width: 450,\n        height: 450,\n        margin: 60,\n        style: {\n          fontSize: \"14px\",\n          fontWeight: \"normal\"\n        },\n        x: {\n          label: \"X₂\",\n          domain: [-1, n],\n          tickFormat: d => d >= 0 ? d : \"\",\n        },\n        y: {\n          label: \"X₁\",\n          domain: [-1, n],\n          tickFormat: d => d >= 0 ? d : \"\",\n        },\n        marks: [\n          Plot.dot(probabilities, {\n            x: \"x2\",\n            y: \"x1\",\n            r: d => Math.sqrt(d.prob) * 200,\n            fill: d => d.sum === t ? \"red\" : \"black\",\n          }),\n          Plot.text([{x: n/2, y: -1.5}], {\n            text: [\"Distribution of (X₁, X₂)\"],\n            fontSize: 16,\n          }),\n        ]\n      })\n    }\n  </div>\n  <div class=\"plot\">\n    <div class=\"plot-title\">P(X₁ | T(X))</div>\n    ${\n      Plot.plot({\n        width: 450,\n        height: 450,\n        margin: 60,\n        style: {\n          fontSize: \"14px\",\n          fontWeight: \"normal\"\n        },\n        x: {\n          label: \"X₁\",\n        },\n        y: {\n          label: \"Probability\",\n          domain: [0, Math.max(...conditionalProbs.map(d => d.prob)) * 1.1],\n        },\n        marks: [\n          Plot.barY(conditionalProbs, {x: \"x1\", y: \"prob\", fill: \"red\"}),\n        ]\n      })\n    }\n  </div>\n</div>`\n"},{"methodName":"interpretQuiet","source":"shinyInput('n')"},{"methodName":"interpretQuiet","source":"shinyInput('theta')"},{"methodName":"interpretQuiet","source":"shinyInput('t')"}]}
+</script>
+<script type="module">
+if (window.location.protocol === "file:") { alert("The OJS runtime does not work with file:// URLs. Please use a web server to view this document."); }
+window._ojs.paths.runtimeToDoc = "../../reader";
+window._ojs.paths.runtimeToRoot = "../..";
+window._ojs.paths.docToRoot = "..";
+window._ojs.selfContained = false;
+window._ojs.runtime.interpretFromScriptTags();
+</script>
 <script id="quarto-html-after-body" type="application/javascript">
 window.document.addEventListener("DOMContentLoaded", function (event) {
   const toggleBodyColorMode = (bsSheetEl) => {
