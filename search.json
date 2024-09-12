@@ -46,7 +46,7 @@
     "href": "units/unit1.html#evaluated-python-code-chunk-with-a-plot",
     "title": "Unit 1: Intro",
     "section": "Evaluated Python code chunk, with a plot",
-    "text": "Evaluated Python code chunk, with a plot\n\n\nCode\nimport numpy as np\nx = np.random.normal(size=100)\nimport matplotlib.pyplot as plt\nplt.hist(x)\nplt.show()\nnp.mean(x)\n\n\n\n\n\n0.2525104602082963"
+    "text": "Evaluated Python code chunk, with a plot\n\n\nCode\nimport numpy as np\nx = np.random.normal(size=100)\nimport matplotlib.pyplot as plt\nplt.hist(x)\nplt.show()\nnp.mean(x)\n\n\n\n\n\n0.047655970721861916"
   },
   {
     "objectID": "units/unit1.html#latex",
@@ -725,7 +725,14 @@
     "href": "reader/exponential-families.html#exponential-tilting",
     "title": "Exponential Families",
     "section": "Exponential tilting",
-    "text": "Exponential tilting\nTo help interpret what it means for a model to have an exponential family structure, we can think of \\(p_\\eta(x) = e^{\\eta'T(x) - A(\\eta)} h(x)\\) as an exponential tilt of the carrier density \\(h(x)\\). That is, beginning with \\(h(x)\\), we first multiply by \\(e^{\\eta'T(x)}\\), increasing the density of points in the sample space for which \\(\\eta'T(x)\\) is largest relative to those for which \\(\\eta'T(x)\\) is smaller. Then, we re-normalize by \\(e^{-A(\\eta)}\\) to obtain a probability distribution.\nThis is easiest to understand in a one-parameter family with sufficient statistic \\(T(X) = X\\)\n\nPlot = require(\"@observablehq/plot\")\nd3 = require(\"d3\")\n\nkatex = require(\"https://cdn.jsdelivr.net/npm/katex@0.16.7/dist/katex.min.js\")\n\n// Function to render LaTeX\nfunction tex(string) {\n  let span = document.createElement('span');\n  katex.render(string, span, {output: \"mathml\", throwOnError: false});\n  return span;\n}\n\n// Create sliders for mean and standard deviation\nviewof eta1 = Inputs.range([-5, 5], {step: 0.1, label: tex(\"\\\\eta_1\"), value: 0})\nviewof eta2 = Inputs.range([-5, 5], {step: 0.1, label: tex(\"\\\\eta_2\"), value: 0})\nviewof eta3 = Inputs.range([-0.3, 0.3], {step: 0.01, label: tex(\"\\\\eta_3\"), value: 0})\n\n// Function to generate normal distribution data\nfunction explDistribution(eta1, eta2, eta3, n = 2000) {\n  const x = d3.range(-1, 1, 2/n);\n  const unnorm = x.map(x =&gt; ({\n    x: x,\n    y: Math.exp(eta1 * x + eta2 * x * x + eta3 * Math.cos(30 * x * Math.PI)) * (1 - Math.abs(x))\n  }));\n  const normConst = d3.sum(unnorm, point =&gt; point.y) * 2 / n;\n  return unnorm.map(point =&gt; ({\n    x: point.x,\n    y: point.y / normConst\n  }));\n}\n\n// Create the plot\nPlot.plot({\n  width: 640,\n  height: 400,\n  x: {label: \"X\"},\n  y: {label: \"Density\"},\n  marks: [\n    Plot.line(explDistribution(eta1, eta2, eta3), {x: \"x\", y: \"y\", stroke: \"steelblue\"}),\n    Plot.ruleY([0])\n  ]\n})"
+    "text": "Exponential tilting\nTo help interpret what it means for a model to have an exponential family structure, we can think of \\(p_\\eta(x) = e^{\\eta'T(x) - A(\\eta)} h(x)\\) as an exponential tilt of the carrier density \\(h(x)\\). That is, beginning with \\(h(x)\\), we first multiply by \\(e^{\\eta'T(x)}\\), increasing the density of points in the sample space for which \\(\\eta'T(x)\\) is largest relative to those for which \\(\\eta'T(x)\\) is smaller. Then, we re-normalize by \\(e^{-A(\\eta)}\\) to obtain a probability distribution.\nThis is easiest to understand in a one-parameter family with sufficient statistic \\(T(X) = X\\), (need to finish)"
+  },
+  {
+    "objectID": "reader/exponential-families.html#visualization-of-exponential-tilting",
+    "href": "reader/exponential-families.html#visualization-of-exponential-tilting",
+    "title": "Exponential Families",
+    "section": "Visualization of exponential tilting",
+    "text": "Visualization of exponential tilting\nBelow we visualize an exponential family with triangular'' base density $h(x) = \\max\\{0, 1-|x|\\}$ and three sufficient statistics $T_1(X) = X, T_2(X) = X^2, and T_3(X) = \\cos(100 X)$. Use the dials totilt’’ the density toward each statistic, and see how the density changes.\n\nPlot = require(\"@observablehq/plot\")\nd3 = require(\"d3\")\n\nkatex = require(\"https://cdn.jsdelivr.net/npm/katex@0.16.7/dist/katex.min.js\")\n\n// Function to render LaTeX\nfunction tex(string) {\n  let span = document.createElement('span');\n  katex.render(string, span, {output: \"mathml\", throwOnError: false});\n  return span;\n}\n\n// Create sliders for mean and standard deviation\nviewof eta1 = Inputs.range([-5, 5], {step: 0.1, label: tex(\"\\\\eta_1\"), value: 0})\nviewof eta2 = Inputs.range([-5, 5], {step: 0.1, label: tex(\"\\\\eta_2\"), value: 0})\nviewof eta3 = Inputs.range([-0.3, 0.3], {step: 0.01, label: tex(\"\\\\eta_3\"), value: 0})\n\n// Function to generate normal distribution data\nfunction explDistribution(eta1, eta2, eta3, n = 2000) {\n  const x = d3.range(-1, 1, 2/n);\n  const unnorm = x.map(x =&gt; ({\n    x: x,\n    y: Math.exp(eta1 * x + eta2 * x * x + eta3 * Math.cos(30 * x * Math.PI)) * (1 - Math.abs(x))\n  }));\n  const normConst = d3.sum(unnorm, point =&gt; point.y) * 2 / n;\n  return unnorm.map(point =&gt; ({\n    x: point.x,\n    y: point.y / normConst\n  }));\n}\n\n// Create the plot\nPlot.plot({\n  width: 640,\n  height: 400,\n  x: {label: \"X\"},\n  y: {label: \"Density\"},\n  marks: [\n    Plot.line(explDistribution(eta1, eta2, eta3), {x: \"x\", y: \"y\", stroke: \"steelblue\"}),\n    Plot.ruleY([0])\n  ]\n})"
   },
   {
     "objectID": "reader/exponential-families.html#repeated-sampling-from-exponential-families",
@@ -1082,7 +1089,7 @@
     "href": "units/unit3.html#evaluated-python-code-chunk-with-a-plot",
     "title": "Unit 3: More",
     "section": "Evaluated Python code chunk, with a plot",
-    "text": "Evaluated Python code chunk, with a plot\n\n\nCode\nimport numpy as np\nx = np.random.normal(size=100)\nimport matplotlib.pyplot as plt\nplt.hist(x)\nplt.show()\nnp.mean(x)\n\n\n\n\n\n0.01650088793274388"
+    "text": "Evaluated Python code chunk, with a plot\n\n\nCode\nimport numpy as np\nx = np.random.normal(size=100)\nimport matplotlib.pyplot as plt\nplt.hist(x)\nplt.show()\nnp.mean(x)\n\n\n\n\n\n0.08899399588659117"
   },
   {
     "objectID": "units/unit3.html#latex",
