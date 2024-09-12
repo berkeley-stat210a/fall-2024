@@ -1,0 +1,218 @@
+\documentclass{article}
+
+\usepackage[margin=1.2in]{geometry}
+\usepackage{graphicx}
+\usepackage{amsmath,amssymb,amsthm,bm}
+\usepackage{latexsym,color,minipage-marginpar,caption,multirow,verbatim}
+\usepackage{enumerate}
+\usepackage{times}
+
+\newcommand{\cP}{\mathcal{P}}
+\newcommand{\cX}{\mathcal{X}}
+\newcommand{\cR}{\mathcal{R}}
+
+\newcommand{\EE}{\mathbb{E}}
+\newcommand{\PP}{\mathbb{P}}
+\newcommand{\QQ}{\mathbb{Q}}
+\newcommand{\RR}{\mathbb{R}}
+\newcommand{\ZZ}{\mathbb{Z}}
+
+\newcommand{\Var}{\textnormal{Var}}
+
+
+\newcommand{\simiid}{\overset{\text{i.i.d.}}{\sim}}
+\newcommand{\ep}{\varepsilon}
+
+\definecolor{darkblue}{rgb}{0.2, 0.2, 0.5}
+\newcommand{\sol}{~\\\color{darkblue}{\bf Solution:~\\}}
+
+\newenvironment{solution}{~\\\color{darkblue}{\bf Solution:~\\}}{}
+\newenvironment{ifsol}{\color{darkblue}}{}
+
+\theoremstyle{definition}
+\newtheorem{problem}{Problem}
+
+
+\begin{document}
+
+\title{Stats 210A, Fall 2024\\
+  Homework 2 \\
+  {\large {\bf Due on}: Wednesday, Sep. 18}}
+\date{}
+
+\maketitle
+
+\paragraph{Instructions:} You may disregard measure-theoretic niceties about conditioning on measure-zero sets, almost-sure equality vs. actual equality, ``all functions'' vs. ``all measurable functions,'' etc. (unless the problem is explicitly asking about such issues).
+
+\begin{problem}[Bayesian interpretation of sufficiency]
+  Assume we have a family $\cP$ defined by densities $p_{\theta}(x)$ with respect to a common measure $\mu$ on $\cX$, for $\theta\in \Theta \subseteq \RR^n$. Additionally, assume the parameter $\theta$ is itself random, following {\em prior density} $q(\theta)$ with respect to the Lebesgue measure on $\Theta$. 
+
+  Then, we can write the {\em posterior density} (distribution of $\theta$ given $X=x$) as
+  \[
+  q_{\text{post}}(\theta \mid x) = \frac{p_\theta(x)q(\theta)}{\int_{\Theta} p_\zeta(x)q(\zeta) \,d \zeta}.
+  \]
+  {\bf Note:} this manipulation of the densities generally works even though we might worry about conditioning on a measure zero set. Feel free to make similar manipulations yourself in the problem.
+
+  \begin{enumerate}[(a)]
+    %%% 
+  \item Suppose a statistic $T(X)$ has the property that, for any prior distribution $q(\theta)$, the posterior distribution $q_{\text{post}}(\theta \mid x)$ depends on $x$ only through $T(x)$. Show that $T(X)$ is sufficient for $\cP$.
+
+    
+    
+    %%% 
+  \item Conversely, show that, if $T(X)$ is sufficient for $\cP$ then, for any prior $q$, the posterior depends on $x$ only through $T(x)$.
+    
+    
+
+  \end{enumerate}
+
+\paragraph{Moral:} If we have a prior opinion about $\theta$ in the form of a distribution, and then we update our opinion using Bayes' rule after observing $X$, then we will naturally adhere to the sufficiency principle. This gives an alternative epistemological motivation for the principle. Another interpretation of the result of this exercise is that, in the Bayesian model, $\theta$ is conditionally independent of $X$ given $T(X)$ if and only if $T(X)$ is sufficient.
+
+\end{problem}
+
+\begin{problem}[Convexity of $A(\eta)$ and $\Xi_1$]
+Let $\cP=\{p_\eta:\; \eta \in \Xi_1\}$ denote an $s$-parameter exponential family in canonical form
+\[
+p_\eta(x) = e^{\eta'T(x) - A(\eta)}h(x), \qquad A(\eta) = \log\int_{\cX} e^{\eta'T(x)}h(x)\,d \mu(x),
+\]
+where $\Xi_1=\{\eta:\; A(\eta) < \infty\}$ is the natural parameter space. 
+
+Recall H\"{o}lder's inequality: if $q_1,q_2\geq 1$ with $q_1^{-1} + q_2^{-1} = 1$, and $f_1$ and $f_2$ are ($\mu$-measurable) functions from $\cX$ to $\RR$, then
+\[
+\|f_1f_2\|_{L^1(\mu)} \leq \|f_1\|_{L^{q_1}(\mu)}\|f_2\|_{L^{q_2}(\mu)}, \quad \text{ where } \|f\|_{L^{q}(\mu)} = \left(\int_{\cX} |f(x)|^q\,d \mu(x)\right)^{1/q}.
+\]
+{\bf Note:} $q_1=q_2=2$ reduces to Cauchy-Schwarz.
+
+
+\begin{enumerate}[(a)]
+\item Show that $A(\eta):\;\RR^s \to [0,\infty]$ is a convex function: that is, for {\em any} $\eta_1,\eta_2\in \RR^s$ (not just in $\Xi_1$), and $c\in [0,1]$ then
+  \begin{equation}\label{eq:ineq}
+  A(c\eta_1 + (1-c)\eta_2) \leq c A(\eta_1) + (1-c) A(\eta_2)
+  \end{equation}
+  {\bf Hint}: try $q_1=c^{-1}$, $f_1(x)^{1/c}=e^{\eta_1'T(x)}h(x)$.
+
+  
+
+
+\item Use the previous part to show that $\Xi_1\subseteq \RR^s$ is convex. 
+
+  
+  
+
+
+\end{enumerate}
+
+\paragraph{Moral:} The natural parameter space for any exponential family (meaning the set of all parameters $\eta$ that give normalizable densities) is a convex subset of $\RR^s$.
+
+
+\end{problem}
+
+\begin{problem}[Expectation of an increasing function]
+\begin{enumerate}[(a)]
+\item Assume $X\sim P$ is a real-valued random variable. Show that if $f(x)$ and $g(x)$ are non-decreasing functions of $x$, then 
+\[
+\text{Cov}(f(X),g(X)) \geq 0
+\]
+{\bf Hint}: first show $\EE\left[(f(X_1)-f(X_2))(g(X_1)-g(X_2))\right] = 2\text{Cov}(f(X_1),g(X_1))$, where $X_1,X_2\simiid P$.
+
+
+
+\item Let $p_\eta(x)$ be a one-parameter canonical exponential family with non-decreasing sufficient statistic $T(x)$, where $x\in\cX\subseteq \RR$:
+\[
+p_\eta(x) = e^{\eta T(x) - A(\eta)}h(x).
+\]
+Let $\psi(x)$ be any non-decreasing bounded function. Show that, for $\eta\in\Xi_1^\circ$, the interior of the natural parameter space, $\frac{d}{d \eta}\EE_{\eta}[\psi(X)] \geq 0$.
+
+{\bf Hint}: find an expression for $\frac{d}{d \eta} \EE_{\eta}[\psi(X)]$ by using methods akin to the ones we used in class to derive the differential identities. You may assume it is justified to differentiate under the integral sign.
+
+
+
+\item Conclude that $X$ is stochastically increasing in $\eta$; that is, show $\PP_\eta(X \leq c)$ is non-increasing in $\eta$, for every $c \in \RR$.
+
+
+
+\end{enumerate}
+
+\paragraph{Moral:} This exercise confirms something that we should intuitively expect to be true: that increasing the natural parameter $\eta$, which ``tilts'' the distribution toward larger values of $T(X)$, will also shift the distribution of $X$ to the right if $T$ is an increasing function. It also illustrates the usefulness of differential identities for understanding exponential families' structure.
+\end{problem}
+
+
+\begin{problem}[Mean parameterization of an exponential family]
+
+  Consider the $s$-parameter exponential family $\cP = \{P_\eta:\; \eta \in \Xi\}$ on $\cX$ with densities $p_\eta(x) = e^{\eta'T(x) - A(\eta)}h(x)$ with respect to a common dominating measure $\nu$. Assume $\Xi=\Xi_1^{\circ}$, the interior of the full natural parameter space, and that $\text{Var}_\eta(a'T(X))>0$ for all $a \neq 0$ and $\eta\in \Xi$.
+
+  Define the {\em mean parameter} 
+  \[
+  \mu(\eta) = \EE_\eta[T(X)].
+  \]
+  We will show that this is a one-to-one mapping, so $\cP$ can be alternatively be parameterized by $\mu(\eta)$ instead of $\eta$. The Bernoulli, Poisson, and exponential distributions are exponential families that are most often parameterized by their means, and parameterizations of other distributions like the normal and binomial are closely related to the mean parameterization.
+
+  Throughout this problem, you may use without proof that if the variance of any statistic $S(X)$ is positive under one $P_\eta \in \cP$ then it is positive under all $P_\eta \in \cP$ (as an optional exercise, try to prove this).
+
+  \begin{enumerate}[(a)]
+    
+  \item For $s=1$, show that $\eta \mapsto \EE_\eta[T(X)]$ is a one-to-one mapping; that is, show that if $\eta_1 \neq \eta_2$ then $\EE_{\eta_1}[T(X)] \neq \EE_{\eta_2}[T(X)]$.
+
+    {\bf Hint:} You can use the differential identities.
+
+    
+
+  \item For $s>1$ and $\eta_1,\eta_2\in\Xi$, consider the subfamily whose parameter space is the line segment between $\eta_1$ and $\eta_2$. For $\theta \in [0,1]$, let
+    \[
+    \eta(\theta) = (1-\theta) \eta_1 + \theta \eta_2. 
+    \]
+    Show that this subfamily is a one-parameter exponential family on $\cX$ with natural parameter $\theta$, and write it in standard exponential family form.
+
+    
+
+  \item Combine (a) and (b) to show that $\eta \mapsto \EE_\eta[T(X)]$ is a one-to-one mapping for $s \geq 1$.
+
+    
+
+
+  \end{enumerate}
+
+\paragraph{Moral:} We can always parameterize an exponential family by the mean of $T(X)$. This parameterization is very often more intuitive than the natural parameterization, and it gives us the standard parameterization for families like the Poisson (with sufficient statistic $T(X)=X$) and binomial (with sufficient statistic $T(X)=X/n$).
+\end{problem}
+
+
+\begin{problem}[Multinomial family]
+
+  The multinomial family is a multi-category version of the binomial, it measures the number of times each category comes up if we sample a $d$-category random variable with distribution $\pi$ on $n$ independent trials. Throughout this problem assume $d \geq 3$.
+
+  If $X \sim \text{Multinom}(n, \pi)$, with all $\pi_j > 0$ and $\sum_j \pi_j = 1$, then $X$ has density
+  \[
+  p_\pi(x) = \pi_1^{x_1}\pi_2^{x_2}\cdots \pi_d^{x_d} \cdot \frac{n!}{x_1! x_2! \cdots x_d!}
+  \]
+  
+  {\bf Note:} The coordinates of $X=(X_1,\ldots,X_d)$ are {\em not} i.i.d. samples; each one corresponds to a different bin and $X_1$ is not independent of $X_2$.
+
+ \begin{enumerate}[(a)]
+    
+  \item Rewrite the densities as a $(d-1)$-parameter exponential family, giving an explicit form for $T(x)$, $h(x)$, $\eta$, and $A(\eta)$. Is $X=(X_1,\ldots,X_d)$ minimal sufficient? 
+
+    
+  
+  \item Suppose a certain gene has two alleles {\bf A} and {\bf a}, and $\theta\in (0,1)$ is the unknown prevalence of allele {\bf a} in a well-mixed population. Then the proportion of individuals in the population with genotypes {\bf aa}, {\bf Aa}, and {\bf AA} is $\theta^2$, $2\theta(1-\theta)$, and $(1-\theta)^2$, respectively.
+
+    We can estimate $\theta$ by sampling $n$ independent individuals from the population and counting the number who have each genotype. These counts will have a joint multinomial distribution with probability parameter
+    \[
+    \pi(\theta) = (\theta^2, 2\theta(1-\theta), (1-\theta)^2).
+    \]
+    Hence, scientific considerations might lead us to use the multinomial subfamily indexed by $\theta$:
+    \[
+    \cP = \{\text{Multinom}(n,\pi(\theta)):\; \theta \in (0,1)\}.
+    \]
+    Can $\cP$ be written as a one-parameter exponential family? Find a minimal sufficient statistic for $\cP$.
+
+    
+    
+  \end{enumerate}
+
+  \paragraph{Moral: } The ``true'' (minimal) dimension of an exponential family is not always the dimension in which it is initially given to us.
+
+\end{problem}
+
+
+
+\end{document}
