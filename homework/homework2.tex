@@ -18,13 +18,13 @@
 \newcommand{\ZZ}{\mathbb{Z}}
 
 \newcommand{\Var}{\textnormal{Var}}
+\newcommand{\MSE}{\textnormal{MSE}}
 
 
 \newcommand{\simiid}{\overset{\text{i.i.d.}}{\sim}}
 \newcommand{\ep}{\varepsilon}
 
 \definecolor{darkblue}{rgb}{0.2, 0.2, 0.5}
-\newcommand{\sol}{~\\\color{darkblue}{\bf Solution:~\\}}
 
 \newenvironment{solution}{~\\\color{darkblue}{\bf Solution:~\\}}{}
 \newenvironment{ifsol}{\color{darkblue}}{}
@@ -69,6 +69,75 @@
 \paragraph{Moral:} If we have a prior opinion about $\theta$ in the form of a distribution, and then we update our opinion using Bayes' rule after observing $X$, then we will naturally adhere to the sufficiency principle. This gives an alternative epistemological motivation for the principle. Another interpretation of the result of this exercise is that, in the Bayesian model, $\theta$ is conditionally independent of $X$ given $T(X)$ if and only if $T(X)$ is sufficient.
 
 \end{problem}
+
+
+
+\begin{problem}[Uniform location-scale family]
+\label{prob:uniflocscale}
+
+Let $X_1, \ldots, X_n\simiid \text{Unif}[\mu-\sigma, \mu + \sigma]$, with $\mu\in\RR$ and $\sigma > 0$ unknown.
+%
+\begin{enumerate}[(a)]
+\item Show that $T(X) = (X_{(1)}, X_{(n)})$ is minimal sufficient.
+
+
+
+\item Suppose that we wish to estimate $\mu$ under the squared error loss.  The sample mean $\overline{X}$ may appear to be a reasonable estimator of $\mu$, but we might worry about the fact that it is not a function of $T(X)$.
+
+Guided by the sufficiency principle, we could instead consider the estimator 
+\[\delta^*(X) = \frac{X_{(1)} + X_{(n)}}{2}.\] 
+Use Monte Carlo simulation to simulate the distribution of both estimators for $\mu = 0, \sigma = 1, n = 1000$. Report the root mean squared error (RMSE), defined as $\sqrt{\MSE}$ (as calculated by Monte Carlo).
+
+For each estimator, plot a histogram of simulated estimates. You can either put both histograms on the same plot, or in side-by-side plots. If you do the latter, it might be more enlightening to use the same range for the horizontal and vertical axes in both plots, so the differences between the histograms are more evident. Include your code.
+
+
+
+
+\item In the previous part, we only compared the two estimators for one setting of the parameters $\mu,\sigma$. Show that, for both estimators, the MSE for generic $(\mu,\sigma)$ does not depend on $\mu$, and is proportional to $\sigma^2$. That is, show that
+\[
+\MSE(\mu, \sigma; \delta) = \sigma^2 \MSE(0,1; \delta), \quad \text{for } \delta = \overline{X}, \delta^*.
+\]
+Complete the argument to conclude that $\overline{X}$ is inadmissible whenever $\MSE(0,1;\delta^*) < \MSE(0,1;\overline{X})$.
+
+\item ({\bf Optional:} Not graded, no extra points) In this and the next optional parts, you will calculate the MSE analytically using some nice manipulations. 
+
+If $B \sim \text{Beta}(\alpha,\beta)$ then its density is proportional to $x^{\alpha-1}(1-x)^{\beta-1}$ on $x\in [0,1]$.
+
+If $U_1,\ldots,U_n \simiid U[0,1]$, show that
+\[
+U_{(n)} \sim \text{Beta}(n,1), \quad\text{ which has density } p(x) = n x^{n-1},
+\]
+and
+\[
+U_{(1)}/U_{(n)} \sim \text{Beta}(1,n-1) \quad\text{ which has density } p(x) = (n-1)(1-x)^{n-2},
+\]
+independently of $U_{(n)}$.
+
+{\bf Hint:} For the first part, start by writing down the CDF of $U_{(n)}$.
+
+{\bf Hint:} For the second part, you may use without proof the fact that, conditional on $U_{(n)} = u$, the remaining $n-1$ values are i.i.d. $\text{Unif}[0,u]$, then proceed similarly to what you did for the first part.
+
+
+
+
+
+\item ({\bf Optional:} Not graded, no extra points) Compute the MSE of each estimator as a function of $n, \mu,$ and $\sigma$, and show that $\delta^*$ strictly dominates $\overline{X}$ for $n > 2$ (the estimators coincide for $n=2$). What happens to the ratio of their MSE's as $n\to\infty$?
+
+{\bf Hint:} The results from the previous part should be useful. You may use without proof that $\text{Beta}(\alpha,\beta)$ has mean $\frac{\alpha}{\alpha+\beta}$ and variance $\frac{\alpha\beta}{(\alpha+\beta)^2(\alpha + \beta + 1)}$.
+
+
+
+
+
+\end{enumerate}
+
+\paragraph{Moral:} Understanding and respecting the statistical structure of a model sometimes helps us to come up with estimators that perform dramatically better than the estimator we would have na\"{i}vely thought of. Here is a case where applying the sufficiency principle helped us get a much better estimator than the sample mean.
+
+\end{problem}
+
+
+
+
 
 \begin{problem}[Convexity of $A(\eta)$ and $\Xi_1$]
 Let $\cP=\{p_\eta:\; \eta \in \Xi_1\}$ denote an $s$-parameter exponential family in canonical form
@@ -175,43 +244,6 @@ Let $\psi(x)$ be any non-decreasing bounded function. Show that, for $\eta\in\Xi
 \paragraph{Moral:} We can always parameterize an exponential family by the mean of $T(X)$. This parameterization is very often more intuitive than the natural parameterization, and it gives us the standard parameterization for families like the Poisson (with sufficient statistic $T(X)=X$) and binomial (with sufficient statistic $T(X)=X/n$).
 \end{problem}
 
-
-\begin{problem}[Multinomial family]
-
-  The multinomial family is a multi-category version of the binomial, it measures the number of times each category comes up if we sample a $d$-category random variable with distribution $\pi$ on $n$ independent trials. Throughout this problem assume $d \geq 3$.
-
-  If $X \sim \text{Multinom}(n, \pi)$, with all $\pi_j > 0$ and $\sum_j \pi_j = 1$, then $X$ has density
-  \[
-  p_\pi(x) = \pi_1^{x_1}\pi_2^{x_2}\cdots \pi_d^{x_d} \cdot \frac{n!}{x_1! x_2! \cdots x_d!}
-  \]
-  
-  {\bf Note:} The coordinates of $X=(X_1,\ldots,X_d)$ are {\em not} i.i.d. samples; each one corresponds to a different bin and $X_1$ is not independent of $X_2$.
-
- \begin{enumerate}[(a)]
-    
-  \item Rewrite the densities as a $(d-1)$-parameter exponential family, giving an explicit form for $T(x)$, $h(x)$, $\eta$, and $A(\eta)$. Is $X=(X_1,\ldots,X_d)$ minimal sufficient? 
-
-    
-  
-  \item Suppose a certain gene has two alleles {\bf A} and {\bf a}, and $\theta\in (0,1)$ is the unknown prevalence of allele {\bf a} in a well-mixed population. Then the proportion of individuals in the population with genotypes {\bf aa}, {\bf Aa}, and {\bf AA} is $\theta^2$, $2\theta(1-\theta)$, and $(1-\theta)^2$, respectively.
-
-    We can estimate $\theta$ by sampling $n$ independent individuals from the population and counting the number who have each genotype. These counts will have a joint multinomial distribution with probability parameter
-    \[
-    \pi(\theta) = (\theta^2, 2\theta(1-\theta), (1-\theta)^2).
-    \]
-    Hence, scientific considerations might lead us to use the multinomial subfamily indexed by $\theta$:
-    \[
-    \cP = \{\text{Multinom}(n,\pi(\theta)):\; \theta \in (0,1)\}.
-    \]
-    Can $\cP$ be written as a one-parameter exponential family? Find a minimal sufficient statistic for $\cP$.
-
-    
-    
-  \end{enumerate}
-
-  \paragraph{Moral: } The ``true'' (minimal) dimension of an exponential family is not always the dimension in which it is initially given to us.
-
-\end{problem}
 
 
 
