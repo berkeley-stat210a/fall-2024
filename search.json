@@ -46,7 +46,7 @@
     "href": "units/unit1.html#evaluated-python-code-chunk-with-a-plot",
     "title": "Unit 1: Intro",
     "section": "Evaluated Python code chunk, with a plot",
-    "text": "Evaluated Python code chunk, with a plot\n\n\nCode\nimport numpy as np\nx = np.random.normal(size=100)\nimport matplotlib.pyplot as plt\nplt.hist(x)\nplt.show()\nnp.mean(x)\n\n\n\n\n\n0.010935583989494546"
+    "text": "Evaluated Python code chunk, with a plot\n\n\nCode\nimport numpy as np\nx = np.random.normal(size=100)\nimport matplotlib.pyplot as plt\nplt.hist(x)\nplt.show()\nnp.mean(x)\n\n\n\n\n\n0.2525104602082963"
   },
   {
     "objectID": "units/unit1.html#latex",
@@ -123,21 +123,21 @@
     "href": "index.html#schedule",
     "title": "Statistics 210a: Theoretical Statistics",
     "section": "Schedule",
-    "text": "Schedule\n\n\n   Week 1\n   \n   \n   \n   \n           \n           Aug 29:\n           Lecture 1 Introduction\n                \n                  Handwritten notes\n                \n           \n   \n   \n   Week 2\n   \n   \n   \n   \n           \n           Sep 3:\n           Lecture 2 Probability\n                \n                  Handwritten notes\n                \n           \n           \n           Sep 5:\n           Lecture 3 Estimation\n                \n                  Handwritten notes\n                \n           \n           \n           Sep 6:\n           Recitation 1 Probability review\n                \n           \n   \n   \n   Week 3\n   \n   \n   \n   \n           \n           Sep 10:\n           Lecture 4 Exponential families\n                \n                  Handwritten notes\n                \n           \n           \n           Sep 11:\n           Homework 1 Problems\n                \n                  LaTeX source\n                \n           \n           \n           Sep 12:\n           Lecture 5 Sufficiency\n                \n                  Handwritten notes\n                \n           \n   \n   \n   Week 3\n   \n   \n   \n   \n           \n           Sep 17:\n           Lecture 6 Completeness\n                \n                  Handwritten notes\n                \n           \n           \n           Sep 19:\n           Lecture 7 Unbiased estimation\n                \n                  Handwritten notes\n                \n           \n   \n   \n   Week 17\n   \n   \n   \n   \n           \n           Dec 18:\n           Exam  Final Exam, 8-11am\n                \n           \n   \n   \n\nNo matching items"
+    "text": "Schedule\n\n\n   Week 1\n   \n   \n   \n   \n           \n           Aug 29:\n           Lecture 1 Introduction\n                \n                  Handwritten notes\n                \n           \n   \n   \n   Week 2\n   \n   \n   \n   \n           \n           Sep 3:\n           Lecture 2 Probability\n                \n                  Handwritten notes\n                \n           \n           \n           Sep 5:\n           Lecture 3 Estimation\n                \n                  Handwritten notes\n                \n           \n           \n           Sep 6:\n           Recitation 1 Probability review\n                \n           \n   \n   \n   Week 3\n   \n   \n   \n   \n           \n           Sep 10:\n           Lecture 4 Sufficiency\n                \n                  Handwritten notes\n                \n           \n           \n           Sep 11:\n           Homework 1 Problems\n                \n                  LaTeX source\n                \n           \n           \n           Sep 12:\n           Lecture 5 Exponential families\n                \n                  Handwritten notes\n                \n           \n   \n   \n   Week 3\n   \n   \n   \n   \n           \n           Sep 17:\n           Lecture 6 Completeness\n                \n                  Handwritten notes\n                \n           \n           \n           Sep 18:\n           Homework 2 Problems\n                \n                  LaTeX source\n                \n           \n           \n           Sep 19:\n           Lecture 7 Unbiased estimation\n                \n                  Handwritten notes\n                \n           \n   \n   \n   Week 17\n   \n   \n   \n   \n           \n           Dec 18:\n           Exam  Final Exam, 8-11am\n                \n           \n   \n   \n\nNo matching items"
   },
   {
     "objectID": "handwritten-notes.html",
     "href": "handwritten-notes.html",
     "title": "Handwritten notes",
     "section": "",
-    "text": "Lecture 1: Induction\nLecture 2: Probability\nLecture 3: Estimation\nLecture 4: Exponential families\nLecture 5: Sufficiency\nLecture 6: Completeness\nLecture 7: Unbiased estimation"
+    "text": "Lecture 1: Induction\nLecture 2: Probability\nLecture 3: Estimation\nLecture 4: Sufficiency\nLecture 5: Exponential families\nLecture 6: Completeness\nLecture 7: Unbiased estimation"
   },
   {
     "objectID": "handwritten-notes.html#handwritten-lecture-notes",
     "href": "handwritten-notes.html#handwritten-lecture-notes",
     "title": "Handwritten notes",
     "section": "",
-    "text": "Lecture 1: Induction\nLecture 2: Probability\nLecture 3: Estimation\nLecture 4: Exponential families\nLecture 5: Sufficiency\nLecture 6: Completeness\nLecture 7: Unbiased estimation"
+    "text": "Lecture 1: Induction\nLecture 2: Probability\nLecture 3: Estimation\nLecture 4: Sufficiency\nLecture 5: Exponential families\nLecture 6: Completeness\nLecture 7: Unbiased estimation"
   },
   {
     "objectID": "reader/testing-linear.html",
@@ -1082,7 +1082,7 @@
     "href": "units/unit3.html#evaluated-python-code-chunk-with-a-plot",
     "title": "Unit 3: More",
     "section": "Evaluated Python code chunk, with a plot",
-    "text": "Evaluated Python code chunk, with a plot\n\n\nCode\nimport numpy as np\nx = np.random.normal(size=100)\nimport matplotlib.pyplot as plt\nplt.hist(x)\nplt.show()\nnp.mean(x)\n\n\n\n\n\n0.05133934842748159"
+    "text": "Evaluated Python code chunk, with a plot\n\n\nCode\nimport numpy as np\nx = np.random.normal(size=100)\nimport matplotlib.pyplot as plt\nplt.hist(x)\nplt.show()\nnp.mean(x)\n\n\n\n\n\n0.01650088793274388"
   },
   {
     "objectID": "units/unit3.html#latex",
