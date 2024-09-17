@@ -46,7 +46,7 @@
     "href": "units/unit1.html#evaluated-python-code-chunk-with-a-plot",
     "title": "Unit 1: Intro",
     "section": "Evaluated Python code chunk, with a plot",
-    "text": "Evaluated Python code chunk, with a plot\n\n\nCode\nimport numpy as np\nx = np.random.normal(size=100)\nimport matplotlib.pyplot as plt\nplt.hist(x)\nplt.show()\nnp.mean(x)\n\n\n\n\n\n-0.10039107385556256"
+    "text": "Evaluated Python code chunk, with a plot\n\n\nCode\nimport numpy as np\nx = np.random.normal(size=100)\nimport matplotlib.pyplot as plt\nplt.hist(x)\nplt.show()\nnp.mean(x)\n\n\n\n\n\n0.025355409902827874"
   },
   {
     "objectID": "units/unit1.html#latex",
@@ -770,6 +770,13 @@
     "text": "Factorization theorem\nAs we will see next, we didn’t really need to go to the trouble of calculating the conditional distribution in the first example. Once we noticed that the density depends on \\(x\\) only through \\(T(x)\\), we could have concluded that \\(T(X)\\) was sufficient.\nThe easiest way to verify that a statistic is sufficient is to show that the density \\(p_\\theta\\) factorizes into a part that involves only \\(\\theta\\) and \\(T(x)\\), and a part that involves only \\(h(x)\\).\nFactorization Theorem: Let \\(\\cP\\) be a model having densities \\(p_\\theta(x)\\) with respect to a common dominating measure \\(\\mu\\). Then \\(T(X)\\) is sufficient for \\(\\cP\\) if and only if there exist non-negative functions \\(g_\\theta\\) and \\(h\\) for which\n\\[\np_\\theta(x) = g_\\theta(T(x)) h(x),\n\\]\nfor almost every \\(x\\) under \\(\\mu\\).\nThe “almost every \\(x\\)” qualification means that\n\\[\n\\mu\\left(\\{x:\\; p_\\theta(x) \\neq g_\\theta(T(x))h(x)\\}\\right) = 0.\n\\]\nIt is needed to avoid counterexamples where we mess with the densities on a set of points that the base measure doesn’t assign any mass, which would let us destroy the factorization structure without changing any of the distributions.\nProof (discrete \\(\\cX\\)): The proof is easiest in the discrete case, so that we don’t have to deal with conditioning on measure-zero events and worry about things like Jacobians for change of variables.\nWe’ll assume without loss of generality that \\(\\mu\\) is the counting measure: if \\(\\mu\\) were some other measure, it would have to have a density \\(m\\) with respect to the counting measure and we would just have to carry around \\(m(x)\\) in all of our expressions.\nFirst, assume that there exists a factorization \\(p_\\theta(x) = g_\\theta(T(x)) h(x)\\). Then we have\n\\[\n\\begin{aligned}\n\\PP_\\theta(X = x \\mid T(X) = t)\n&= \\frac{\\PP_\\theta(X = x, T(X) = t)}{\\PP_\\theta(T(X) = t)}\\\\[7pt]\n&= \\frac{g_\\theta(t) h(x) 1\\{T(x) = t\\}}{g_\\theta(t)\\displaystyle\\sum_{z:\\;T(z) = t} h(z)}\\\\[7pt]\n&= \\frac{h(x) 1\\{T(x) = t\\}}{\\displaystyle\\sum_{z:\\;T(z) = t} h(z)},\n\\end{aligned}\n\\]\nwhich we see does not depend on \\(\\theta\\).\nNext consider the opposite direction. If \\(T(X)\\) is sufficient, then we can construct a factorization by writing\n\\[\n\\begin{aligned}\ng_\\theta(t) &= \\PP_\\theta(T(X)=t)\\\\\nh(x) &= \\PP(X = x \\mid T(X) = T(x)),\n\\end{aligned}\n\\] noting that the conditional probability in the definition of \\(h(x)\\) does not depend on \\(\\theta\\) by sufficiency. Then we have\n\\[\n\\PP_\\theta(X = x) = \\PP_\\theta(T(X) = T(x)) \\;\\cdot\\;\\PP_\\theta(X = x \\mid T(X) = T(x)) = g_\\theta(T(x)) h(x),\n\\] so \\(g_\\theta(T(x))h(x)\\) is indeed the pmf \\(p_\\theta(x)\\)."
   },
   {
+    "objectID": "reader/sufficiency.html#statement-for-general-cx",
+    "href": "reader/sufficiency.html#statement-for-general-cx",
+    "title": "Sufficiency",
+    "section": "Statement for general \\(\\cX\\)",
+    "text": "Statement for general \\(\\cX\\)"
+  },
+  {
     "objectID": "reader/sufficiency.html#examples",
     "href": "reader/sufficiency.html#examples",
     "title": "Sufficiency",
@@ -1089,7 +1096,7 @@
     "href": "units/unit3.html#evaluated-python-code-chunk-with-a-plot",
     "title": "Unit 3: More",
     "section": "Evaluated Python code chunk, with a plot",
-    "text": "Evaluated Python code chunk, with a plot\n\n\nCode\nimport numpy as np\nx = np.random.normal(size=100)\nimport matplotlib.pyplot as plt\nplt.hist(x)\nplt.show()\nnp.mean(x)\n\n\n\n\n\n-0.080690135100009"
+    "text": "Evaluated Python code chunk, with a plot\n\n\nCode\nimport numpy as np\nx = np.random.normal(size=100)\nimport matplotlib.pyplot as plt\nplt.hist(x)\nplt.show()\nnp.mean(x)\n\n\n\n\n\n0.020026045497094448"
   },
   {
     "objectID": "units/unit3.html#latex",
