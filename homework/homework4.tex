@@ -1,0 +1,255 @@
+\documentclass{article}
+
+\usepackage[margin=1.2in]{geometry}
+\usepackage{graphicx}
+\usepackage{amsmath,amssymb,amsthm,bm}
+\usepackage{latexsym,color,minipage-marginpar,caption,multirow,verbatim}
+\usepackage{enumerate}
+\usepackage[round]{natbib}
+\usepackage{times}
+
+\newcommand{\cP}{\mathcal{P}}
+\newcommand{\cX}{\mathcal{X}}
+\newcommand{\cR}{\mathcal{R}}
+\newcommand{\cT}{\mathcal{T}}
+\newcommand{\cY}{\mathcal{Y}}
+\newcommand{\cQ}{\mathcal{Q}}
+
+\newcommand{\EE}{\mathbb{E}}
+\newcommand{\PP}{\mathbb{P}}
+\newcommand{\QQ}{\mathbb{Q}}
+\newcommand{\RR}{\mathbb{R}}
+\newcommand{\ZZ}{\mathbb{Z}}
+
+\newcommand{\Var}{\textnormal{Var}}
+\newcommand{\MSE}{\textnormal{MSE}}
+
+
+\newcommand{\simiid}{\overset{\text{i.i.d.}}{\sim}}
+\newcommand{\ep}{\varepsilon}
+
+\definecolor{darkblue}{rgb}{0.2, 0.2, 0.5}
+
+\newenvironment{solution}{~\\\color{darkblue}{\bf Solution:~\\}}{}
+\newenvironment{ifsol}{\color{darkblue}}{}
+
+\newcommand{\optional}{{\bf Optional:} (Not graded, no extra points) }
+
+\theoremstyle{definition}
+\newtheorem{problem}{Problem}
+
+
+\begin{document}
+
+\title{Stats 210A, Fall 2024\\
+  Homework 4 \\
+  {\large {\bf Due on}: Wednesday, Oct. 2}}
+\date{}
+
+\maketitle
+
+\paragraph{Instructions:} You may disregard measure-theoretic niceties about conditioning on measure-zero sets, almost-sure equality vs. actual equality, ``all functions'' vs. ``all measurable functions,'' etc. (unless the problem is explicitly asking about such issues).
+
+\begin{problem}[Unbiased estimation in replicated studies]
+
+One focal issue in the ongoing scientific replication crisis is the ``file drawer problem,'' i.e. the tendency of researchers to report findings (or of journals to publish them) only if they have a $p$-value less than 0.05. Replication studies typically represent cleaner estimates of the results under study, since they are reported regardless of whether they are statistically significant. This is one of the reasons that replication studies often find much smaller effect size estimates than the original studies: if the original study had gotten a good estimate of the (small) true effect, we wouldn't have heard about it.
+
+We can introduce a toy model for a replicated study where the original study is $X_1 \sim N(\mu, 1)$ and the replication study is $X_2 \sim N(\mu, 1)$, but we only observe the study pair given that $X_1 > c$ for some significance cutoff $c \in \RR$, e.g. $c=1.96$. In other words, the distribution for a study pair conditional on our observing it is
+\begin{align*}
+p_\mu(x_1,x_2) &= \PP_\mu(X_1=x_1,X_2=x_2 \mid X_1 > c)\\
+  &= \frac{\phi(x_1-\mu)1\{x_1 > c\}}{1-\Phi(c-\mu)} \phi(x_2-\mu),
+\end{align*}
+where $ \phi(x) = \frac{1}{\sqrt{2\pi}}e^{-x^2/2}$ is the standard normal pdf and $\Phi(x) =  \int_{-\infty}^x \phi(u)\,d  u$ is the standard normal cdf. We will consider the problem of estimating $\mu$ after observing a study pair.
+
+Arguably, we should only care about the {\em conditional} bias or risk of an estimator, given that we actually get to see the data, since the conditional distribution more accurately describes the set of published results. Thus, all questions below about bias, admissibility, UMVU, etc.\, should be answered in terms of the conditional distribution given that $X_1>c$ (i.e., with densities $p_{\mu}(x_1,x_2)$ above), {\em not} in terms of the marginal distribution (whose densities would be $\phi(x_1-\mu)\phi(x_2-\mu)$.) For example, in part (a) it would not be true to say that $\overline X$ is marginally biased, but I want you to show it is conditionally biased given that it is observed.
+
+\begin{enumerate}[(a)]
+\item Show that $\overline X = (X_1 + X_2)/2$ is an upwardly biased estimator of $\mu$ (we can call this the {\em naive} estimator since it ignores the selection bias).
+
+
+
+\item Show that $X_2$ is unbiased for $\mu$, but it is inadmissible under any strictly convex loss function (we can call this the {\em data splitting} estimator since we ignore $X_1$, which was used for selection, and use the fresh data $X_2$.)
+
+
+
+\item Show that the UMVU estimator for $\mu$ is
+\[
+\delta(\overline{X}) = \overline{X} - 
+\frac{1}{\sqrt{2}}\;\zeta\left(\sqrt{2}(c-\overline{X})\right),
+\]
+where 
+\[
+\zeta(x) = \EE_{Z \sim N(0,1)}[Z \mid Z > x] = \frac{\int_x^\infty u\phi(u)\,d  u}{1-\Phi(x)}.
+\]
+{\bf Hint:} It may help to note that $X_1+X_2$ is marginally independent of $X_1 - X_2$ (but note they are {\bf not} conditionally independent given $X_1 > c$.)
+
+
+
+
+
+\item Show that 
+  \[
+  \lim_{\overline{X} \to \infty} \delta(\overline{X}) - \overline{X} = 0.
+  \]
+  In other words, if $\overline{X} \gg c$, then $\delta(\overline{X}) \approx \overline{X}$, the naive estimator.
+  Can you give any intuition for why this limit makes sense?
+
+
+
+
+
+\item \optional Show that
+  \[
+  \lim_{\overline{X} \to -\infty} \delta(\overline{X}) - \left(X_2 + (X_1-c)\right) = 0,
+  \]
+  and furthermore that for any $\ep > 0$, we have
+  \[
+  \lim_{\overline{X} \to -\infty} \PP(X_1 - c > \ep \mid \overline{X}, X_1 > c) \to 0.
+  \]
+  In other words, if $\overline{X} \ll c$, we have $\delta(\overline{X}) \approx X_2 + (X_1-c) \approx X_2$, the data splitting estimator. Can you give any intuition for why this limit makes sense?
+
+{\bf Hint:} It may be helpful to use the tail inequality
+\[
+\left(\frac{1}{x} - \frac{1}{x^3}\right)\phi(x) \leq 1-\Phi(x) \leq \frac{1}{x} \phi(x),
+\]
+for $x>0$.
+
+
+
+\end{enumerate}
+
+
+{\bf Moral:} This is a nice estimator that transitions adaptively between the data splitting estimator (when $X_1$ is subject to extreme selection bias) and the unadjusted sample mean (when $X_1$ is nearly unaffected by selection bias). It manages to do this even though we don't know how bad the selection bias is, since that depends on $\mu$. It would be difficult to come up with an estimator like this without the theory of exponential families and UMVU estimators, specifically the idea of Rao-Blackwellization. You can read more about problems like this in \citet{hung2020statistical}.
+
+\end{problem}
+
+\begin{problem}[Poisson UMVU and Bayes estimation]
+
+Let $X_1,\ldots,X_n \simiid \text{Pois}(\theta)$ and consider estimating 
+\[
+g(\theta) = e^{-\theta} = \PP_\theta(X_1 = 0)
+\]
+
+\begin{enumerate}[(a)]
+\item Find the UMVU estimator for $g(\theta)$ by Rao-Blackwellizing a simple unbiased estimator. You may use without proof the fact that $(X_1,\ldots,X_n) \sim \text{Multinom}(t, (n^{-1},\ldots,n^{-1}) )$ given $\sum_{i=1}^n X_i = t$.
+
+
+
+\item Find the UMVU estimator for $g(\theta)$ directly, using the power series method from class.
+
+
+
+\item Consider Bayes estimation using the Gamma prior 
+\[
+\theta \sim \text{Gamma}(\nu, s) = \frac{1}{\Gamma(\nu)s^{\nu}} \theta^{\nu - 1}e^{-\theta/s},
+\]
+where $\nu$ is the shape parameter and $s$ is the scale parameter. Find the posterior distribution for $\theta$, and the Bayes estimator for $g(\theta)$ under the squared error loss.
+
+{\bf Hint:} The MGF might be useful.
+
+\end{enumerate}
+\end{problem}
+
+
+\begin{problem}[Bayesian law of large numbers]
+
+Let $p(x)$ and $q(x)$ denote two strictly positive probability densities with respect to a common dominating measure $\mu$. The {\em Kullback--Leibler divergence} between $p$ and $q$ is defined as
+\[
+D(p \| q) = \int_{\cX} p(x) \log \frac{p(x)}{q(x)} \,d\mu(x).
+\]
+
+
+\begin{enumerate}[(a)]
+\item Show that $D(p \| q) \geq 0$, with equality only in the case that $p(X) = q(X)$ almost surely 
+
+{\bf Hint:} recall that $\log(1+x) \leq x$ for all $x>-1$.
+
+
+
+\item Consider a dominated likelihood model $\cP = \{p_{\theta}(x):\; \theta\in \Theta\}$, where the parameter space $\Theta$ is a finite set, and the densities are strictly positive on $\cX$. Let $\lambda$ denote a prior density w.r.t. the counting measure on $\Theta$, and consider the Bayes posterior after observing a sample $X_1,\ldots,X_n \simiid p_{\theta_0}(x)$ for some {\em fixed} value $\theta_0$ (that is, we are doing a {\em frequentist} analysis of the {\em Bayesian} posterior distribution).  Assume that all the densities are distinct; that is, $p_{\theta_1}(X) = p_{\theta_2}(X)$ almost surely if and only if $\theta_1=\theta_2$.
+
+If the prior $\lambda$ puts positive mass on all values in $\Theta$, show that as $n\to\infty$, the posterior density eventually concentrates nearly all its mass on the true value $\theta_0$. That is, 
+\[
+\PP_{\theta_0}\left[\lambda(\theta_0 \mid X_1,\ldots,X_n) \geq 1-\ep\right] \to 1, \quad \text{for all } \ep > 0.
+\]
+{\bf Hint:} apply the law of large numbers and see if you can find a way to use part (a).
+
+
+\end{enumerate}
+
+{\bf Moral:} At least for a finite parameter space, the Bayes estimator always converges to the right answer as long as we put positive mass on the right answer. This result can be generalized with more effort to continuous parameter spaces under some regularity conditions on the likelihood function, similar to the types of conditions we will use to guarantee the MLE is consistent. 
+
+The requirement that the prior density should be nonzero everywhere is sometimes called Cromwell's Rule, after Oliver Cromwell's famous plea to the Church of Scotland: ``I beseech you, in the bowels of Christ, think it possible that you may be mistaken.''
+
+\end{problem}
+
+
+\begin{problem}[Fisher information for location and scale families]
+
+This problem considers the Fisher information for families with location or scale structure. Your verbal explanations for each part will be graded leniently.
+
+\begin{enumerate}[(a)]
+
+\item Consider a location family
+\[
+p_\theta(x) = p_0(x-\theta), \quad \text{ for } \theta \in \RR,
+\]
+where $p_0$ is some fixed probability density function with respect to the Lebesgue measure.
+
+Show that the Fisher information for a single observation $X$ is given by
+\[
+J(\theta) = \int_{-\infty}^\infty \frac{\dot{p}_0(u)^2}{p_0(u)}\,d u.
+\]
+Explain in your own words why it makes sense that there should be no dependence on $\theta$.
+
+
+
+\item Consider a scale family 
+\[p_\theta(x) = \frac{1}{\theta}p_0\left(\frac{x}{\theta}\right),\quad \theta > 0.\]
+where $p_0$ is some fixed probability density function with respect to the Lebesgue measure.
+
+Show that the Fisher information of a single observation $X$ is given by
+\[J(\theta) = \frac{1}{\theta^{2}}\int_{-\infty}^\infty\left[\frac{u \dot{p}_0(u)}{p_0(u)} + 1\right]^{2}p_0(u)\,d u.\]
+Try to explain in your own words why it makes sense that the Fisher information should be proportional to $\theta^{-2}$.
+
+
+
+\item If we instead parameterize the scale family using $\zeta = \log\theta$, show that the Fisher information $J(\zeta)$ of a single observation $X$ does not depend on $\zeta$. Explain in your own words why this makes sense.
+
+
+
+\end{enumerate}
+\end{problem}
+
+
+
+\begin{problem}[Other loss functions]
+
+Assume for each problem below that there exists an estimator with finite Bayes risk.
+\begin{enumerate}[(a)]
+\item Consider a Bayesian model with a discrete parameter $\theta$. What is the Bayes estimator for the loss $L(\theta, d) = 1\{\theta \neq d\}$?
+
+
+
+
+\item Next consider a Bayesian model with a single real parameter $\theta$, and assume that the posterior distribution of $\theta$ given $X=x$ is absolutely continuous (with respect to the Lebesgue measure) for all $x$. What is the Bayes estimator for the {\em absolute error loss} $L(\theta, d) = |\theta-d|$? 
+
+
+
+
+\item Under the same assumptions as part (b), what loss function $L_\gamma(\theta, d)$ would give the posterior $\gamma$ quantile as its Bayes estimator; that is, the estimator $\delta_\gamma(X)$ has $\PP(\theta < \delta_\gamma(X) \mid X) = \gamma$.
+
+
+
+
+
+\end{enumerate}
+\end{problem}
+
+
+\bibliography{biblio}
+\bibliographystyle{plainnat}
+
+
+
+\end{document}
