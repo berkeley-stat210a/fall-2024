@@ -20,6 +20,40 @@ ul.task-list li input[type="checkbox"] {
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
 }
+/* CSS for syntax highlighting */
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
 </style>
 
 
@@ -68,6 +102,8 @@ function gtag(){dataLayer.push(arguments);}
 gtag('js', new Date());
 gtag('config', 'G-B8G2041HSB', { 'anonymize_ip': true});
 </script>
+<script type="module" src="../site_libs/quarto-ojs/quarto-ojs-runtime.js"></script>
+<link href="../site_libs/quarto-ojs/quarto-ojs.css" rel="stylesheet">
 
   <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
   <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
@@ -270,6 +306,7 @@ gtag('config', 'G-B8G2041HSB', { 'anonymize_ip': true});
   <ul class="collapse">
   <li><a href="#conjugate-priors-for-exponential-families" id="toc-conjugate-priors-for-exponential-families" class="nav-link" data-scroll-target="#conjugate-priors-for-exponential-families"><span class="header-section-number">4.1</span> Conjugate Priors for Exponential Families</a></li>
   <li><a href="#conjugate-prior-examples" id="toc-conjugate-prior-examples" class="nav-link" data-scroll-target="#conjugate-prior-examples"><span class="header-section-number">4.2</span> Conjugate Prior Examples</a></li>
+  <li><a href="#beta-binomial-example" id="toc-beta-binomial-example" class="nav-link" data-scroll-target="#beta-binomial-example"><span class="header-section-number">4.3</span> Beta-binomial example</a></li>
   </ul></li>
   </ul>
 </nav>
@@ -446,12 +483,182 @@ r(\pi, \delta) = \EE_\pi[\EE_\theta[L(\theta, \delta(X))]] = \EE[L(\theta, \delt
 <p>Posterior: <span class="math inline">\(\theta|X \sim \text{Gamma}(\alpha + \sum x_i, \beta + n)\)</span></p>
 <p>Interpret <span class="math inline">\(\alpha\)</span> as pseudo-counts and <span class="math inline">\(\beta\)</span> as pseudo-exposure.</p></li>
 </ol>
+</section>
+<section id="beta-binomial-example" class="level3" data-number="4.3">
+<h3 data-number="4.3" class="anchored" data-anchor-id="beta-binomial-example"><span class="header-section-number">4.3</span> Beta-binomial example</h3>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb1" data-startfrom="178" data-source-offset="0"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 177;"><span id="cb1-178"><a href="#cb1-178" aria-hidden="true" tabindex="-1"></a><span class="co">// Define the plot container</span></span>
+<span id="cb1-179"><a href="#cb1-179" aria-hidden="true" tabindex="-1"></a>plotDiv <span class="op">=</span> <span class="fu">html</span><span class="vs">`&lt;div style="width: 100%; height: 500px;"&gt;&lt;/div&gt;`</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<div id="ojs-cell-1" data-nodetype="declaration">
+
+</div>
+</div>
+</div>
+<div class="quarto-ojs-syntax-error">
+<div class="sourceCode" id="cb2" data-startfrom="183" data-syntax-error-position="539" data-source-offset="9"><pre class="sourceCode numberSource numberLines java code-with-copy"><code class="sourceCode java" style="counter-reset: source-line 182;"><span id="cb2-183"><a href="#cb2-183"></a>```<span class="op">{</span>ojs<span class="op">}</span></span>
+<span id="cb2-184"><a href="#cb2-184"></a><span class="co">// Import necessary libraries</span></span>
+<span id="cb2-185"><a href="#cb2-185"></a><span class="kw">import</span> <span class="im">{Plotly} from '@observablehq/plotly'</span></span>
+<span id="cb2-186"><a href="#cb2-186"></a><span class="kw">import</span> <span class="im">{jStat} from 'jstat'</span></span>
+<span id="cb2-187"><a href="#cb2-187"></a></span>
+<span id="cb2-188"><a href="#cb2-188"></a><span class="co">// Input sliders and text boxes</span></span>
+<span id="cb2-189"><a href="#cb2-189"></a>viewof priorMean <span class="op">=</span> Inputs<span class="op">.</span><span class="fu">range</span><span class="op">([</span><span class="fl">0.01</span><span class="op">,</span> <span class="fl">0.99</span><span class="op">],</span> <span class="op">{</span>value<span class="op">:</span> <span class="fl">0.5</span><span class="op">,</span> step<span class="op">:</span> <span class="fl">0.01</span><span class="op">,</span> label<span class="op">:</span> <span class="st">"Prior Mean"</span><span class="op">})</span></span>
+<span id="cb2-190"><a href="#cb2-190"></a>viewof priorPseudoFlips <span class="op">=</span> Inputs<span class="op">.</span><span class="fu">range</span><span class="op">([</span><span class="fl">0.1</span><span class="op">,</span> <span class="dv">100</span><span class="op">],</span> <span class="op">{</span>value<span class="op">:</span> <span class="dv">20</span><span class="op">,</span> step<span class="op">:</span> <span class="fl">0.1</span><span class="op">,</span> label<span class="op">:</span> <span class="st">"Prior Pseudo-Flips"</span><span class="op">})</span></span>
+<span id="cb2-191"><a href="#cb2-191"></a>viewof n <span class="op">=</span> Inputs<span class="op">.</span><span class="fu">number</span><span class="op">({</span>value<span class="op">:</span> <span class="dv">500</span><span class="op">,</span> min<span class="op">:</span> <span class="dv">1</span><span class="op">,</span> step<span class="op">:</span> <span class="dv">1</span><span class="op">,</span> label<span class="op">:</span> <span class="st">"n"</span><span class="op">})</span></span>
+<span id="cb2-192"><a href="#cb2-192"></a>viewof xVal <span class="op">=</span> Inputs<span class="op">.</span><span class="fu">number</span><span class="op">({</span>value<span class="op">:</span> <span class="dv">125</span><span class="op">,</span> min<span class="op">:</span> <span class="dv">0</span><span class="op">,</span> max<span class="op">:</span> n<span class="op">,</span> step<span class="op">:</span> <span class="dv">1</span><span class="op">,</span> label<span class="op">:</span> <span class="st">"X"</span><span class="op">})</span></span>
+<span id="cb2-193"><a href="#cb2-193"></a></span>
+<span id="cb2-194"><a href="#cb2-194"></a><span class="co">// Compute alpha and beta from prior mean and pseudo-flips</span></span>
+<span id="cb2-195"><a href="#cb2-195"></a>let alpha <span class="op">=</span> priorMean <span class="op">*</span> priorPseudoFlips<span class="op">;</span></span>
+<span id="cb2-196"><a href="#cb2-196"></a>let beta <span class="op">=</span> <span class="op">(</span><span class="dv">1</span> <span class="op">-</span> priorMean<span class="op">)</span> <span class="op">*</span> priorPseudoFlips<span class="op">;</span></span>
+<span id="cb2-197"><a href="#cb2-197"></a></span>
+<span id="cb2-198"><a href="#cb2-198"></a><span class="co">// Create theta values</span></span>
+<span id="cb2-199"><a href="#cb2-199"></a>let theta <span class="op">=</span> <span class="bu">Array</span><span class="op">.</span><span class="fu">from</span><span class="op">({</span>length<span class="op">:</span> <span class="dv">1000</span><span class="op">},</span> <span class="op">(</span>_<span class="op">,</span> i<span class="op">)</span> <span class="op">=&gt;</span> i <span class="op">/</span> <span class="dv">999</span><span class="op">);</span></span>
+<span id="cb2-200"><a href="#cb2-200"></a></span>
+<span id="cb2-201"><a href="#cb2-201"></a><span class="co">// Calculate prior, likelihood, and posterior densities</span></span>
+<span id="cb2-202"><a href="#cb2-202"></a>let priorDensity <span class="op">=</span> theta<span class="op">.</span><span class="fu">map</span><span class="op">(</span>t <span class="op">=&gt;</span> jStat<span class="op">.</span><span class="fu">beta</span><span class="op">.</span><span class="fu">pdf</span><span class="op">(</span>t<span class="op">,</span> alpha<span class="op">,</span> beta<span class="op">));</span></span>
+<span id="cb2-203"><a href="#cb2-203"></a>let posteriorDensity <span class="op">=</span> theta<span class="op">.</span><span class="fu">map</span><span class="op">(</span>t <span class="op">=&gt;</span> jStat<span class="op">.</span><span class="fu">beta</span><span class="op">.</span><span class="fu">pdf</span><span class="op">(</span>t<span class="op">,</span> alpha <span class="op">+</span> xVal<span class="op">,</span> beta <span class="op">+</span> n <span class="op">-</span> xVal<span class="op">));</span></span>
+<span id="cb2-204"><a href="#cb2-204"></a></span>
+<span id="cb2-205"><a href="#cb2-205"></a><span class="co">// Compute log-likelihood to prevent underflow issues</span></span>
+<span id="cb2-206"><a href="#cb2-206"></a>let logLikelihood <span class="op">=</span> theta<span class="op">.</span><span class="fu">map</span><span class="op">(</span>t <span class="op">=&gt;</span> <span class="op">{</span></span>
+<span id="cb2-207"><a href="#cb2-207"></a>  <span class="cf">if</span> <span class="op">(</span>t <span class="op">&lt;=</span> <span class="dv">0</span> <span class="op">||</span> t <span class="op">&gt;=</span> <span class="dv">1</span><span class="op">)</span> <span class="cf">return</span> <span class="op">-</span>Infinity<span class="op">;</span></span>
+<span id="cb2-208"><a href="#cb2-208"></a>  <span class="cf">return</span> xVal <span class="op">*</span> <span class="bu">Math</span><span class="op">.</span><span class="fu">log</span><span class="op">(</span>t<span class="op">)</span> <span class="op">+</span> <span class="op">(</span>n <span class="op">-</span> xVal<span class="op">)</span> <span class="op">*</span> <span class="bu">Math</span><span class="op">.</span><span class="fu">log</span><span class="op">(</span><span class="dv">1</span> <span class="op">-</span> t<span class="op">);</span></span>
+<span id="cb2-209"><a href="#cb2-209"></a><span class="op">});</span></span>
+<span id="cb2-210"><a href="#cb2-210"></a>let maxLogLikelihood <span class="op">=</span> <span class="bu">Math</span><span class="op">.</span><span class="fu">max</span><span class="op">(</span><span class="kw">...</span>logLikelihood<span class="op">);</span></span>
+<span id="cb2-211"><a href="#cb2-211"></a>let likelihoodScaled <span class="op">=</span> logLikelihood<span class="op">.</span><span class="fu">map</span><span class="op">(</span>l <span class="op">=&gt;</span> <span class="bu">Math</span><span class="op">.</span><span class="fu">exp</span><span class="op">(</span>l <span class="op">-</span> maxLogLikelihood<span class="op">));</span></span>
+<span id="cb2-212"><a href="#cb2-212"></a></span>
+<span id="cb2-213"><a href="#cb2-213"></a><span class="co">// Scale likelihood to match plot dimensions</span></span>
+<span id="cb2-214"><a href="#cb2-214"></a>let maxPriorDensity <span class="op">=</span> <span class="bu">Math</span><span class="op">.</span><span class="fu">max</span><span class="op">(</span><span class="kw">...</span>priorDensity<span class="op">);</span></span>
+<span id="cb2-215"><a href="#cb2-215"></a>let maxPosteriorDensity <span class="op">=</span> <span class="bu">Math</span><span class="op">.</span><span class="fu">max</span><span class="op">(</span><span class="kw">...</span>posteriorDensity<span class="op">);</span></span>
+<span id="cb2-216"><a href="#cb2-216"></a>let ymax <span class="op">=</span> <span class="fl">1.1</span> <span class="op">*</span> <span class="bu">Math</span><span class="op">.</span><span class="fu">max</span><span class="op">(</span>maxPriorDensity<span class="op">,</span> maxPosteriorDensity<span class="op">);</span></span>
+<span id="cb2-217"><a href="#cb2-217"></a>likelihoodScaled <span class="op">=</span> likelihoodScaled<span class="op">.</span><span class="fu">map</span><span class="op">(</span>l <span class="op">=&gt;</span> l <span class="op">*</span> ymax <span class="op">/</span> <span class="fl">1.1</span><span class="op">);</span></span>
+<span id="cb2-218"><a href="#cb2-218"></a></span>
+<span id="cb2-219"><a href="#cb2-219"></a><span class="co">// Prepare data for plotting</span></span>
+<span id="cb2-220"><a href="#cb2-220"></a>let data <span class="op">=</span> <span class="op">[</span></span>
+<span id="cb2-221"><a href="#cb2-221"></a>  <span class="op">{</span></span>
+<span id="cb2-222"><a href="#cb2-222"></a>    x<span class="op">:</span> theta<span class="op">,</span></span>
+<span id="cb2-223"><a href="#cb2-223"></a>    y<span class="op">:</span> priorDensity<span class="op">,</span></span>
+<span id="cb2-224"><a href="#cb2-224"></a>    name<span class="op">:</span> <span class="er">'</span>Prior<span class="er">'</span><span class="op">,</span></span>
+<span id="cb2-225"><a href="#cb2-225"></a>    mode<span class="op">:</span> <span class="er">'</span>lines<span class="er">'</span><span class="op">,</span></span>
+<span id="cb2-226"><a href="#cb2-226"></a>    line<span class="op">:</span> <span class="op">{</span>color<span class="op">:</span> <span class="er">'</span>blue<span class="er">'</span><span class="op">}</span></span>
+<span id="cb2-227"><a href="#cb2-227"></a>  <span class="op">},</span></span>
+<span id="cb2-228"><a href="#cb2-228"></a>  <span class="op">{</span></span>
+<span id="cb2-229"><a href="#cb2-229"></a>    x<span class="op">:</span> theta<span class="op">,</span></span>
+<span id="cb2-230"><a href="#cb2-230"></a>    y<span class="op">:</span> likelihoodScaled<span class="op">,</span></span>
+<span id="cb2-231"><a href="#cb2-231"></a>    name<span class="op">:</span> <span class="er">'</span>Likelihood<span class="er">'</span><span class="op">,</span></span>
+<span id="cb2-232"><a href="#cb2-232"></a>    mode<span class="op">:</span> <span class="er">'</span>lines<span class="er">'</span><span class="op">,</span></span>
+<span id="cb2-233"><a href="#cb2-233"></a>    line<span class="op">:</span> <span class="op">{</span>color<span class="op">:</span> <span class="er">'</span>black<span class="er">'</span><span class="op">}</span></span>
+<span id="cb2-234"><a href="#cb2-234"></a>  <span class="op">},</span></span>
+<span id="cb2-235"><a href="#cb2-235"></a>  <span class="op">{</span></span>
+<span id="cb2-236"><a href="#cb2-236"></a>    x<span class="op">:</span> theta<span class="op">,</span></span>
+<span id="cb2-237"><a href="#cb2-237"></a>    y<span class="op">:</span> posteriorDensity<span class="op">,</span></span>
+<span id="cb2-238"><a href="#cb2-238"></a>    name<span class="op">:</span> <span class="er">'</span>Posterior<span class="er">'</span><span class="op">,</span></span>
+<span id="cb2-239"><a href="#cb2-239"></a>    mode<span class="op">:</span> <span class="er">'</span>lines<span class="er">'</span><span class="op">,</span></span>
+<span id="cb2-240"><a href="#cb2-240"></a>    line<span class="op">:</span> <span class="op">{</span>color<span class="op">:</span> <span class="er">'</span>red<span class="er">'</span><span class="op">}</span></span>
+<span id="cb2-241"><a href="#cb2-241"></a>  <span class="op">}</span></span>
+<span id="cb2-242"><a href="#cb2-242"></a><span class="op">];</span></span>
+<span id="cb2-243"><a href="#cb2-243"></a></span>
+<span id="cb2-244"><a href="#cb2-244"></a><span class="co">// Compute estimates for vertical lines</span></span>
+<span id="cb2-245"><a href="#cb2-245"></a>let UMVU_estimate <span class="op">=</span> xVal <span class="op">/</span> n<span class="op">;</span></span>
+<span id="cb2-246"><a href="#cb2-246"></a>let Bayes_estimate <span class="op">=</span> <span class="op">(</span>alpha <span class="op">+</span> xVal<span class="op">)</span> <span class="op">/</span> <span class="op">(</span>alpha <span class="op">+</span> beta <span class="op">+</span> n<span class="op">);</span></span>
+<span id="cb2-247"><a href="#cb2-247"></a></span>
+<span id="cb2-248"><a href="#cb2-248"></a><span class="co">// Define layout with vertical lines and annotations</span></span>
+<span id="cb2-249"><a href="#cb2-249"></a>let layout <span class="op">=</span> <span class="op">{</span></span>
+<span id="cb2-250"><a href="#cb2-250"></a>  title<span class="op">:</span> <span class="er">'</span>Beta<span class="op">-</span>Binomial<span class="er">'</span><span class="op">,</span></span>
+<span id="cb2-251"><a href="#cb2-251"></a>  xaxis<span class="op">:</span> <span class="op">{</span>title<span class="op">:</span> <span class="er">'</span>theta<span class="er">'</span><span class="op">,</span> range<span class="op">:</span> <span class="op">[</span><span class="dv">0</span><span class="op">,</span> <span class="dv">1</span><span class="op">]},</span></span>
+<span id="cb2-252"><a href="#cb2-252"></a>  yaxis<span class="op">:</span> <span class="op">{</span>title<span class="op">:</span> <span class="er">'</span>Density<span class="er">'</span><span class="op">,</span> range<span class="op">:</span> <span class="op">[</span><span class="dv">0</span><span class="op">,</span> ymax<span class="op">]},</span></span>
+<span id="cb2-253"><a href="#cb2-253"></a>  shapes<span class="op">:</span> <span class="op">[</span></span>
+<span id="cb2-254"><a href="#cb2-254"></a>    <span class="op">{</span></span>
+<span id="cb2-255"><a href="#cb2-255"></a>      type<span class="op">:</span> <span class="er">'</span>line<span class="er">'</span><span class="op">,</span></span>
+<span id="cb2-256"><a href="#cb2-256"></a>      x0<span class="op">:</span> UMVU_estimate<span class="op">,</span></span>
+<span id="cb2-257"><a href="#cb2-257"></a>      x1<span class="op">:</span> UMVU_estimate<span class="op">,</span></span>
+<span id="cb2-258"><a href="#cb2-258"></a>      y0<span class="op">:</span> <span class="dv">0</span><span class="op">,</span></span>
+<span id="cb2-259"><a href="#cb2-259"></a>      y1<span class="op">:</span> ymax<span class="op">,</span></span>
+<span id="cb2-260"><a href="#cb2-260"></a>      line<span class="op">:</span> <span class="op">{</span>color<span class="op">:</span> <span class="er">'</span>black<span class="er">'</span><span class="op">,</span> dash<span class="op">:</span> <span class="er">'</span>dot<span class="er">'</span><span class="op">}</span></span>
+<span id="cb2-261"><a href="#cb2-261"></a>    <span class="op">},</span></span>
+<span id="cb2-262"><a href="#cb2-262"></a>    <span class="op">{</span></span>
+<span id="cb2-263"><a href="#cb2-263"></a>      type<span class="op">:</span> <span class="er">'</span>line<span class="er">'</span><span class="op">,</span></span>
+<span id="cb2-264"><a href="#cb2-264"></a>      x0<span class="op">:</span> Bayes_estimate<span class="op">,</span></span>
+<span id="cb2-265"><a href="#cb2-265"></a>      x1<span class="op">:</span> Bayes_estimate<span class="op">,</span></span>
+<span id="cb2-266"><a href="#cb2-266"></a>      y0<span class="op">:</span> <span class="dv">0</span><span class="op">,</span></span>
+<span id="cb2-267"><a href="#cb2-267"></a>      y1<span class="op">:</span> ymax<span class="op">,</span></span>
+<span id="cb2-268"><a href="#cb2-268"></a>      line<span class="op">:</span> <span class="op">{</span>color<span class="op">:</span> <span class="er">'</span>red<span class="er">'</span><span class="op">,</span> dash<span class="op">:</span> <span class="er">'</span>dot<span class="er">'</span><span class="op">}</span></span>
+<span id="cb2-269"><a href="#cb2-269"></a>    <span class="op">},</span></span>
+<span id="cb2-270"><a href="#cb2-270"></a>    <span class="op">{</span></span>
+<span id="cb2-271"><a href="#cb2-271"></a>      type<span class="op">:</span> <span class="er">'</span>line<span class="er">'</span><span class="op">,</span></span>
+<span id="cb2-272"><a href="#cb2-272"></a>      x0<span class="op">:</span> <span class="fl">0.5</span><span class="op">,</span></span>
+<span id="cb2-273"><a href="#cb2-273"></a>      x1<span class="op">:</span> <span class="fl">0.5</span><span class="op">,</span></span>
+<span id="cb2-274"><a href="#cb2-274"></a>      y0<span class="op">:</span> <span class="dv">0</span><span class="op">,</span></span>
+<span id="cb2-275"><a href="#cb2-275"></a>      y1<span class="op">:</span> ymax<span class="op">,</span></span>
+<span id="cb2-276"><a href="#cb2-276"></a>      line<span class="op">:</span> <span class="op">{</span>color<span class="op">:</span> <span class="er">'</span>gray<span class="er">'</span><span class="op">,</span> dash<span class="op">:</span> <span class="er">'</span>solid<span class="er">'</span><span class="op">}</span></span>
+<span id="cb2-277"><a href="#cb2-277"></a>    <span class="op">}</span></span>
+<span id="cb2-278"><a href="#cb2-278"></a>  <span class="op">],</span></span>
+<span id="cb2-279"><a href="#cb2-279"></a>  annotations<span class="op">:</span> <span class="op">[</span></span>
+<span id="cb2-280"><a href="#cb2-280"></a>    <span class="op">{</span></span>
+<span id="cb2-281"><a href="#cb2-281"></a>      x<span class="op">:</span> UMVU_estimate<span class="op">,</span></span>
+<span id="cb2-282"><a href="#cb2-282"></a>      y<span class="op">:</span> ymax<span class="op">,</span></span>
+<span id="cb2-283"><a href="#cb2-283"></a>      xref<span class="op">:</span> <span class="ch">'x'</span><span class="op">,</span></span>
+<span id="cb2-284"><a href="#cb2-284"></a>      yref<span class="op">:</span> <span class="ch">'y'</span><span class="op">,</span></span>
+<span id="cb2-285"><a href="#cb2-285"></a>      text<span class="op">:</span> <span class="er">'</span>UMVU<span class="er">'</span><span class="op">,</span></span>
+<span id="cb2-286"><a href="#cb2-286"></a>      showarrow<span class="op">:</span> <span class="kw">true</span><span class="op">,</span></span>
+<span id="cb2-287"><a href="#cb2-287"></a>      arrowhead<span class="op">:</span> <span class="dv">2</span><span class="op">,</span></span>
+<span id="cb2-288"><a href="#cb2-288"></a>      ax<span class="op">:</span> <span class="dv">0</span><span class="op">,</span></span>
+<span id="cb2-289"><a href="#cb2-289"></a>      ay<span class="op">:</span> <span class="op">-</span><span class="dv">40</span></span>
+<span id="cb2-290"><a href="#cb2-290"></a>    <span class="op">},</span></span>
+<span id="cb2-291"><a href="#cb2-291"></a>    <span class="op">{</span></span>
+<span id="cb2-292"><a href="#cb2-292"></a>      x<span class="op">:</span> Bayes_estimate<span class="op">,</span></span>
+<span id="cb2-293"><a href="#cb2-293"></a>      y<span class="op">:</span> ymax<span class="op">,</span></span>
+<span id="cb2-294"><a href="#cb2-294"></a>      xref<span class="op">:</span> <span class="ch">'x'</span><span class="op">,</span></span>
+<span id="cb2-295"><a href="#cb2-295"></a>      yref<span class="op">:</span> <span class="ch">'y'</span><span class="op">,</span></span>
+<span id="cb2-296"><a href="#cb2-296"></a>      text<span class="op">:</span> <span class="er">'</span>Bayes<span class="er">'</span><span class="op">,</span></span>
+<span id="cb2-297"><a href="#cb2-297"></a>      showarrow<span class="op">:</span> <span class="kw">true</span><span class="op">,</span></span>
+<span id="cb2-298"><a href="#cb2-298"></a>      arrowhead<span class="op">:</span> <span class="dv">2</span><span class="op">,</span></span>
+<span id="cb2-299"><a href="#cb2-299"></a>      ax<span class="op">:</span> <span class="dv">0</span><span class="op">,</span></span>
+<span id="cb2-300"><a href="#cb2-300"></a>      ay<span class="op">:</span> <span class="op">-</span><span class="dv">40</span></span>
+<span id="cb2-301"><a href="#cb2-301"></a>    <span class="op">}</span></span>
+<span id="cb2-302"><a href="#cb2-302"></a>  <span class="op">],</span></span>
+<span id="cb2-303"><a href="#cb2-303"></a>  legend<span class="op">:</span> <span class="op">{</span>x<span class="op">:</span> <span class="fl">0.8</span><span class="op">,</span> y<span class="op">:</span> <span class="fl">0.9</span><span class="op">},</span></span>
+<span id="cb2-304"><a href="#cb2-304"></a>  margin<span class="op">:</span> <span class="op">{</span>t<span class="op">:</span> <span class="dv">40</span><span class="op">}</span></span>
+<span id="cb2-305"><a href="#cb2-305"></a><span class="op">};</span></span>
+<span id="cb2-306"><a href="#cb2-306"></a></span>
+<span id="cb2-307"><a href="#cb2-307"></a><span class="co">// Create and display the plot</span></span>
+<span id="cb2-308"><a href="#cb2-308"></a>Plotly<span class="op">.</span><span class="fu">newPlot</span><span class="op">(</span>plotDiv<span class="op">,</span> data<span class="op">,</span> layout<span class="op">);</span></span>
+<span id="cb2-309"><a href="#cb2-309"></a></span>
+<span id="cb2-310"><a href="#cb2-310"></a><span class="co">// Return the plot to display in the document</span></span>
+<span id="cb2-311"><a href="#cb2-311"></a>plotDiv</span>
+<span id="cb2-312"><a href="#cb2-312"></a>```</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-error">
+<div class="callout callout-style-default callout-important callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+OJS Syntax Error (line 195, column 1)The keyword ‘let’ is reserved
+</div>
+</div>
+<div class="callout-body-container callout-body">
+
+</div>
+</div>
+</div>
+</div>
 
 
 </section>
 </section>
 
 </main> <!-- /main -->
+<script type="ojs-module-contents">
+{"contents":[{"methodName":"interpret","cellName":"ojs-cell-1","inline":false,"source":"// Define the plot container\nplotDiv = html`<div style=\"width: 100%; height: 500px;\"></div>`\n"}]}
+</script>
+<script type="module">
+if (window.location.protocol === "file:") { alert("The OJS runtime does not work with file:// URLs. Please use a web server to view this document."); }
+window._ojs.paths.runtimeToDoc = "../../reader";
+window._ojs.paths.runtimeToRoot = "../..";
+window._ojs.paths.docToRoot = "..";
+window._ojs.selfContained = false;
+window._ojs.runtime.interpretFromScriptTags();
+</script>
 <script id="quarto-html-after-body" type="application/javascript">
 window.document.addEventListener("DOMContentLoaded", function (event) {
   const toggleBodyColorMode = (bsSheetEl) => {
