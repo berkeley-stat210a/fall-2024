@@ -196,7 +196,7 @@ where $\sigma$ is a scale parameter, and $k,n,m$, are fixed and known.
 
 
 
-\item Implement the Gibbs sampler in a programming language of your choice (R is recommended since it is easy to draw random draws from standard distributions; Python or Matlab will probably also work fine). For $k=m=3$ and $n=100$, download the matrix $X \in \RR^{n \times m}$, in \texttt{hw5.csv} from the course website and implement the Gibbs sampler (the standard version where you update all variables in every round; use 100 rounds of burn-in and take the next 10,000 rounds of sampling, without thinning). Make a trace plot of your draws from $\sigma$ and $\theta_1$ and include them in your homework submission. Report the following three estimators of $\theta_1$, to three significant digits:
+\item Implement the Gibbs sampler in a programming language of your choice (R is recommended since it is easy to draw random draws from standard distributions; Python or Matlab will probably also work fine). For $k=m=3$ and $n=100$, download the matrix $X \in \RR^{n \times m}$, in \texttt{gibbspoisson.csv} from the course website and implement the Gibbs sampler (the standard version where you update all variables in every round; use 100 rounds of burn-in and take the next 10,000 rounds of sampling, without thinning). Make a trace plot of your draws from $\sigma$ and $\theta_1$ and include them in your homework submission. Report the following three estimators of $\theta_1$, to three significant digits:
 \begin{enumerate}[(i)]
 \item the hierarchical Bayes estimator (for squared error loss),
 \item the empirical Bayes estimator from Problem 4, and
