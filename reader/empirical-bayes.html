@@ -6,9 +6,8 @@
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
-<meta name="dcterms.date" content="2023-10-03">
 
-<title>Empirical Bayes and the James-Stein Paradox</title>
+<title>The James-Stein Estimator</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -251,26 +250,39 @@ gtag('config', 'G-B8G2041HSB', { 'anonymize_ip': true});
     <h2 id="toc-title">On this page</h2>
    
   <ul>
-  <li><a href="#empirical-bayes" id="toc-empirical-bayes" class="nav-link active" data-scroll-target="#empirical-bayes"><span class="header-section-number">1</span> Empirical Bayes</a>
+  <li><a href="#gaussian-sequence-model" id="toc-gaussian-sequence-model" class="nav-link active" data-scroll-target="#gaussian-sequence-model"><span class="header-section-number">1</span> Gaussian sequence model</a>
   <ul class="collapse">
-  <li><a href="#common-situation-in-hierarchical-bayes-models" id="toc-common-situation-in-hierarchical-bayes-models" class="nav-link" data-scroll-target="#common-situation-in-hierarchical-bayes-models"><span class="header-section-number">1.1</span> Common Situation in Hierarchical Bayes Models</a></li>
-  <li><a href="#hybrid-approach" id="toc-hybrid-approach" class="nav-link" data-scroll-target="#hybrid-approach"><span class="header-section-number">1.2</span> Hybrid Approach</a></li>
-  <li><a href="#example" id="toc-example" class="nav-link" data-scroll-target="#example"><span class="header-section-number">1.3</span> Example</a></li>
+  <li><a href="#bayes-estimators" id="toc-bayes-estimators" class="nav-link" data-scroll-target="#bayes-estimators"><span class="header-section-number">1.1</span> Bayes estimators</a></li>
+  <li><a href="#james-stein-paradox" id="toc-james-stein-paradox" class="nav-link" data-scroll-target="#james-stein-paradox"><span class="header-section-number">1.2</span> James-Stein Paradox</a></li>
+  <li><a href="#linear-shrinkage-estimators" id="toc-linear-shrinkage-estimators" class="nav-link" data-scroll-target="#linear-shrinkage-estimators"><span class="header-section-number">1.3</span> Linear shrinkage estimators</a></li>
   </ul></li>
-  <li><a href="#james-stein-estimator" id="toc-james-stein-estimator" class="nav-link" data-scroll-target="#james-stein-estimator"><span class="header-section-number">2</span> James-Stein Estimator</a>
+  <li><a href="#steins-unbiased-risk-estimator" id="toc-steins-unbiased-risk-estimator" class="nav-link" data-scroll-target="#steins-unbiased-risk-estimator"><span class="header-section-number">2</span> Stein’s Unbiased Risk Estimator</a>
   <ul class="collapse">
-  <li><a href="#james-stein-paradox" id="toc-james-stein-paradox" class="nav-link" data-scroll-target="#james-stein-paradox"><span class="header-section-number">2.1</span> James-Stein Paradox</a></li>
-  <li><a href="#general-form" id="toc-general-form" class="nav-link" data-scroll-target="#general-form"><span class="header-section-number">2.2</span> General Form</a></li>
+  <li><a href="#steins-lemma" id="toc-steins-lemma" class="nav-link" data-scroll-target="#steins-lemma"><span class="header-section-number">2.1</span> Stein’s Lemma</a></li>
+  <li><a href="#steins-unbaised-risk-estimator-sure" id="toc-steins-unbaised-risk-estimator-sure" class="nav-link" data-scroll-target="#steins-unbaised-risk-estimator-sure"><span class="header-section-number">2.2</span> Stein’s unbaised risk estimator (SURE)</a></li>
+  <li><a href="#risk-of-james-stein" id="toc-risk-of-james-stein" class="nav-link" data-scroll-target="#risk-of-james-stein"><span class="header-section-number">2.3</span> Risk of James-Stein</a></li>
   </ul></li>
-  <li><a href="#steins-lemma" id="toc-steins-lemma" class="nav-link" data-scroll-target="#steins-lemma"><span class="header-section-number">3</span> Stein’s Lemma</a>
+  <li><a href="#empirical-bayes" id="toc-empirical-bayes" class="nav-link" data-scroll-target="#empirical-bayes"><span class="header-section-number">3</span> Empirical Bayes</a>
   <ul class="collapse">
-  <li><a href="#theorem-steins-lemma---univariate" id="toc-theorem-steins-lemma---univariate" class="nav-link" data-scroll-target="#theorem-steins-lemma---univariate"><span class="header-section-number">3.1</span> Theorem (Stein’s Lemma - Univariate)</a></li>
-  <li><a href="#multivariate-version" id="toc-multivariate-version" class="nav-link" data-scroll-target="#multivariate-version"><span class="header-section-number">3.2</span> Multivariate Version</a></li>
-  <li><a href="#theorem-steins-lemma---multivariate" id="toc-theorem-steins-lemma---multivariate" class="nav-link" data-scroll-target="#theorem-steins-lemma---multivariate"><span class="header-section-number">3.3</span> Theorem (Stein’s Lemma - Multivariate)</a></li>
+  <li><a href="#section" id="toc-section" class="nav-link" data-scroll-target="#section"><span class="header-section-number">3.1</span> </a></li>
+  <li><a href="#common-situation-in-hierarchical-bayes-models" id="toc-common-situation-in-hierarchical-bayes-models" class="nav-link" data-scroll-target="#common-situation-in-hierarchical-bayes-models"><span class="header-section-number">3.2</span> Common Situation in Hierarchical Bayes Models</a></li>
+  <li><a href="#hybrid-approach" id="toc-hybrid-approach" class="nav-link" data-scroll-target="#hybrid-approach"><span class="header-section-number">3.3</span> Hybrid Approach</a></li>
+  <li><a href="#example" id="toc-example" class="nav-link" data-scroll-target="#example"><span class="header-section-number">3.4</span> Example</a></li>
   </ul></li>
-  <li><a href="#steins-unbiased-risk-estimator-sure" id="toc-steins-unbiased-risk-estimator-sure" class="nav-link" data-scroll-target="#steins-unbiased-risk-estimator-sure"><span class="header-section-number">4</span> Stein’s Unbiased Risk Estimator (SURE)</a>
+  <li><a href="#james-stein-estimator" id="toc-james-stein-estimator" class="nav-link" data-scroll-target="#james-stein-estimator"><span class="header-section-number">4</span> James-Stein Estimator</a>
   <ul class="collapse">
-  <li><a href="#risk-of-james-stein" id="toc-risk-of-james-stein" class="nav-link" data-scroll-target="#risk-of-james-stein"><span class="header-section-number">4.1</span> Risk of James-Stein</a></li>
+  <li><a href="#james-stein-paradox-1" id="toc-james-stein-paradox-1" class="nav-link" data-scroll-target="#james-stein-paradox-1"><span class="header-section-number">4.1</span> James-Stein Paradox</a></li>
+  <li><a href="#general-form" id="toc-general-form" class="nav-link" data-scroll-target="#general-form"><span class="header-section-number">4.2</span> General Form</a></li>
+  </ul></li>
+  <li><a href="#steins-lemma-1" id="toc-steins-lemma-1" class="nav-link" data-scroll-target="#steins-lemma-1"><span class="header-section-number">5</span> Stein’s Lemma</a>
+  <ul class="collapse">
+  <li><a href="#theorem-steins-lemma---univariate" id="toc-theorem-steins-lemma---univariate" class="nav-link" data-scroll-target="#theorem-steins-lemma---univariate"><span class="header-section-number">5.1</span> Theorem (Stein’s Lemma - Univariate)</a></li>
+  <li><a href="#multivariate-version" id="toc-multivariate-version" class="nav-link" data-scroll-target="#multivariate-version"><span class="header-section-number">5.2</span> Multivariate Version</a></li>
+  <li><a href="#theorem-steins-lemma---multivariate" id="toc-theorem-steins-lemma---multivariate" class="nav-link" data-scroll-target="#theorem-steins-lemma---multivariate"><span class="header-section-number">5.3</span> Theorem (Stein’s Lemma - Multivariate)</a></li>
+  </ul></li>
+  <li><a href="#steins-unbiased-risk-estimator-sure" id="toc-steins-unbiased-risk-estimator-sure" class="nav-link" data-scroll-target="#steins-unbiased-risk-estimator-sure"><span class="header-section-number">6</span> Stein’s Unbiased Risk Estimator (SURE)</a>
+  <ul class="collapse">
+  <li><a href="#risk-of-james-stein-1" id="toc-risk-of-james-stein-1" class="nav-link" data-scroll-target="#risk-of-james-stein-1"><span class="header-section-number">6.1</span> Risk of James-Stein</a></li>
   </ul></li>
   </ul>
 </nav>
@@ -280,7 +292,7 @@ gtag('config', 'G-B8G2041HSB', { 'anonymize_ip': true});
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title">Empirical Bayes and the James-Stein Paradox</h1>
+<h1 class="title">The James-Stein Estimator</h1>
 </div>
 
 
@@ -288,12 +300,6 @@ gtag('config', 'G-B8G2041HSB', { 'anonymize_ip': true});
 <div class="quarto-title-meta">
 
     
-    <div>
-    <div class="quarto-title-meta-heading">Published</div>
-    <div class="quarto-title-meta-contents">
-      <p class="date">October 3, 2023</p>
-    </div>
-  </div>
   
     
   </div>
@@ -323,10 +329,78 @@ gtag('config', 'G-B8G2041HSB', { 'anonymize_ip': true});
 \newcommand{\Cov}{\textnormal{Cov}}
 \newcommand{\Corr}{\textnormal{Corr}}
 \]</span></p>
-<section id="empirical-bayes" class="level2" data-number="1">
-<h2 data-number="1" class="anchored" data-anchor-id="empirical-bayes"><span class="header-section-number">1</span> Empirical Bayes</h2>
-<section id="common-situation-in-hierarchical-bayes-models" class="level3" data-number="1.1">
-<h3 data-number="1.1" class="anchored" data-anchor-id="common-situation-in-hierarchical-bayes-models"><span class="header-section-number">1.1</span> Common Situation in Hierarchical Bayes Models</h3>
+<section id="gaussian-sequence-model" class="level2" data-number="1">
+<h2 data-number="1" class="anchored" data-anchor-id="gaussian-sequence-model"><span class="header-section-number">1</span> Gaussian sequence model</h2>
+<p>Recall that we have discussed a variety of estimators for <span class="math inline">\(\theta \in \RR^d\)</span> in the <em>Gaussian sequence model</em></p>
+<p><span class="math display">\[X \sim N_d(\theta, I_d)\]</span></p>
+<p>Note that this model is somewhat more general than it appears. If <span class="math inline">\(X_1,\ldots,X_n \simiid N_d(\theta, \sigma^2 I_d)\)</span> for known <span class="math inline">\(\sigma^2&gt; 0\)</span>, we could make a sufficiency reduction to obtain</p>
+<p><span class="math display">\[Z = \frac{1}{\sigma\sqrt{n}} \sum\_i X_i \sim N_d(\theta, I_d).\]</span> For simplicity we will discuss the ``vanilla’’ version here, but we can always translate our results to the more general setting via this transformation.</p>
+<p>We’ll generally assume in what follows that the loss we care about is the squared error loss, summed over the coordinates:<br>
+<span class="math display">\[L(\theta, d) =
+\|\delta(X) - \theta\|\^2 = \sum\_j (\delta\_j(X) - \theta\_j)\^2\]</span></p>
+<p>The most obvious estimator is <span class="math inline">\(\delta_0(X) = X\)</span> itself, which we could justify in a variety of ways: we’ve shown that it is the UMVU estimator for <span class="math inline">\(\theta\)</span> and also the objective Bayes estimator, since the flat prior on <span class="math inline">\(\theta\)</span> coincides with the Jeffreys prior (as it does for any location model). It also happens to be the maximum likelihood estimator (MLE), which we’ll discuss later in the course.</p>
+<section id="bayes-estimators" class="level3" data-number="1.1">
+<h3 data-number="1.1" class="anchored" data-anchor-id="bayes-estimators"><span class="header-section-number">1.1</span> Bayes estimators</h3>
+<p>If we introduce the Bayesian prior <span class="math inline">\(\theta_i \simiid N(0,\tau^2)\)</span> then we have seen that we arrive at the Bayes estimator <span class="math inline">\(\frac{\tau^2}{1+\tau^2}X\)</span>.</p>
+<p>We can think of this as a tuning parameter for a generic <em>linear shrinkage estimator</em> <span class="math display">\[\delta_\zeta(X) = (1-\zeta)X,\]</span> where <span class="math inline">\(\zeta \in [0,1]\)</span> is in effect a tuning parameter we will call the <em>shrinkage parameter</em>. Taking <span class="math inline">\(\zeta = 0\)</span> corresponds to using <span class="math inline">\(X\)</span> as our estimator for <span class="math inline">\(\theta\)</span>, and taking <span class="math inline">\(\zeta = 1/(1+\tau^2)\)</span> corresponds to the Bayes estimator where <span class="math inline">\(\tau^2\)</span> is known.</p>
+<p>If we aren’t sure which <span class="math inline">\(\zeta\)</span> to use, for example because we have some <em>a priori</em> uncertainty about <span class="math inline">\(\tau^2\)</span>, we can try to estimate it from the data using hierarchical Bayes, which we’ve seen would give the final estimator <span class="math display">\[\delta(X) = (1 - \EE[\zeta \mid X]) X = \delta_{\hat\zeta_{\text{Bayes}}(X)}(X),\]</span> so we are in effect estimating <span class="math inline">\(\zeta\)</span> from the whole data set and then plugging it in as a data-adaptive tuning parameter.</p>
+<p>The hierarchical Bayes estimator uses a Bayes estimator for <span class="math inline">\(\zeta\)</span>, but if we take an empirical Bayes approach we could try other estimators, such as the MLE or UMVU. If <span class="math inline">\(d \geq 3\)</span> then the UMVU estimator for <span class="math inline">\(\zeta\)</span> is <span class="math display">\[\hat{\zeta}_{\text{UMVU}}(X) = \frac{d-2}{\|X\|^2},\]</span> which we can verify using the identity <span class="math display">\[\EE[1/Y] = \frac{1}{d-2}, \quad \text{ if } Y \sim \chi_d^2 = \text{Gamma}(d/2, 2), \text{ for } d &gt; 2,\]</span> which is proved in the handwritten notes. Plugging in <span class="math inline">\(\hat\zeta_\text{UMVU}\)</span> results in an estimator called the <em>James-Stein</em> estimator, <span class="math display">\[ \delta_{\text{JS}}(X)= \left(1 - \frac{d-2}{\|X\|^2}\right)X = \delta_{\hat\zeta_{\text{UMVU}}}(X) \]</span></p>
+</section>
+<section id="james-stein-paradox" class="level3" data-number="1.2">
+<h3 data-number="1.2" class="anchored" data-anchor-id="james-stein-paradox"><span class="header-section-number">1.2</span> James-Stein Paradox</h3>
+<p>While the James-Stein estimator can be motivated as an empirical Bayes estimator, it is surprisingly good even without making any Bayesian assumptions at all.</p>
+<p>For <span class="math inline">\(d \geq 3\)</span>, the estimator <span class="math inline">\(X\)</span> is actually <em>inadmissible</em> as an estimator of <span class="math inline">\(\theta\)</span> under squared error loss:</p>
+<p><span class="math display">\[\text{MSE}(\theta, \delta_{JS}) &lt; \text{MSE}(\theta, X) \quad \text{ for all } \theta \in \mathbb{R}^d.\]</span></p>
+<p>It is not surprising for a Bayes estimator to beat the UMVU estimator <em>an average</em> with respect to some prior, but this result holds for <em>every fixed value</em> of the parameter <span class="math inline">\(\theta\)</span>.</p>
+<p>In fact, since there is nothing special about shrinking towards <span class="math inline">\(0\)</span>. We could use a version of the estimator that shrinks toward any other <span class="math inline">\(\theta_0 \in \RR^d\)</span>, i.e. <span class="math display">\[ \tilde delta(X) = \theta_0 + \left(1 - \frac{d-2}{\|X - \theta_0\|^2}\right) (X - \theta_0)\]</span>. This also dominates <span class="math inline">\(\delta_0\)</span> because it is just the James-Stein estimator we’d get if we made the substitution <span class="math display">\[Y = X - \theta_0 \sim N_d(\mu, I_d), \quad \text{ for } \mu = \theta - \theta_0.\]</span> The translation-invariance of the Gaussian location model means that the James-Stein estimator for <span class="math inline">\(\mu\)</span> using <span class="math inline">\(Y\)</span> also dominates the estimator <span class="math inline">\(\hat\mu_0(Y) = Y\)</span>, which corresponds to the estimator <span class="math inline">\(\delta_0(X) = \hat\mu_0 + \theta_0 = X\)</span> for <span class="math inline">\(\theta\)</span>.</p>
+<p>This result was received as a shock in the 1950s when it first came out. It was regarded for a long time as a curiosity, but it was eventually understood to carry the deep implication that shrinkage makes sense, especially in higher-dimensional problems, even when we don’t have a Bayes justification for it.</p>
+</section>
+<section id="linear-shrinkage-estimators" class="level3" data-number="1.3">
+<h3 data-number="1.3" class="anchored" data-anchor-id="linear-shrinkage-estimators"><span class="header-section-number">1.3</span> Linear shrinkage estimators</h3>
+<p>Even without introducing a Bayesian prior for <span class="math inline">\(\theta\)</span>, we can motivate our linear shrinkage estimator purely from the perspective of trading a bit of bias for a reduction in variance.</p>
+<p>We can start by calculating the MSE (considered as a purely frequentist risk function) for a single coordinate, using the bias-variance tradeoff: <span class="math display">\[
+\begin{aligned}
+\EE_\theta[(\theta - \delta_i(X))^2]
+&amp;= (\theta_i - \EE_\theta (1-\zeta)X_i)^2 + \text{Var}_\theta (1-\zeta)X_i\\
+&amp;= (\zeta\theta_i)^2 + (1-\zeta)^2
+\end{aligned}
+\]</span> Summing over the <span class="math inline">\(d\)</span> coordinates gives <span class="math display">\[\text{MSE}(\theta; \delta) = \zeta^2\|\theta\|^2 + d(1-\zeta)^2,\]</span> where the first term represents the squared bias and the second is the variance.</p>
+<p>Note that the risk is a quadratic in <span class="math inline">\(\zeta\)</span> with positive second derivative, so we can minimize it by setting <span class="math display">\[0 = \frac{d}{d\zeta}\text{MSE}(\theta) = 2\zeta\|\theta\|^2 - 2(1-\zeta)d,\]</span> leading to <span class="math display">\[\zeta^*(\theta) = \frac{d}{d+\|\theta\|^2} = \frac{1}{1+\|\theta\|^2/d},\]</span> which looks remarkably similar to <span class="math inline">\(\frac{1}{1+\tau^2}\)</span>, which is the Bayes-optimal <span class="math inline">\(\zeta\)</span> under the Gaussian prior from the last section.</p>
+<p>One thing to notice is that <span class="math inline">\(\zeta^*(\theta) &gt; 0\)</span>, so a small amount of shrinkage helps. But the correct amount of shrinkage depends on <span class="math inline">\(\|\theta\|^2\)</span>: if <span class="math inline">\(\|\theta\|^2 \to \infty\)</span>, the correct amount of shrinkage goes to <span class="math inline">\(0\)</span>, so any fixed <span class="math inline">\(\zeta\)</span> would overshoot for some <span class="math inline">\(\theta\)</span> parameters.</p>
+<p>It turns out the James-Stein estimator manages to estimate the correct amount of shrinkage from the data, in such a way that we avoid overshooting most of the time, and thereby improve on the MSE for <em>any</em> <span class="math inline">\(\theta\)</span>.</p>
+<p>To understand why, we need a general way to calculate the MSE for an estimator with an adaptive <span class="math inline">\(\hat\zeta(X)\)</span>. Stein’s unbiased risk estimator will give us that.</p>
+</section>
+</section>
+<section id="steins-unbiased-risk-estimator" class="level2" data-number="2">
+<h2 data-number="2" class="anchored" data-anchor-id="steins-unbiased-risk-estimator"><span class="header-section-number">2</span> Stein’s Unbiased Risk Estimator</h2>
+<section id="steins-lemma" class="level3" data-number="2.1">
+<h3 data-number="2.1" class="anchored" data-anchor-id="steins-lemma"><span class="header-section-number">2.1</span> Stein’s Lemma</h3>
+<p>The first ingredient in finding the MSE of <span class="math inline">\(\delta_\text{JS}\)</span> is a lemma called <em>Stein’s Lemma</em>:</p>
+<p><strong>Theorem (Stein’s lemma, univariate):</strong> Suppose <span class="math inline">\(X \sim N(\theta, \sigma^2)\)</span>, and that <span class="math inline">\(h:\; \RR \to \RR\)</span> is differentiable, with <span class="math inline">\(\EE|\dot{h}(X)| &lt; \infty\)</span>. Then we have <span class="math display">\[\Cov(X, h(X)) = \EE[(X-\theta)h(X)] = \sigma^2\EE[\dot{h}(X)].\]</span></p>
+<p><em>Proof</em>:</p>
+<p>Next, we will do the calculation for <span class="math inline">\(\theta = 0\)</span> and <span class="math inline">\(\sigma^2 = 1\)</span>. Then <span class="math display">\[\EE[Xh(X)] = \int_{-\infty}^\infty xh(x)\phi(x)\,dx = \int_{-\infty}^\infty \dot{h}(x)\phi(x)\,dx,\]</span> where we’ve used integration by parts: <span class="math display">\[\dot{\phi}(x) = \frac{d}{dx} \frac{1}{\sqrt{2\pi}}e^{-x^2/2} = -x \frac{1}{\sqrt{2\pi}}e^{-x^2/2} = -x\phi(x).\]</span> (A slightly more rigorous version is in the handwritten notes: we can assume wlog <span class="math inline">\(h(0) = 0\)</span> because otherwise we could center it by using <span class="math inline">\(k(X) = h(X) - h(0)\)</span>, which has the same covariance with <span class="math inline">\(X\)</span>. Then we can break up the integral into an integral from <span class="math inline">\(0\)</span> to <span class="math inline">\(\infty\)</span> and another from <span class="math inline">\(-\infty\)</span> to <span class="math inline">\(0\)</span>, and do integration by parts a bit more carefully for each.)</p>
+<p>For more general <span class="math inline">\(\theta\)</span>, we can write <span class="math inline">\(X = \theta + \sigma Z\)</span>, where <span class="math inline">\(Z \sim N(0,1)\)</span>. Then applying the result for <span class="math inline">\(k(z) = h(\theta + \sigma z)\)</span>, we have</p>
+<p><span class="math display">\[\EE[(X-\theta) h(X)] = \sigma\EE[Zh(\theta + \sigma Z)] = \sigma^2\EE[\dot{h}(\theta + \sigma Z)] = \sigma^2\EE[\dot{h}(X)],\]</span> giving the general result.</p>
+<p>We will need the multivariate version of Stein’s lemma. For a function <span class="math inline">\(h:\; \RR^d \to \RR^d\)</span>, define the Jacobian matrix <span class="math inline">\(Dh \in \RR^{d\times d}\)</span> by <span class="math display">\[(Dh(x))_{ij} = \frac{\partial h_i}{\partial x_j}(x).\]</span></p>
+<p>Define the <strong>Frobenius norm</strong> <span class="math inline">\(A \in \RR^{d\times d}\)</span> as <span class="math display">\[\|A\|_F = (\sum_{ij} A_{ij}^2)^{1/2}.\]</span></p>
+<p>Now we can state our theorem:</p>
+<p><strong>Theorem (Stein’s lemma, multivariate):</strong> Assume <span class="math inline">\(X \sim N_d(\theta; \sigma^2 I_d)\)</span>, and <span class="math inline">\(h:\;\RR^d \to \RR^d\)</span> is differentiable with <span class="math inline">\(\EE\|Dh(X)\|_F &lt; \infty\)</span>. Then <span class="math display">\[ \EE[(X-\theta)'h(X)] = \sigma^2 \EE \text{tr}(Dh(X)) = \sigma^2 \sum_i \EE \frac{\partial h_i}{\partial x_i} (X).\]</span></p>
+<p>The proof follows easily from the proof of the univariate version, and appears in the handwritten notes.</p>
+</section>
+<section id="steins-unbaised-risk-estimator-sure" class="level3" data-number="2.2">
+<h3 data-number="2.2" class="anchored" data-anchor-id="steins-unbaised-risk-estimator-sure"><span class="header-section-number">2.2</span> Stein’s unbaised risk estimator (SURE)</h3>
+</section>
+<section id="risk-of-james-stein" class="level3" data-number="2.3">
+<h3 data-number="2.3" class="anchored" data-anchor-id="risk-of-james-stein"><span class="header-section-number">2.3</span> Risk of James-Stein</h3>
+</section>
+</section>
+<section id="empirical-bayes" class="level2" data-number="3">
+<h2 data-number="3" class="anchored" data-anchor-id="empirical-bayes"><span class="header-section-number">3</span> Empirical Bayes</h2>
+<section id="section" class="level3" data-number="3.1">
+<h3 data-number="3.1" class="anchored" data-anchor-id="section"><span class="header-section-number">3.1</span> </h3>
+</section>
+<section id="common-situation-in-hierarchical-bayes-models" class="level3" data-number="3.2">
+<h3 data-number="3.2" class="anchored" data-anchor-id="common-situation-in-hierarchical-bayes-models"><span class="header-section-number">3.2</span> Common Situation in Hierarchical Bayes Models</h3>
 <ol type="1">
 <li><span class="math inline">\(\theta \sim G\)</span>, one draw: hard to justify prior</li>
 <li>Lots of info: prior doesn’t matter</li>
@@ -335,16 +409,16 @@ gtag('config', 'G-B8G2041HSB', { 'anonymize_ip': true});
 </ol>
 <p><span class="math display">\[X_i \sim p_{\theta_i}(x), \quad i = 1,\ldots,d\]</span></p>
 </section>
-<section id="hybrid-approach" class="level3" data-number="1.2">
-<h3 data-number="1.2" class="anchored" data-anchor-id="hybrid-approach"><span class="header-section-number">1.2</span> Hybrid Approach</h3>
+<section id="hybrid-approach" class="level3" data-number="3.3">
+<h3 data-number="3.3" class="anchored" data-anchor-id="hybrid-approach"><span class="header-section-number">3.3</span> Hybrid Approach</h3>
 <p>Treat <span class="math inline">\(G\)</span> as fixed:</p>
 <ol type="1">
 <li>Estimate <span class="math inline">\(G\)</span> based on observed data</li>
 <li>Plug in <span class="math inline">\(\hat{G}\)</span> as though known</li>
 </ol>
 </section>
-<section id="example" class="level3" data-number="1.3">
-<h3 data-number="1.3" class="anchored" data-anchor-id="example"><span class="header-section-number">1.3</span> Example</h3>
+<section id="example" class="level3" data-number="3.4">
+<h3 data-number="3.4" class="anchored" data-anchor-id="example"><span class="header-section-number">3.4</span> Example</h3>
 <p><span class="math inline">\(\theta_i \sim N(0, \tau^2)\)</span>, <span class="math inline">\(\tau^2\)</span> fixed unknown <span class="math inline">\(X_i|\theta_i \sim N(\theta_i, 1)\)</span>, <span class="math inline">\(i = 1,\ldots,d\)</span></p>
 <p>Bayes estimator if we knew <span class="math inline">\(\tau^2\)</span> is:</p>
 <p><span class="math display">\[\delta(X) = \frac{\tau^2}{\tau^2 + 1}X_i\]</span></p>
@@ -356,23 +430,23 @@ gtag('config', 'G-B8G2041HSB', { 'anonymize_ip': true});
 <p>If <span class="math inline">\(d\)</span> large, should be near optimal.</p>
 </section>
 </section>
-<section id="james-stein-estimator" class="level2" data-number="2">
-<h2 data-number="2" class="anchored" data-anchor-id="james-stein-estimator"><span class="header-section-number">2</span> James-Stein Estimator</h2>
+<section id="james-stein-estimator" class="level2" data-number="4">
+<h2 data-number="4" class="anchored" data-anchor-id="james-stein-estimator"><span class="header-section-number">4</span> James-Stein Estimator</h2>
 <p><span class="math display">\[\delta_{JS}(X) = (1 - \frac{d-2}{\|X\|^2})X\]</span></p>
 <p>Proof: If <span class="math inline">\(Y \sim \text{Gamma}(\frac{d}{2}, \frac{1}{2})\)</span>, then:</p>
 <p><span class="math display">\[\mathbb{P}(Y &gt; \frac{d-2}{2}) = 1\]</span></p>
 <p>Now use <span class="math inline">\(f(x) = x - \frac{d-2}{x}\)</span>, <span class="math inline">\(\frac{1}{2}\|X\|^2 \sim \text{Gamma}(\frac{d}{2}, \frac{1}{2})\)</span></p>
 <p><span class="math display">\[\mathbb{E}[f(\frac{1}{2}\|X\|^2)] &gt; f(\mathbb{E}[\frac{1}{2}\|X\|^2]) = \frac{d}{2} - \frac{d-2}{\frac{d}{2}} = 1\]</span></p>
-<section id="james-stein-paradox" class="level3" data-number="2.1">
-<h3 data-number="2.1" class="anchored" data-anchor-id="james-stein-paradox"><span class="header-section-number">2.1</span> James-Stein Paradox</h3>
+<section id="james-stein-paradox-1" class="level3" data-number="4.1">
+<h3 data-number="4.1" class="anchored" data-anchor-id="james-stein-paradox-1"><span class="header-section-number">4.1</span> James-Stein Paradox</h3>
 <p>For <span class="math inline">\(d \geq 3\)</span>, the sample mean <span class="math inline">\(\bar{X} = \frac{1}{n}\sum X_i\)</span> is inadmissible as an estimator of <span class="math inline">\(\theta\)</span> under squared error loss.</p>
 <p>For <span class="math inline">\(\delta_{JS}(X) = (1 - \frac{d-2}{\|X\|^2})X\)</span>:</p>
 <p><span class="math display">\[\text{MSE}(\theta, \delta_{JS}) &lt; \text{MSE}(\theta, \bar{X}) \quad \forall \theta \in \mathbb{R}^d\]</span></p>
 <p>Notes: - <span class="math inline">\(\bar{X}\)</span> is UMVU, Minimax, objective Bayes - Might as well take <span class="math inline">\(n=1\)</span> (Sufficiency reduction) - This result holds without assumption of Bayes model on <span class="math inline">\(\theta\)</span>: true for <span class="math inline">\(\theta = (50, 10, 94, \ldots)\)</span> - Nothing special about 0: for any <span class="math inline">\(\theta_0 \in \mathbb{R}^d\)</span>, <span class="math inline">\(\delta(X) = \theta_0 + (1 - \frac{d-2}{\|X-\theta_0\|^2})(X-\theta_0)\)</span> also dominates <span class="math inline">\(X\)</span></p>
 <p>Deep implication: shrinkage makes sense even without Bayes justification.</p>
 </section>
-<section id="general-form" class="level3" data-number="2.2">
-<h3 data-number="2.2" class="anchored" data-anchor-id="general-form"><span class="header-section-number">2.2</span> General Form</h3>
+<section id="general-form" class="level3" data-number="4.2">
+<h3 data-number="4.2" class="anchored" data-anchor-id="general-form"><span class="header-section-number">4.2</span> General Form</h3>
 <p>Let <span class="math inline">\(\delta(X) = (1 - \frac{c}{\|X\|^2})X\)</span>, <span class="math inline">\(c\)</span> is tuning parameter</p>
 <p><span class="math display">\[R(\theta, \delta) = \mathbb{E}_\theta\|\delta(X) - \theta\|^2 = \mathbb{E}_\theta\|X - \theta\|^2 + \mathbb{E}_\theta[\frac{c^2}{\|X\|^2} - 2c]\]</span></p>
 <p>What is optimal <span class="math inline">\(c\)</span>?</p>
@@ -383,11 +457,11 @@ gtag('config', 'G-B8G2041HSB', { 'anonymize_ip': true});
 <p>What if we estimate <span class="math inline">\(c\)</span>? How does adaptivity of <span class="math inline">\(c(X)\)</span> affect MSE?</p>
 </section>
 </section>
-<section id="steins-lemma" class="level2" data-number="3">
-<h2 data-number="3" class="anchored" data-anchor-id="steins-lemma"><span class="header-section-number">3</span> Stein’s Lemma</h2>
+<section id="steins-lemma-1" class="level2" data-number="5">
+<h2 data-number="5" class="anchored" data-anchor-id="steins-lemma-1"><span class="header-section-number">5</span> Stein’s Lemma</h2>
 <p>Useful tool for computing/estimating risk in Gaussian estimation problems.</p>
-<section id="theorem-steins-lemma---univariate" class="level3" data-number="3.1">
-<h3 data-number="3.1" class="anchored" data-anchor-id="theorem-steins-lemma---univariate"><span class="header-section-number">3.1</span> Theorem (Stein’s Lemma - Univariate)</h3>
+<section id="theorem-steins-lemma---univariate" class="level3" data-number="5.1">
+<h3 data-number="5.1" class="anchored" data-anchor-id="theorem-steins-lemma---univariate"><span class="header-section-number">5.1</span> Theorem (Stein’s Lemma - Univariate)</h3>
 <p>Suppose <span class="math inline">\(X \sim N(\theta, \sigma^2)\)</span> <span class="math inline">\(h: \mathbb{R} → \mathbb{R}\)</span> differentiable, <span class="math inline">\(\mathbb{E}|h'(X)| &lt; \infty\)</span></p>
 <p>Then <span class="math inline">\(\mathbb{E}[(X-\theta)h(X)] = \sigma^2\mathbb{E}[h'(X)]\)</span></p>
 <p><span class="math inline">\(\text{Cov}(X, h(X)) = \sigma^2\mathbb{E}[h'(X)]\)</span></p>
@@ -399,12 +473,12 @@ gtag('config', 'G-B8G2041HSB', { 'anonymize_ip': true});
 <p>General <span class="math inline">\(\theta\)</span>, <span class="math inline">\(\sigma^2 \neq 1\)</span>: write <span class="math inline">\(X = \theta + \sigma Z\)</span>, <span class="math inline">\(Z \sim N(0,1)\)</span></p>
 <p><span class="math display">\[\mathbb{E}[(X-\theta)h(X)] = \sigma\mathbb{E}[Zh(\theta+\sigma Z)] = \sigma^2\mathbb{E}[h'(\theta+\sigma Z)] = \sigma^2\mathbb{E}[h'(X)]\]</span></p>
 </section>
-<section id="multivariate-version" class="level3" data-number="3.2">
-<h3 data-number="3.2" class="anchored" data-anchor-id="multivariate-version"><span class="header-section-number">3.2</span> Multivariate Version</h3>
+<section id="multivariate-version" class="level3" data-number="5.2">
+<h3 data-number="5.2" class="anchored" data-anchor-id="multivariate-version"><span class="header-section-number">5.2</span> Multivariate Version</h3>
 <p>Define Frobenius norm: <span class="math inline">\(\|A\|_F^2 = \sum_{i,j} A_{ij}^2 = \text{tr}(A^TA)\)</span></p>
 </section>
-<section id="theorem-steins-lemma---multivariate" class="level3" data-number="3.3">
-<h3 data-number="3.3" class="anchored" data-anchor-id="theorem-steins-lemma---multivariate"><span class="header-section-number">3.3</span> Theorem (Stein’s Lemma - Multivariate)</h3>
+<section id="theorem-steins-lemma---multivariate" class="level3" data-number="5.3">
+<h3 data-number="5.3" class="anchored" data-anchor-id="theorem-steins-lemma---multivariate"><span class="header-section-number">5.3</span> Theorem (Stein’s Lemma - Multivariate)</h3>
 <p><span class="math inline">\(X \sim N_d(\theta, \sigma^2 I_d)\)</span>, <span class="math inline">\(\theta \in \mathbb{R}^d\)</span> <span class="math inline">\(h: \mathbb{R}^d → \mathbb{R}^d\)</span> differentiable, <span class="math inline">\(\mathbb{E}\|Dh(X)\|_F &lt; \infty\)</span></p>
 <p>Then <span class="math inline">\(\mathbb{E}[(X-\theta)^Th(X)] = \sigma^2\mathbb{E}[\text{tr}(Dh(X))]\)</span></p>
 <p><span class="math inline">\(\mathbb{E}[(X-\theta)h(X)^T] = \sigma^2\mathbb{E}[Dh(X)]\)</span></p>
@@ -412,8 +486,8 @@ gtag('config', 'G-B8G2041HSB', { 'anonymize_ip': true});
 <p><span class="math display">\[\mathbb{E}[(X_i-\theta_i)h_i(X)] = \mathbb{E}[\mathbb{E}[(X_i-\theta_i)h_i(X)|X_{-i}]]\]</span> <span class="math display">\[= \sigma^2\mathbb{E}[\frac{\partial h_i}{\partial x_i}(X)]\]</span></p>
 </section>
 </section>
-<section id="steins-unbiased-risk-estimator-sure" class="level2" data-number="4">
-<h2 data-number="4" class="anchored" data-anchor-id="steins-unbiased-risk-estimator-sure"><span class="header-section-number">4</span> Stein’s Unbiased Risk Estimator (SURE)</h2>
+<section id="steins-unbiased-risk-estimator-sure" class="level2" data-number="6">
+<h2 data-number="6" class="anchored" data-anchor-id="steins-unbiased-risk-estimator-sure"><span class="header-section-number">6</span> Stein’s Unbiased Risk Estimator (SURE)</h2>
 <p>Unbiased estimator of the MSE of any <span class="math inline">\(\delta(X)\)</span></p>
 <p>Apply Stein’s Lemma with <span class="math inline">\(h(x) = X - \delta(x)\)</span></p>
 <p>Assume <span class="math inline">\(\sigma^2 = 1\)</span>:</p>
@@ -427,8 +501,8 @@ gtag('config', 'G-B8G2041HSB', { 'anonymize_ip': true});
 <p>Example: <span class="math inline">\(\delta(X) = (1-c)X\)</span> for fixed <span class="math inline">\(c\)</span></p>
 <p><span class="math inline">\(h(x) = cX\)</span>, <span class="math inline">\(Dh = cI_d\)</span></p>
 <p><span class="math inline">\(\hat{R} = d + c^2\|X\|^2 - 2cd\)</span></p>
-<section id="risk-of-james-stein" class="level3" data-number="4.1">
-<h3 data-number="4.1" class="anchored" data-anchor-id="risk-of-james-stein"><span class="header-section-number">4.1</span> Risk of James-Stein</h3>
+<section id="risk-of-james-stein-1" class="level3" data-number="6.1">
+<h3 data-number="6.1" class="anchored" data-anchor-id="risk-of-james-stein-1"><span class="header-section-number">6.1</span> Risk of James-Stein</h3>
 <p><span class="math inline">\(\delta_{JS}(X) = (1 - \frac{d-2}{\|X\|^2})X\)</span></p>
 <p><span class="math inline">\(h(X) = \frac{d-2}{\|X\|^2}X\)</span>, <span class="math inline">\(Dh(X) = \frac{d-2}{\|X\|^2}I_d - 2(d-2)\frac{XX^T}{\|X\|^4}\)</span></p>
 <p><span class="math inline">\(\|h(X)\|^2 = \frac{(d-2)^2}{\|X\|^2}\)</span></p>
