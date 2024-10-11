@@ -383,13 +383,7 @@ gtag('config', 'G-B8G2041HSB', { 'anonymize_ip': true});
 &amp;= \EE_\theta\|X - \theta\|^2 + \EE_\theta\|h(X)\|^2 - 2\EE_\theta \left[(X - \theta)'h(X)\right]\\
 &amp;= \sigma^2 d + \EE_\theta\|h(X)\|^2 - 2\sigma^2 \EE_\theta \text{tr}(Dh(X)).
 \end{aligned}
-\]</span> Thus, if <span class="math inline">\(\sigma^2\)</span> is known, we obtain the unbiased estimator <span class="math display">\[ \widehat{\text{MSE}}(X) = \sigma^2 d +  \|h(X)\|^2 - 2 \sigma^2 \text{tr}(Dh(X)).\]</span> As an example, we can estimate the MSE of an estimator that shrinks <span class="math inline">\(X_i\)</span> partway toward the average <span class="math inline">\(\overline{X}\)</span>: <span class="math display">\[
-\delta_i(X) = \frac{X_i  + \overline{X}}{2}.
-\]</span> Then <span class="math display">\[
-h(X) = X - \delta(X) = \frac{X - \overline{X} 1_d}{2}, \quad \text{ and } Dh(X)_{ii} = \frac{\partial}{\partial X_i} \frac{X_i - \overline{X}}{2} = \frac{d-1}{2d}.
-\]</span> And an unbiased estimator for the MSE is <span class="math display">\[
-\widehat{\text{MSE}}(X) = \sigma^2 d +  \frac{1}{4}\sum_i (X_i - \overline{X})^2 - 2\sigma^2 \cdot d (1-1/d)/2 = \sigma^2 + \frac{d-1}{4}S^2
-\]</span></p>
+\]</span> Thus, if <span class="math inline">\(\sigma^2\)</span> is known, we obtain the unbiased estimator <span class="math display">\[ \widehat{\text{MSE}}(X) = \sigma^2 d +  \|h(X)\|^2 - 2 \sigma^2 \text{tr}(Dh(X)).\]</span></p>
 </section>
 <section id="example-shrinking-toward-overlinex" class="level3" data-number="2.3">
 <h3 data-number="2.3" class="anchored" data-anchor-id="example-shrinking-toward-overlinex"><span class="header-section-number">2.3</span> Example: shrinking toward <span class="math inline">\(\overline{X}\)</span></h3>
@@ -414,7 +408,7 @@ Dh(X)_{ii} = \frac{\partial}{\partial X_i} \gamma(X_i - \overline{X}) = \gamma (
 </section>
 <section id="risk-of-the-james-stein-estimator" class="level2" data-number="3">
 <h2 data-number="3" class="anchored" data-anchor-id="risk-of-the-james-stein-estimator"><span class="header-section-number">3</span> Risk of the James-Stein estimator</h2>
-<p>We are now ready to calculate the risk of the James–Stein estimator <span class="math inline">\(\delta_{JS}(X) = \left(1 - \frac{d-2}{\|X\|^2}\right)X\)</span>, under the assumption <span class="math inline">\(\sigma^2 = 1\)</span> (for general <span class="math inline">\(\sigma^2\)</span>, we should replace the numerator <span class="math inline">\(d-2\)</span> with <span class="math inline">\((d-2)\sigma^2\)</span>).</p>
+<p>We are now ready to calculate the risk of the James–Stein estimator <span class="math inline">\(\delta_{JS}(X) = \left(1 - \frac{d-2}{\|X\|^2}\right)X\)</span>. We can drop the assumption $^2 = $, under the assumption <span class="math inline">\(\sigma^2 = 1\)</span> (for general <span class="math inline">\(\sigma^2\)</span>, we should replace the numerator <span class="math inline">\(d-2\)</span> with <span class="math inline">\((d-2)\sigma^2\)</span>. Then ).</p>
 <p>Proceeding as before, we have <span class="math display">\[
 h(X) = \frac{d-2}{\|X\|^2}X \Rightarrow \|h(X)\|^2 = \frac{(d-2)^2}{\|X\|^2},
 \]</span> Applying the quotient rule we have <span class="math display">\[Dh(X)_{ii} = (d-2)\frac{\partial}{\partial X_i} \frac{X_i}{\sum_j X_j^2} = (d-2)\frac{\|X\|^2 - 2X_i^2}{\|X\|^4},\]</span> and summing over the coordinates gives <span class="math display">\[\text{tr}(Dh(X)) = (d-2) \frac{d\|X\|^2 - 2\|X\|^2}{\|X\|^4} = -\frac{(d-2)^2}{\|X\|^2}.\]</span> We thereby obtain the estimator <span class="math display">\[
@@ -426,6 +420,7 @@ h(X) = \frac{d-2}{\|X\|^2}X \Rightarrow \|h(X)\|^2 = \frac{(d-2)^2}{\|X\|^2},
 \text{MSE}(0; \delta_{\text{JS}}) = d - (d-2)^2\frac{1}{d-2} = 2.
 \]</span> Thus, even though we are estimating <span class="math inline">\(d\)</span> parameters, our total MSE does not rise with <span class="math inline">\(d\)</span>, because we will shrink harder and harder toward zero the larger <span class="math inline">\(d\)</span> gets. This is fairly remarkable.</p>
 <p>On the other hand, suppose <span class="math inline">\(\|\theta\|^2 \to \infty\)</span>. Then <span class="math inline">\(\EE_\theta \|X\|^2 \to \infty\)</span> and the improvement <span class="math inline">\((d-2)^2/\EE_\theta\|X\|^2\)</span> will be driven to <span class="math inline">\(0\)</span>.</p>
+<p>Note that, for more general <span class="math inline">\(\sigma^2\)</span>, the James–Stein estimator is <span class="math inline">\(\left(1-\frac{(d-2)\sigma^2}{\|X\|^2}\right)X\)</span>. Then we have <span class="math display">\[h(X) = \sigma^2\frac{d-2}{\|X\|^2} \Rightarrow \|h(X)\|^2 = \sigma^4 \frac{(d-2)^2}{\|X\|^2}, \quad \text{tr} Dh(X) = \sigma^2 \frac{(d-2)^2}{\|X\|^2},\]</span> leading to the estimator <span class="math inline">\(\widehat{\text{MSE}}(X) = \sigma^2 d - \sigma^4\frac{(d-2)^2}{\|X\|^2}\)</span>, and plugging in <span class="math inline">\(\EE_0 1/\|X\|^2 = 1/(d-2)\sigma^2\)</span>, the MSE at <span class="math inline">\(\theta=0\)</span> is <span class="math inline">\(2\sigma^2\)</span>.</p>
 <section id="final-thoughts" class="level3" data-number="3.1">
 <h3 data-number="3.1" class="anchored" data-anchor-id="final-thoughts"><span class="header-section-number">3.1</span> Final thoughts</h3>
 <p>A few more notes: first, <span class="math inline">\(\delta_{JS}(X)\)</span> also inadmissible, since <span class="math inline">\(\delta_{+}(X) = (1 - \frac{d-2}{\|X\|^2})_+ X\)</span> is strictly better since we never benefit from using a shrinkage parameter <span class="math inline">\(\zeta &gt; 1\)</span>.</p>
