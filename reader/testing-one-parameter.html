@@ -6,7 +6,6 @@
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
-<meta name="dcterms.date" content="2023-10-12">
 
 <title>Testing with One Real Parameter</title>
 <style>
@@ -251,22 +250,23 @@ gtag('config', 'G-B8G2041HSB', { 'anonymize_ip': true});
     <h2 id="toc-title">On this page</h2>
    
   <ul>
-  <li><a href="#uniformly-most-powerful-tests" id="toc-uniformly-most-powerful-tests" class="nav-link active" data-scroll-target="#uniformly-most-powerful-tests"><span class="header-section-number">1</span> Uniformly Most Powerful Tests</a>
+  <li><a href="#types-of-hypotheses" id="toc-types-of-hypotheses" class="nav-link active" data-scroll-target="#types-of-hypotheses"><span class="header-section-number">1</span> Types of hypotheses</a></li>
+  <li><a href="#one-sided-testing" id="toc-one-sided-testing" class="nav-link" data-scroll-target="#one-sided-testing"><span class="header-section-number">2</span> One-sided testing</a>
   <ul class="collapse">
-  <li><a href="#definition-of-ump-test" id="toc-definition-of-ump-test" class="nav-link" data-scroll-target="#definition-of-ump-test"><span class="header-section-number">1.1</span> Definition of UMP Test</a></li>
-  <li><a href="#identifiability-and-monotone-likelihood-ratio" id="toc-identifiability-and-monotone-likelihood-ratio" class="nav-link" data-scroll-target="#identifiability-and-monotone-likelihood-ratio"><span class="header-section-number">1.2</span> Identifiability and Monotone Likelihood Ratio</a></li>
-  <li><a href="#theorem-ump-for-one-sided-tests" id="toc-theorem-ump-for-one-sided-tests" class="nav-link" data-scroll-target="#theorem-ump-for-one-sided-tests"><span class="header-section-number">1.3</span> Theorem: UMP for One-Sided Tests</a></li>
-  <li><a href="#ump-test-picture" id="toc-ump-test-picture" class="nav-link" data-scroll-target="#ump-test-picture"><span class="header-section-number">1.4</span> UMP Test Picture</a></li>
+  <li><a href="#definition-of-ump-test" id="toc-definition-of-ump-test" class="nav-link" data-scroll-target="#definition-of-ump-test"><span class="header-section-number">2.1</span> Definition of UMP Test</a></li>
+  <li><a href="#identifiability-and-monotone-likelihood-ratio" id="toc-identifiability-and-monotone-likelihood-ratio" class="nav-link" data-scroll-target="#identifiability-and-monotone-likelihood-ratio"><span class="header-section-number">2.2</span> Identifiability and Monotone Likelihood Ratio</a></li>
+  <li><a href="#theorem-ump-for-one-sided-tests" id="toc-theorem-ump-for-one-sided-tests" class="nav-link" data-scroll-target="#theorem-ump-for-one-sided-tests"><span class="header-section-number">2.3</span> Theorem: UMP for One-Sided Tests</a></li>
+  <li><a href="#ump-test-picture" id="toc-ump-test-picture" class="nav-link" data-scroll-target="#ump-test-picture"><span class="header-section-number">2.4</span> UMP Test Picture</a></li>
   </ul></li>
-  <li><a href="#one-sided-tests-in-general" id="toc-one-sided-tests-in-general" class="nav-link" data-scroll-target="#one-sided-tests-in-general"><span class="header-section-number">2</span> One-Sided Tests in General</a>
+  <li><a href="#one-sided-tests-in-general" id="toc-one-sided-tests-in-general" class="nav-link" data-scroll-target="#one-sided-tests-in-general"><span class="header-section-number">3</span> One-Sided Tests in General</a>
   <ul class="collapse">
-  <li><a href="#stochastically-increasing" id="toc-stochastically-increasing" class="nav-link" data-scroll-target="#stochastically-increasing"><span class="header-section-number">2.1</span> Stochastically Increasing</a></li>
+  <li><a href="#stochastically-increasing" id="toc-stochastically-increasing" class="nav-link" data-scroll-target="#stochastically-increasing"><span class="header-section-number">3.1</span> Stochastically Increasing</a></li>
   </ul></li>
-  <li><a href="#two-sided-alternatives" id="toc-two-sided-alternatives" class="nav-link" data-scroll-target="#two-sided-alternatives"><span class="header-section-number">3</span> Two-Sided Alternatives</a>
+  <li><a href="#two-sided-alternatives" id="toc-two-sided-alternatives" class="nav-link" data-scroll-target="#two-sided-alternatives"><span class="header-section-number">4</span> Two-Sided Alternatives</a>
   <ul class="collapse">
-  <li><a href="#equal-tailed-unbiased-tests" id="toc-equal-tailed-unbiased-tests" class="nav-link" data-scroll-target="#equal-tailed-unbiased-tests"><span class="header-section-number">3.1</span> Equal-Tailed Unbiased Tests</a></li>
-  <li><a href="#unbiased-tests" id="toc-unbiased-tests" class="nav-link" data-scroll-target="#unbiased-tests"><span class="header-section-number">3.2</span> Unbiased Tests</a></li>
-  <li><a href="#theorem-umpu-tests" id="toc-theorem-umpu-tests" class="nav-link" data-scroll-target="#theorem-umpu-tests"><span class="header-section-number">3.3</span> Theorem: UMPU Tests</a></li>
+  <li><a href="#equal-tailed-unbiased-tests" id="toc-equal-tailed-unbiased-tests" class="nav-link" data-scroll-target="#equal-tailed-unbiased-tests"><span class="header-section-number">4.1</span> Equal-Tailed Unbiased Tests</a></li>
+  <li><a href="#unbiased-tests" id="toc-unbiased-tests" class="nav-link" data-scroll-target="#unbiased-tests"><span class="header-section-number">4.2</span> Unbiased Tests</a></li>
+  <li><a href="#theorem-umpu-tests" id="toc-theorem-umpu-tests" class="nav-link" data-scroll-target="#theorem-umpu-tests"><span class="header-section-number">4.3</span> Theorem: UMPU Tests</a></li>
   </ul></li>
   </ul>
 </nav>
@@ -284,12 +284,6 @@ gtag('config', 'G-B8G2041HSB', { 'anonymize_ip': true});
 <div class="quarto-title-meta">
 
     
-    <div>
-    <div class="quarto-title-meta-heading">Published</div>
-    <div class="quarto-title-meta-contents">
-      <p class="date">October 12, 2023</p>
-    </div>
-  </div>
   
     
   </div>
@@ -315,30 +309,35 @@ gtag('config', 'G-B8G2041HSB', { 'anonymize_ip': true});
 \newcommand{\eqD}{\stackrel{D}{=}}
 \newcommand{\indep}{\perp\!\!\!\!\perp}
 \DeclareMathOperator*{\minz}{minimize\;}
+\DeclareMathOperator*{\maxz}{minimize\;}
 \DeclareMathOperator*{\argmin}{argmin\;}
 \DeclareMathOperator*{\argmax}{argmax\;}
 \newcommand{\Var}{\textnormal{Var}}
 \newcommand{\Cov}{\textnormal{Cov}}
 \newcommand{\Corr}{\textnormal{Corr}}
 \]</span></p>
-<section id="uniformly-most-powerful-tests" class="level2" data-number="1">
-<h2 data-number="1" class="anchored" data-anchor-id="uniformly-most-powerful-tests"><span class="header-section-number">1</span> Uniformly Most Powerful Tests</h2>
-<section id="definition-of-ump-test" class="level3" data-number="1.1">
-<h3 data-number="1.1" class="anchored" data-anchor-id="definition-of-ump-test"><span class="header-section-number">1.1</span> Definition of UMP Test</h3>
+<section id="types-of-hypotheses" class="level2" data-number="1">
+<h2 data-number="1" class="anchored" data-anchor-id="types-of-hypotheses"><span class="header-section-number">1</span> Types of hypotheses</h2>
+<p>This lecture concerns testing with one real parameter. There are a variety of null hypotheses we could test including a point</p>
+</section>
+<section id="one-sided-testing" class="level2" data-number="2">
+<h2 data-number="2" class="anchored" data-anchor-id="one-sided-testing"><span class="header-section-number">2</span> One-sided testing</h2>
+<section id="definition-of-ump-test" class="level3" data-number="2.1">
+<h3 data-number="2.1" class="anchored" data-anchor-id="definition-of-ump-test"><span class="header-section-number">2.1</span> Definition of UMP Test</h3>
 <p>If <span class="math inline">\(\phi(x)\)</span> has significance level <span class="math inline">\(\alpha\)</span> and for any other level <span class="math inline">\(\alpha\)</span> test <span class="math inline">\(\psi\)</span>, we have:</p>
 <p><span class="math display">\[\beta_\phi(\theta) \geq \beta_\psi(\theta) \quad \forall \theta \in \Theta_1\]</span></p>
 <p>then <span class="math inline">\(\phi\)</span> is uniformly most powerful (UMP).</p>
 <p>Typically, UMP tests only exist for 1-sided testing in certain 1-parameter families.</p>
 </section>
-<section id="identifiability-and-monotone-likelihood-ratio" class="level3" data-number="1.2">
-<h3 data-number="1.2" class="anchored" data-anchor-id="identifiability-and-monotone-likelihood-ratio"><span class="header-section-number">1.2</span> Identifiability and Monotone Likelihood Ratio</h3>
+<section id="identifiability-and-monotone-likelihood-ratio" class="level3" data-number="2.2">
+<h3 data-number="2.2" class="anchored" data-anchor-id="identifiability-and-monotone-likelihood-ratio"><span class="header-section-number">2.2</span> Identifiability and Monotone Likelihood Ratio</h3>
 <p><strong>Definition (Identifiability):</strong> A model <span class="math inline">\(\cP\)</span> is identifiable if:</p>
 <p><span class="math display">\[\forall \theta_1 \neq \theta_2, \, \exists A \text{ s.t. } P_{\theta_1}(A) \neq P_{\theta_2}(A)\]</span></p>
 <p><strong>Definition (Monotone Likelihood Ratio):</strong> Assume <span class="math inline">\(\cP = \{P_\theta: \theta \in \Theta \subseteq \mathbb{R}\}\)</span> has densities <span class="math inline">\(p_\theta\)</span> and is identifiable. We say <span class="math inline">\(\cP\)</span> has monotone likelihood ratios (MLR) if there is some statistic <span class="math inline">\(T(X)\)</span> s.t. <span class="math inline">\(\frac{p_{\theta_2}(x)}{p_{\theta_1}(x)}\)</span> is a non-decreasing function of <span class="math inline">\(T(X)\)</span> for any <span class="math inline">\(\theta_2 &gt; \theta_1\)</span> (same <span class="math inline">\(T(\cdot)\)</span> for all <span class="math inline">\(\theta\)</span>’s).</p>
 <p>Example: Exponential family <span class="math inline">\(e^{\eta \cdot T(x) - A(\eta)}h(x)\)</span> has MLR in <span class="math inline">\(\eta \cdot T(x)\)</span>.</p>
 </section>
-<section id="theorem-ump-for-one-sided-tests" class="level3" data-number="1.3">
-<h3 data-number="1.3" class="anchored" data-anchor-id="theorem-ump-for-one-sided-tests"><span class="header-section-number">1.3</span> Theorem: UMP for One-Sided Tests</h3>
+<section id="theorem-ump-for-one-sided-tests" class="level3" data-number="2.3">
+<h3 data-number="2.3" class="anchored" data-anchor-id="theorem-ump-for-one-sided-tests"><span class="header-section-number">2.3</span> Theorem: UMP for One-Sided Tests</h3>
 <p>Assume <span class="math inline">\(\cP\)</span> has MLR. Test <span class="math inline">\(H_0: \theta \leq \theta_0\)</span> vs <span class="math inline">\(H_1: \theta &gt; \theta_0\)</span> at level <span class="math inline">\(\alpha\)</span>. Let:</p>
 <p><span class="math display">\[\phi(x) = \begin{cases}
 1 &amp; \text{if } T(x) &gt; c \\
@@ -362,14 +361,14 @@ gtag('config', 'G-B8G2041HSB', { 'anonymize_ip': true});
 </ol>
 <p>Intuition: <span class="math inline">\(\phi\)</span> is a LRT for <span class="math inline">\(H_0: \theta = \theta_0\)</span> vs <span class="math inline">\(H_1: \theta = \theta\)</span> for any pair <span class="math inline">\(\theta, \theta_0\)</span>. Significance level depends on <span class="math inline">\(\theta_0\)</span>.</p>
 </section>
-<section id="ump-test-picture" class="level3" data-number="1.4">
-<h3 data-number="1.4" class="anchored" data-anchor-id="ump-test-picture"><span class="header-section-number">1.4</span> UMP Test Picture</h3>
+<section id="ump-test-picture" class="level3" data-number="2.4">
+<h3 data-number="2.4" class="anchored" data-anchor-id="ump-test-picture"><span class="header-section-number">2.4</span> UMP Test Picture</h3>
 <p>[Insert visual representation of UMP test here]</p>
 <p>Best on <span class="math inline">\(\theta &gt; \theta_0\)</span>, exactly level <span class="math inline">\(\alpha\)</span> at <span class="math inline">\(\theta_0\)</span>, best among tests with <span class="math inline">\(\mathbb{E}_{\theta_0}[\phi] = \alpha\)</span>.</p>
 </section>
 </section>
-<section id="one-sided-tests-in-general" class="level2" data-number="2">
-<h2 data-number="2" class="anchored" data-anchor-id="one-sided-tests-in-general"><span class="header-section-number">2</span> One-Sided Tests in General</h2>
+<section id="one-sided-tests-in-general" class="level2" data-number="3">
+<h2 data-number="3" class="anchored" data-anchor-id="one-sided-tests-in-general"><span class="header-section-number">3</span> One-Sided Tests in General</h2>
 <p><span class="math inline">\(\cP = \{P_\theta: \theta \in \Theta \subseteq \mathbb{R}\}\)</span>, <span class="math inline">\(\Theta \subseteq \mathbb{R}\)</span></p>
 <p><span class="math inline">\(H_0: \theta \leq \theta_0\)</span> vs <span class="math inline">\(H_1: \theta &gt; \theta_0\)</span> called one-sided hypothesis.</p>
 <p>Often no UMP test exists.</p>
@@ -387,8 +386,8 @@ gtag('config', 'G-B8G2041HSB', { 'anonymize_ip': true});
 <p><span class="math inline">\(T = \sum X_i\)</span>, <span class="math inline">\(\sum |X_i|\)</span>, <span class="math inline">\(\frac{T}{\sum |X_i|}\)</span></p>
 <p>Tail <span class="math inline">\(\{X_i\}\)</span> vs <span class="math inline">\(\{|X_i|\}\)</span> vs <span class="math inline">\(\{\text{sign}(X_i)\}\)</span></p>
 <p><span class="math inline">\(n^{-1/2} \sum X_i \sim N(0,1)\)</span> vs <span class="math inline">\(\text{Binom}(n, \frac{1}{2})\)</span> (sign test)</p>
-<section id="stochastically-increasing" class="level3" data-number="2.1">
-<h3 data-number="2.1" class="anchored" data-anchor-id="stochastically-increasing"><span class="header-section-number">2.1</span> Stochastically Increasing</h3>
+<section id="stochastically-increasing" class="level3" data-number="3.1">
+<h3 data-number="3.1" class="anchored" data-anchor-id="stochastically-increasing"><span class="header-section-number">3.1</span> Stochastically Increasing</h3>
 <p><strong>Definition:</strong> A real-valued statistic <span class="math inline">\(T(X)\)</span> is stochastically increasing in <span class="math inline">\(\theta\)</span> if <span class="math inline">\(\mathbb{P}_\theta(T(X) &gt; t)\)</span> is non-decreasing in <span class="math inline">\(\theta\)</span>, <span class="math inline">\(\forall t\)</span>.</p>
 <p>If <span class="math inline">\(\phi_t\)</span> is right-tailed test based on <span class="math inline">\(T(X)\)</span>:</p>
 <p><span class="math display">\[\phi_t(x) = 1\{T(x) &gt; c\} + \gamma 1\{T(x) = c\}\]</span></p>
@@ -399,8 +398,8 @@ gtag('config', 'G-B8G2041HSB', { 'anonymize_ip': true});
 <p>Example 2: <span class="math inline">\(X_i \sim \text{iid}\)</span> scale family <span class="math inline">\(T(X) = \sum |X_i|\)</span> or median <span class="math inline">\(\{|X_1|, \ldots, |X_n|\}\)</span></p>
 </section>
 </section>
-<section id="two-sided-alternatives" class="level2" data-number="3">
-<h2 data-number="3" class="anchored" data-anchor-id="two-sided-alternatives"><span class="header-section-number">3</span> Two-Sided Alternatives</h2>
+<section id="two-sided-alternatives" class="level2" data-number="4">
+<h2 data-number="4" class="anchored" data-anchor-id="two-sided-alternatives"><span class="header-section-number">4</span> Two-Sided Alternatives</h2>
 <p>Setup: <span class="math inline">\(\cP = \{P_\theta: \theta \in \Theta \subseteq \mathbb{R}\}\)</span>, <span class="math inline">\(\Theta \subseteq \mathbb{R}\)</span></p>
 <p>Test <span class="math inline">\(H_0: \theta = \theta_0\)</span> vs <span class="math inline">\(H_1: \theta \neq \theta_0\)</span></p>
 <p>Can be generalized naturally to <span class="math inline">\(H_0: \theta \in [\theta_0, \theta_1]\)</span></p>
@@ -414,8 +413,8 @@ gtag('config', 'G-B8G2041HSB', { 'anonymize_ip': true});
 <p>Two ways to reject. How to balance?</p>
 <p>For symmetric distributions like <span class="math inline">\(N(\theta, 1)\)</span>, natural choice is to equalize lobes of rejection region: <span class="math inline">\(\alpha/2 = \mathbb{P}(\text{left lobe}) = \mathbb{P}(\text{right lobe})\)</span> for <span class="math inline">\(H_0: \theta = \theta_0\)</span>.</p>
 <p>For asymmetric distributions or interval null <span class="math inline">\(H_0: \theta \in [\theta_0, \theta_1]\)</span>, more complicated.</p>
-<section id="equal-tailed-unbiased-tests" class="level3" data-number="3.1">
-<h3 data-number="3.1" class="anchored" data-anchor-id="equal-tailed-unbiased-tests"><span class="header-section-number">3.1</span> Equal-Tailed Unbiased Tests</h3>
+<section id="equal-tailed-unbiased-tests" class="level3" data-number="4.1">
+<h3 data-number="4.1" class="anchored" data-anchor-id="equal-tailed-unbiased-tests"><span class="header-section-number">4.1</span> Equal-Tailed Unbiased Tests</h3>
 <p>Recall <span class="math inline">\(H_0: \theta = \theta_0\)</span></p>
 <p>Let <span class="math inline">\(\alpha_1 = \mathbb{P}_{\theta_0}(T &lt; c_1) + \gamma_1\mathbb{P}_{\theta_0}(T = c_1)\)</span> <span class="math inline">\(\alpha_2 = \mathbb{P}_{\theta_0}(T &gt; c_2) + \gamma_2\mathbb{P}_{\theta_0}(T = c_2)\)</span></p>
 <p>Valid if <span class="math inline">\(\alpha_1 + \alpha_2 = \alpha\)</span> (<span class="math inline">\(\alpha_2\)</span> is free parameter)</p>
@@ -430,8 +429,8 @@ gtag('config', 'G-B8G2041HSB', { 'anonymize_ip': true});
 <p>Power curve for <span class="math inline">\(\theta \in [0,2]\)</span>:</p>
 <p>[Insert power curve graph here]</p>
 </section>
-<section id="unbiased-tests" class="level3" data-number="3.2">
-<h3 data-number="3.2" class="anchored" data-anchor-id="unbiased-tests"><span class="header-section-number">3.2</span> Unbiased Tests</h3>
+<section id="unbiased-tests" class="level3" data-number="4.2">
+<h3 data-number="4.2" class="anchored" data-anchor-id="unbiased-tests"><span class="header-section-number">4.2</span> Unbiased Tests</h3>
 <p><strong>Definition:</strong> <span class="math inline">\(\phi(x)\)</span> is unbiased if <span class="math inline">\(\forall \theta \neq \theta_0\)</span>, <span class="math inline">\(\mathbb{E}_\theta[\phi(X)] \geq \alpha\)</span></p>
 <p>Idea 2 (Unbiased): ensure min <span class="math inline">\(\beta(\theta) = \alpha\)</span></p>
 <p>Choose <span class="math inline">\(\gamma_1, \gamma_2, c_1, c_2\)</span> to solve:</p>
@@ -442,8 +441,8 @@ gtag('config', 'G-B8G2041HSB', { 'anonymize_ip': true});
 <p>Assume <span class="math inline">\(T(x)\)</span> continuous, set <span class="math inline">\(c_1 &lt; c_2\)</span>:</p>
 <p><span class="math inline">\(\alpha = \mathbb{P}_{\eta_0}(T &lt; c_1) + \mathbb{P}_{\eta_0}(T &gt; c_2)\)</span> <span class="math inline">\(0 = \mathbb{E}_{\eta_0}[T \cdot 1\{T &lt; c_1\}] + \mathbb{E}_{\eta_0}[T \cdot 1\{T &gt; c_2\}]\)</span></p>
 </section>
-<section id="theorem-umpu-tests" class="level3" data-number="3.3">
-<h3 data-number="3.3" class="anchored" data-anchor-id="theorem-umpu-tests"><span class="header-section-number">3.3</span> Theorem: UMPU Tests</h3>
+<section id="theorem-umpu-tests" class="level3" data-number="4.3">
+<h3 data-number="4.3" class="anchored" data-anchor-id="theorem-umpu-tests"><span class="header-section-number">4.3</span> Theorem: UMPU Tests</h3>
 <p>Assume <span class="math inline">\(X_1, \ldots, X_n \sim p_\eta(x) = e^{\eta T(x) - A(\eta)}h(x)\)</span></p>
 <p><span class="math inline">\(H_0: \eta \in [\eta_1, \eta_2]\)</span> vs <span class="math inline">\(H_1: \eta &lt; \eta_1 \text{ or } \eta &gt; \eta_2\)</span></p>
 <p>(possibly <span class="math inline">\(\eta_1 = \eta_2\)</span>)</p>

@@ -6,7 +6,6 @@
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
-<meta name="dcterms.date" content="2023-10-10">
 
 <title>Hypothesis Testing and the Neyman-Pearson Lemma</title>
 <style>
@@ -251,18 +250,17 @@ gtag('config', 'G-B8G2041HSB', { 'anonymize_ip': true});
     <h2 id="toc-title">On this page</h2>
    
   <ul>
-  <li><a href="#hypothesis-testing" id="toc-hypothesis-testing" class="nav-link active" data-scroll-target="#hypothesis-testing"><span class="header-section-number">1</span> Hypothesis Testing</a>
+  <li><a href="#hypothesis-testing" id="toc-hypothesis-testing" class="nav-link active" data-scroll-target="#hypothesis-testing"><span class="header-section-number">1</span> Hypothesis Testing</a></li>
+  <li><a href="#the-critical-function" id="toc-the-critical-function" class="nav-link" data-scroll-target="#the-critical-function"><span class="header-section-number">2</span> The critical function</a>
   <ul class="collapse">
-  <li><a href="#critical-function" id="toc-critical-function" class="nav-link" data-scroll-target="#critical-function"><span class="header-section-number">1.1</span> Critical Function</a></li>
-  <li><a href="#power-function" id="toc-power-function" class="nav-link" data-scroll-target="#power-function"><span class="header-section-number">1.2</span> Power Function</a></li>
-  <li><a href="#example-normal-distribution-test" id="toc-example-normal-distribution-test" class="nav-link" data-scroll-target="#example-normal-distribution-test"><span class="header-section-number">1.3</span> Example: Normal Distribution Test</a></li>
+  <li><a href="#significance-level-and-power" id="toc-significance-level-and-power" class="nav-link" data-scroll-target="#significance-level-and-power"><span class="header-section-number">2.1</span> Significance level and power</a></li>
+  <li><a href="#example-the-z-test" id="toc-example-the-z-test" class="nav-link" data-scroll-target="#example-the-z-test"><span class="header-section-number">2.2</span> Example: the <span class="math inline">\(Z\)</span>-test</a></li>
   </ul></li>
-  <li><a href="#likelihood-ratio-test" id="toc-likelihood-ratio-test" class="nav-link" data-scroll-target="#likelihood-ratio-test"><span class="header-section-number">2</span> Likelihood Ratio Test</a></li>
-  <li><a href="#neyman-pearson-lemma" id="toc-neyman-pearson-lemma" class="nav-link" data-scroll-target="#neyman-pearson-lemma"><span class="header-section-number">3</span> Neyman-Pearson Lemma</a>
+  <li><a href="#optimal-testing" id="toc-optimal-testing" class="nav-link" data-scroll-target="#optimal-testing"><span class="header-section-number">3</span> Optimal testing</a>
   <ul class="collapse">
-  <li><a href="#theorem-neyman-pearson-lemma" id="toc-theorem-neyman-pearson-lemma" class="nav-link" data-scroll-target="#theorem-neyman-pearson-lemma"><span class="header-section-number">3.1</span> Theorem (Neyman-Pearson Lemma)</a></li>
-  <li><a href="#example-1-exponential-family" id="toc-example-1-exponential-family" class="nav-link" data-scroll-target="#example-1-exponential-family"><span class="header-section-number">3.2</span> Example 1: Exponential Family</a></li>
-  <li><a href="#example-2-x_1-ldots-x_n-sim-px-theta-same-h_0-h_1" id="toc-example-2-x_1-ldots-x_n-sim-px-theta-same-h_0-h_1" class="nav-link" data-scroll-target="#example-2-x_1-ldots-x_n-sim-px-theta-same-h_0-h_1"><span class="header-section-number">3.3</span> Example 2: <span class="math inline">\(X_1, \ldots, X_n \sim p(x; \theta)\)</span> (same <span class="math inline">\(H_0, H_1\)</span>)</a></li>
+  <li><a href="#likelihood-ratio-test" id="toc-likelihood-ratio-test" class="nav-link" data-scroll-target="#likelihood-ratio-test"><span class="header-section-number">3.1</span> Likelihood Ratio Test</a></li>
+  <li><a href="#example-binomial" id="toc-example-binomial" class="nav-link" data-scroll-target="#example-binomial"><span class="header-section-number">3.2</span> Example: Binomial</a></li>
+  <li><a href="#uniformly-most-powerful-tests" id="toc-uniformly-most-powerful-tests" class="nav-link" data-scroll-target="#uniformly-most-powerful-tests"><span class="header-section-number">3.3</span> Uniformly most powerful tests</a></li>
   </ul></li>
   </ul>
 </nav>
@@ -280,12 +278,6 @@ gtag('config', 'G-B8G2041HSB', { 'anonymize_ip': true});
 <div class="quarto-title-meta">
 
     
-    <div>
-    <div class="quarto-title-meta-heading">Published</div>
-    <div class="quarto-title-meta-contents">
-      <p class="date">October 10, 2023</p>
-    </div>
-  </div>
   
     
   </div>
@@ -311,6 +303,7 @@ gtag('config', 'G-B8G2041HSB', { 'anonymize_ip': true});
 \newcommand{\eqD}{\stackrel{D}{=}}
 \newcommand{\indep}{\perp\!\!\!\!\perp}
 \DeclareMathOperator*{\minz}{minimize\;}
+\DeclareMathOperator*{\maxz}{minimize\;}
 \DeclareMathOperator*{\argmin}{argmin\;}
 \DeclareMathOperator*{\argmax}{argmax\;}
 \newcommand{\Var}{\textnormal{Var}}
@@ -328,6 +321,7 @@ gtag('config', 'G-B8G2041HSB', { 'anonymize_ip': true});
 <p>A few examples to have in mind:</p>
 <p><strong>Example 1 (Gaussian summary statistic, a.k.a. <span class="math inline">\(Z\)</span>-test):</strong> We observe <span class="math inline">\(Z \sim N(\theta,1)\)</span> (which is commonly a summary statistic <span class="math inline">\(Z(X)\)</span> from a large data set) and we want to draw an inference about <span class="math inline">\(\theta\)</span>. Two common hypothesis testing settings are the <em>one-sided</em> hypotheses <span class="math inline">\(H_0:\; \theta \leq \theta_0\)</span> vs <span class="math inline">\(H_1:\; \theta &gt; \theta_0\)</span> and the <em>two-sided</em> hypotheses <span class="math inline">\(H_0:\; \theta = \theta_0\)</span> vs <span class="math inline">\(H_1:\; \theta \neq \theta_0\)</span>.</p>
 <p><strong>Example 2 (Two-sample nonparametric testing):</strong> We observe two samples, <span class="math inline">\(X_1,\ldots,X_n \simiid P\)</span> and <span class="math inline">\(Y_1,\ldots,Y_m \simiid Q\)</span>, independently of each other. Without making any further assumptions about <span class="math inline">\(P\)</span> and <span class="math inline">\(Q\)</span>, we want to test the <em>nonparametric</em> hypotheses <span class="math inline">\(H_0:\; P = Q\)</span> vs <span class="math inline">\(H_1:\; P \neq Q\)</span>.</p>
+<p>A hypothesis is called <em>simple</em> if it fully specifies the data distribution, and <em>composite</em> otherwise. In the examples above, the point null hypothesis <span class="math inline">\(H_0:\; \theta = \theta_0\)</span> is a simple hypothesis, and the other five are composite.</p>
 <p>We’d like to use the data <span class="math inline">\(X\sim P_\theta\)</span> to determine which of <span class="math inline">\(H_0\)</span> or <span class="math inline">\(H_1\)</span> is true, but if a statistician has been called in then this is usually not possible through pure deductive reasoning. For example, if the distributions <span class="math inline">\(P_\theta\)</span> all have the same support, then any data set <span class="math inline">\(X\)</span> we see is logically consistent with any value of <span class="math inline">\(\theta\)</span> in the parameter space.</p>
 <p>As usual, we have two options to get around this problem: we can beg the question (the Bayesian approach) or change the subject (the frequentist approach). The Bayesian answer to this problem is clean and simple: just calculate the posterior probabilities <span class="math inline">\(\Lambda(\Theta_0 \mid X) = \PP(\theta \in \Theta_0 \mid X)\)</span> and <span class="math inline">\(\Lambda(\Theta_1 \mid X) = \PP(\theta \in \Theta_1 \mid X)\)</span>.</p>
 <p>But there are a variety of settings where this is regarded as unappealing: scientists, drug companies, and others often work very hard to design carefully controlled experiments where the only stochastic assumptions made are ones that very few people would disagree with, and we’d like to be able to analyze the data from those experiments without having to layer on any further assumptions.</p>
@@ -337,11 +331,12 @@ gtag('config', 'G-B8G2041HSB', { 'anonymize_ip': true});
 <li><p>Accept <span class="math inline">\(H_0\)</span> (go on believing <span class="math inline">\(H_0\)</span>).</p></li>
 </ol>
 <p>There is a basic asymmetry here in that <span class="math inline">\(H_0\)</span> is privileged as the default choice to be disconfirmed, or else corroborated. An analogy is often drawn to a criminal trial where the defendant is innocent until proven guilty.</p>
-<p>In many settings where hypothesis testing is applied, including the two-sided <span class="math inline">\(Z\)</span>-testing and two-sample nonparametric testing examples above, there will always be alternatives that explain the data even better than the null hypothesis does. As a result, it is major stretch to say that we would ever “accept” <span class="math inline">\(H_0\)</span> in the sense of regarding <span class="math inline">\(H_1\)</span> as disconfirmed. As a result, it is usually preferable to say that we “fail to reject <span class="math inline">\(H_0\)</span>” rather than saying we accept it.</p>
-<p>A common conceptual objection: We know <span class="math inline">\(\theta \neq \theta_0\)</span> or <span class="math inline">\(P \neq Q\)</span> already, why bother? (We will return to this.)</p>
-<section id="critical-function" class="level3" data-number="1.1">
-<h3 data-number="1.1" class="anchored" data-anchor-id="critical-function"><span class="header-section-number">1.1</span> Critical Function</h3>
-<p>Can describe a test by its critical function (a.k.a. test function):</p>
+<p>In reality, of course, our credence in the null (or alternative) hypothesis should be continuous in the evidence that we observe; it would be ridiculous to flip from 100% belief in the null to 100% belief in the alternative just at the point where a normal random variable crosses some threshold. But there are real-world situations in which a dichotomous decision must be made. For example, should the FDA approve a drug, or not? Or, do we need to control for some variable in our experimental setup, or not? Still, it is helpful to retain some critical distance from the conceit that we are ever really dichotomously “rejecting” or “accepting” either hypothesis in an epistemic sense.</p>
+<p>In many settings where hypothesis testing is applied, including the examples of two-sided <span class="math inline">\(Z\)</span>-testing and two-sample nonparametric testing above, there will always be points in the alternative hypothesis that explain the data even better than the null hypothesis does. As a result, even if we accept the conceit of making a dichotomous decision about what to “conclude,” it is implausible that we would ever “accept” <span class="math inline">\(H_0\)</span> in the sense of regarding <span class="math inline">\(H_1\)</span> as disconfirmed, even in an approximate sense. As a result, it is usually preferable to say that we “fail to reject <span class="math inline">\(H_0\)</span>” rather than saying we accept it. Though we will continue to use “accept” as a technical term in what follows, “fail to reject” has less risk of inadvertently misleading non-statisticians.</p>
+</section>
+<section id="the-critical-function" class="level2" data-number="2">
+<h2 data-number="2" class="anchored" data-anchor-id="the-critical-function"><span class="header-section-number">2</span> The critical function</h2>
+<p>We can describe a test by its <em>critical function</em> (a.k.a. <em>test function</em>):</p>
 <p><span class="math display">\[
 \phi(x) = \begin{cases}
 0 &amp; \text{accept } H_0 \\
@@ -349,115 +344,122 @@ gtag('config', 'G-B8G2041HSB', { 'anonymize_ip': true});
 1 &amp; \text{reject } H_0
 \end{cases}
 \]</span></p>
-<p>In practice, randomization is rarely used (<span class="math inline">\(\phi(x) \in \{0,1\}\)</span>). In theory, it simplifies discussions.</p>
-<p>A non-randomized test partitions <span class="math inline">\(\cX\)</span> into: - <span class="math inline">\(R = \{x: \phi(x) = 1\}\)</span> - <span class="math inline">\(A = \{x: \phi(x) = 0\}\)</span></p>
-</section>
-<section id="power-function" class="level3" data-number="1.2">
-<h3 data-number="1.2" class="anchored" data-anchor-id="power-function"><span class="header-section-number">1.2</span> Power Function</h3>
-<p>Power function: <span class="math inline">\(\beta(\theta) = \mathbb{E}_\theta[\phi(X)]\)</span> (rejection probability) <span class="math inline">\(\beta(\theta) = P_\theta(\text{Reject } H_0)\)</span></p>
-<p>Fully summarizes test’s behavior.</p>
-<p><span class="math inline">\(\phi\)</span> is a level <span class="math inline">\(\alpha\)</span> test if <span class="math inline">\(\forall \theta \in \Theta_0\)</span>, <span class="math inline">\(\beta(\theta) \leq \alpha\)</span>.</p>
-<p>Ubiquitous choice is <span class="math inline">\(\alpha = 0.05\)</span> (most influential offhand remark in history of science).</p>
-<p>Goal: Maximize <span class="math inline">\(\beta(\theta)\)</span> on <span class="math inline">\(\Theta_1\)</span> subject to level <span class="math inline">\(\alpha\)</span> constraint.</p>
-</section>
-<section id="example-normal-distribution-test" class="level3" data-number="1.3">
-<h3 data-number="1.3" class="anchored" data-anchor-id="example-normal-distribution-test"><span class="header-section-number">1.3</span> Example: Normal Distribution Test</h3>
-<p><span class="math inline">\(X \sim N(\theta, 1)\)</span>, <span class="math inline">\(\theta_0 = 0\)</span>, <span class="math inline">\(H_1: \theta \neq 0\)</span></p>
-<p>Let <span class="math inline">\(\Phi(z)\)</span> be standard normal CDF.</p>
-<p><span class="math inline">\(\phi(x) = 1\{|x| &gt; z_{\alpha/2}\}\)</span> (2-sided test)</p>
-<p><span class="math inline">\(\beta(\theta) = 1 - \Phi(z_{\alpha/2} - \theta) + \Phi(-z_{\alpha/2} - \theta)\)</span></p>
-<p>Sometimes a unique best test exists.</p>
-<p>Example: <span class="math inline">\(X \sim N(\theta, 1)\)</span>, <span class="math inline">\(H_0: \theta = 0\)</span>, <span class="math inline">\(H_1: \theta = \theta_1\)</span></p>
-<p><span class="math inline">\(\phi(x) = 1\{x &gt; c\}\)</span> is best possible level <span class="math inline">\(\alpha\)</span> test.</p>
-<p><span class="math inline">\(\beta(\theta) = \begin{cases} \alpha &amp; \text{if } \theta = 0 \\ 1 - \Phi(c - \theta_1) &amp; \text{if } \theta = \theta_1 \end{cases}\)</span></p>
-</section>
-</section>
-<section id="likelihood-ratio-test" class="level2" data-number="2">
-<h2 data-number="2" class="anchored" data-anchor-id="likelihood-ratio-test"><span class="header-section-number">2</span> Likelihood Ratio Test</h2>
-<p>When null and alternative are both simple, there exists a unique best test, which rejects for large values of the likelihood ratio.</p>
-<p>Let <span class="math inline">\(LR(x) = \frac{p_1(x)}{p_0(x)}\)</span> where <span class="math inline">\(p_0, p_1\)</span> are densities (note: dominating measure always exists, e.g., <span class="math inline">\(P_0 + P_1\)</span>)</p>
-<p>Likelihood Ratio Test (LRT): <span class="math display">\[
+<p>The option of randomizing our test by taking <span class="math inline">\(\phi(x) \in (0,1)\)</span> for some values <span class="math inline">\(x \in \cX\)</span> is helpful in theory, as we will see shortly, but it is hardly ever done in practice. A non-randomized test <span class="math inline">\(\phi\)</span> partitions <span class="math inline">\(\cX\)</span> into the <em>rejection region</em> <span class="math inline">\(R = \{x \in \cX: \phi(x) = 1\}\)</span> and the <em>acceptance region</em> <span class="math inline">\(A = \{x \in \cX:\; \phi(x) = 0\}\)</span>.</p>
+<p>Most tests are defined by choosing a real-valued <em>test statistic</em> <span class="math inline">\(T(X)\)</span> and rejecting when <span class="math inline">\(T(X)\)</span> is above some <em>critical threshold</em> <span class="math inline">\(c \in \RR\)</span>. We say <span class="math inline">\(\phi\)</span> <em>rejects for large <span class="math inline">\(T(X)\)</span></em> if <span class="math display">\[
 \phi(x) = \begin{cases}
-1 &amp; \text{if } LR(x) &gt; C \\
-\gamma &amp; \text{if } LR(x) = C \\
-0 &amp; \text{if } LR(x) &lt; C
+0 &amp; T(x) &lt; c\\
+\gamma \in (0,1) &amp; T(x) = c \text{ (if } \phi \text{ is randomized)} \\
+1 &amp; T(x) &gt; c
 \end{cases}
-\]</span></p>
-<p><span class="math inline">\(C, \gamma\)</span> chosen to make <span class="math inline">\(\mathbb{E}_0[\phi(X)] = \alpha\)</span></p>
-<p>Intuitions (discrete case): - Power under <span class="math inline">\(H_1\)</span>: <span class="math inline">\(\sum_x \phi(x) p_1(x) = \mathbb{E}_1[\phi(X)]\)</span> - Significance level: <span class="math inline">\(\sum_x \phi(x) p_0(x) = \mathbb{E}_0[\phi(X)]\)</span></p>
-<p>Analogy: $$100 to buy as much flour as possible</p>
+\]</span> Much of the art in designing a hypothesis test is in choosing a test statistic <span class="math inline">\(T(X)\)</span> that is as effective as possible at discriminating between <span class="math inline">\(H_0\)</span> and <span class="math inline">\(H_1\)</span></p>
+<section id="significance-level-and-power" class="level3" data-number="2.1">
+<h3 data-number="2.1" class="anchored" data-anchor-id="significance-level-and-power"><span class="header-section-number">2.1</span> Significance level and power</h3>
+<p>In carrying out a test, there are two types of errors that we can make: a <em>Type I error</em> (sometimes called a <em>false positive</em>) is when <span class="math inline">\(H_0\)</span> is true, but we reject it, and a <em>Type II error</em> (sometimes called a <em>false negative</em>) is when <span class="math inline">\(H_0\)</span> is false but we fail to reject it. One way to remember which is which is that the Type I error rate is of primary importance in deciding when to reject, and the Type II error rate is of secondary importance. Our usual goal, informally, is to make the probability of a Type II error under <span class="math inline">\(H_1\)</span> as small as we can, while controlling the Type I error rate below a prespecified value <span class="math inline">\(\alpha \in [0,1]\)</span>. Note that if <span class="math inline">\(H_0\)</span> and <span class="math inline">\(H_1\)</span> are composite, we cannot necessarily speak of “the” Type I or Type II error rate, as it may depend on exactly which of the null or alternative parameter values we sample under.</p>
+<p>The behavior of the test is fully summarized by the <em>power function</em> <span class="math inline">\(\beta(\theta) = \mathbb{E}_\theta[\phi(X)] = \PP_\theta(\text{Reject } H_0)\)</span>. In terms of this power function, our goal can be formally stated as <span class="math display">\[
+\maxz_\phi \beta_\phi(\theta) \text{ for } \theta \in \Theta_1 \quad \text{ subject to } \beta_\phi(\theta) \leq \alpha \text{ for } \theta \in \Theta_0.
+\]</span> We say <span class="math inline">\(\phi\)</span> is a <em>level-<span class="math inline">\(\alpha\)</span> test</em> if <span class="math inline">\(\sup_{\theta\in\Theta_0} \beta_\phi(\theta) \leq \alpha\)</span>. If this supremum is strictly below <span class="math inline">\(\alpha\)</span>, we say the test is <em>conservative</em>. A very common choice for <span class="math inline">\(\alpha\)</span> is <span class="math inline">\(0.05\)</span>; this began with a somewhat offhand remark by Ronald Fisher in his work when he introduced hypothesis testing, that he sometimes liked to use <span class="math inline">\(0.05\)</span> in his scientific work. It has become “the most influential offhand remark in the history of science,” according to Brad Efron at Stanford.</p>
+<p>If <span class="math inline">\(H_0\)</span> is composite, this optimization problem has multiple constraints, and if <span class="math inline">\(H_1\)</span> is composite it has multiple objectives. A major question for the remainder of this lecture is whether we can find a test <span class="math inline">\(\phi^*\)</span> that optimizes all objectives at once.</p>
 </section>
-<section id="neyman-pearson-lemma" class="level2" data-number="3">
-<h2 data-number="3" class="anchored" data-anchor-id="neyman-pearson-lemma"><span class="header-section-number">3</span> Neyman-Pearson Lemma</h2>
-<section id="theorem-neyman-pearson-lemma" class="level3" data-number="3.1">
-<h3 data-number="3.1" class="anchored" data-anchor-id="theorem-neyman-pearson-lemma"><span class="header-section-number">3.1</span> Theorem (Neyman-Pearson Lemma)</h3>
-<p>LRT with significance level <span class="math inline">\(\alpha\)</span> is optimal for testing <span class="math inline">\(H_0: X \sim p_0\)</span> vs <span class="math inline">\(H_1: X \sim p_1\)</span></p>
-<p>Proof: We are interested in maximization problem:</p>
+<section id="example-the-z-test" class="level3" data-number="2.2">
+<h3 data-number="2.2" class="anchored" data-anchor-id="example-the-z-test"><span class="header-section-number">2.2</span> Example: the <span class="math inline">\(Z\)</span>-test</h3>
+<p>A very common setting is that we observe some statistic <span class="math inline">\(Z(X) \sim N(\theta, 1)\)</span>, very often a summary statistic from a larger data set. If we are testing the one-sided hypothesis we might use the <em>right-tailed test</em> <span class="math inline">\(\phi_1(z) = 1\{z &gt; z_\alpha\}\)</span> that rejects for large values of <span class="math inline">\(Z\)</span>. Here <span class="math inline">\(z_\alpha = \Phi^{-1}(1-\alpha)\)</span> is the upper <span class="math inline">\(\alpha\)</span> quantile of the <span class="math inline">\(N(0,1)\)</span> distribution, and <span class="math inline">\(\Phi(z)\)</span> is the standard normal cdf.</p>
+<p>If we want to test the two-sided hypothesis we might use the <em>two-tailed test</em> <span class="math inline">\(\phi_2(z) = 1\{|z| &gt; z_{\alpha/2}\}\)</span>. Now we are rejecting for large values of the test statistic <span class="math inline">\(|Z|\)</span>. The rejection regions for these tests at level <span class="math inline">\(\alpha = 0.1\)</span> are plotted below, along with the alternative distribution when <span class="math inline">\(\theta = 2.3\)</span>. The shaded blue region shows the power of the test under the alternative.</p>
+<div class="cell">
+<div class="cell-output-display">
+<p><img src="hypothesis-testing_files/figure-html/unnamed-chunk-1-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+<p>The two tests’ power functions are plotted below for <span class="math inline">\(\alpha = 0.1\)</span>.</p>
+<div class="cell">
+<div class="cell-output-display">
+<p><img src="hypothesis-testing_files/figure-html/unnamed-chunk-2-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+<p>The power functions for both tests intersect the vertical axis <span class="math inline">\(\theta=0\)</span> at <span class="math inline">\(\alpha\)</span>, but the right-tailed test’s power function remains below <span class="math inline">\(\alpha\)</span> for all <span class="math inline">\(\theta &lt; 0\)</span> as well. Note that the right-tailed test is actually a valid test for the two-sided hypothesis, but we would be unlikely to want to use it since it has even less than <span class="math inline">\(\alpha\)</span> power to reject for negative values of <span class="math inline">\(\theta\)</span>. But this may give us a hint that it will not be possible to maximize power throughout the alternative, because the two-tailed test is in fact losing out to the right-tailed test when <span class="math inline">\(\theta &gt; 0\)</span>.</p>
+<p>For the one-sided hypothesis testing problem, however, we might hold out hope that the right-tailed test is the best for all values in the alternative (all <span class="math inline">\(\theta &gt; 0\)</span>), and indeed it is.</p>
+</section>
+</section>
+<section id="optimal-testing" class="level2" data-number="3">
+<h2 data-number="3" class="anchored" data-anchor-id="optimal-testing"><span class="header-section-number">3</span> Optimal testing</h2>
+<section id="likelihood-ratio-test" class="level3" data-number="3.1">
+<h3 data-number="3.1" class="anchored" data-anchor-id="likelihood-ratio-test"><span class="header-section-number">3.1</span> Likelihood Ratio Test</h3>
+<p><span class="math display">\[
+\newcommand{\LR}{\textnormal{LR}}
+\]</span></p>
+<p>To begin thinking through optimality of a test, we will start with the simplest sort of hypothesis testing problem: a test of a simple null <span class="math inline">\(H_0:\; X\sim P_0\)</span> against a simple alternative <span class="math inline">\(H_1:\; X \sim P_1\)</span>. Without loss of generality, assume that <span class="math inline">\(P_0\)</span> and <span class="math inline">\(P_1\)</span> have densities <span class="math inline">\(p_0\)</span> and <span class="math inline">\(p_1\)</span> with respect to a common dominating measure <span class="math inline">\(\mu\)</span> (such a measure always exists since we could take <span class="math inline">\(\mu = P_0 + P_1\)</span>).</p>
+<p>The optimal level-<span class="math inline">\(\alpha\)</span> test in this setting is the one that rejects for large values of the <em>likelihood ratio statistic</em> <span class="math display">\[\LR(X) = \frac{p_1(X)}{p_0(X)}.\]</span> That is, our test will be of the form <span class="math display">\[
+\phi(x) = \begin{cases}
+1 &amp; \text{if } \LR(x) &gt; c \\
+\gamma &amp; \text{if } \LR(x) = c \\
+0 &amp; \text{if } \LR(x) &lt; c
+\end{cases},
+\]</span> where <span class="math inline">\(c &gt; 0\)</span> and <span class="math inline">\(\gamma \in (0,1)\)</span> are chosen to make <span class="math inline">\(\EE_0 \phi(X) = \alpha\)</span> exactly.</p>
+<p>To gain intuiion for why this is the right test, recall that the power of a test with rejection region <span class="math inline">\(R\)</span> is <span class="math inline">\(\int_R p_1(x) \,d\mu(x)\)</span>, while the Type I error budget is <span class="math inline">\(\int_R p_0(x)\,d\mu(x)\)</span>. If the sample space were discrete, both integrals would just be sums over <span class="math inline">\(x \in R\)</span>, and we should construct a rejection region <span class="math inline">\(R\)</span> by collecting sample points for which we can buy us the most power <span class="math inline">\(p_1(x)\)</span> per unit of error budget <span class="math inline">\(p_0(x)\)</span> that we must spend. In short, <span class="math inline">\(p_1(x)\)</span> is the “bang” we get out of including <span class="math inline">\(x\)</span> in the rejection region, and <span class="math inline">\(p_0(x)\)</span> is the “buck” we must spend. The likelihood ratio statistic <span class="math inline">\(\LR(x)\)</span> is the ratio representing the “bang for our buck.”</p>
+<p><strong>Theorem (Neyman–Pearson lemma):</strong> The likelihood ratio test <span class="math inline">\(\phi^*\)</span> with <span class="math inline">\(\EE_0 \phi(X) = \alpha\)</span> maximizes power among all level-<span class="math inline">\(\alpha\)</span> tests of <span class="math inline">\(H_0:\; X \sim P_0\)</span> vs <span class="math inline">\(H_1:\; X \sim P_1\)</span>.</p>
+<p>For purposes of defining likelihood ratio tests, we use the convention that <span class="math inline">\(\LR(x) = \infty\)</span> if <span class="math inline">\(p_1(x) &gt; p_0(x) = 0\)</span> (including such points in the rejection region buys us additional power for free), and <span class="math inline">\(\LR(x)\)</span> is undefined if <span class="math inline">\(p_0(x)=p_1(x)=0\)</span> (since such points never come up under the null or the alternative).</p>
+<p><strong>Proof:</strong> We are attempting to show <span class="math inline">\(\phi^*\)</span> solves the maximization problem <span class="math display">\[
+\maxz \int \phi(x)p_1(x)\,d\mu(x) \quad \text{s.t. } \int \phi(x)p_0(x)\,d\mu(x) \leq \alpha.
+\]</span></p>
+<p>The Lagrange form is:</p>
 <p><span class="math display">\[
 \begin{aligned}
-&amp;\text{maximize } \mathbb{E}_1[\phi(X)] \\
-&amp;\text{subject to } \mathbb{E}_0[\phi(X)] \leq \alpha, \quad \phi(x) \in [0,1]
+\mathcal{L}(\phi; \lambda)
+&amp;= \int\phi(x) p_1(x)\,d\mu(x)  - \lambda\int \phi(x) p_0(x) \,d\mu(x) \\
+&amp;= \int \phi(x) \left(p_1(x) - \lambda p_0(x)\right)\,d\mu(x)\\
+&amp;= \int \phi(x) \left(\frac{p_1(x)}{p_0(x)} - \lambda\right)\,dP_0(x)\\
 \end{aligned}
-\]</span></p>
-<p>Lagrange form:</p>
-<p><span class="math display">\[
-\text{maximize } \mathbb{E}_1[\phi(X)] - \lambda(\mathbb{E}_0[\phi(X)] - \alpha)
-\]</span></p>
-<p><span class="math display">\[
-= \int \phi(x)[p_1(x) - \lambda p_0(x)]d\mu(x) + \lambda\alpha
-\]</span></p>
-<p>Solution: <span class="math display">\[
-\phi^*(x) = \begin{cases}
-1 &amp; \text{if } LR(x) &gt; C \\
-\gamma &amp; \text{if } LR(x) = C \\
-0 &amp; \text{if } LR(x) &lt; C
-\end{cases}
-\]</span></p>
-<p><span class="math inline">\(\phi^*\)</span> maximizes Lagrangian for <span class="math inline">\(\lambda = C\)</span></p>
-<p>Consider any other test <span class="math inline">\(\phi(x) \in [0,1]\)</span>:</p>
-<p><span class="math display">\[
+\]</span> If we want to maximize this expression over all functions <span class="math inline">\(\phi:\; \cX \to [0,1]\)</span>, it is clear we should take <span class="math inline">\(\phi(x)\)</span> as large as possible when <span class="math inline">\(\LR(x)-\lambda &gt; 0\)</span> (since the integrand is positive), and as small as possible when <span class="math inline">\(\LR(x) - \lambda &lt; 0\)</span> (since the integrand is negative). The best values are attained at the boundary points <span class="math inline">\(\{0,1\}\)</span>. Note it does not actually matter in this formulation what <span class="math inline">\(\phi(x)\)</span> is when <span class="math inline">\(\LR(x)=c\)</span>, so any test with <span class="math inline">\(\phi(x) = 1\)</span> when <span class="math inline">\(\LR(x) &gt; \lambda\)</span> and <span class="math inline">\(\phi(x) = 0\)</span> when <span class="math inline">\(\LR(x) &lt; \lambda\)</span> solves this Lagrange form. As a result we see that our proposed test <span class="math inline">\(\phi^*\)</span> maximizes the Lagrangian for <span class="math inline">\(c = \lambda\)</span>.</p>
+<p>Next, consider any other test <span class="math inline">\(\phi(x)\)</span> with <span class="math inline">\(\EE_0\phi(X) \leq \alpha\)</span>. We have <span class="math display">\[
 \begin{aligned}
-\mathbb{E}_1[\phi^*] - \lambda\mathbb{E}_0[\phi^*] &amp;= \int \phi^*(x)[p_1(x) - \lambda p_0(x)]d\mu(x) \\
-&amp;\geq \int \phi(x)[p_1(x) - \lambda p_0(x)]d\mu(x) \\
-&amp;= \mathbb{E}_1[\phi] - \lambda\mathbb{E}_0[\phi]
+\EE_1\phi(X) &amp;\leq \EE_1\phi(X) - c(\EE_0\phi(X) - \alpha)\\
+&amp;\leq \EE_1\phi^*(X) - c(\EE_0 \phi^*(X) - \alpha)\\
+&amp;= \EE_1\phi^*(x),
 \end{aligned}
-\]</span></p>
-<p>Therefore, <span class="math inline">\(\mathbb{E}_1[\phi^*] - \mathbb{E}_1[\phi] \geq \lambda(\mathbb{E}_0[\phi^*] - \mathbb{E}_0[\phi])\)</span></p>
-<p>We can choose two free parameters. We need both to solve one equation:</p>
-<p><span class="math display">\[
-\alpha = \mathbb{E}_0[\phi^*(X)] = P_0(LR &gt; C) + \gamma P_0(LR = C)
-\]</span></p>
-<p>Case 1: <span class="math inline">\(C\)</span> is upper <span class="math inline">\(\alpha\)</span>-quantile of <span class="math inline">\(LR\)</span> Case 2: <span class="math inline">\(C\)</span> and <span class="math inline">\(\gamma\)</span> discrete</p>
-<p><span class="math inline">\(P_0(LR &gt; c)\)</span> jumps down at discrete values <span class="math inline">\(c_1 &lt; c_2 &lt; \cdots\)</span> Set <span class="math inline">\(i = \max\{i: P_0(LR &gt; c_i) \geq \alpha\}\)</span> Then <span class="math inline">\(P_0(LR &gt; c_i) \geq \alpha &gt; P_0(LR \geq c_{i+1})\)</span></p>
-<p><span class="math display">\[
-\gamma = \frac{\alpha - P_0(LR &gt; c_i)}{P_0(LR = c_i)}
+\]</span> where the first inequality comes from the assumption <span class="math inline">\(\EE_0\phi(X) \leq \alpha\)</span>, the second comes from the fact that <span class="math inline">\(\phi^*\)</span> maximizes the Lagrangian at <span class="math inline">\(\lambda = c\)</span>, and the last from our assumption <span class="math inline">\(\EE_0\phi(X) = \alpha\)</span>.</p>
+<p>To ensure the condition <span class="math inline">\(\EE_0\phi(X) = \alpha\)</span>, we use threshold <span class="math inline">\(c_\alpha\)</span>, the upper-<span class="math inline">\(\alpha\)</span> quantile of the distribution of <span class="math inline">\(\LR(X)\)</span>. Where the randomization parameter <span class="math inline">\(\gamma\)</span> comes in is that the likelihood ratio statistic may be discrete, in which case we could have <span class="math display">\[
+\PP_0 (\LR(X) &gt; c_\alpha) &lt; \alpha \leq \PP_0(\LR(X) \geq c_\alpha.
+\]</span> In that case, we can “top off” our error budget at <span class="math inline">\(\alpha\)</span> by setting <span class="math display">\[
+\gamma = \frac{\alpha - \PP_0(\LR(X) &gt; c)}{\PP_0(\LR(X) = c)}.
 \]</span></p>
 </section>
-<section id="example-1-exponential-family" class="level3" data-number="3.2">
-<h3 data-number="3.2" class="anchored" data-anchor-id="example-1-exponential-family"><span class="header-section-number">3.2</span> Example 1: Exponential Family</h3>
-<p><span class="math inline">\(p_\eta(x) = e^{\eta^T T(x) - A(\eta)}h(x)\)</span></p>
-<p><span class="math inline">\(H_0: \eta = \eta_0\)</span> vs <span class="math inline">\(H_1: \eta = \eta_1 &gt; \eta_0\)</span></p>
-<p><span class="math display">\[
-LR(x) = e^{(\eta_1 - \eta_0)^T T(x) - [A(\eta_1) - A(\eta_0)]}
-\]</span></p>
-<p><span class="math inline">\(\phi^*\)</span> rejects for large <span class="math inline">\(T(X)\)</span>:</p>
-<p><span class="math display">\[
-\phi^*(x) = \begin{cases}
-1 &amp; \text{if } T(X) &gt; c \\
-\gamma &amp; \text{if } T(X) = c \\
-0 &amp; \text{if } T(X) &lt; c
-\end{cases}
-\]</span></p>
-<p>Choose <span class="math inline">\(c, \gamma\)</span> to make:</p>
-<p><span class="math display">\[
-\beta(\eta_0) = P_{\eta_0}(T(X) &gt; c) + \gamma P_{\eta_0}(T(X) = c) = \alpha
-\]</span></p>
+<section id="example-binomial" class="level3" data-number="3.2">
+<h3 data-number="3.2" class="anchored" data-anchor-id="example-binomial"><span class="header-section-number">3.2</span> Example: Binomial</h3>
+<p>To give a sense of how this works, suppose that we observe a binomial random variable measuring the same-side bias of some human coin flipper <span class="math display">\[
+X \sim \text{Binom}(n,\theta) = \binom{n}{x}\theta^x(1-\theta)^{n-x}, \text{ for } x=0,1,\ldots,n.
+\]</span> Inspired by the Diaconis, Holmes, and Montgomery paper, we want to test <span class="math inline">\(H_0:\; \theta = 0.5\)</span> vs <span class="math inline">\(H_1:\;\theta = 0.51\)</span>. The Neyman–Pearson lemma tells us to use the likelihood ratio: <span class="math display">\[
+\LR(X) = \frac{p_{0.51}(X)}{p_{0.5}(X)} = \frac{0.51^X 0.49^{n-X}}{0.5^n} = \left(\frac{0.49}{0.5}\right)^n\left(\frac{0.51}{0.49}\right)^X
+\]</span> We know that the most powerful test <span class="math inline">\(\phi^*(X)\)</span> rejects for large <span class="math inline">\(\LR(X)\)</span>, but because <span class="math inline">\(\LR(X)\)</span> is a strictly increasing function of <span class="math inline">\(X\)</span>, this is completely equivalent to rejecting for large <span class="math inline">\(X\)</span>. Thus, the optimal test will reject when <span class="math inline">\(X\)</span> is larger than its upper-<span class="math inline">\(\alpha\)</span> quantile <span class="math inline">\(c_\alpha\)</span> under sampling from the simple null <span class="math inline">\(P_{0.5}\)</span>.</p>
+<p>If we choose some value like <span class="math inline">\(\alpha = 0.05\)</span> that is not divisible by <span class="math inline">\(2^{-n}\)</span>, there is no way we can hope to get a Type I error rate of exactly <span class="math inline">\(\alpha\)</span> under the null, because <span class="math inline">\(p_{0.5}(x) = \binom{n}{x}2^{-n}\)</span>. To fill our Type I error rate budget, we would then need to randomize at the rejection boundary.</p>
+<p>For example, if <span class="math inline">\(n = 100\)</span> and <span class="math inline">\(\alpha = 0.05\)</span>, we will take <span class="math inline">\(c_\alpha = 58\)</span>, which is the <span class="math inline">\(0.95\)</span> quantile under the null. But <span class="math inline">\(\PP_{0.5}(X &gt; 58) = 0.044\)</span> instead of <span class="math inline">\(0.05\)</span>, which is the Type I error rate we asked for. As a result, we randomize at the boundary by setting <span class="math display">\[
+\gamma = \frac{0.05-0.44}{\PP_{0.5}(X = 58)} = 0.26,
+\]</span> so <span class="math inline">\(\phi^*\)</span> rejects with probability <span class="math inline">\(0.26\)</span> if <span class="math inline">\(X = 58\)</span>. The plot below shows the acceptance and rejection regions of the test on a probability mass function plot of the null distribution, with the bar at <span class="math inline">\(c_\alpha = 58\)</span> split according to the acceptance and rejection probabilities at the boundary.</p>
+<div class="cell">
+<div class="cell-output-display">
+<p><img src="hypothesis-testing_files/figure-html/unnamed-chunk-3-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+<p>In practice, we hardly ever use randomized tests. The conservative test <span class="math inline">\(\phi^*(X) = 1\{X &gt; 58\}\)</span> is also a likelihood ratio test, and indeed it is the most powerful test at its own level <span class="math inline">\(0.044\)</span>.</p>
+<p>What if instead of the alternative <span class="math inline">\(H_1:\; \theta = 0.51\)</span>, we instead read the more recent empirical paper and decided <span class="math inline">\(H_1:\; \theta = 0.508\)</span> was better? Then, following the same steps as before, the likelihood ratio statistic would be <span class="math display">\[
+\LR(X) = \left(\frac{0.492}{0.5}\right)^n \left(\frac{0.508}{0.492}\right)^X.
+\]</span> Just as before, the likelihood ratio is increasing in <span class="math inline">\(X\)</span>, so the test rejects for large values of <span class="math inline">\(X\)</span>. And, just as before, we will set our threshold <span class="math inline">\((c,\gamma)\)</span> to control the Type I error at <span class="math inline">\(\alpha\)</span> under <span class="math inline">\(H_0:\; \theta = 0.5\)</span>. Notice that since we have the same test statistic and the same null, we are using exactly the same test. This would be true for any alternative value <span class="math inline">\(\theta_1 &gt; 0.5\)</span> (but if we used an alternative <span class="math inline">\(\theta_1 &lt; 0.5\)</span> we would reject for <em>small</em> <span class="math inline">\(X\)</span>). So we actually have in <span class="math inline">\(\phi^*\)</span> a test of the point null <span class="math inline">\(H_0:\theta = 0.5\)</span> against the <em>composite</em> alternative <span class="math inline">\(H_1:\; \theta &gt; 0.5\)</span>, which is simultaneously optimal over all alternative values. A test that achieves maximal power for all values <span class="math inline">\(\theta \in\Theta_1\)</span> is called <em>uniformly most powerful</em>.</p>
+<p>Next we will turn this into a general condition for the same test to be optimal across the entire alternative.</p>
 </section>
-<section id="example-2-x_1-ldots-x_n-sim-px-theta-same-h_0-h_1" class="level3" data-number="3.3">
-<h3 data-number="3.3" class="anchored" data-anchor-id="example-2-x_1-ldots-x_n-sim-px-theta-same-h_0-h_1"><span class="header-section-number">3.3</span> Example 2: <span class="math inline">\(X_1, \ldots, X_n \sim p(x; \theta)\)</span> (same <span class="math inline">\(H_0, H_1\)</span>)</h3>
-<p>Reject for large <span class="math inline">\(\sum_i T(X_i)\)</span></p>
-<p>Important: <span class="math inline">\(\phi^*\)</span> depends only on <span class="math inline">\(\eta_0\)</span> and sufficient statistic <span class="math inline">\(T(\cdot)\)</span>, not on <span class="math inline">\(\eta_1\)</span>.</p>
-<p>Next topic: Uniformly most powerful (UMP) tests.</p>
+<section id="uniformly-most-powerful-tests" class="level3" data-number="3.3">
+<h3 data-number="3.3" class="anchored" data-anchor-id="uniformly-most-powerful-tests"><span class="header-section-number">3.3</span> Uniformly most powerful tests</h3>
+<p><strong>Definition:</strong> We say a test <span class="math inline">\(\phi^*\)</span> is a <em>uniformly most powerful</em> (UMP) level-<span class="math inline">\(\alpha\)</span> test of <span class="math inline">\(H_0\)</span> against <span class="math inline">\(H_1\)</span> if it is a valid level <span class="math inline">\(\alpha\)</span> test, and for any other valid test <span class="math inline">\(\phi\)</span>, we have <span class="math inline">\(\beta_{\phi^*}(\theta) \geq \beta_\phi(\theta)\)</span> for all <span class="math inline">\(\theta \in \Theta_1\)</span>.</p>
+<p>In the binomial example above, the reason we found a UMP test is that the likelihood ratio statistic was increasing in <span class="math inline">\(X\)</span> no matter what alternative we chose, so the optimal thing to do was always to reject for large <span class="math inline">\(X\)</span>. We now generalize this condition:</p>
+<p><strong>Definition:</strong> We say <span class="math inline">\(\cP = \{P_\theta:\; \theta \in \Theta \subseteq \RR\}\)</span> has <em>monotone likelihood ratios</em> (MLR) in the statistic <span class="math inline">\(T(X)\)</span> if <span class="math inline">\(p_{\theta_2}(x)/p_{\theta_1}(x)\)</span> is a non-decreasing function of <span class="math inline">\(T(x)\)</span>, for any pair of parameter values <span class="math inline">\(\theta_1 &lt; \theta_2\)</span>.</p>
+<p>In a family with monotone likelihood ratios, one-tailed tests are UMP for one-sided testing problems:</p>
+<p><strong>Theorem:</strong> Assume that <span class="math inline">\(\cP\)</span> has MLR in <span class="math inline">\(T(X)\)</span>, and consider testing <span class="math inline">\(H_0:\;\theta \leq \theta_0\)</span> against <span class="math inline">\(H_1:\; \theta &gt; \theta_0\)</span>, for some <span class="math inline">\(\theta_0 \in \Theta \subseteq \RR\)</span>. If <span class="math inline">\(\phi^*(X)\)</span> rejects for large <span class="math inline">\(T(X)\)</span>, then <span class="math inline">\(\phi^*\)</span> is UMP at level <span class="math inline">\(\alpha = \EE_{\theta_0}\phi^*(X)\)</span>.</p>
+<p><strong>Proof:</strong> Consider any other level-<span class="math inline">\(\alpha\)</span> test <span class="math inline">\(\phi\)</span>, and any <span class="math inline">\(\theta_1 &gt; \theta_0\)</span>. We know that <span class="math inline">\(\phi\)</span> is also a valid level-<span class="math inline">\(\alpha\)</span> test of the simple null <span class="math inline">\(H_0:\; \theta=\theta_0\)</span> vs the simple alternative <span class="math inline">\(H_1:\; \theta=\theta_1\)</span>, and so is <span class="math inline">\(\phi^*(X)\)</span> by assumption. Because <span class="math inline">\(p_{\theta_1}(X)/p_{\theta_0}(X)\)</span> is a non-decreasing function of <span class="math inline">\(T(X)\)</span>, <span class="math inline">\(\phi^*(X)\)</span> is a likelihood ratio test for this problem, so we have <span class="math inline">\(\beta_{\phi^*}(\theta_1) \geq \beta_{\phi}(\theta_1)\)</span>.</p>
+<p>Note further that <span class="math inline">\(\beta_{\phi^*}(\theta_1) \geq \alpha\)</span> for <span class="math inline">\(\theta_1&gt;\theta_0\)</span>, which we can see by comparing it to the test <span class="math inline">\(\phi(X) \equiv \alpha\)</span> that ignores the data.</p>
+<p>It remains only to show that <span class="math inline">\(\phi^*\)</span> is a valid level-<span class="math inline">\(\alpha\)</span> test; we only assumed it controls Type I error at the boundary. Define <span class="math inline">\(\bar{\phi}(X) = 1-\phi^*(X)\)</span>, which rejects for <em>small</em> <span class="math inline">\(T(X)\)</span> (or equivalently for large values of <span class="math inline">\(-T(X)\)</span>). Note further that <span class="math inline">\(\bar{\phi}(X)\)</span> is a level-<span class="math inline">\((1-\alpha)\)</span> LRT of <span class="math inline">\(H_0:\;\theta = \theta_0\)</span> vs <span class="math inline">\(H_1:\; \theta = \theta_1\)</span>, for any <span class="math inline">\(\theta_1 &lt; \theta_0\)</span>. As a result, we can conclude that for <span class="math inline">\(\theta_1&lt;\theta_0\)</span>, we have <span class="math display">\[1-\alpha \leq \beta_{\bar{\phi}}(\theta_1) = 1-\beta_{\phi^*}(\theta_1),\]</span> completing the proof.</p>
+<p>An important group of examples of MLR families is all one-parameter exponential families.</p>
+<p><strong>Example (One-parameter exponential family):</strong> Consider a size-<span class="math inline">\(n\)</span> sample from the exponential family <span class="math display">\[
+X_1,\ldots,X_n \simiid p_\eta(x) = e^{\eta T(x) - A(\eta)}h(x)
+\]</span> Then, for any <span class="math inline">\(\eta_1 &lt;\eta_2\)</span>, the likelihood ratio for the full sample is <span class="math display">\[
+\frac{\prod_i p_{\eta_2}(x_i)}{\prod_i p_{\eta_1}(x_i)} = \exp\left\{(\eta_2-\eta_1)\sum_i T(x_i) - n(A(\eta_2) - A(\eta_1))\right\},
+\]</span> which is increasing in <span class="math inline">\(\sum_i T(x_i)\)</span> if <span class="math inline">\(\eta_2 &gt; \eta_1\)</span> (and otherwise it is decreasing in the same statistic). As a result, any likelihood ratio test will reject for large values of <span class="math inline">\(\sum_i T(X_i)\)</span>.</p>
 
 
 </section>
