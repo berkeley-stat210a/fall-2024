@@ -250,23 +250,17 @@ gtag('config', 'G-B8G2041HSB', { 'anonymize_ip': true});
     <h2 id="toc-title">On this page</h2>
    
   <ul>
-  <li><a href="#types-of-hypotheses" id="toc-types-of-hypotheses" class="nav-link active" data-scroll-target="#types-of-hypotheses"><span class="header-section-number">1</span> Types of hypotheses</a></li>
+  <li><a href="#testing-with-one-real-parameter" id="toc-testing-with-one-real-parameter" class="nav-link active" data-scroll-target="#testing-with-one-real-parameter"><span class="header-section-number">1</span> Testing with one real parameter</a></li>
   <li><a href="#one-sided-testing" id="toc-one-sided-testing" class="nav-link" data-scroll-target="#one-sided-testing"><span class="header-section-number">2</span> One-sided testing</a>
   <ul class="collapse">
-  <li><a href="#definition-of-ump-test" id="toc-definition-of-ump-test" class="nav-link" data-scroll-target="#definition-of-ump-test"><span class="header-section-number">2.1</span> Definition of UMP Test</a></li>
-  <li><a href="#identifiability-and-monotone-likelihood-ratio" id="toc-identifiability-and-monotone-likelihood-ratio" class="nav-link" data-scroll-target="#identifiability-and-monotone-likelihood-ratio"><span class="header-section-number">2.2</span> Identifiability and Monotone Likelihood Ratio</a></li>
-  <li><a href="#theorem-ump-for-one-sided-tests" id="toc-theorem-ump-for-one-sided-tests" class="nav-link" data-scroll-target="#theorem-ump-for-one-sided-tests"><span class="header-section-number">2.3</span> Theorem: UMP for One-Sided Tests</a></li>
-  <li><a href="#ump-test-picture" id="toc-ump-test-picture" class="nav-link" data-scroll-target="#ump-test-picture"><span class="header-section-number">2.4</span> UMP Test Picture</a></li>
+  <li><a href="#score-test" id="toc-score-test" class="nav-link" data-scroll-target="#score-test"><span class="header-section-number">2.1</span> Score test</a></li>
+  <li><a href="#the-sign-test-as-a-nonparametric-test" id="toc-the-sign-test-as-a-nonparametric-test" class="nav-link" data-scroll-target="#the-sign-test-as-a-nonparametric-test"><span class="header-section-number">2.2</span> The sign test as a nonparametric test</a></li>
   </ul></li>
-  <li><a href="#one-sided-tests-in-general" id="toc-one-sided-tests-in-general" class="nav-link" data-scroll-target="#one-sided-tests-in-general"><span class="header-section-number">3</span> One-Sided Tests in General</a>
+  <li><a href="#two-sided-alternatives" id="toc-two-sided-alternatives" class="nav-link" data-scroll-target="#two-sided-alternatives"><span class="header-section-number">3</span> Two-sided alternatives</a>
   <ul class="collapse">
-  <li><a href="#stochastically-increasing" id="toc-stochastically-increasing" class="nav-link" data-scroll-target="#stochastically-increasing"><span class="header-section-number">3.1</span> Stochastically Increasing</a></li>
-  </ul></li>
-  <li><a href="#two-sided-alternatives" id="toc-two-sided-alternatives" class="nav-link" data-scroll-target="#two-sided-alternatives"><span class="header-section-number">4</span> Two-Sided Alternatives</a>
-  <ul class="collapse">
-  <li><a href="#equal-tailed-unbiased-tests" id="toc-equal-tailed-unbiased-tests" class="nav-link" data-scroll-target="#equal-tailed-unbiased-tests"><span class="header-section-number">4.1</span> Equal-Tailed Unbiased Tests</a></li>
-  <li><a href="#unbiased-tests" id="toc-unbiased-tests" class="nav-link" data-scroll-target="#unbiased-tests"><span class="header-section-number">4.2</span> Unbiased Tests</a></li>
-  <li><a href="#theorem-umpu-tests" id="toc-theorem-umpu-tests" class="nav-link" data-scroll-target="#theorem-umpu-tests"><span class="header-section-number">4.3</span> Theorem: UMPU Tests</a></li>
+  <li><a href="#two-tailed-tests" id="toc-two-tailed-tests" class="nav-link" data-scroll-target="#two-tailed-tests"><span class="header-section-number">3.1</span> Two-tailed tests</a></li>
+  <li><a href="#exponential-example" id="toc-exponential-example" class="nav-link" data-scroll-target="#exponential-example"><span class="header-section-number">3.2</span> Exponential example</a></li>
+  <li><a href="#optimal-unbiased-tests" id="toc-optimal-unbiased-tests" class="nav-link" data-scroll-target="#optimal-unbiased-tests"><span class="header-section-number">3.3</span> Optimal unbiased tests</a></li>
   </ul></li>
   </ul>
 </nav>
@@ -316,143 +310,163 @@ gtag('config', 'G-B8G2041HSB', { 'anonymize_ip': true});
 \newcommand{\Cov}{\textnormal{Cov}}
 \newcommand{\Corr}{\textnormal{Corr}}
 \]</span></p>
-<section id="types-of-hypotheses" class="level2" data-number="1">
-<h2 data-number="1" class="anchored" data-anchor-id="types-of-hypotheses"><span class="header-section-number">1</span> Types of hypotheses</h2>
-<p>This lecture concerns testing with one real parameter. There are a variety of null hypotheses we could test including a point</p>
+<section id="testing-with-one-real-parameter" class="level2" data-number="1">
+<h2 data-number="1" class="anchored" data-anchor-id="testing-with-one-real-parameter"><span class="header-section-number">1</span> Testing with one real parameter</h2>
+<p>This lecture concerns the general problem of testing with one real parameter. We observe <span class="math inline">\(X \sim P_\theta\)</span> for <span class="math inline">\(\theta \in \Theta \subseteq \RR\)</span>, and we might want to test a <em>one-sided alternative</em> like <span class="math inline">\(H_0:\; \theta \leq \theta_0\)</span> vs the one-sided alternative <span class="math inline">\(H_1:\; \theta &gt; \theta_0\)</span>, or a <em>point null</em> hypothesis like <span class="math inline">\(H_0:\; \theta = \theta_0\)</span> against a <em>two-sided alternative</em> <span class="math inline">\(H_1:\; \theta \neq \theta_0\)</span>. Or, we could test an <em>interval null</em> <span class="math inline">\(H_0:\; |\theta - \theta_0| \leq \delta\)</span> vs the two-sided alternative <span class="math inline">\(H_1:\; |\theta-\theta_0|&gt;\delta\)</span>, for <span class="math inline">\(\delta \geq 0\)</span> (which reduces to the point null if <span class="math inline">\(\delta = 0\)</span>).</p>
 </section>
 <section id="one-sided-testing" class="level2" data-number="2">
 <h2 data-number="2" class="anchored" data-anchor-id="one-sided-testing"><span class="header-section-number">2</span> One-sided testing</h2>
-<section id="definition-of-ump-test" class="level3" data-number="2.1">
-<h3 data-number="2.1" class="anchored" data-anchor-id="definition-of-ump-test"><span class="header-section-number">2.1</span> Definition of UMP Test</h3>
-<p>If <span class="math inline">\(\phi(x)\)</span> has significance level <span class="math inline">\(\alpha\)</span> and for any other level <span class="math inline">\(\alpha\)</span> test <span class="math inline">\(\psi\)</span>, we have:</p>
-<p><span class="math display">\[\beta_\phi(\theta) \geq \beta_\psi(\theta) \quad \forall \theta \in \Theta_1\]</span></p>
-<p>then <span class="math inline">\(\phi\)</span> is uniformly most powerful (UMP).</p>
-<p>Typically, UMP tests only exist for 1-sided testing in certain 1-parameter families.</p>
-</section>
-<section id="identifiability-and-monotone-likelihood-ratio" class="level3" data-number="2.2">
-<h3 data-number="2.2" class="anchored" data-anchor-id="identifiability-and-monotone-likelihood-ratio"><span class="header-section-number">2.2</span> Identifiability and Monotone Likelihood Ratio</h3>
-<p><strong>Definition (Identifiability):</strong> A model <span class="math inline">\(\cP\)</span> is identifiable if:</p>
-<p><span class="math display">\[\forall \theta_1 \neq \theta_2, \, \exists A \text{ s.t. } P_{\theta_1}(A) \neq P_{\theta_2}(A)\]</span></p>
-<p><strong>Definition (Monotone Likelihood Ratio):</strong> Assume <span class="math inline">\(\cP = \{P_\theta: \theta \in \Theta \subseteq \mathbb{R}\}\)</span> has densities <span class="math inline">\(p_\theta\)</span> and is identifiable. We say <span class="math inline">\(\cP\)</span> has monotone likelihood ratios (MLR) if there is some statistic <span class="math inline">\(T(X)\)</span> s.t. <span class="math inline">\(\frac{p_{\theta_2}(x)}{p_{\theta_1}(x)}\)</span> is a non-decreasing function of <span class="math inline">\(T(X)\)</span> for any <span class="math inline">\(\theta_2 &gt; \theta_1\)</span> (same <span class="math inline">\(T(\cdot)\)</span> for all <span class="math inline">\(\theta\)</span>’s).</p>
-<p>Example: Exponential family <span class="math inline">\(e^{\eta \cdot T(x) - A(\eta)}h(x)\)</span> has MLR in <span class="math inline">\(\eta \cdot T(x)\)</span>.</p>
-</section>
-<section id="theorem-ump-for-one-sided-tests" class="level3" data-number="2.3">
-<h3 data-number="2.3" class="anchored" data-anchor-id="theorem-ump-for-one-sided-tests"><span class="header-section-number">2.3</span> Theorem: UMP for One-Sided Tests</h3>
-<p>Assume <span class="math inline">\(\cP\)</span> has MLR. Test <span class="math inline">\(H_0: \theta \leq \theta_0\)</span> vs <span class="math inline">\(H_1: \theta &gt; \theta_0\)</span> at level <span class="math inline">\(\alpha\)</span>. Let:</p>
-<p><span class="math display">\[\phi(x) = \begin{cases}
-1 &amp; \text{if } T(x) &gt; c \\
-\gamma &amp; \text{if } T(x) = c \\
-0 &amp; \text{if } T(x) &lt; c
-\end{cases}\]</span></p>
-<p>with <span class="math inline">\(c, \gamma\)</span> chosen so that <span class="math inline">\(\mathbb{E}_{\theta_0}[\phi(X)] = \alpha\)</span>.</p>
-<p>Then:</p>
-<ol type="a">
-<li><span class="math inline">\(\phi\)</span> is a UMP level <span class="math inline">\(\alpha\)</span> test</li>
-<li>If <span class="math inline">\(\theta &lt; \theta_0\)</span>, then <span class="math inline">\(\phi\)</span> minimizes <span class="math inline">\(\mathbb{E}_\theta[\phi(X)]\)</span> among all tests with <span class="math inline">\(\mathbb{E}_{\theta_0}[\phi(X)] = \alpha\)</span></li>
+<p>Last time, we showed that if the family <span class="math inline">\(\cP\)</span> has MLR in the statistic <span class="math inline">\(T(X)\)</span>, then the one-sided test that rejects for large <span class="math inline">\(T(X)\)</span> is UMP for testing <span class="math inline">\(H_0:\;\theta\leq \theta_0\)</span> vs <span class="math inline">\(H_1:\;\theta &gt; \theta_0\)</span>, because:</p>
+<ol type="i">
+<li><p>it is simultaneously the likelihood ratio test for <span class="math inline">\(H_0:\;\theta = \theta_0\)</span> vs <span class="math inline">\(H_1:\;\theta = \theta_1\)</span>, for every <span class="math inline">\(\theta_1 &gt; 0\)</span>, and</p></li>
+<li><p>it controls the Type I error for all <span class="math inline">\(\theta &lt; \theta_0\)</span>.</p></li>
 </ol>
-<p>Proof:</p>
-<ol type="a">
-<li><p>Suppose <span class="math inline">\(\theta &gt; \theta_0\)</span> and <span class="math inline">\(\psi\)</span> has level <span class="math inline">\(\alpha\)</span>:</p>
-<p><span class="math inline">\(\mathbb{E}_\theta[\phi(X)] \geq \mathbb{E}_\theta[\psi(X)]\)</span> since <span class="math inline">\(\phi\)</span> is a LRT for <span class="math inline">\(H_0: \theta = \theta_0\)</span> vs <span class="math inline">\(H_1: \theta = \theta\)</span>.</p></li>
-<li><p>If <span class="math inline">\(\theta &lt; \theta_0\)</span>, assume <span class="math inline">\(\mathbb{E}_\theta[\psi] = \mathbb{E}_\theta[\phi] + \delta\)</span>, <span class="math inline">\(\delta &gt; 0\)</span></p>
-<p>Both <span class="math inline">\(\frac{1}{1+\delta}\psi\)</span> and <span class="math inline">\(\phi\)</span> are tests of <span class="math inline">\(H_0: \theta = \theta_0\)</span> vs <span class="math inline">\(H_1: \theta = \theta\)</span>, both have significance level <span class="math inline">\(\alpha\)</span>.</p>
-<p><span class="math inline">\(\phi\)</span> is a LRT since <span class="math inline">\(\frac{p_\theta(x)}{p_{\theta_0}(x)}\)</span> is non-increasing in <span class="math inline">\(T(X)\)</span>.</p>
-<p>Therefore, <span class="math inline">\(\mathbb{E}_\theta[\phi] \geq \mathbb{E}_\theta[\frac{1}{1+\delta}\psi] = \frac{1}{1+\delta}(\mathbb{E}_\theta[\phi] + \delta)\)</span></p></li>
+<p>Recall that a test <em>rejects for large <span class="math inline">\(T(X)\)</span></em> if it is of the form <span class="math display">\[\phi(X) = \begin{cases} 1 &amp;\quad \text{ if } T(X) &gt; c \\ 0 &amp;\quad \text{ if } T(X) &lt; c\\ \gamma &amp;\quad \text{ if } T(X) = c\end{cases},\]</span> where the critical threshold <span class="math inline">\(c\)</span> is the <em>upper-<span class="math inline">\(\alpha\)</span> quantile at the boundary</em> <span class="math display">\[
+c_\alpha = \min \{c \in \RR:\; \PP_{\theta_0}(T(X) &gt; c) \leq \alpha\}
+\]</span> and the randomization parameter <span class="math inline">\(\gamma\)</span> is used to “top off” the Type I error rate if <span class="math inline">\(T(X)\)</span> is discrete and <span class="math inline">\(\PP_{\theta_0}(T(X) &gt; c_\alpha) &lt; \alpha\)</span>. In the rest of this section we will ignore randomization and assume that we just accept a conservative test in case <span class="math inline">\(\PP_{\theta_0}(T(X) &gt; c_\alpha) &lt; \alpha\)</span> (as is generally done in practice).</p>
+<p>A generic one-parameter model <span class="math inline">\(\cP\)</span> does not have MLR in any statistic <span class="math inline">\(T(X)\)</span>; e.g.&nbsp;the LRT for testing <span class="math inline">\(\theta_0\)</span> vs <span class="math inline">\(\theta_1=\theta_0 + 1\)</span> does not coincide with the LRT for testing <span class="math inline">\(\theta_0\)</span> vs <span class="math inline">\(\theta_1=\theta_0 + 2\)</span>. Then we cannot maximize power for both alternative values <span class="math inline">\(\theta_0+1\)</span> and <span class="math inline">\(\theta_0+2\)</span> simultaneously.</p>
+<p>In such cases, we could still come up with a test that rejects for large values of some other test statistic <span class="math inline">\(T(X)\)</span>, that tends to be larger when <span class="math inline">\(\theta\)</span> is larger. Formally, we say that <span class="math inline">\(T(X)\)</span> is <em>stochastically increasing in <span class="math inline">\(\theta\)</span></em> if <span class="math inline">\(\PP_\theta(T(X) &gt; c)\)</span> is non-decreasing in <span class="math inline">\(\theta\)</span>, for every <span class="math inline">\(c \in \RR\)</span>. The power function of <span class="math inline">\(\phi(X) = 1\{T(X) &gt; c_\alpha\}\)</span>, then, is also non-decreasing in <span class="math inline">\(\theta\)</span>, and <span class="math inline">\(\phi(X)\)</span> is a valid test of <span class="math inline">\(H_0:\;\theta\leq \theta_0\)</span> vs <span class="math inline">\(H_1:\;\theta &gt; \theta_0\)</span>.</p>
+<section id="score-test" class="level3" data-number="2.1">
+<h3 data-number="2.1" class="anchored" data-anchor-id="score-test"><span class="header-section-number">2.1</span> Score test</h3>
+<p>Suppose we observe <span class="math inline">\(X_1,\ldots,X_n \simiid P_\theta\)</span> for large <span class="math inline">\(n\)</span>, and we want to test <span class="math inline">\(H_0:\;\theta\leq \theta_0\)</span> vs <span class="math inline">\(H_1:\;\theta &gt; \theta_0\)</span>, but <span class="math inline">\(\cP\)</span> does not have MLR so we cannot maximize the power over the entirety of <span class="math inline">\(H_1\)</span>. One idea is to use the heuristic of maximizing the power for alternatives near <span class="math inline">\(\theta_0\)</span>; if <span class="math inline">\(n\)</span> is large, then we have a lot of information about <span class="math inline">\(\theta\)</span> so our power will be close to <span class="math inline">\(1\)</span> no matter what we do. So we might prioritize maximizing the power at <span class="math inline">\(\theta_0 + \varepsilon\)</span> for small <span class="math inline">\(\varepsilon\)</span>.</p>
+<p>The LRT for <span class="math inline">\(\theta_0\)</span> vs <span class="math inline">\(\theta_0 + \varepsilon\)</span> rejects for large values of <span class="math display">\[ \frac{p_{\theta_0+\varepsilon}(X)}{p_{\theta_0}(X)} =\exp\{\ell(\theta_0+\varepsilon; X) - \ell(\theta_0; X)\} \approx e^{\varepsilon \dot\ell(\theta_0;X)},\]</span> which is equivalent to rejecting for large values of <span class="math inline">\(\dot\ell(\theta_0;X)\)</span>. Using the score statistic can give simple and appealing tests in certain situations.</p>
+<p><strong>Example: Laplace</strong></p>
+<p>Suppose <span class="math inline">\(X_1,\ldots,X_n \simiid \text{Laplace}(\theta) = \frac{1}{2}e^{-|x-\theta|}\)</span> and we want to test <span class="math inline">\(H_0:\theta \leq 0\)</span> vs <span class="math inline">\(H_1:\;\theta &gt; 0\)</span>. We can calculate the likelihood ratio test for a given fixed alternative <span class="math inline">\(\theta_1 &gt; 0\)</span> as</p>
+<p><span class="math display">\[
+\log \frac{p_{\theta_1}(X)}{p_0(X)} = \sum_i |X_i| - |X_i-\theta_1| = \theta_1\sum_i T_{\theta_1}(X_i),
+\]</span> so the optimal test rejects for large <span class="math inline">\(\sum_i T_{\theta_1}(X_i)\)</span>, where <span class="math display">\[
+T_{\theta}(x) = \begin{cases} -1 &amp; \text{ if } x \leq 0 \\ \frac{2x}{\theta} -1 &amp; \text{ if } 0 \leq x \leq \theta \\ +1 &amp;\text{ if } x \geq \theta \end{cases}.
+\]</span> We can visualize the univariate version of the test statistic <span class="math inline">\(T_{\theta}(x)\)</span> for several different values of <span class="math inline">\(\theta&gt;0\)</span>:</p>
+<div class="cell">
+<div class="cell-output-display">
+<p><img src="testing-one-parameter_files/figure-html/unnamed-chunk-1-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+<p>Note that this test implicitly caps the influence of any single observation <span class="math inline">\(X_i\)</span>. Once <span class="math inline">\(X_i &gt; \theta_1\)</span>, it gives the same evidence in favor of <span class="math inline">\(\theta_1\)</span> and against <span class="math inline">\(\theta_0\)</span> regardless of how much it exceeds <span class="math inline">\(\theta_1\)</span>. Compare this with the sample mean, where the influence of a single observation <span class="math inline">\(X_i\)</span> is unbounded. It is easy to see that <span class="math inline">\(f(X_i)\)</span> is stochastically increasing in <span class="math inline">\(\theta\)</span> for <em>any</em> non-decreasing function <span class="math inline">\(f\)</span>, so any LRT gives a valid level-<span class="math inline">\(\alpha\)</span> test on the entire null distribution.</p>
+<p>If we take <span class="math inline">\(\theta_1\downarrow 0\)</span>, the univariate test statistic approaches <span class="math display">\[
+T_0(x) = \begin{cases} -1 &amp; \text{ if } x \leq 0\\ +1 &amp;\text{ if } x &gt; 0\end{cases},
+\]</span> which gives the score test since <span class="math display">\[
+\dot{\ell}(\theta;X) = \frac{d}{d\theta} \sum_i -|X_i-\theta| = \sum_i T_0(X_i)
+\]</span> This is equivalent to rejecting for large values of <span class="math inline">\(S(X) = \#\{X_i &gt; 0\}\)</span>, simply the number of positive <span class="math inline">\(X_i\)</span> values.</p>
+<p>We can also plot the power curves for <span class="math inline">\(n = 100\)</span> and <span class="math inline">\(\alpha = 0.1\)</span>, for these tests and for the test that rejects for large values of <span class="math inline">\(\sum_i X_i\)</span>. As we see, the score test performs noticeably better than the test that rejects for large values of the sample mean <span class="math inline">\(\overline{X}\)</span>. But the LRT for <span class="math inline">\(\theta_1 = 0.2\)</span> seems to do best for this value of <span class="math inline">\(n\)</span>, since <span class="math inline">\(\theta_1 = 0.2\)</span> is a moderately hard alternative value for which the power is intermediate.</p>
+<div class="cell" data-hash="testing-one-parameter_cache/html/unnamed-chunk-2_d901147f769f3ef3bb7a9af0ea26d3bf">
+<div class="cell-output-display">
+<p><img src="testing-one-parameter_files/figure-html/unnamed-chunk-2-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+</section>
+<section id="the-sign-test-as-a-nonparametric-test" class="level3" data-number="2.2">
+<h3 data-number="2.2" class="anchored" data-anchor-id="the-sign-test-as-a-nonparametric-test"><span class="header-section-number">2.2</span> The sign test as a nonparametric test</h3>
+<p>The test based on the statistic <span class="math inline">\(S(X) = \#\{X_i &gt; 0\}\)</span> is called the <em>sign test</em>, and is generally an appealing test for a <em>nonparametric</em> testing problem. Suppose <span class="math inline">\(X_1,\ldots,X_n \simiid F\)</span>, where <span class="math inline">\(F\)</span> represents an unknown cdf for their distribution. Assume for simplicity that <span class="math inline">\(F\)</span> is continuous and strictly increasing on its support, so that the median <span class="math inline">\(\theta(F) = F^{-1}(1/2)\)</span> is well-defined, and consider testing <span class="math inline">\(H_0:\; \theta(F) \leq 0\)</span> vs <span class="math inline">\(H_1:\; \theta(F) &gt; 0\)</span>.</p>
+<p>Then <span class="math inline">\(S(X) \sim \text{Binom}(n, 1-F(0))\)</span>, where the probability parameter <span class="math inline">\(1-F(0)\)</span> is no more than <span class="math inline">\(1/2\)</span> if <span class="math inline">\(H_0\)</span> is true, but strictly greater than <span class="math inline">\(1/2\)</span> if <span class="math inline">\(H_1\)</span> is true. Then the test that rejects when <span class="math inline">\(S(X)\)</span> is above the upper <span class="math inline">\(1-\alpha\)</span> quantile of the <span class="math inline">\(\text{Binom}(n,1/2)\)</span> distribution (randomizing at the boundary if desired) is level-<span class="math inline">\(\alpha\)</span> on <span class="math inline">\(H_0\)</span>.</p>
+</section>
+</section>
+<section id="two-sided-alternatives" class="level2" data-number="3">
+<h2 data-number="3" class="anchored" data-anchor-id="two-sided-alternatives"><span class="header-section-number">3</span> Two-sided alternatives</h2>
+<p>Often we want to test a null hypothesis against the alternative that the parameter is larger <em>or</em> smaller than a null value, or range of values. This section will consider a null hypothesis of the form <span class="math inline">\(H_0:\; |\theta - \theta_0| \leq \delta\)</span> against the alternative <span class="math inline">\(H_1:\; |\theta - \theta_0| &gt; \delta\)</span>, for some tolerance <span class="math inline">\(\delta \geq 0\)</span>. In the important special case <span class="math inline">\(\delta = 0\)</span> we will call <span class="math inline">\(H_0\)</span> a <em>point null</em>, and if <span class="math inline">\(\delta &gt; 0\)</span> we will call <span class="math inline">\(H_0\)</span> an <em>interval null</em>.</p>
+<section id="two-tailed-tests" class="level3" data-number="3.1">
+<h3 data-number="3.1" class="anchored" data-anchor-id="two-tailed-tests"><span class="header-section-number">3.1</span> Two-tailed tests</h3>
+<p>To test a two-sided alternative, we will generally employ a <em>two-tailed test</em> based on some test statistic <span class="math inline">\(T(X)\)</span>. We will say that <span class="math inline">\(\phi(X)\)</span> <em>rejects for extreme <span class="math inline">\(T(X)\)</span></em> (i.e., for large or small values of <span class="math inline">\(T(X)\)</span>) if <span class="math display">\[
+\phi(X) = \begin{cases} 1 &amp; \quad \text{ if } T(X) &lt; c_1 \text{ or } T(X) &gt; c_2\\
+0 &amp; \quad \text{ if } c_1 &lt; T(X) &lt; c_2\\
+\gamma_i &amp;\quad \text{ if } T(X) = c_i, \; i = 1,2
+\end{cases}
+\]</span></p>
+<p>When we test with a two-sided alternative we will generally not be able to optimize power everywhere. For example, if we test <span class="math inline">\(H_0:\; \theta = 0\)</span> vs <span class="math inline">\(H_1:\; \theta \neq 0\)</span> in the <span class="math inline">\(z\)</span>-test problem <span class="math inline">\(X \sim N(\theta,1)\)</span>, we can choose any test of the form <span class="math display">\[
+\phi_{\alpha_1}(x) = 1\{x &lt; -z_{\alpha_1}\} + 1\{x &gt; z_{\alpha - \alpha_1}\},
+\]</span> for any <span class="math inline">\(\alpha_1 \in [0,\alpha]\)</span>. We obtain the right- and left-tailed tests in the limit where <span class="math inline">\(\alpha\)</span> is <span class="math inline">\(0\)</span> or <span class="math inline">\(\alpha\)</span> respectively, and the usual symmetric two-tailed test when <span class="math inline">\(\alpha_1 = \alpha/2\)</span>.</p>
+<div class="cell">
+<div class="cell-output-display">
+<p><img src="testing-one-parameter_files/figure-html/unnamed-chunk-3-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+<p>Note that two of the three tests shown above have the undesirable property that the power falls below <span class="math inline">\(\alpha\)</span> on part of the alternative: that is, there are alternative values of <span class="math inline">\(\theta\)</span> for which our chance of rejecting the null is even less than it would be if the null were true.</p>
+<p>None of the tests plotted above is as powerful for <span class="math inline">\(\theta &gt; 0\)</span> as the right-tailed test (<span class="math inline">\(\alpha_1 = 0\)</span>), and none is as powerful for <span class="math inline">\(\theta &lt; 0\)</span> as the left-tailed test (<span class="math inline">\(\alpha_1 = \alpha\)</span>), and intuitively it is clear that we cannot hope to find a test that maximizes power on both parts of the alternative.</p>
+<p>As in the case with estimation, one way that we can proceed when there is no UMP test is to impose a constraint that rules out all but one test. In the <span class="math inline">\(z\)</span>-test above, the test with <span class="math inline">\(\alpha_1 = \alpha/2\)</span> is symmetric in two respects:</p>
+<ol type="1">
+<li><p>It is <em>equal-tailed</em>, meaning that we have dedicated an equal portion of our total Type I error budget to the left and right lobes of the rejection region, and</p></li>
+<li><p>It is <em>unbiased</em>, meaning that the power is at least <span class="math inline">\(\alpha\)</span> everywhere on the alternative.</p></li>
 </ol>
-<p>Intuition: <span class="math inline">\(\phi\)</span> is a LRT for <span class="math inline">\(H_0: \theta = \theta_0\)</span> vs <span class="math inline">\(H_1: \theta = \theta\)</span> for any pair <span class="math inline">\(\theta, \theta_0\)</span>. Significance level depends on <span class="math inline">\(\theta_0\)</span>.</p>
+<p>The idea of an equal-tailed test makes sense when <span class="math inline">\(H_0\)</span> is simple, but it is not obvious how it extends to the more common situation where <span class="math inline">\(H_0\)</span> is composite. We will focus on the latter condition, unbiasedness.</p>
 </section>
-<section id="ump-test-picture" class="level3" data-number="2.4">
-<h3 data-number="2.4" class="anchored" data-anchor-id="ump-test-picture"><span class="header-section-number">2.4</span> UMP Test Picture</h3>
-<p>[Insert visual representation of UMP test here]</p>
-<p>Best on <span class="math inline">\(\theta &gt; \theta_0\)</span>, exactly level <span class="math inline">\(\alpha\)</span> at <span class="math inline">\(\theta_0\)</span>, best among tests with <span class="math inline">\(\mathbb{E}_{\theta_0}[\phi] = \alpha\)</span>.</p>
+<section id="exponential-example" class="level3" data-number="3.2">
+<h3 data-number="3.2" class="anchored" data-anchor-id="exponential-example"><span class="header-section-number">3.2</span> Exponential example</h3>
+<p>Consider testing <span class="math inline">\(H_0:\;\theta = 1\)</span> vs <span class="math inline">\(H_1:\;\theta \neq 1\)</span> in the model where <span class="math inline">\(X \sim \text{Exp}(\theta)\)</span>, with cdf <span class="math display">\[F_\theta(t) = \PP_\theta(X \leq t) = 1-e^{-t/\theta}.\]</span> To solve for the equal-tailed test cutoffs we set <span class="math inline">\(c_1^{\text{ET}}=F_1^{-1}(1-\alpha/2) = -\log(1-\alpha/2)\)</span> and <span class="math inline">\(c_2^{\text{ET}}= F_1^{-1}(\alpha/2) = -\log(\alpha/2)\)</span>. Then the power function of the equal-tailed test <span class="math inline">\(\phi^{\text{ET}}\)</span> is</p>
+<p><span class="math display">\[
+\begin{aligned}
+\beta_{\phi^{\text{ET}}}(\theta)
+&amp;= \PP_\theta(X &lt; c_1^{\text{ET}}) + \PP_\theta(X &gt; c_2^{\text{ET}})\\
+&amp;= 1 - e^{-c_1^{\text{ET}}/\theta} +e^{-c_2^{\text{ET}}/\theta}\\
+&amp;= 1 - (1-\alpha/2)^{1/\theta} + (\alpha/2)^{1/\theta}
+\end{aligned}
+\]</span> This test does indeed have power equal to <span class="math inline">\(\alpha\)</span> at <span class="math inline">\(\theta = 1\)</span>, but its power is also <span class="math inline">\(\alpha\)</span> at <span class="math inline">\(\theta = 1/2\)</span>, and the power is actually below <span class="math inline">\(\alpha\)</span> on <span class="math inline">\((1/2,1)\)</span>. So this is not an unbiased test. If we want an unbiased test, we need to set the <em>derivative</em> of the power equal to <span class="math inline">\(0\)</span> at <span class="math inline">\(\theta = 1\)</span>. We can solve this numerically in terms of the left-lobe rejection probability <span class="math inline">\(\alpha_1\)</span>, taking <span class="math display">\[
+\begin{aligned}
+c_1(\alpha_1) &amp;=-\log(1-\alpha_1), \quad\text{ and }\\
+c_2(\alpha_1) &amp;= -\log(\alpha_2)=-\log(\alpha-\alpha_1).
+\end{aligned}
+\]</span> If <span class="math inline">\(\alpha = 0.1\)</span> we obtain <span class="math inline">\(\alpha_1 = 0.080\)</span>, <span class="math inline">\(c_1 = 0.083\)</span>, and <span class="math inline">\(c_2 = 3.9\)</span> for the unbiased test, vs <span class="math inline">\(c_1 = 0.051\)</span> and <span class="math inline">\(c_2 = 3.0\)</span> for the equal-tailed test. The unbiased test is not as powerful for <span class="math inline">\(\theta &gt; 1\)</span>, but it is more powerful for <span class="math inline">\(\theta &lt; 1\)</span>, and its power is minimized at <span class="math inline">\(\alpha\)</span> when <span class="math inline">\(\theta = 1\)</span>. We plot both power curves below.</p>
+<div class="cell">
+<div class="cell-output-display">
+<p><img src="testing-one-parameter_files/figure-html/unnamed-chunk-4-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
 </section>
-</section>
-<section id="one-sided-tests-in-general" class="level2" data-number="3">
-<h2 data-number="3" class="anchored" data-anchor-id="one-sided-tests-in-general"><span class="header-section-number">3</span> One-Sided Tests in General</h2>
-<p><span class="math inline">\(\cP = \{P_\theta: \theta \in \Theta \subseteq \mathbb{R}\}\)</span>, <span class="math inline">\(\Theta \subseteq \mathbb{R}\)</span></p>
-<p><span class="math inline">\(H_0: \theta \leq \theta_0\)</span> vs <span class="math inline">\(H_1: \theta &gt; \theta_0\)</span> called one-sided hypothesis.</p>
-<p>Often no UMP test exists.</p>
-<p>Example 1: <span class="math inline">\(p_\theta(x) = \theta e^{-\theta x} 1_{x&gt;0} + (1-\theta)\delta_0(x)\)</span>, <span class="math inline">\(\theta \in [0,1]\)</span></p>
-<p>LRT for <span class="math inline">\(H_0: \theta = \theta_0\)</span> vs <span class="math inline">\(H_1: \theta = \theta_1 &gt; \theta_0\)</span>:</p>
-<p><span class="math display">\[\log LR(x) = \begin{cases}
-\log \frac{\theta_1}{\theta_0} - (\theta_1 - \theta_0)x &amp; \text{if } x &gt; 0 \\
-\log \frac{1-\theta_1}{1-\theta_0} &amp; \text{if } x = 0
-\end{cases}\]</span></p>
-<p>Reject for: - <span class="math inline">\(x \leq \theta_0\)</span> if <span class="math inline">\(\theta_1 &lt; \frac{1}{2}\)</span> - <span class="math inline">\(x \geq \theta_0\)</span> if <span class="math inline">\(\theta_1 &gt; \frac{1}{2}\)</span></p>
-<p>Very dependent on specific values of <span class="math inline">\(\theta_0\)</span> and <span class="math inline">\(\theta_1\)</span>.</p>
-<p>Test <span class="math inline">\(H_0: \theta \leq \theta_0\)</span> vs <span class="math inline">\(H_1: \theta &gt; \theta_0\)</span>: No UMP test.</p>
-<p>Example 2: Test <span class="math inline">\(H_0: \theta \leq 0\)</span> vs <span class="math inline">\(H_1: \theta &gt; 0\)</span> for <span class="math inline">\(X_i \in \{-1,0,1\}\)</span></p>
-<p><span class="math inline">\(\mathbb{E}[X_i] = \theta\)</span>, <span class="math inline">\(\text{Var}(X_i) = 1 - \theta^2\)</span></p>
-<p><span class="math inline">\(T = \sum X_i\)</span>, <span class="math inline">\(\sum |X_i|\)</span>, <span class="math inline">\(\frac{T}{\sum |X_i|}\)</span></p>
-<p>Tail <span class="math inline">\(\{X_i\}\)</span> vs <span class="math inline">\(\{|X_i|\}\)</span> vs <span class="math inline">\(\{\text{sign}(X_i)\}\)</span></p>
-<p><span class="math inline">\(n^{-1/2} \sum X_i \sim N(0,1)\)</span> vs <span class="math inline">\(\text{Binom}(n, \frac{1}{2})\)</span> (sign test)</p>
-<section id="stochastically-increasing" class="level3" data-number="3.1">
-<h3 data-number="3.1" class="anchored" data-anchor-id="stochastically-increasing"><span class="header-section-number">3.1</span> Stochastically Increasing</h3>
-<p><strong>Definition:</strong> A real-valued statistic <span class="math inline">\(T(X)\)</span> is stochastically increasing in <span class="math inline">\(\theta\)</span> if <span class="math inline">\(\mathbb{P}_\theta(T(X) &gt; t)\)</span> is non-decreasing in <span class="math inline">\(\theta\)</span>, <span class="math inline">\(\forall t\)</span>.</p>
-<p>If <span class="math inline">\(\phi_t\)</span> is right-tailed test based on <span class="math inline">\(T(X)\)</span>:</p>
-<p><span class="math display">\[\phi_t(x) = 1\{T(x) &gt; c\} + \gamma 1\{T(x) = c\}\]</span></p>
-<p>and <span class="math inline">\(T(X)\)</span> is stochastically increasing in <span class="math inline">\(\theta\)</span>:</p>
-<p><span class="math display">\[\beta_{\phi_t}(\theta) = \mathbb{P}_\theta(T(X) &gt; c) + \gamma\mathbb{P}_\theta(T(X) = c)\]</span></p>
-<p>is increasing in <span class="math inline">\(\theta\)</span>.</p>
-<p>Example 1: <span class="math inline">\(X_i \sim \text{iid}\)</span> location family $T(X) = $ sample mean, median, sign statistic</p>
-<p>Example 2: <span class="math inline">\(X_i \sim \text{iid}\)</span> scale family <span class="math inline">\(T(X) = \sum |X_i|\)</span> or median <span class="math inline">\(\{|X_1|, \ldots, |X_n|\}\)</span></p>
-</section>
-</section>
-<section id="two-sided-alternatives" class="level2" data-number="4">
-<h2 data-number="4" class="anchored" data-anchor-id="two-sided-alternatives"><span class="header-section-number">4</span> Two-Sided Alternatives</h2>
-<p>Setup: <span class="math inline">\(\cP = \{P_\theta: \theta \in \Theta \subseteq \mathbb{R}\}\)</span>, <span class="math inline">\(\Theta \subseteq \mathbb{R}\)</span></p>
-<p>Test <span class="math inline">\(H_0: \theta = \theta_0\)</span> vs <span class="math inline">\(H_1: \theta \neq \theta_0\)</span></p>
-<p>Can be generalized naturally to <span class="math inline">\(H_0: \theta \in [\theta_0, \theta_1]\)</span></p>
-<p>Two-tailed test rejects when <span class="math inline">\(T(X)\)</span> is extreme:</p>
-<p><span class="math display">\[\phi(x) = \begin{cases}
-1 &amp; \text{if } T(X) &gt; c_2 \text{ or } T(X) &lt; c_1 \\
-\gamma_2 &amp; \text{if } T(X) = c_2 \\
-\gamma_1 &amp; \text{if } T(X) = c_1 \\
-0 &amp; \text{if } c_1 &lt; T(X) &lt; c_2
-\end{cases}\]</span></p>
-<p>Two ways to reject. How to balance?</p>
-<p>For symmetric distributions like <span class="math inline">\(N(\theta, 1)\)</span>, natural choice is to equalize lobes of rejection region: <span class="math inline">\(\alpha/2 = \mathbb{P}(\text{left lobe}) = \mathbb{P}(\text{right lobe})\)</span> for <span class="math inline">\(H_0: \theta = \theta_0\)</span>.</p>
-<p>For asymmetric distributions or interval null <span class="math inline">\(H_0: \theta \in [\theta_0, \theta_1]\)</span>, more complicated.</p>
-<section id="equal-tailed-unbiased-tests" class="level3" data-number="4.1">
-<h3 data-number="4.1" class="anchored" data-anchor-id="equal-tailed-unbiased-tests"><span class="header-section-number">4.1</span> Equal-Tailed Unbiased Tests</h3>
-<p>Recall <span class="math inline">\(H_0: \theta = \theta_0\)</span></p>
-<p>Let <span class="math inline">\(\alpha_1 = \mathbb{P}_{\theta_0}(T &lt; c_1) + \gamma_1\mathbb{P}_{\theta_0}(T = c_1)\)</span> <span class="math inline">\(\alpha_2 = \mathbb{P}_{\theta_0}(T &gt; c_2) + \gamma_2\mathbb{P}_{\theta_0}(T = c_2)\)</span></p>
-<p>Valid if <span class="math inline">\(\alpha_1 + \alpha_2 = \alpha\)</span> (<span class="math inline">\(\alpha_2\)</span> is free parameter)</p>
-<p>Idea 1: Equal-tailed test <span class="math inline">\(\alpha_1 = \alpha_2 = \frac{\alpha}{2}\)</span></p>
-<p>Example: <span class="math inline">\(X \sim \text{Exp}(\theta)\)</span>, test <span class="math inline">\(H_0: \theta = 1\)</span></p>
-<p>Solve for cutoffs: <span class="math inline">\(1 - e^{-c_1} = e^{-c_2} = \frac{\alpha}{2}\)</span></p>
-<p><span class="math inline">\(c_1 = -\log(1-\frac{\alpha}{2})\)</span>, <span class="math inline">\(c_2 = -\log(\frac{\alpha}{2})\)</span></p>
-<p><span class="math inline">\(\phi(x) = 1\{x &lt; -\log(1-\frac{\alpha}{2}) \text{ or } x &gt; -\log(\frac{\alpha}{2})\}\)</span></p>
-<p><span class="math inline">\(\beta(\theta) = \mathbb{P}_\theta(X &lt; c_1) + \mathbb{P}_\theta(X &gt; c_2)\)</span></p>
-<p><span class="math inline">\(= 1 - e^{-\theta c_1} + e^{-\theta c_2}\)</span></p>
-<p><span class="math inline">\(= 1 - (1-\frac{\alpha}{2})^\theta + (\frac{\alpha}{2})^\theta\)</span></p>
-<p>Power curve for <span class="math inline">\(\theta \in [0,2]\)</span>:</p>
-<p>[Insert power curve graph here]</p>
-</section>
-<section id="unbiased-tests" class="level3" data-number="4.2">
-<h3 data-number="4.2" class="anchored" data-anchor-id="unbiased-tests"><span class="header-section-number">4.2</span> Unbiased Tests</h3>
-<p><strong>Definition:</strong> <span class="math inline">\(\phi(x)\)</span> is unbiased if <span class="math inline">\(\forall \theta \neq \theta_0\)</span>, <span class="math inline">\(\mathbb{E}_\theta[\phi(X)] \geq \alpha\)</span></p>
-<p>Idea 2 (Unbiased): ensure min <span class="math inline">\(\beta(\theta) = \alpha\)</span></p>
-<p>Choose <span class="math inline">\(\gamma_1, \gamma_2, c_1, c_2\)</span> to solve:</p>
-<p><span class="math inline">\(\beta(\theta_0) = \alpha\)</span> <span class="math inline">\(\beta'(\theta_0) = 0\)</span></p>
-<p>2 equations, 2 unknowns</p>
-<p>Example: 1-parameter exponential family, <span class="math inline">\(H_0: \eta = \eta_0\)</span> vs <span class="math inline">\(H_1: \eta \neq \eta_0\)</span></p>
-<p><span class="math inline">\(p_\eta(x) = e^{\eta T(x) - A(\eta)}h(x)\)</span> (MLR in <span class="math inline">\(T(x)\)</span>)</p>
-<p>Assume <span class="math inline">\(T(x)\)</span> continuous, set <span class="math inline">\(c_1 &lt; c_2\)</span>:</p>
-<p><span class="math inline">\(\alpha = \mathbb{P}_{\eta_0}(T &lt; c_1) + \mathbb{P}_{\eta_0}(T &gt; c_2)\)</span> <span class="math inline">\(0 = \mathbb{E}_{\eta_0}[T \cdot 1\{T &lt; c_1\}] + \mathbb{E}_{\eta_0}[T \cdot 1\{T &gt; c_2\}]\)</span></p>
-</section>
-<section id="theorem-umpu-tests" class="level3" data-number="4.3">
-<h3 data-number="4.3" class="anchored" data-anchor-id="theorem-umpu-tests"><span class="header-section-number">4.3</span> Theorem: UMPU Tests</h3>
-<p>Assume <span class="math inline">\(X_1, \ldots, X_n \sim p_\eta(x) = e^{\eta T(x) - A(\eta)}h(x)\)</span></p>
-<p><span class="math inline">\(H_0: \eta \in [\eta_1, \eta_2]\)</span> vs <span class="math inline">\(H_1: \eta &lt; \eta_1 \text{ or } \eta &gt; \eta_2\)</span></p>
-<p>(possibly <span class="math inline">\(\eta_1 = \eta_2\)</span>)</p>
-<p>Then:</p>
-<ol type="a">
-<li>The unbiased test rejecting for <span class="math inline">\(T(X) \notin [c_1, c_2]\)</span> with significance level <span class="math inline">\(\alpha\)</span> is UMP among all unbiased tests (UMPU)</li>
-<li>If <span class="math inline">\(\eta_1 = \eta_2\)</span>, the UMPU test can be found by solving for <span class="math inline">\(c_1, c_2\)</span> s.t. <span class="math inline">\(\mathbb{E}_{\eta_0}[\phi] = \alpha\)</span>, <span class="math inline">\(\mathbb{E}_{\eta_0}[T\phi] = \alpha\mathbb{E}_{\eta_0}[T]\)</span></li>
-<li>If <span class="math inline">\(\eta_1 &lt; \eta_2\)</span>, the UMPU test can be found by solving for <span class="math inline">\(c_1, c_2\)</span> s.t. <span class="math inline">\(\mathbb{E}_{\eta_1}[\phi] = \alpha\)</span> and <span class="math inline">\(\mathbb{E}_{\eta_2}[\phi] = \alpha\)</span></li>
+<section id="optimal-unbiased-tests" class="level3" data-number="3.3">
+<h3 data-number="3.3" class="anchored" data-anchor-id="optimal-unbiased-tests"><span class="header-section-number">3.3</span> Optimal unbiased tests</h3>
+<p>If we are testing a point null against a two-sided alternative, we can take our choice between the equal-tailed and unbiased test, but the unbiasedness criterion is conceptually appealing for more general testing problems because the definition naturally extends to the case where <span class="math inline">\(H_0\)</span> is composite. For example, if we want to test an interval null against a two-sided alternative, it is not clear what it means to set <span class="math inline">\(\PP_{H_0}(T(X) &lt; c_1) = \alpha/2\)</span>, because that probability varies over the null parameter space <span class="math inline">\(\Theta_0\)</span>. By contrast, the unbiased criterion is well-defined for any hypothesis testing problem.</p>
+<p>If the power function is differentiable in <span class="math inline">\(\theta\)</span>, and <span class="math inline">\(\theta_0\)</span> is in <span class="math inline">\(\Theta^{\circ}\)</span>, the interior of the parameter space, then any unbiased test <span class="math inline">\(\phi\)</span> must have <span class="math inline">\(\beta_\phi(\theta_0) = \alpha\)</span> and <span class="math inline">\(\dot{\beta}_{\phi}(\theta_0) = 0\)</span>. Otherwise, the power would be strictly less than <span class="math inline">\(\alpha\)</span> at either <span class="math inline">\(\theta_0 +\varepsilon\)</span> or <span class="math inline">\(\theta_0- \varepsilon\)</span>, for sufficiently small <span class="math inline">\(\varepsilon&gt;0\)</span>.</p>
+<p>In exponential family models, we can use these facts to obtain a simple characterization of the criterion that the power function has zero derivative at <span class="math inline">\(\theta_0\)</span>, as. Let <span class="math inline">\(X \sim p_\theta(x) = e^{\theta T(x) - A(\theta)}h(x)\)</span>, and differentiate the power function to obtain <span class="math display">\[
+\begin{aligned}
+\dot{\beta}_{\phi}(\theta_0)
+&amp;= \frac{d}{d\theta} \left. \int \phi(x)e^{\theta T(x) - A(\theta)}h(x)\,d\mu(x)\right|_{\theta=\theta_0} \\
+&amp;= \int \phi(x)(T(x)-\dot{A}(\theta_0))e^{\theta_0 T(x) - A(\theta_0)}h(x)\,d\mu(x)\\
+&amp;= \EE_{\theta_0}\left[\phi(X)(T(X) - \EE_{\theta_0}T(X))\right]\\[5pt]
+&amp;= \text{Cov}_{\theta_0}(T(X), \phi(X))\\[5pt]
+&amp;= \EE_{\theta_0}\left[(\phi(X)-\alpha)T(X)\right].
+\end{aligned}
+\]</span> Setting the last expression to 0 and massaging the equation a bit, we obtain <span class="math display">\[
+\EE_{\theta_0}T(X) = \frac{\EE_{\theta_0}[\phi(X)T(X)]}{\alpha} = \EE_{\theta_0}[T(X) \mid \phi(X) \text{ rejects } H_0].
+\]</span> Thus, the conditional expectation of <span class="math inline">\(T(X)\)</span> under the null, given that it falls in the rejection region, is the same as the marginal expectation. For instance, both the acceptance region and the rejection region for our unbiased test of <span class="math inline">\(H_0:\;\theta=1\)</span> in the exponential model share the same “balance point” at <span class="math inline">\(\EE_{1}X = 1\)</span>. Because the right lobe is farther out from 1, it has only about 1/4 as much probability mass as the right lobe.</p>
+<div class="cell">
+<div class="cell-output-display">
+<p><img src="testing-one-parameter_files/figure-html/unnamed-chunk-5-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+<p>Recall that when we restricted our attention to unbiased estimators, we were able to find a unique best unbiased estimator. Likewise, we can sometimes find an optimal two-sided test if we restrict our attention to unbiased tests. We say that <span class="math inline">\(\phi^*\)</span> is <em>UMP unbiased</em> (UMPU) if, for any other unbiased level <span class="math inline">\(\alpha\)</span> test <span class="math inline">\(\phi\)</span>, we have <span class="math inline">\(\beta_{\phi^*}(\theta) \geq \beta_{\phi}(\theta)\)</span> for all <span class="math inline">\(\theta \in \Theta_1\)</span>. UMPU tests exist, at least, for one-parameter exponential family models, as we show below.</p>
+<p><strong>Theorem (UMP Unbiased tests):</strong> Assume we want to test <span class="math inline">\(H_0:\;|\theta -\theta_0| \leq \delta\)</span> vs <span class="math inline">\(H_1:\;|\theta - \theta_0| &gt; \delta\)</span> in the model <span class="math inline">\(X \sim e^{\theta T(x)-A(\theta)}h(x)\)</span>, for <span class="math inline">\(\delta \geq 0\)</span> and <span class="math inline">\(\theta_0-\delta, \theta+\delta \in \Theta^\circ\)</span>, the interior of the parameter space. Suppose that the test <span class="math inline">\(\phi^*(X)\)</span> rejects for extreme values of <span class="math inline">\(T(X)\)</span>, with the cutoffs <span class="math inline">\(c_1,c_2,\gamma_1,\gamma_2\)</span> chosen so that</p>
+<ol type="1">
+<li><p><span class="math inline">\(\phi^*\)</span> attains power <span class="math inline">\(\alpha\)</span> at the boundary of the null, i.e.&nbsp;<span class="math inline">\(\beta_{\phi^*}(\theta_0 - \delta) = \beta_{\phi^*}(\theta_0 + \delta) = \alpha\)</span>, and</p></li>
+<li><p>if <span class="math inline">\(\delta&gt; 0\)</span>, the power function is flat at <span class="math inline">\(\theta_0\)</span>, i.e.&nbsp;<span class="math inline">\(\dot{\beta}_{\phi^*}(\theta_0) = 0\)</span>.</p></li>
 </ol>
-<p>Proof in Keener.</p>
+<p>Then <span class="math inline">\(\phi^*\)</span> is UMPU.</p>
+<p><strong>Proof:</strong> Assume without loss of generality that <span class="math inline">\(\theta_0 = 0\)</span>, and first consider the case <span class="math inline">\(\delta = 0\)</span>. Our proof will proceed much as it did for the Neyman-Pearson lemma. For <span class="math inline">\(\theta \neq 0\)</span>, we want to solve the problem <span class="math display">\[
+\begin{aligned}
+\maxz_\phi &amp;\int \phi(x)p_{\theta}(x)\,d\mu(x)\\
+\text{ subject to } &amp;\int \phi(x)p_0(x)\,d\mu(x) = \alpha, \quad\text{ and }\\
+&amp;\int \phi(x)(T(x)-\nu_0)p_0(x)\,d\mu(x) = 0,
+\end{aligned}
+\]</span> where <span class="math inline">\(\nu_0 = \EE_0 T(X)\)</span>. Note that we have an equality constraint for the Type I error, because any unbiased test must have power exactly equal to <span class="math inline">\(\alpha\)</span> at <span class="math inline">\(\theta_0\)</span>. The Lagrangian is <span class="math display">\[
+\begin{aligned}
+&amp;\int \phi p_{\theta}\,d\mu - \lambda_1\int \phi p_0\,d\mu - \lambda_2\int \phi (T-\nu_0)p_0 \,d\mu \\
+&amp;\quad = \int \phi\left(p_\theta -\lambda_1 p_0 - \lambda_2(T-\nu_0)p_0\right)\,d\mu \\
+&amp;\quad = \int \phi\left(\frac{p_\theta}{p_0} - \lambda_1 - \lambda_2(T-\nu_0)\right)\,dP_0.
+\end{aligned}
+\]</span> Since <span class="math inline">\(\frac{p_\theta}{p_0}(x) = e^{\theta T(x) - A(\theta)+A(0)}\)</span>, the test that maximizes this Lagrangian has <span class="math display">\[
+\phi^*(x) = \begin{cases} 1 &amp;\quad \text{ if } e^{\theta T(x)} &gt; a_0 + a_1 T(x)\\
+0 &amp;\quad \text{ if } e^{\theta T(x)} &lt; a_0 + a_1 T(x)\\
+\text{anything} &amp;\quad \text{ if } e^{\theta T(x)} = a_0 + a_1 T(x)
+\end{cases}
+\]</span> for <span class="math inline">\(a_0 = (\lambda_1 - \lambda_2\nu_0)e^{A(0)-A(\theta)}\)</span> and <span class="math inline">\(a_1 = \lambda_2 e^{A(0)-A(\theta)}\)</span>.</p>
+<p>For any <span class="math inline">\(c_1,c_2\)</span> we can find <span class="math inline">\(a_1 &gt; 0\)</span> and <span class="math inline">\(a_0\in \RR\)</span> for which <span class="math inline">\(e^{\theta t} = a_0 + a_1 t\)</span> at <span class="math inline">\(t = c_1,c_2\)</span>, in which case <span class="math inline">\(e^{t\theta} &gt; a_0 + a_1 t\)</span> for <span class="math inline">\(t &lt; c_1\)</span> and <span class="math inline">\(t &gt; c_2\)</span> and <span class="math inline">\(e^{t\theta} &lt; a_0 + a_1 t\)</span> otherwise; then we can solve for <span class="math inline">\(\lambda_1,\lambda_2 \in \RR\)</span> for which our <span class="math inline">\(\phi^*\)</span> maximizes the Lagrangian.</p>
+<p>Now, for any other test <span class="math inline">\(\phi\)</span> that satisfies the unbiasedness constraints we can write <span class="math display">\[
+\begin{aligned}
+\beta_{\phi}(\theta)  
+&amp;= \beta_{\phi}(\theta) - \lambda_1\left(\beta_{\phi}(0) - \alpha\right) -\lambda_2 \dot\beta_{\phi}(0)\\
+&amp;\leq \beta_{\phi^*}(\theta) - \lambda_1\left(\beta_{\phi^*}(0) - \alpha\right) -\lambda_2 \dot\beta_{\phi^*}(0)\\
+&amp;= \beta_{\phi^*}(\theta).
+\end{aligned}
+\]</span> Since <span class="math inline">\(\theta\)</span> was arbitrary, we have the result.</p>
+<p>The proof for <span class="math inline">\(\delta &gt; 0\)</span> is similar, with the constraints <span class="math inline">\(\beta_{\phi}(0) = \alpha\)</span> and <span class="math inline">\(\dot{\beta}_{\phi}(0) = 0\)</span> replaced by <span class="math inline">\(\beta_{\phi}(-\delta) = \beta_{\phi}(\delta) =\alpha\)</span>.</p>
 
 
 </section>
