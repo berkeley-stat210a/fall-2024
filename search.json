@@ -46,7 +46,7 @@
     "href": "units/unit1.html#evaluated-python-code-chunk-with-a-plot",
     "title": "Unit 1: Intro",
     "section": "Evaluated Python code chunk, with a plot",
-    "text": "Evaluated Python code chunk, with a plot\n\n\nCode\nimport numpy as np\nx = np.random.normal(size=100)\nimport matplotlib.pyplot as plt\nplt.hist(x)\nplt.show()\nnp.mean(x)\n\n\n\n\n\n-0.10946995790594222"
+    "text": "Evaluated Python code chunk, with a plot\n\n\nCode\nimport numpy as np\nx = np.random.normal(size=100)\nimport matplotlib.pyplot as plt\nplt.hist(x)\nplt.show()\nnp.mean(x)\n\n\n\n\n\n-0.006171221480879524"
   },
   {
     "objectID": "units/unit1.html#latex",
@@ -1117,7 +1117,7 @@
     "href": "homework.html#assignments",
     "title": "Homework",
     "section": "Assignments",
-    "text": "Assignments\n\nHomework 1 (LaTeX source)\nHomework 2 (LaTeX source)\nHomework 3 (LaTeX source)\nHomework 4 (LaTeX source)\nHomework 5 (Data for Problem 5) (LaTeX source)\nHomework 6 (LaTeX source)\nHomework 7 (LaTeX source)"
+    "text": "Assignments\n\nHomework 1 (LaTeX source)\nHomework 2 (LaTeX source)\nHomework 3 (LaTeX source)\nHomework 4 (LaTeX source)\nHomework 5 (Data for Problem 5) (LaTeX source)\nHomework 6 (LaTeX source)\nHomework 7 (LaTeX source)\nHomework 8 (LaTeX source)"
   },
   {
     "objectID": "units/macros.html",
@@ -1138,7 +1138,7 @@
     "href": "units/unit3.html#evaluated-python-code-chunk-with-a-plot",
     "title": "Unit 3: More",
     "section": "Evaluated Python code chunk, with a plot",
-    "text": "Evaluated Python code chunk, with a plot\n\n\nCode\nimport numpy as np\nx = np.random.normal(size=100)\nimport matplotlib.pyplot as plt\nplt.hist(x)\nplt.show()\nnp.mean(x)\n\n\n\n\n\n-0.010488187826875434"
+    "text": "Evaluated Python code chunk, with a plot\n\n\nCode\nimport numpy as np\nx = np.random.normal(size=100)\nimport matplotlib.pyplot as plt\nplt.hist(x)\nplt.show()\nnp.mean(x)\n\n\n\n\n\n-0.005029423913081293"
   },
   {
     "objectID": "units/unit3.html#latex",
