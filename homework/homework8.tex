@@ -1,0 +1,196 @@
+\documentclass{article}
+
+\usepackage[margin=1.2in]{geometry}
+\usepackage{graphicx}
+\usepackage{amsmath,amssymb,amsthm,bm}
+\usepackage{latexsym,color,minipage-marginpar,caption,multirow,verbatim}
+\usepackage{enumerate}
+\usepackage[round]{natbib}
+\usepackage{times}
+\usepackage{booktabs}
+
+\newcommand{\cP}{\mathcal{P}}
+\newcommand{\cX}{\mathcal{X}}
+\newcommand{\cR}{\mathcal{R}}
+\newcommand{\cT}{\mathcal{T}}
+\newcommand{\cY}{\mathcal{Y}}
+\newcommand{\cQ}{\mathcal{Q}}
+
+\newcommand{\EE}{\mathbb{E}}
+\newcommand{\PP}{\mathbb{P}}
+\newcommand{\QQ}{\mathbb{Q}}
+\newcommand{\RR}{\mathbb{R}}
+\newcommand{\ZZ}{\mathbb{Z}}
+
+\newcommand{\Var}{\textnormal{Var}}
+\newcommand{\MSE}{\textnormal{MSE}}
+
+\DeclareMathOperator*{\argmax}{argmax}
+
+
+\newcommand{\simiid}{\overset{\text{i.i.d.}}{\sim}}
+\newcommand{\simind}{\overset{\text{ind.}}{\sim}}
+\newcommand{\ep}{\varepsilon}
+
+\definecolor{darkblue}{rgb}{0.2, 0.2, 0.5}
+
+\newenvironment{solution}{~\\\color{darkblue}{\bf Solution:~\\}}{}
+\newenvironment{ifsol}{\color{darkblue}}{}
+
+\newcommand{\optional}{{\bf Optional:} (Not graded, no extra points) }
+
+\theoremstyle{definition}
+\newtheorem{problem}{Problem}
+
+
+\begin{document}
+
+\title{Stats 210A, Fall 2024\\
+  Homework 8 \\
+  {\large {\bf Due on}: Wednesday, Oct. 30}}
+\date{}
+
+\maketitle
+
+\paragraph{Instructions:} See the standing homework instructions on the course web page
+
+\begin{problem}[Some two-tailed tests]
+\label{prob:two-tailed}
+
+Consider testing $H_0:\,\theta = \theta_0$ vs $H_1:\,\theta \neq \theta_0$ in a one-parameter exponential family of the form $p_\theta(x) = e^{\theta T(x) - A(\theta)}h(x)$. We stated in class that among all {\em unbiased, level-$\alpha$} tests, the one that rejects for extreme (i.e., large or small) values of $T(X)$ is uniformly most powerful (simultaneously maximizes power for all alternatives).
+
+The equal-tailed level-$\alpha$ test that rejects for extreme values of $T(X)$ does not satisfy as interesting an optimality property but it is also a competitive test. Depending on the distribution, the equal-tailed test and the UMPU test may or may not coincide.
+
+Numerically find the equal-tailed and UMPU test for the following hypothesis testing problems at level $\alpha=0.05$. For each problem,
+\begin{enumerate}[(i)]
+\item derive the appropriate tests (leaving the cutoff values abstract), 
+\item numerically compute the cutoff values $c$ (no $\gamma$ necessary since these are continuous problems), and 
+\item invert the equal-tailed test to give an interval for the data value specified (no need to invert the unbiased test).
+\end{enumerate}
+
+\begin{enumerate}[(a)]
+
+\item $X_i \simind N(\theta, \sigma_i^2)$ for $i=1,\ldots,n$, where $\sigma_i^2$ are known positive constants and $\theta \in \RR$ is unknown. Test $H_0:\; \theta = 0$ vs. $H_1:\; \theta \neq 0$, with $n = 20$ and $\sigma_i^2 = i$. On your power plot, also plot the power function of the (sub-optimal) test that rejects for extreme values of $\sum_i X_i$.
+
+
+
+
+
+\item $X_1,\ldots, X_n \simiid \text{Pareto}(\theta) = \theta x^{-(1+\theta)}$, for $\theta > 0$ and $x > 1$ (also called a power law distribution). Test $H_0:\; \theta = 1$ vs. $H_1:\; \theta \neq 1$, for $n = 100$. On your power plot, also plot the power function of the (sub-optimal) test that rejects for large $\sum_i X_i$.
+
+
+\end{enumerate}
+
+\end{problem}
+
+
+
+\begin{problem}[Testing in trinomial subfamilies]
+  \label{prob:trinomial-testing}
+
+  Recall the problem on a previous homework on subfamilies of the trinomial distribution
+  \[
+  p_\pi(x) = \pi_1^{x_1}\pi_2^{x_2}\pi_3^{x_3} \cdot \frac{n!}{x_1! x_2! x_3!},
+  \]
+  and recall that the probability of genotypes {\bf aa}, {\bf Aa}, and {\bf AA} were $\theta^2$, $2\theta(1-\theta)$, and $(1-\theta)^2$, respectively, for an individual drawn from a well-mixed population with prevalence $\theta\in (0,1)$ for allele {\bf a}. 
+
+  You may appeal to any results from the previous homework problem that are helpful, without re-deriving them.
+
+ \begin{enumerate}[(a)]
+      
+  \item Suppose we observe a sample of size $n = 1000$ from a well-mixed population with prevalence $\theta$, and we want to test $H_0:\;\theta \leq 0.1$ vs $H_1:\; \theta > 0.1$ at level $\alpha = 0.1$. Show that there is a UMP test for this problem, and say what the test statistic is. Give the cutoffs $c,\gamma$ and plot the power as a function of $\theta$, for an appropriate range of values.
+
+    
+
+
+  \item Now suppose our population is a mixture of two populations with different prevalences $\theta_1$ and $\theta_2$ for allele {\bf a}. Define $\gamma \in [0,1]$ as the proportion of individuals from population 1, so the proportion of genotype $i=1,2,3$ is $\pi_i(\gamma) = \gamma \pi_i(1) + (1-\gamma)\pi_i(0)$. Assume that $\theta_1,\theta_2$ are known and only $\gamma$ is unknown.
+
+    Consider testing  $H_0:\;\gamma = 0$ vs $H_1:\;\gamma = \gamma_1$, for some fixed value $\gamma_1 > 0$. That is, we are testing for whether the individuals we are sampling from are coming only from population 2, or whether a nonzero fraction of them are coming from population 1. Show that the likelihood ratio test rejects for large values of the statistic  $\sum_{i=1}^3 w_iX_i$, where
+    \[
+    w_i(\gamma_1) = \log\left(1 + \gamma_1\left(\frac{\pi_i(1)-\pi_i(0)}{\pi_i(0)}\right)\right).
+    \]
+    
+    
+
+    \item Next consider testing  $H_0:\;\gamma = 0$ vs $H_1:\;\gamma >0$, when $n$ is large. Explain why no UMP test exists, and suggest instead an appropriate test for $H_0:\;\gamma = 0$ vs $H_1:\;\gamma > 0$ that prioritizes small alternative values of $\gamma$.
+
+      
+
+
+    \item Implement your test from part (c) when $\theta_1 = 0.7$, $\theta_2=0.05$, and $n=1000$, at level $\alpha = 0.1$, and compare its power to the Neyman--Pearson test for $H_0:\;\gamma = 0$ vs $H_1:\;\gamma = 1$. Give an explicit expression for both test statistics and comment qualitatively on how they are examining the data differently. Plot their power curves for an appropriate range of $\gamma$ values.
+        
+      
+  \end{enumerate}
+
+  \paragraph{Moral:} We saw before that, while a one-parameter exponential family like the one in part (a) has a complete sufficient statistic that allows for optimal inference throughout the parameter space, a curved exponential family like the mixture family in parts (b-d) has no complete sufficient statistic. Instead, the score acts like a complete sufficient statistic in a local neighborhood of the parameter space, but the score is different in different parts of the parameter space.  Hence, the structure of the family has important ramifications for how we should think about statistically efficient inference.
+
+\end{problem}
+
+\begin{problem}[Confidence intervals for quantiles]
+  \label{prob:conf-quantiles}
+  
+  Assume we observe $X_1,\ldots,X_n \simiid F$, where the cdf $F$ is assumed to be strictly increasing and continuous. Consider inference on the quantile $q(F) = F^{-1}(p)$, for a fixed $p \in (0,1)$.
+
+  \begin{enumerate}[(a)]
+  \item Suggest a nonparametric level-$\alpha$ test for $H_0:\; q(F) = q_0$ vs $H_1:\; q(F) \neq q_0$. Since $\alpha$ and $p$ are unspecified, you don't need to solve for any cutoff values, but describe how you might do so.
+  \item For $n = 1000$ and $p = 0.9$, invert your test from part (a) to find an explicit confidence interval for $q(F)$, as a function of $X_1,\ldots,X_n$.
+  \end{enumerate}
+  
+\end{problem}
+
+
+
+\begin{problem}[Testing with multidirectional alternatives]
+\label{prob:test-multidir}
+
+Suppose $X\sim N_d(\mu,I_d)$ for unknown $\mu\in\RR^d$. Consider testing $H_0:\; \mu=0$ vs. $H_1:\; \mu \neq 0$. 
+
+\begin{enumerate}[(a)]
+
+\item If $d=1$, elaborate on the UMPU proof from class to show that the usual two-sided test $\phi^*(X) = 1\{|X| > z_{\alpha/2}\}$ is the only UMPU test up to almost sure equality.
+
+  
+  
+\item Show that for any $d>1$ and $\alpha\in(0,1)$, there exists no UMP or UMPU level-$\alpha$ test.
+
+{\bf Hint:} what would we do if we knew $\mu = (\theta,0,0,\ldots,0)$ for an unknown $\theta\in\RR$?
+
+
+
+
+\item Suppose we have a prior $\Lambda_1$ for the value that $\mu$ takes under the alternative; that is, $\mu \sim \Lambda_1$ if $H_1$ is true and $\mu = 0$ if $H_0$ is true. Define the average power as
+\[
+\int_{\RR^d} \EE_\mu [\phi(X)] \,d\Lambda_1(\mu).
+\]
+
+If $\Lambda_1 = N(\nu, \Sigma)$, with positive definite covariance matrix $\Sigma$, find the level-$\alpha$ test that maximizes the average power. Show that the acceptance region is an ellipse centered at $0$ if $\nu = 0$.
+
+
+
+\item \optional Suppose the prior $\Lambda_1$ (not necessarily multivariate Gaussian) is rotationally invariant, meaning $\Lambda_1(Q A) = \Lambda_1(A)$ where $A \subseteq \RR^d$, $Q$ is any rotation matrix and $QA = \{Qa:\; a\in A\}$. Show that the $\chi^2$ test that rejects for large $\|X\|^2$ maximizes the average power.
+  
+  
+\end{enumerate}
+
+{\bf Moral:} Choosing a test in higher dimensions requires us to think harder about how to compromise across different alternative directions, and Bayesian thinking can give us some guidance.
+\end{problem}
+
+
+
+
+\begin{problem}[$p$-value densities]
+\label{prob:pval-densities}
+
+Suppose $\cP$ is a family with monotone likelihood ratio in $T(X)$, and the distribution of $T(X)$ is continuous with common support for all $\theta$. Let $\phi_{\alpha}$ denote the UMP level-$\alpha$ test of $H_0:\theta\leq \theta_0$ vs. $H_0:\theta > \theta_0$ that rejects when $T(X)$ is large. Let $p(X)$ denote the resulting $p$-value. Show that $p(X)\sim \text{Unif}[0,1]$ if $\theta=\theta_0$, has non-increasing density on $[0,1]$ if $\theta>\theta_0$, and has non-decreasing density on $[0,1]$ if $\theta<\theta_0$.
+
+{\bf Note:} As always there is technically some ambiguity in how we could define the density, but the version we want is the derivative of the cdf. Feel free to work more informally and ignore such technical issues.
+
+
+\end{problem}
+
+\bibliography{biblio}
+\bibliographystyle{plainnat}
+
+
+
+\end{document}
