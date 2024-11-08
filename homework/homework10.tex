@@ -1,0 +1,304 @@
+\documentclass{article}
+
+\usepackage[margin=1.2in]{geometry}
+\usepackage{graphicx}
+\usepackage{amsmath,amssymb,amsthm,bm}
+\usepackage{latexsym,color,minipage-marginpar,caption,multirow,verbatim}
+\usepackage{enumerate}
+\usepackage[round]{natbib}
+\usepackage{times}
+\usepackage{booktabs}
+
+\newcommand{\cP}{\mathcal{P}}
+\newcommand{\cX}{\mathcal{X}}
+\newcommand{\cR}{\mathcal{R}}
+\newcommand{\cT}{\mathcal{T}}
+\newcommand{\cY}{\mathcal{Y}}
+\newcommand{\cQ}{\mathcal{Q}}
+
+\newcommand{\EE}{\mathbb{E}}
+\newcommand{\PP}{\mathbb{P}}
+\newcommand{\QQ}{\mathbb{Q}}
+\newcommand{\RR}{\mathbb{R}}
+\newcommand{\ZZ}{\mathbb{Z}}
+
+\newcommand{\Var}{\textnormal{Var}}
+\newcommand{\MSE}{\textnormal{MSE}}
+\newcommand{\toProb}{\overset{p}{\to}}
+\newcommand{\toPtheta}{\overset{{P_\theta}}{\to}}
+
+
+\DeclareMathOperator*{\argmax}{argmax}
+
+
+\newcommand{\simiid}{\overset{\text{i.i.d.}}{\sim}}
+\newcommand{\simind}{\overset{\text{ind.}}{\sim}}
+\newcommand{\ep}{\varepsilon}
+
+\definecolor{darkblue}{rgb}{0.2, 0.2, 0.5}
+
+\newenvironment{solution}{~\\\color{darkblue}{\bf Solution:~\\}}{}
+\newenvironment{ifsol}{\color{darkblue}}{}
+
+\newcommand{\optional}{{\bf Optional:} (Not graded, no extra points) }
+
+\theoremstyle{definition}
+\newtheorem{problem}{Problem}
+
+
+\begin{document}
+
+\title{Stats 210A, Fall 2024\\
+  Homework 10 \\
+  {\large {\bf Due on}: Friday, Nov. 15}}
+\date{}
+
+\maketitle
+
+\paragraph{Instructions:} See the standing homework instructions on the course web page
+
+
+\begin{problem}[James-Stein estimator with regression-based shrinkage]
+\label{prob:js-regression}
+
+Consider estimating $\theta \in \RR^n$ in the model $Y \sim N_n(\theta, \sigma^2 I_n)$. In the standard James-Stein estimator, we shrink all the estimates toward zero, but it might make more sense to shrink them towards the average value $\overline{Y}$ (as we explored in a previous problem) or towards some other value based on observed side information.
+
+Suppose that we have side information about each parameter $\theta_i$, represented by covariate vectors $x_1,\ldots,x_n \in \RR^d$. Assume the design matrix $X \in \RR^{n\times d}$, whose $i$th row is $x_i'$, has full column rank. Suppose that we expect $\theta_i$ is not too far from $x_i'\beta$ for some $\beta\in \RR^d$. But unlike the usual linear regression setup, we will not assume $\theta_i = x_i'\beta$ exactly, we just want to shrink our estimate toward $x_i'\beta$.
+
+\begin{enumerate}[(a)]
+
+\item Assume the error variance $\sigma^2 = 1$ is known. Find an estimator $\delta(Y)$ for $\theta$ that strictly dominates $\delta_0(Y) = Y$ whenever $n - d \geq 3$,
+\[
+\text{MSE}(\theta; \delta) < \text{MSE}(\theta; \delta_0), \quad \text{for all } \theta \in \RR^n,
+\]
+and for which $\text{MSE}(X\beta; \delta) = d + 2$, for any $\beta\in \RR^d$.
+
+In the special case of ``intercept-only'' regression ($d=1$ and $x_i=1$ for all $i$), your estimator should reduce to the version of the James-Stein estimator that shrinks toward $\overline{Y}$ (but you do not have to show this).
+
+{\bf Hint:} The problem will become easier after an appropriate change of basis; think about how the estimator operates on different subspaces.
+
+
+
+
+
+\item Continue to assume the error variance $\sigma^2 = 1$ is known. Suppose we are unsure of whether $\theta = X\beta$ exactly. Suggest an appropriate test of the hypothesis $H_0:\;\theta = X\beta$ vs $H_1:\; \theta \neq X\beta$, treating $\beta \in \RR^d$ as an unknown nuisance parameter.
+
+
+\item \optional Now suppose that the error variance $\sigma^2>0$ is unknown, but we have $r > 1$ replicates for each $i$; that is, we observe $Y_{i,k} \simind N(\theta_i, \sigma^2)$ for $i=1,\ldots,n$ and $k=1,\ldots,r$. Modify your test from the previous part for $H_0:\;\theta = X\beta$ vs $H_1:\; \theta \neq X\beta$.
+
+
+% 
+
+
+
+\end{enumerate}
+\end{problem}
+
+
+
+
+\begin{problem}[Confidence regions for regression]
+\label{prob:conf-reg-regression}
+
+Assume we observe $x_1,\ldots,x_n \in \RR$, which are not all identical (for at least one pair $i$ and $j$, $x_i\neq x_j$). We also observe
+\[
+Y_i = \beta_0 + \beta_1 x_i + \ep_i, \; \text{ for } \ep_i \simiid N(0,\sigma^2).
+\]
+$\beta_0,\beta_1\in \RR$ and $\sigma^2 > 0$ are unknown. Let $\bar{x}$ represent the mean value $\frac{1}{n}\sum_i x_i$.
+
+\begin{enumerate}[(a)]
+\item Give an explicit expression for the $t$-based confidence interval for $\beta_1$, in terms of a quantile of a Student's $t$ distribution with an appropriate number of degrees of freedom (feel free to break up the expression, for example by first giving an expression for $\hat\beta_1$ and then using $\hat\beta_1$ in your final expression).
+
+
+
+
+\item Define the OLS estimator $\hat\beta = \binom{\hat\beta_0}{\hat\beta_1}$. Show that $\hat\beta \sim N_2\left(\beta, \; \sigma^2(X'X)^{-1}\right)$, for the design matrix $X = [1_n, x]$. Apply this fact to find an $F$-test for the hypothesis $H_0:\;\beta=0$ vs $H_1:\;\beta \neq 0$.
+
+\item Invert your $F$-test to give a {\em confidence ellipse} for $\beta = \binom{\beta_0}{\beta_1}$.  It may be convenient to represent the set as an affine transformation of the unit ball in $\RR^2$:
+\[
+b + A \mathbb{B}_1(0) = \{b + Az:\; z\in \RR^2, \|z\| \leq 1\}, \quad \text{ for } b \in \RR^2, A \in \RR^{2\times 2}.
+\]
+Give explicit expressions for $b$ and $A$ in terms of a quantile of an appropriate $F$ distribution.
+
+
+
+
+
+\end{enumerate}
+\end{problem}
+
+\begin{problem}[Confidence bands for regression]
+\label{prob:conf-bands-regression}
+
+The setup for this problem is the same as for the previous problem only now we are interested in giving {\em confidence bands} for the regression line $f(x) = \beta_0 + \beta_1 x$. In this problem you do not need to give explicit expressions for everything, but you should be explicit enough that someone could calculate the bands based on your description.
+
+\begin{enumerate}[(a)]
+\item For a fixed value $x_0 \in \RR$ (not necessarily one of the observed $x_i$ values) give a $1-\alpha$ $t$-based confidence interval for $f(x_0) = \beta_0 + \beta_1 x_0$. That is, we want to find $C_1^P(x_0), C_2^P(x_0)$ such that
+\[
+\PP\left(C_1^P(x_0) \leq f(x_0) \leq C_2^P(x_0)\right) = 1-\alpha.
+\]
+For each $x_0$, the coverage should be exactly $1-\alpha$. The functions $C_1^P(x), C_2^P(x)$ that we get from performing this operation on all $x$ values give a {\em pointwise confidence band} for the function $f(x)$.
+
+
+
+\item Now give a {\em simultaneous confidence band} around $f(x) = \beta_0 + \beta_1 x$. That is, give $C_1^S(x), C_2^S(x)$ with
+\[
+\PP\left(C_1^S(x) \leq f(x) \leq C_2^S(x), \; \text{ for all } x\in\RR\right) \geq 1-\alpha,
+\]
+and show that your confidence band has this property.
+
+{\bf Hint:} If all we know is that $\beta$ is in the confidence ellipse from the previous problem, what can we deduce about $f(x)$?
+
+
+
+\item Download the data set in \texttt{hw10.csv} from the course web site and make a scatter plot of the data. Plot the OLS regression line as well as the two confidence bands. Describe what you see. What do the bands do as $x$ goes away from the data set, and why does this make sense?
+
+
+
+\item \optional Show that the coverage of the simultaneous confidence band is {\em exactly} $1-\alpha$, not just greater than or equal to $1-\alpha$.
+
+
+
+\end{enumerate}
+\end{problem}
+
+\begin{problem}[Precision-weighted average]
+\label{prob:prec-weights}
+
+ Suppose that we observe two independent samples $X_1,\ldots,X_n\simiid (\mu, \sigma^2)$ and $Y_1,\ldots,Y_m \simiid (\mu, \tau^2)$, with $n,m> 1$. The notation means that the expectation of a single $X_i$ or $Y_i$ is $\mu\in \RR$, and the variance is $\sigma^2>0$ for a single $X_i$ and $\tau^2>0$ for a single $Y_i$. All three parameters are unknown, but we are primarily interested in estimating the common expectation $\mu$.
+
+A natural estimator is to take a convex combination of the sample averages:
+\[
+\delta_\gamma(X,Y) = \gamma \overline X + (1-\gamma) \overline Y,
+\]
+for $\gamma \in [0,1]$.
+
+\begin{enumerate}[(a)]
+
+\item Show that the optimal (variance-minimizing) choice of $\gamma$ is
+\[
+\gamma^* = \frac{n\sigma^{-2}}{n\sigma^{-2}+m\tau^{-2}} = \frac{1}{1+\rho m/n},
+\]
+where $\rho = \sigma^2/\tau^2$. $\delta_{\gamma^*}$ is called the {\em precision-weighted average} because $n\sigma^{-2}$ and $m\tau^{-2}$ are the precisions (inverse variances) of $\overline{X}$ and $\overline{Y}$, respectively. Give the variance of $\delta_{\gamma^*}(X,Y)$.
+
+
+
+\item Since $\sigma^2$ and $\tau^2$ are unknown, we must estimate them. Let $S_X^2$ and $S_Y^2$ denote the usual sample variances for the two samples. Show that $\hat\rho = S_X^2/S_Y^2$ is a consistent estimator for $\rho$ as $m,n \to \infty$.
+
+{\bf Hint:} It may help to recall the identity $(n-1)S_X^2 = \sum_i X_i^2 - n\overline{X}^2$.
+
+{\bf Note:} If you are wondering what it means for both $m$ and $n$ to go to $\infty$, you may assume that we have a sequence of problems indexed by $k=1,2,\ldots$ and $\min \{m_k,n_k\} \to \infty$ as $k\to\infty$. You should feel free to work more informally than this.
+
+
+
+\item Let $\hat\gamma = 1/(1+\hat\rho m/n)$ and assume that $m,n\to\infty$ with $m/n \to c \in (0,\infty)$. Show that the adaptive estimator
+\[
+\delta_{\hat\gamma}(X,Y) = \hat\gamma \overline X + (1-\hat\gamma) \overline Y
+\]
+has an asymptotic normal distribution as $n,m\to \infty$, and give its asymptotic distribution after appropriately centering and scaling it. Compare the asymptotic distribution of the adaptive estimator $\delta_{\hat\gamma}(X,Y)$ to the asymptotic distribution of the oracle estimator $\delta_{\gamma^*}(X,Y)$.
+
+{\bf Hint:} Start by considering the asymptotic distribution of $(\overline X, \overline Y)$. You may use without proof the result that if $Z_n \Rightarrow P$ and $W_n \Rightarrow Q$, and $Z_n$ and $W_n$ are independent for each $n$, then $(Z_n,W_n) \to P \times Q$ (meaning the product measure between the distributions $P$ and $Q$).
+
+{\bf Note:} Again, if we want to set up a formal sequence of problems in which the distribution converges, we could assume the ratio $c_k = m_k/n_k$ is converging to $c \in (0,\infty)$, in addition to our previous assumption that $\min \{m_k,n_k\}\to\infty$. As before, you can also work more informally.
+
+
+
+\end{enumerate}
+
+\end{problem}
+
+
+% \begin{problem}[Estimating the inverse of a mean]
+% \label{prob:est-inv-mean}
+
+
+% \begin{enumerate}[(a)]
+% \item Suppose that $X_1,\ldots,X_n\simiid N(\mu,\sigma^2)$, and that we are interested in
+% estimating the quantity $1/\mu$.  In order to do so, we use the
+% estimator $\delta(X)=1/\overline{X}_n$ where $\overline{X}_n = \frac{1}{n}
+% \sum_{i=1}^n X_i$ is the sample mean. Assume $\mu \neq 0$. Show that $\delta$ is asymptotically normal, and find its asymptotic distribution (after appropriately centering and scaling it).
+
+% 
+
+% \item Show that the expectation $\EE|1/\overline{X}_n| = \infty$ for every $n$.  Why does this not contradict the result of part (a)?
+
+% 
+
+% \item Simulate to find the distribution of $1/\overline{X}_n$ for $n = 10, 100, 10^4$ and $\theta = 0.1, 1, 10$. For each setting of the parameters, plot a histogram of the estimator and overlay its Gaussian approximation. When the Gaussian approximation is not good, what is going wrong? Is the sample size a reliable indicator of whether we should trust an asymptotic approximation?
+
+% {\bf Hint:} If you are using R, the functions \texttt{hist} (with argument \texttt{freq = FALSE} to get a density histogram), \texttt{curve}, and \texttt{dnorm} will come in handy. Also, I recommend manually setting the \texttt{breaks} and \texttt{xlim} arguments in \texttt{hist} to stop enormous values from making your histogram uninformative: $\mu \pm 4\sigma$ is a reasonable range of values to plot, where $\mu$ and $\sigma^2$ are the mean and variance of the Gaussian approximation.
+
+% 
+
+% \end{enumerate}
+% \end{problem}
+
+
+
+
+
+\begin{problem}[Probabilistic big-O notation]
+\label{prob:bigO}
+
+Let $X_1,X_2,\ldots$ denote a sequence of random vectors (with $\|X_n\| <\infty$ almost surely for each $n$). We say the sequence is {\em bounded in probability} (or sometimes {\em tight}) if for every $\ep>0$ there exists a constant $M_\ep > 0$ for which
+\[
+\PP(\|X_n\| > M_\ep) < \ep, \quad \forall n.
+\]
+
+Informally, there is ``no mass escaping to infinity'' as $n$ grows. Like regular big-O notation, these symbols can help to make rigorous asymptotic proofs look clean and intuitive.
+
+For a fixed sequence $a_n$, we say $X_n = o_p(a_n)$ if $X_n/a_n \toProb 0$ as $n\to \infty$, and $X_n = O_p(a_n)$ if the sequence $(X_n/a_n)_{n\geq 1}$ is bounded in probability.
+
+Prove the following facts for $X_n, Y_n \in \RR^d$:
+
+\begin{enumerate}[(a)]
+%%%
+\item If $X_n \Rightarrow X$ for any random vector $X$, then $X_n = O_p(1)$.
+
+
+\item If $X_n = o_p(a_n)$ then $X_n = O_p(a_n)$.
+
+
+
+% \item {\bf (For next year)} If $a_n/b_n \to 0$ and $X_n = O_p(a_n)$, then $X_n = o_p(b_n)$.
+
+% 
+
+
+% \item {\bf (For next year)} If $X_n = O_p(a_n)$ then $X^k = O_p(a_n^k)$, for any power $k \in \RR$.
+
+% 
+
+%\item For next year: If $X_n = O_p(a_n)$ and $Y_n = O_p(b_n)$ then $X_n + Y_n = O_p(\max\{a_n,b_n\})$.
+
+
+\item If $X_n = O_p(a_n)$ and $Y_n = o_p(b_n)$, then $X_n'Y_n = o_p(a_n b_n)$. If $X_n = O_p(a_n)$ and $Y_n = O_p(b_n)$, then $X_n'Y_n = O_p(a_n b_n)$.
+
+
+
+\item If $X_n = O_p(1)$ and $g:\; \RR^d \to \RR^k$ is continuous then $g(X_n) = O_p(1)$.
+
+
+
+\item For $d=1$, if $X_n = O_p(a_n)$ with $a_n \to 0$ and $g:\; \RR \to \RR$ is continuously differentiable with $g(0) = \dot{g}(0) = 0$, then $g(X_n) = o_p(a_n)$. Show further that if $g$ is twice continuously differentiable then $g(X_n) = O_p(a_n^2)$. ({\bf Hint:} Use the mean value theorem and apply a previous part of this problem.)
+
+
+
+\item For $d=1$, if $\text{Var}(X_n) = a_n^2 < \infty$ and $\EE X_n = 0$ then $X_n = O_p(a_n)$. ({\bf Hint:} Use Chebyshev's inequality.)
+
+
+
+\item If $\text{Var}(X_n) = a_n^2 < \infty$, is it impossible to have $X_n = o_p(a_n)$? Prove or give a counterexample.
+
+
+
+\end{enumerate}
+\end{problem}
+
+
+\bibliography{biblio}
+\bibliographystyle{plainnat}
+
+
+
+\end{document}
