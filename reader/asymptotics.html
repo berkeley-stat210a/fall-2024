@@ -21,6 +21,40 @@ ul.task-list li input[type="checkbox"] {
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
 }
+/* CSS for syntax highlighting */
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
 </style>
 
 
@@ -329,6 +363,7 @@ gtag('config', 'G-B8G2041HSB', { 'anonymize_ip': true});
 <section id="introduction-to-asymptotic-theory" class="level2" data-number="1">
 <h2 data-number="1" class="anchored" data-anchor-id="introduction-to-asymptotic-theory"><span class="header-section-number">1</span> Introduction to Asymptotic Theory</h2>
 <p>So far, everything we have seen in this class has dealt with the exact distributions of finite data sets. In many cases we have needed to exploit special properties of the model <span class="math inline">\(\cP\)</span> (e.g., that it has a complete sufficient statistic, it is an exponential family, it is a multivariate Gaussian distribution, etc.) to make exact calculations easier. In generic models, however, the tools we have learned so far may fail us.</p>
+<p>For generic models, exact calculations may be intractable or impossible. However, we may be able to approximate our problem with a simpler problem in which calculations are easy. Typically, we approximate by Gaussian by taking the limit as observations <span class="math inline">\(n \to \infty\)</span>. This is only interesting if the approximation is good for reasonable sample sizes, but fortunately it very often is.</p>
 <section id="example-logistic-regression" class="level3" data-number="1.1">
 <h3 data-number="1.1" class="anchored" data-anchor-id="example-logistic-regression"><span class="header-section-number">1.1</span> Example: Logistic regression</h3>
 <p>To take a specific example, suppose that we modify the linear regression example from the last lecture to allow for a binary rather than a continuous response. We retain the feature vector <span class="math inline">\(x_i \in \RR^d\)</span> and regression coefficients <span class="math inline">\(\beta \in \RR^d\)</span>, but instead of observing outcome <span class="math inline">\(y_i \simind N(\beta'x_i, \sigma^2)\)</span>, we now observe <span class="math inline">\(y_i \simind \text{Bern}(\mu(\beta'x_i))\)</span>, where</p>
@@ -344,15 +379,58 @@ p_\beta(y \mid X)  &amp;= \prod_{i=1}^n \mu_i^{y_i}(1-\mu_i)^{1-y_i}\\
 \end{aligned}
 \]</span> a <span class="math inline">\(d\)</span>-parameter exponential family on <span class="math inline">\(\mathcal{Y} = \{0,1\}^n\)</span> with natural parameter <span class="math inline">\(\beta\)</span>, complete sufficient statistic <span class="math inline">\(X'y\)</span>, and normalizing constant <span class="math inline">\(A(\beta; X) = - \sum_i \log (1+e^{\beta'x_i})\)</span>. Note <span class="math inline">\(A\)</span> depends only on <span class="math inline">\(\beta\)</span> and the design matrix <span class="math inline">\(X\)</span>, which we typically treat as fixed (possibly after conditioning on it, if it is “really” random).</p>
 <p>If we want to estimate <span class="math inline">\(\beta\)</span>, we might hope for a UMVU estimator. Unfortunately, no unbiased estimator could possibly exist: any estimator <span class="math inline">\(\hat\beta_j\)</span> would have some largest value that it can take on the finite sample space <span class="math inline">\(\mathcal{Y}\)</span>, and its expectation can never be larger than that value, even though <span class="math inline">\(\beta_j\)</span> can range over the entire real line. We could also come up with a Bayes estimator, but we would have to specify a joint distribution over the parameter vector <span class="math inline">\(\beta \in \RR^d\)</span>, which we might not wish to do.</p>
-<p>Likewise, we might want to test a hypothesis like <span class="math inline">\(H_0:\;\beta_j = 0\)</span> vs <span class="math inline">\(H_1:\;\beta_j \neq 0\)</span>. Again, we might think we are in good shape due to the exponential family form: all we have to do is condition on <span class="math inline">\(X_{-j}'y\)</span> and then reject for conditionally large values of <span class="math inline">\(X_j'y\)</span>. Unfortunately, however, this is also typically a nonstarter: if one of the features <span class="math inline">\(X_k\)</span> takes continuous values, then the entire vector <span class="math inline">\(y\)</span> can typically be recovered from observing only <span class="math inline">\(X_k'y = \sum_{i:y_i=1} x_{i,k}\)</span>. In that case, the only unbiased test is the trivial constant test that ignores the response vector <span class="math inline">\(y\)</span> and rejects with probability <span class="math inline">\(\alpha\)</span>.</p>
+<p>Likewise, we might want to test a hypothesis like <span class="math inline">\(H_0:\;\beta_j = 0\)</span> vs <span class="math inline">\(H_1:\;\beta_j \neq 0\)</span>. Again, we might think we are in good shape due to the exponential family form: all we have to do is condition on <span class="math inline">\(X_{-j}'y\)</span> and then reject for conditionally large values of <span class="math inline">\(X_j'y\)</span>. Unfortunately, however, this is also typically a nonstarter: if one of the features <span class="math inline">\(X_k\)</span> takes continuous values, then the entire vector <span class="math inline">\(y\)</span> can be recovered from observing only <span class="math inline">\(X_k'y = \sum_{i:y_i=1} x_{i,k}\)</span> if all <span class="math inline">\(2^n\)</span> such partial sums are distinct. In that case, the only unbiased test is the trivial constant test that ignores the response vector <span class="math inline">\(y\)</span> and rejects with probability <span class="math inline">\(\alpha\)</span>.</p>
 <p>Fortunately, if <span class="math inline">\(n\)</span> is “large” then we can apply general-purpose asymptotic methods to come up with very good estimators, tests, or confidence intervals in this problem. Define the <em>maximum likelihood estimator</em> <span class="math display">\[
 \begin{aligned}
-\hat\beta_{\text{MLE}} &amp;= \argmax_{\beta \in \RR^d} \log p_\beta(y \mid X)\\
+\hat\beta_{\text{MLE}} &amp;= \argmax_{\beta \in \RR^d} p_\beta(y \mid X)\\
 &amp;= \argmax_{\beta \in \RR^d} \beta'X'y - A(\beta; X),
 \end{aligned}
-\]</span></p>
-<p>For generic models, exact calculations may be intractable or impossible. However, we may be able to approximate our problem with a simpler problem in which calculations are easy.</p>
-<p>Typically, we approximate by Gaussian by taking the limit as observations <span class="math inline">\(n \to \infty\)</span>. But this is only interesting if the approximation is good for reasonable sample sizes.</p>
+\]</span> which can be maximized efficiently because the log-likelihood is concave in <span class="math inline">\(\beta\)</span>.</p>
+<p>We’ll show in a future lecture that, under relatively mild conditions, we will have <span class="math display">\[
+\hat\beta_{\text{MLE}} \approx N_d(\beta, J(\beta)^{-1}),
+\]</span> for the Fisher information matrix <span class="math display">\[
+J(\beta) = \Var_{\beta}(\nabla\ell(\beta; y, X))
+= -\EE_\beta \nabla^2\ell(\beta; y, X)
+\]</span> That is, if <span class="math inline">\(n\)</span> is large then <span class="math inline">\(\hat\beta_{\text{MLE}}\)</span> approximately follows a Gaussian distribution that is not only approximately unbiased, but its variance-covariance matrix <span class="math inline">\(\Sigma(\beta) = J(\beta)^{-1}\)</span> matches the Cramèr–Rao lower bound.</p>
+<p>What is more, the observed value of minus the Hessian matrix gives a good approximation to its expectation, the Fisher information matrix at the true <span class="math inline">\(\beta\)</span>: <span class="math display">\[
+\widehat{\Sigma}(y,X) = (-\nabla^2\ell(\hat\beta_{\text{MLE}}; y, X))^{-1} \approx \Sigma(\beta) = J(\beta)^{-1}
+\]</span> For a single coefficient <span class="math inline">\(\beta_j\)</span> we can say <span class="math inline">\(\hat\beta_j - \beta_j \approx N(0, \sigma^2_{j}(\beta))\)</span>, for <span class="math inline">\(\sigma^2_j(\beta) = \Sigma_{jj}(\beta))\)</span>, or <span class="math display">\[
+Z_j = \frac{\hat\beta_j - \beta_j}{\hat\sigma_j} \approx N(0,1), \quad \text{ for } \hat\sigma^2_j = \widehat\Sigma_{jj},
+\]</span> leading to natural tests for hypotheses like <span class="math inline">\(H_0:\;\beta_j = 0\)</span> or the confidence interval <span class="math inline">\(\hat\beta_j \pm z_{\alpha/2} \sqrt{\hat\Sigma_{jj}}\)</span> for <span class="math inline">\(\beta_j\)</span>.</p>
+<p>These results do not necessarily require <span class="math inline">\(n\)</span> to be huge; for example, we can simulate the distribution of <span class="math inline">\(\hat\beta_1\)</span> in the logistic regression model <span class="math inline">\(\eta_i = \beta_0 + \beta_1 x_i\)</span> with an intercept and a single (uniformly distributed) covariate. For <span class="math inline">\(\beta_0 = -2\)</span>, <span class="math inline">\(\beta_1 = 4\)</span>, and <span class="math inline">\(n = 100\)</span>, the normal approximation appears reasonably good, though it depends on the parameters.</p>
+<div class="cell" data-hash="asymptotics_cache/html/unnamed-chunk-1_6ffa547ccbcb2169baae41048ab46ce2">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">12345</span>)</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>n <span class="ot">&lt;-</span> <span class="dv">100</span></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>beta <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="sc">-</span><span class="dv">2</span>,<span class="dv">4</span>)</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>B <span class="ot">&lt;-</span> <span class="fl">1E4</span></span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>beta.hat <span class="ot">&lt;-</span> <span class="fu">matrix</span>(<span class="cn">NA</span>, <span class="at">nrow=</span>B, <span class="at">ncol=</span><span class="dv">2</span>)</span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>sigma.hat <span class="ot">&lt;-</span> <span class="fu">matrix</span>(<span class="cn">NA</span>, <span class="at">nrow=</span>B, <span class="at">ncol=</span><span class="dv">2</span>)</span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> (b <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span>B) {</span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>  x <span class="ot">&lt;-</span> <span class="fu">runif</span>(n)</span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>  eta <span class="ot">&lt;-</span> beta[<span class="dv">1</span>] <span class="sc">+</span> x <span class="sc">*</span> beta[<span class="dv">2</span>]</span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>  mu <span class="ot">&lt;-</span> <span class="fu">exp</span>(eta) <span class="sc">/</span> (<span class="dv">1</span><span class="sc">+</span><span class="fu">exp</span>(eta))</span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a>  y <span class="ot">&lt;-</span> <span class="dv">1</span><span class="sc">*</span>(<span class="fu">runif</span>(n) <span class="sc">&lt;</span> mu)</span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a>  mod <span class="ot">&lt;-</span> <span class="fu">glm</span>(y <span class="sc">~</span> x, <span class="at">family=</span>binomial)</span>
+<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a>  <span class="do">## Estimate is MLE</span></span>
+<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a>  beta.hat[b,] <span class="ot">&lt;-</span> <span class="fu">coef</span>(mod)</span>
+<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a>  <span class="do">## Std. error estimate is sqrt(-diag(Hessian) at MLE)</span></span>
+<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a>  sigma.hat[b,] <span class="ot">&lt;-</span> <span class="fu">coef</span>(<span class="fu">summary</span>(mod))[,<span class="st">"Std. Error"</span>]</span>
+<span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb1-19"><a href="#cb1-19" aria-hidden="true" tabindex="-1"></a><span class="do">## "True" Fisher information</span></span>
+<span id="cb1-20"><a href="#cb1-20" aria-hidden="true" tabindex="-1"></a>sigma <span class="ot">&lt;-</span> <span class="fu">sqrt</span>(<span class="fu">colMeans</span>(sigma.hat<span class="sc">^</span><span class="dv">2</span>))</span>
+<span id="cb1-21"><a href="#cb1-21" aria-hidden="true" tabindex="-1"></a><span class="fu">hist</span>(beta.hat[,<span class="dv">2</span>], <span class="at">freq=</span><span class="cn">FALSE</span>, <span class="at">breaks=</span><span class="dv">50</span>, <span class="at">main =</span> <span class="fu">expression</span>(<span class="fu">paste</span>(<span class="st">"Simulated distribution of "</span>, <span class="fu">hat</span>(beta)[<span class="dv">1</span>])), <span class="at">xlab=</span><span class="fu">expression</span>(<span class="fu">hat</span>(beta)[<span class="dv">1</span>]))</span>
+<span id="cb1-22"><a href="#cb1-22" aria-hidden="true" tabindex="-1"></a><span class="fu">curve</span>(<span class="fu">dnorm</span>(x, <span class="at">mean =</span> beta[<span class="dv">2</span>], <span class="at">sd =</span> sigma[<span class="dv">2</span>]), <span class="at">add=</span><span class="cn">TRUE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="asymptotics_files/figure-html/unnamed-chunk-1-1.png" class="img-fluid" width="672"></p>
+</div>
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">hist</span>((beta.hat[,<span class="dv">2</span>] <span class="sc">-</span> beta[<span class="dv">2</span>])<span class="sc">/</span>sigma.hat[,<span class="dv">2</span>], <span class="at">freq=</span><span class="cn">FALSE</span>, <span class="at">breaks=</span><span class="dv">30</span>, <span class="at">main =</span> <span class="fu">expression</span>(<span class="fu">paste</span>(<span class="st">"Simulated distribution of "</span>, Z[<span class="dv">1</span>] <span class="sc">==</span> (<span class="fu">hat</span>(beta)[<span class="dv">1</span>]<span class="sc">-</span>beta[<span class="dv">1</span>])<span class="sc">/</span><span class="fu">hat</span>(sigma)[<span class="dv">1</span>])), <span class="at">xlab=</span><span class="fu">expression</span>(Z[<span class="dv">1</span>]))</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="fu">curve</span>(<span class="fu">dnorm</span>(x), <span class="at">add=</span><span class="cn">TRUE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="asymptotics_files/figure-html/unnamed-chunk-1-2.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+<p>These results about the MLE apply far beyond logistic regression, to a wide variety of other models. To begin to prove them, however, we will need to be more precise about what we mean by the distribution of <span class="math inline">\(\hat\beta\)</span> being approximately normal, or by the estimator <span class="math inline">\(\hat\Sigma\)</span> being approximately equal to <span class="math inline">\(\Sigma(\beta)\)</span>.</p>
 </section>
 </section>
 <section id="convergence" class="level2" data-number="2">

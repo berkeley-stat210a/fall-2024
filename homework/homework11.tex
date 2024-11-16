@@ -1,0 +1,254 @@
+\documentclass{article}
+
+\usepackage[margin=1.2in]{geometry}
+\usepackage{graphicx}
+\usepackage{amsmath,amssymb,amsthm,bm}
+\usepackage{latexsym,color,minipage-marginpar,caption,multirow,verbatim}
+\usepackage{enumerate}
+\usepackage[round]{natbib}
+\usepackage{times}
+\usepackage{booktabs}
+
+\newcommand{\cP}{\mathcal{P}}
+\newcommand{\cX}{\mathcal{X}}
+\newcommand{\cR}{\mathcal{R}}
+\newcommand{\cT}{\mathcal{T}}
+\newcommand{\cY}{\mathcal{Y}}
+\newcommand{\cQ}{\mathcal{Q}}
+
+\newcommand{\EE}{\mathbb{E}}
+\newcommand{\PP}{\mathbb{P}}
+\newcommand{\QQ}{\mathbb{Q}}
+\newcommand{\RR}{\mathbb{R}}
+\newcommand{\ZZ}{\mathbb{Z}}
+
+\newcommand{\Var}{\textnormal{Var}}
+\newcommand{\MSE}{\textnormal{MSE}}
+\newcommand{\toProb}{\overset{p}{\to}}
+\newcommand{\toPtheta}{\overset{{P_\theta}}{\to}}
+
+
+\DeclareMathOperator*{\argmax}{argmax}
+
+
+\newcommand{\simiid}{\overset{\text{i.i.d.}}{\sim}}
+\newcommand{\simind}{\overset{\text{ind.}}{\sim}}
+\newcommand{\ep}{\varepsilon}
+
+\definecolor{darkblue}{rgb}{0.2, 0.2, 0.5}
+
+\newenvironment{solution}{~\\\color{darkblue}{\bf Solution:~\\}}{}
+\newenvironment{ifsol}{\color{darkblue}}{}
+
+\newcommand{\optional}{{\bf Optional:} (Not graded, no extra points) }
+
+\theoremstyle{definition}
+\newtheorem{problem}{Problem}
+
+
+\begin{document}
+
+\title{Stats 210A, Fall 2024\\
+  Homework 10 \\
+  {\large {\bf Due on}: Friday, Nov. 22}}
+\date{}
+
+\maketitle
+
+\paragraph{Instructions:} See the standing homework instructions on the course web page
+
+
+\begin{problem}[Some Maximum Likelihood Estimators]
+
+Find the MLE for each model below, and find its asymptotic distribution. You do not need to check the conditions for convergence theorems; just calculate assuming they are in force.
+
+\begin{enumerate}[(a)]
+\item Laplace: $X_1,\ldots,X_n \simiid \frac{1}{2}e^{-|x-\theta|}$.
+
+  {\bf Note:} although the log-likelihood is non-differentiable at one point, we can still use the Fisher information as defined by $J_1(\theta) = \Var_\theta[\dot{\ell}_1(\theta;X_i)]$ to get the asymptotic distribution; you may assume this without proof. You may assume $n$ is odd.
+
+
+
+\item Binomial: $X_1,\ldots,X_n \simiid \text{Binom}(m,\theta)$. Find the MLE for $\theta$ and for the canonical parameter $\eta = \log\frac{\theta}{1-\theta}$.
+
+
+
+\item Gaussian: $X_1,\ldots,X_n \simiid N(\theta,\sigma^2)$. Find (i) the MLE for $\theta$ if $\sigma^2$ is known, (ii) the MLE for $\sigma^2$ if $\theta$ is known, and (iii) the MLE for $(\theta,\sigma^2)$ if neither is known.
+
+
+
+
+\end{enumerate}
+
+
+
+\end{problem}
+
+
+
+\begin{problem}[Limiting distribution of $U$-statistics]
+
+Suppose $X_{1}, \ldots, X_{n} \simiid P$ in some sample space $\cX$. $U_{n} = U_{n}(X_{1}, \ldots, X_{n})$ is called a rank-2 $U$-statistic if
+\[U_{n} = \frac{1}{n(n - 1)}\sum_{i=1}^{n}\sum_{j\neq i}h(X_{i}, X_{j})\]
+where $h$ is a symmetric function, i.e. $h(x_{1}, x_{2}) = h(x_{2}, x_{1})$ for any $x_{1}, x_{2}\in\cX$.
+
+In this problem, we denote $\theta = \EE h(X_{1}, X_{2})$ and assume that $\EE h(X_{1}, X_{2})^{2} < \infty$. Note that $U_n$ is the nonparametric UMVU estimator of $\theta$.
+
+Perhaps surprisingly, we can derive the asymptotic distribution of $U_n$ in a relatively small number of steps using a technique called {\em H\'{a}jek projection} where we approximate it by an additive function of the independent $X_i$ variables. We walk through the proof below.
+
+\begin{enumerate}[(a)]
+\item Define $g(x) = \EE h(x, X_2) - \theta = \int h(x,u)\,d P(u) - \theta$. Show that, for all $i$,
+\[
+\EE g(X_i) = 0, \quad \text{ and } \;\;\Var(g(X_i)) < \infty.
+\]
+({\bf Note:} $g$ is a specific function from $\cX$ to $\RR$. It is not a rule for naively substituting symbols into expressions. In particular, note that $g(X_i)$, a random variable, is not the same as the deterministic expression $\EE h(X_i, X_2)-\theta$.)
+
+
+
+
+\item Define $\widehat{U}_{n} = \theta + \frac{2}{n}\sum_{i=1}^{n}g(X_{i})$. Show that $\EE[(U_n-\widehat{U}_n)f(X_i)]=0$ for any $i$ and any measurable function $f(X_i)$ with $\EE[f(X_i)^2] < \infty$.
+
+({\bf Hint:} Condition on $X_i$)
+
+
+
+\item Show that ${\sqrt{n}(U_{n} - \widehat{U}_{n})\toProb 0}$ as $n\to\infty$. (Hint: show that $U_n$ and $\widehat{U}_n$ have the same asymptotic variance, and then apply part (b)).
+
+  
+
+
+
+\item Conclude that $\sqrt{n}(U_{n} - \theta)\Rightarrow N(0, 4\zeta_{1})$, where $\zeta_{1} = \Var(g(X_{1}))$.
+
+
+
+
+\item Assume that $\cX = \RR$ with $\EE X_i^4 <\infty$. Express the sample variance $S_{n}^{2} = \frac{1}{n-1}\sum_{i=1}^{n}(X_{i} - \overline{X})^{2}$ as a rank-2 U-statistic and use the above results to derive its asymptotic distribution.
+
+
+\end{enumerate}
+
+({\bf Note:} a similar result holds in general for rank-$r$ $U$-statistics if we set $\widehat{U}_n= \theta + \frac{r}{n}\sum_i g(X_i)$ where ${g(x) = \EE[h(x,X_2,\ldots,X_r)]-\theta}$. )
+
+{\bf Moral:} If $P^n$ is the distribution of $(X_1,\ldots,X_n)$ then it is easy to check that the set of all square-integrable random variables of the form $f(X_1,\ldots,X_n)$ (where $f:\; \cX^n \to \RR$ is measurable) forms a vector space over $\RR$, which we call $L^2(P^n)$, where we can define an inner product as
+\[
+\langle f(X), g(X) \rangle_{L^2} = \EE[ f(X)g(X)] \leq \sqrt{\EE[f(X)^2] \EE[g(X)^2]} < \infty.
+\]
+
+Moreover, the subset of those random variables that can be written as $\sum_i f_i(X_i)$, where each $f_i$ is measurable, forms a subspace. Part (b) establishes that the simpler random variable $\widehat{U}_n$ is the {\em projection} of $U_n$ onto this subspace, and part (c) establishes that $U_n$ is asymptotically very close to its projection.
+\end{problem}
+
+
+\begin{problem}[Score test with nuisance parameters]
+Consider a testing problem with $X_1,\ldots,X_n \simiid p_{\theta,\zeta}(x)$ with parameter of interest $\theta \in \RR$ and nuisance parameter $\zeta\in \RR$. That is, we are testing $H_0:\theta = \theta_0$ vs. $H_1:\; \theta \neq \theta_0$, and $\zeta$ is unknown; let $\zeta_0$ denote its true value. Then there is a version of the score test where we plug in an estimator for $\zeta$, but we must use a corrected version of the variance.
+
+Let $\hat\zeta_0$ denote the maximum likelihood estimator of $\zeta$ under the null:
+\[
+\hat\zeta_0(\theta_0) = \arg\max_{\zeta\in\RR} \;\;\ell(\theta_0,\zeta; X).
+\]
+Assume $\hat\zeta_0$ is consistent under the null hypothesis.
+
+Let $J(\theta,\zeta)$ denote the full-sample Fisher Information (omitting the usual $n$ subscript), and assume it is continuous and positive-definite everywhere.
+
+\begin{enumerate}[(a)]
+\item Use Taylor expansions informally to show that, for large $n$,
+\[
+%\frac{\partial}{\partial\theta} \ell(\theta,\zeta)\big|_{\theta_0,\hat\zeta_0}
+\frac{\partial}{\partial\theta} \ell(\theta_0,\hat\zeta_0)
+\approx \frac{\partial}{\partial\theta}\ell(\theta_0,\zeta_0)
+- \frac{\frac{\partial^2}{\partial\theta\partial\zeta} \ell(\theta_0,\zeta_0)}
+{\frac{\partial^2}{\partial\zeta^2} \ell(\theta_0,\zeta_0)} \;\frac{\partial}{\partial\zeta} \ell(\theta_0,\zeta_0).
+\]
+(Note: the LHS should be read as $[\frac{\partial}{\partial\theta} \ell(\theta,\zeta)]\big|_{\theta_0,\hat\zeta_0}$, and {\bf not} $\frac{d}{d\theta_0} [\ell(\theta_0,\hat\zeta_0(\theta_0))]$).
+
+
+
+
+\item Using part (a), conclude that
+\[
+\left(J_{11} - \frac{J_{12}^2}{J_{22}}\right)^{-1/2}
+\frac{\partial}{\partial\theta} \ell(\theta_0,\hat\zeta_0) \Rightarrow N(0,1) \quad \text{ as } n \to\infty
+\]
+where $J = J(\theta_0,\hat\zeta_0)$. Compare this to the score test statistic we would use if $\zeta_0$ were known rather than estimated. (Note: you may assume without proof that the approximation error in part (a) is negligible; i.e. you may take the ``$\approx$'' as an exact equality).
+
+
+
+\end{enumerate}
+
+{\bf Moral:} The score test can be carried out with nuisance parameters, but the fact that we estimate the nuisance parameter affects the distribution of the test statistic in a way that we need to take into account.
+\end{problem}
+
+\begin{problem}[Poisson score test]
+Suppose that for $i=1,\ldots,x_n$ we observe a real covariate $x_i \in \RR$ (fixed and known) and a Poisson response $Y_i \sim \text{Pois}(\lambda_i)$. We assume that $\lambda_i = \alpha + \beta x_i$, with the restriction that $\lambda_i \geq 0$ for all $i$, but with $\alpha, \beta \in \RR$ otherwise unrestricted. Assume that
+\[
+\lim_{n \to \infty} \frac{\sum_{i=1}^n |x_i - \bar{x}_n|^3}{\left(\sum_{i=1}^n (x_i-\bar{x}_n)^2\right)^{3/2}} = 0,
+\]
+where $\bar{x}_n = n^{-1}\sum_{i=1}^n x_i$. We observe the first $n$ pairs $(x_i,y_i)$ and our goal is to test the hypothesis $H_0:\; \beta = 0$ vs. $H_1:\; \beta > 0$. Assume that there are at least 3 distinct values represented among $x_1,\ldots,x_n$.
+
+\begin{enumerate}[(a)]
+\item Show that this model is a curved exponential family.
+
+
+
+\item Derive the score test statistic for $H_0$ vs $H_1$. Give the test statistic and asymptotic rejection cutoff.
+
+
+
+
+\item Show that your test statistic is indeed asymptotically normally distributed, and find an asymptotically valid rejection cutoff.
+
+{\bf Hint}: It may help to use the {\em Lyapunov CLT}, which applies to sums of independent random variables that are  not necessarily identically distributed: Suppose $Z_1,Z_2,\ldots$ is a sequence of random variables with $Z_i \sim (\mu_i, \sigma_i^2)$, for $\sigma_i^2 < \infty$. Define $s_n^2 = \sum_{i=1}^n \sigma_i^2$. If for some $\delta > 0$, we have
+\[
+\lim_{n \to \infty} \frac{1}{s_n^{2+\delta}} \sum_{i=1}^n \EE\left[|Z_i - \mu_i|^{2+\delta}\right] = 0,
+\]
+then $s_n^{-1}\sum_{i=1}^n (Z_i - \mu_i) \Rightarrow N(0,1)$.
+
+{\bf Hint}: It may also help to start by assuming $\bar{x} = 0$, and then generalize your result.
+
+
+
+
+\item Suppose $n$ is small, so we don't want to rely on the asymptotic normality. Explain how we could find a finite-sample exact conditional cutoff for the score test from part (b) (it is not necessary to give a closed form for the test, or to prove any optimality property).
+
+
+\end{enumerate}
+\end{problem}
+
+\begin{problem}[Super-Efficient Estimator]
+
+Let $X_1,\ldots,X_n \simiid N(\theta,1)$ and consider estimating $\theta$ via:
+\[
+\delta_n(X) = \overline{X}_n 1\{|\overline{X}_n| > a_n\},
+\]
+where $a_n \to 0$ but $a_n\sqrt{n} \to \infty$ as $n \to \infty$ (for example, $a_n = n^{-1/4}$).
+
+\begin{enumerate}[(a)]
+\item Show that $\delta_n$ has the same asymptotic distribution as $\overline X_n$ when $\theta \neq 0$, but that $\sqrt{n}(\delta_n-0)\toProb 0$ if $\theta = 0$.
+
+
+
+\item Show that, pointwise in $\theta$, as $n\to\infty$,
+\[
+n\,\text{MSE}(\delta_n;\theta) \to 1\{\theta\neq 0\},
+\]
+but that the convergence is not uniform in $\theta$; in fact,
+\[
+\sup_{\theta\in\RR}\;\; n\,\text{MSE}(\delta_n;\theta) \rightarrow \infty.
+\]
+({\bf Note}: this is an example of a situation where it is incorrect to exchange a limit with a supremum.)
+
+
+
+\end{enumerate}
+
+{\bf Moral:} The sense in which asymptotically efficient estimators are ``optimal'' is not easy to define, and it isn't obvious how we should compare the asymptotic behavior of different estimators. In this example it would appear initially that the super-efficient estimator renders the sample mean inadmissible. But this is only true if we look at the pointwise limit for fixed $\theta$; at any $n$ there are some values of $\theta$ for which the estimator is performing very badly, and this gets worse and worse as $n$ gets larger.
+
+\end{problem}
+
+
+\bibliography{biblio}
+\bibliographystyle{plainnat}
+
+
+
+\end{document}
