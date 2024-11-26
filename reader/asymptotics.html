@@ -430,16 +430,16 @@ Z_j = \frac{\hat\beta_j - \beta_j}{\hat\sigma_j} \approx N(0,1), \quad \text{ fo
 <p><img src="asymptotics_files/figure-html/unnamed-chunk-1-2.png" class="img-fluid" width="672"></p>
 </div>
 </div>
-<p>These results about the MLE apply far beyond logistic regression, to a wide variety of other models. To begin to prove them, however, we will need to be more precise about what we mean by the distribution of <span class="math inline">\(\hat\beta\)</span> being approximately normal, or by the estimator <span class="math inline">\(\hat\Sigma\)</span> being approximately equal to <span class="math inline">\(\Sigma(\beta)\)</span>.</p>
+<p>These results about the MLE apply far beyond logistic regression, to a wide variety of other models. To begin to prove them, however, we will need to be more precise about what we mean by <span class="math inline">\(\hat\beta\)</span> approximately following a normal distribution, or by the estimator <span class="math inline">\(\hat\Sigma\)</span> being approximately equal to the estimand <span class="math inline">\(\Sigma(\beta)\)</span>.</p>
 </section>
 </section>
 <section id="convergence" class="level2" data-number="2">
 <h2 data-number="2" class="anchored" data-anchor-id="convergence"><span class="header-section-number">2</span> Convergence</h2>
-<p>Let <span class="math inline">\(X_1, X_2, \ldots \in \mathbb{R}^d\)</span> be a sequence of random vectors. We care about two kinds of convergence:</p>
-<ol type="1">
-<li>Convergence in probability: <span class="math inline">\(X_n \to\)</span> a constant</li>
-<li>Convergence in distribution: <span class="math inline">\(X_n \to N(0, I_d)\)</span> (usually)</li>
-</ol>
+<p>There are two main approximations we will be interested in making: approximating a random variable as a limiting constant, and approximating it as having some limiting distribution, usually a multivariate Gaussian distribution. To make these approximations precise, we need to introduce two types of convergence: convergence in probability, and convergence in distribution.</p>
+<p>Let <span class="math inline">\(X_1, X_2, \ldots\)</span> be a sequence of random variables on a sample space <span class="math inline">\(\cX\)</span>, which we assume is endowed with a distance <span class="math inline">\(d(x,y)\)</span>. Because we are primarily interested in <span class="math inline">\(\cX \subseteq \RR^d\)</span>, we will write <span class="math inline">\(d(x,y)\)</span> as <span class="math inline">\(\|x-y\|\)</span>, and it will not matter which norm we choose, but</p>
+<p>We say the sequence <em>converges in probability</em> to a limiting constant <span class="math inline">\(c \in \cX\)</span>, written as <span class="math inline">\(X \toProb c\)</span> if <span class="math display">\[
+\mathbb{P}(\|X_n - c\| &gt; \epsilon) \to 0 \quad \forall \epsilon &gt; 0.
+\]</span> In writing the norm we are implicitly assuming $</p>
 <section id="convergence-in-probability" class="level3" data-number="2.1">
 <h3 data-number="2.1" class="anchored" data-anchor-id="convergence-in-probability"><span class="header-section-number">2.1</span> Convergence in Probability</h3>
 <p>We say the sequence converges in probability to <span class="math inline">\(c \in \mathbb{R}^d\)</span> (<span class="math inline">\(X_n \xrightarrow{p} c\)</span>) if:</p>
