@@ -46,7 +46,7 @@
     "href": "units/unit1.html#evaluated-python-code-chunk-with-a-plot",
     "title": "Unit 1: Intro",
     "section": "Evaluated Python code chunk, with a plot",
-    "text": "Evaluated Python code chunk, with a plot\n\n\nCode\nimport numpy as np\nx = np.random.normal(size=100)\nimport matplotlib.pyplot as plt\nplt.hist(x)\nplt.show()\nnp.mean(x)\n\n\n\n\n\n0.058828519747583456"
+    "text": "Evaluated Python code chunk, with a plot\n\n\nCode\nimport numpy as np\nx = np.random.normal(size=100)\nimport matplotlib.pyplot as plt\nplt.hist(x)\nplt.show()\nnp.mean(x)\n\n\n\n\n\n-0.001558925080133442"
   },
   {
     "objectID": "units/unit1.html#latex",
@@ -1138,7 +1138,7 @@
     "href": "units/unit3.html#evaluated-python-code-chunk-with-a-plot",
     "title": "Unit 3: More",
     "section": "Evaluated Python code chunk, with a plot",
-    "text": "Evaluated Python code chunk, with a plot\n\n\nCode\nimport numpy as np\nx = np.random.normal(size=100)\nimport matplotlib.pyplot as plt\nplt.hist(x)\nplt.show()\nnp.mean(x)\n\n\n\n\n\n-0.11674458141197101"
+    "text": "Evaluated Python code chunk, with a plot\n\n\nCode\nimport numpy as np\nx = np.random.normal(size=100)\nimport matplotlib.pyplot as plt\nplt.hist(x)\nplt.show()\nnp.mean(x)\n\n\n\n\n\n-0.08893663052001283"
   },
   {
     "objectID": "units/unit3.html#latex",
@@ -1159,14 +1159,14 @@
     "href": "old-exams.html",
     "title": "Old exams",
     "section": "",
-    "text": "Fall 2023 (Solutions)\nFall 2021 (Solutions)\nFall 2020 (Solutions)\nFall 2019 (Solutions)"
+    "text": "Fall 2024 (Solutions)\nFall 2023 (Solutions)\nFall 2021 (Solutions)\nFall 2020 (Solutions)\nFall 2019 (Solutions)"
   },
   {
     "objectID": "old-exams.html#exams-from-previous-semesters",
     "href": "old-exams.html#exams-from-previous-semesters",
     "title": "Old exams",
     "section": "",
-    "text": "Fall 2023 (Solutions)\nFall 2021 (Solutions)\nFall 2020 (Solutions)\nFall 2019 (Solutions)"
+    "text": "Fall 2024 (Solutions)\nFall 2023 (Solutions)\nFall 2021 (Solutions)\nFall 2020 (Solutions)\nFall 2019 (Solutions)"
   },
   {
     "objectID": "syllabus.html",
