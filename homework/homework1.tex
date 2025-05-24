@@ -20,12 +20,14 @@
 \newcommand{\Var}{\textnormal{Var}}
 
 
-
 \newcommand{\simiid}{\overset{\text{i.i.d.}}{\sim}}
 \newcommand{\ep}{\varepsilon}
 
 \definecolor{darkblue}{rgb}{0.2, 0.2, 0.5}
 \newcommand{\sol}{~\\\color{darkblue}{\bf Solution:~\\}}
+
+\newenvironment{solution}{~\\\color{darkblue}{\bf Solution:~\\}}{}
+\newenvironment{ifsol}{\color{darkblue}}{}
 
 \theoremstyle{definition}
 \newtheorem{problem}{Problem}
@@ -34,7 +36,7 @@
 \begin{document}
 
 \title{Stats 210A, Fall 2024\\
-  Homework 1\\
+  Homework 1 \\
   {\large {\bf Due on}: Wednesday, Sep. 11}}
 \date{}
 
@@ -68,7 +70,10 @@ Assume that some measure $\lambda$ exists which satisfies (i)--(iii) and which i
 \item Define the function $A(x)$ mapping elements of $U$ to subsets of $U$, via $A(x) = x \oplus \QQ$, where $\QQ$ is the set of rational numbers. Show that $\lambda(A(x)) = 0$ for any $x$.
 
 
+
+
 \item Consider the range $\cR_A = \{A(x):\; x\in U\}$. Show that $\cR_A$ is a collection of uncountably many subsets of $U$, all of which are disjoint from each other. That is, show that for any $x,y\in U$, we have either $A(x)=A(y)$ or $A(x) \cap A(y) = \emptyset$.
+
 
 
 
@@ -77,7 +82,14 @@ Assume that some measure $\lambda$ exists which satisfies (i)--(iii) and which i
 Define a new function $C(x) = x \oplus B$ and define $\cR_C = \{C(x):\; x \in \QQ\}$. Show that $\cR_C$ is a collection of {\em countably} many subsets of $U$, all of which are disjoint from each other, and whose union is $U$.
 
 
-\item Show that no matter what value $\lambda(B)$ takes, $\lambda$ will have to violate one of the properties (i)--(iii) ({\bf Hint:} what does the value of $\lambda(B)$ imply about $\lambda(U)$?)
+
+
+\item Show that no matter what value $\lambda(B)$ takes, $\lambda$ will have to violate one of the properties (i)--(iii)
+
+{\bf Hint:} what does the value of $\lambda(B)$ imply about $\lambda(U)$?
+
+
+
 
 \end{enumerate}
 
@@ -98,12 +110,18 @@ Let $X,Y \simiid N(0,1)$. This problem is meant to show that by carelessly condi
 \EE[X^2 + Y^2 \mid D] = D^2/2 + 1
 \]
 
+
+
 \item Now define the polar parameterization $(R,\Theta)$ with $R = \sqrt{X^2 + Y^2}$ and $\Theta \in [0,2\pi)$ such that $X  = R\cos \Theta$ and $Y = R\sin \Theta$. Show that $R$ is independent of $\Theta$ and conclude that
 \[
 \EE[X^2 + Y^2 \mid \Theta] = 2
 \]
 
+
+
 \item Use (a) and then (b) to find the expectation of $X^2 + Y^2$ conditional on the event $X = Y$. Can you come up with an intuitive explanation for how we could have arrived at two different answers?
+
+
 
 \end{enumerate}
 
@@ -150,13 +168,17 @@ Suppose $\mu_1$ and $\mu_2$ are both measures on $\cX$, and $a_1,a_2 \geq 0$. Yo
 provided the two integrals on the right are well-defined and finite.
 
 \begin{enumerate}[(a)]
-\item For $\cX = [0,\infty)$, define the measure $\mu(A) = \lambda(A) + \#(A)$, where $\lambda$ represents the Lebesgue measure and $\#$ still represents the counting measure on the set of integers $\ZZ$. For fixed $\theta \in \RR$, define the random variable 
+\item For $\cX = \RR$, define the measure $\mu(A) = \lambda(A) + \#(A)$, where $\lambda$ represents the Lebesgue measure and $\#$ represents the counting measure on the set of integers $\ZZ$. For fixed $\theta \in \RR$, define the random variable 
 \[
 X = \max(0,Z) \text{ where } Z \sim N(\theta, 1),
 \]
 Let $P_\theta$ represent the probability distribution of $X$. Show that $P_\theta$ has no density with respect to $\lambda$ or $\#$. Find a density of $P_\theta$ with respect to $\mu$.
 
+
+
 \item Find a density for $P_\theta$ with respect to $P_0$, or show that none exists.
+
+
 
 \end{enumerate}
 
@@ -165,40 +187,48 @@ Let $P_\theta$ represent the probability distribution of $X$. Show that $P_\thet
 
 
 
+
 \begin{problem}[Bias-variance tradeoff]
-\label{prob:bias-var}
+  \label{prob:bias-var}
   
-  Consider a generic estimation setting where we observe $X \sim P_\theta$, for a model $\cP = \{P_\theta:\; \theta \in \Theta \subseteq \Theta\}$, and we want to estimate $\theta$ using some estimator $\delta(X) \in \RR^d$. The {\em bias} of $\delta$ (under sampling from $P_\theta$) is defined as
+  Consider a generic estimation setting where we observe $X \sim P_\theta$, for a model $\cP = \{P_\theta:\; \theta \in \Theta \subseteq \RR^d\}$, and we want to estimate $\theta$ using some estimator $\delta(X) \in \RR^d$. The {\em bias} of $\delta$ (under sampling from $P_\theta$) is defined as
   \[
   \text{Bias}_\theta(\delta(X)) = \EE_\theta[\delta(X)] - \theta. 
   \]
   For $d=1$, it is well-known that the mean squared error $\text{MSE}(\theta; \delta)$ can be decomposed as the sum of the squared bias of $\delta$ and its variance:
   \begin{equation}\label{eq:biasvar}
-  \text{MSE}(\theta; \delta) = \text{Bias}_\theta(\delta)^2 + \Var_\theta(\delta).
+    \text{MSE}(\theta; \delta) = \text{Bias}_\theta(\delta)^2 + \Var_\theta(\delta).
   \end{equation}
-    
-
+  
+  
   \begin{enumerate}[(a)]
   \item Derive the correct generalization of \eqref{eq:biasvar} for general $d \geq 1$, where the MSE is defined as
     \[
     \text{MSE}(\theta; \delta) = \EE_\theta \|\delta(X) - \theta\|_2^2.
     \]
     It might help to start with $d=1$.
-
+    
+    
+    
   \item Suppose that we are estimating the false positive rate of a new diagnostic test for some disease, using a sample of $n$ specimens taken from a population known not to have the disease we are testing for. If $X$ is the number of false positives and $\theta \in (0,1)$ is the false positive rate, assume $X \sim \text{Binom}(n, \theta)$. The ``obvious'' estimator is $\delta_0(X) = X/n$.
-
+    
     However, biological samples are expensive to obtain and the new test is a slightly modified version of an old test whose false positive rate is known to be $\theta_0 \in (0,1)$, so we might want to ``shrink'' the estimator toward $\theta_0$ as follows:
     \[
     \delta_{\gamma}(X) = \gamma \theta_0 + (1-\gamma) \frac{X}{n}, \quad \text{ for } \gamma \in [0,1],
     \]
     where taking $\gamma = 0$ reduces to the ``obvious'' estimator $\delta_0(X) = X/n$.
-
+    
     Find the MSE of $\delta_\gamma(X)$ as an explicit expression in $\theta_0, \theta, n$, and $\gamma$.
     
-
+    
+    
   \item Find the parameter $\gamma^*$ for which the MSE is minimized, as an expression in $n, \theta$, and $\theta_0$. What happens to $\gamma^*$ if we send $\theta \to \theta_0$ holding $\theta_0$ and $n$ fixed? What if we send $n\to\infty$ holding $\theta$ and $\theta_0$ fixed instead? Explain why these limits make sense.
 
+    
+
   \item In our calculation above, $\gamma^*$ is never exactly zero. That is, a smidgeon of shrinkage always beats no shrinkage. Does this prove that $\delta_0$ is inadmissible? Prove or disprove whether $\delta_0$ is dominated by any $\delta_\gamma$.
+
+    
 
 \paragraph{Moral:} Shading our estimate toward some ``hunch'' value can be an effective technique to improve an estimator's performance. This is a central idea in statistics and machine learning that goes by many names: regularization, shrinkage, and inductive bias, to name a few. The optimal amount of bias in an estimator depends on the sample size, and the accuracy of our hunch, but is rarely zero. This may give us pause about insisting that estimators should be unbiased, a theme to which we will return later.
 

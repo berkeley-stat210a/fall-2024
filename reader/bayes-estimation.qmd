@@ -171,3 +171,140 @@ Often, $u(\theta) = \eta(\theta)$ and $\lambda$ is interpreted as pseudo-observa
    Posterior: $\theta|X \sim \text{Gamma}(\alpha + \sum x_i, \beta + n)$
 
    Interpret $\alpha$ as pseudo-counts and $\beta$ as pseudo-exposure.
+   
+
+### Beta-binomial example
+
+
+
+
+```{ojs}
+// Import necessary libraries
+import {Plotly} from '@observablehq/plotly'
+import {jStat} from 'jstat'
+
+// Input sliders and text boxes
+viewof priorMean = Inputs.range([0.01, 0.99], {value: 0.5, step: 0.01, label: "Prior Mean"})
+viewof priorPseudoFlips = Inputs.range([0.1, 100], {value: 20, step: 0.1, label: "Prior Pseudo-Flips"})
+viewof n = Inputs.number({value: 500, min: 1, step: 1, label: "n"})
+viewof xVal = Inputs.number({value: 125, min: 0, max: n, step: 1, label: "X"})
+
+// Compute alpha and beta from prior mean and pseudo-flips
+alpha = priorMean * priorPseudoFlips
+beta = (1 - priorMean) * priorPseudoFlips
+
+// Create theta values
+theta = Array.from({length: 1000}, (_, i) => i / 999)
+
+// Calculate prior, likelihood, and posterior densities
+priorDensity = theta.map(t => jStat.beta.pdf(t, alpha, beta))
+posteriorDensity = theta.map(t => jStat.beta.pdf(t, alpha + xVal, beta + n - xVal))
+
+// Compute log-likelihood to prevent underflow issues
+logLikelihood = theta.map(t => {
+  if (t <= 0 || t >= 1) return -Infinity
+  return xVal * Math.log(t) + (n - xVal) * Math.log(1 - t)
+})
+maxLogLikelihood = Math.max(...logLikelihood)
+likelihoodScaled = logLikelihood.map(l => Math.exp(l - maxLogLikelihood))
+
+// Scale likelihood to match plot dimensions
+maxPriorDensity = Math.max(...priorDensity)
+maxPosteriorDensity = Math.max(...posteriorDensity)
+ymax = 1.1 * Math.max(maxPriorDensity, maxPosteriorDensity)
+likelihoodScaled = likelihoodScaled.map(l => l * ymax / 1.1)
+
+// Prepare data for plotting
+data = [
+  {
+    x: theta,
+    y: priorDensity,
+    name: 'Prior',
+    mode: 'lines',
+    line: {color: 'blue'}
+  },
+  {
+    x: theta,
+    y: likelihoodScaled,
+    name: 'Likelihood',
+    mode: 'lines',
+    line: {color: 'black'}
+  },
+  {
+    x: theta,
+    y: posteriorDensity,
+    name: 'Posterior',
+    mode: 'lines',
+    line: {color: 'red'}
+  }
+]
+
+// Compute estimates for vertical lines
+UMVU_estimate = xVal / n
+Bayes_estimate = (alpha + xVal) / (alpha + beta + n)
+
+// Define layout with vertical lines and annotations
+layout = {
+  title: 'Beta-Binomial',
+  xaxis: {title: 'theta', range: [0, 1]},
+  yaxis: {title: 'Density', range: [0, ymax]},
+  shapes: [
+    {
+      type: 'line',
+      x0: UMVU_estimate,
+      x1: UMVU_estimate,
+      y0: 0,
+      y1: ymax,
+      line: {color: 'black', dash: 'dot'}
+    },
+    {
+      type: 'line',
+      x0: Bayes_estimate,
+      x1: Bayes_estimate,
+      y0: 0,
+      y1: ymax,
+      line: {color: 'red', dash: 'dot'}
+    },
+    {
+      type: 'line',
+      x0: 0.5,
+      x1: 0.5,
+      y0: 0,
+      y1: ymax,
+      line: {color: 'gray', dash: 'solid'}
+    }
+  ],
+  annotations: [
+    {
+      x: UMVU_estimate,
+      y: ymax,
+      xref: 'x',
+      yref: 'y',
+      text: 'UMVU',
+      showarrow: true,
+      arrowhead: 2,
+      ax: 0,
+      ay: -40
+    },
+    {
+      x: Bayes_estimate,
+      y: ymax,
+      xref: 'x',
+      yref: 'y',
+      text: 'Bayes',
+      showarrow: true,
+      arrowhead: 2,
+      ax: 0,
+      ay: -40
+    }
+  ],
+  legend: {x: 0.8, y: 0.9},
+  margin: {t: 40}
+}
+
+// Create the plot
+Plotly.newPlot(plotDiv, data, layout)
+
+// Display the plot
+plotDiv = html`<div id="plotDiv"></div>`
+```

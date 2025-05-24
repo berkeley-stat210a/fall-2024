@@ -263,7 +263,11 @@ In addition to these examples, we could add most of the distributional families 
 
 To help interpret what it means for a model to have an exponential family structure, we can think of $p_\eta(x) = e^{\eta'T(x) - A(\eta)} h(x)$ as an *exponential tilt* of the carrier density $h(x)$. That is, beginning with $h(x)$, we first multiply by $e^{\eta'T(x)}$, increasing the density of points in the sample space for which $\eta'T(x)$ is largest relative to those for which $\eta'T(x)$ is smaller. Then, we re-normalize by $e^{-A(\eta)}$ to obtain a probability distribution.
 
-This is easiest to understand in a one-parameter family with sufficient statistic $T(X) = X$
+This is easiest to understand in a one-parameter family with sufficient statistic $T(X) = X$, (need to finish)
+
+## Visualization of exponential tilting
+
+Below we visualize an exponential family with ``triangular'' base density $h(x) = \max\{0, 1-|x|\}$ and three sufficient statistics $T_1(X) = X, T_2(X) = X^2, and T_3(X) = \cos(100 X)$. Use the dials to ``tilt'' the density toward each statistic, and see how the density changes.
 
 ```{ojs}
 //| echo: false

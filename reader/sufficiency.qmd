@@ -1,7 +1,6 @@
 ---
 title: "Sufficiency"
 author: Will Fithian
-date: 08-29-2023
 format: html
 editor: visual
 ---
@@ -43,9 +42,147 @@ $$
 
 Since the conditional distribution does not depend on $\theta$, $T(X)$ is sufficient for the model $\cP$.
 
-As we will see next, we didn't really need to go to the trouble of calculating the conditional distribution. Once we noticed that the density depends on $x$ only through $T(x)$, we could have concluded that $T(X)$ was sufficient.
+## Visualization of sufficiency for two binomials
+
+We now illustrate the concept of sufficiency with a visualization for a closely related example where now the initial data set is a pair of independent binomial random variables $X_1, X_2 \simiid \text{Binom}(n, \theta)$. We can make a similar calculation to show that $T(X) = X_1 + X_2$ is sufficient:
+
+$$
+p_\theta(x) = \binom{n}{x_1} \theta^{x_1}(1-\theta)^{n-x_1} \cdot \binom{n}{x_2} \theta^{x_2}(1-\theta)^{n-x_2} = \theta^{T(x)}(1-\theta)^{2n-T(x)} \binom{n}{x_1}\binom{n}{x_2}.
+$$
+
+```{ojs}
+//| echo: false
+
+// CSS for layout
+html`
+<style>
+  .plot-container {
+    display: flex;
+    justify-content: space-around;
+    flex-wrap: wrap;
+  }
+  .plot {
+    flex: 0 1 450px;
+    margin: 10px;
+  }
+  .plot-title {
+    text-align: center;
+    font-size: 20px;
+    font-weight: bold;
+    margin-bottom: 10px;
+  }
+</style>
+`
+
+// Helper functions
+function binomialProbability(n, k, p) {
+  return combination(n, k) * Math.pow(p, k) * Math.pow(1 - p, n - k);
+}
+
+function combination(n, k) {
+  return factorial(n) / (factorial(k) * factorial(n - k));
+}
+
+function factorial(n) {
+  if (n === 0 || n === 1) return 1;
+  return n * factorial(n - 1);
+}
+
+// Input parameters
+viewof n = Inputs.range([2, 10], {step: 1, value: 5, label: "n:"})
+viewof theta = Inputs.range([0, 1], {step: 0.01, value: 0.5, label: "θ:"})
+viewof t = Inputs.range([0, 2 * n], {step: 1, value: n, label: "T(X) = X₁ + X₂:"})
+
+// Calculate probabilities
+probabilities = {
+  let probs = [];
+  for (let x1 = 0; x1 <= n; x1++) {
+    for (let x2 = 0; x2 <= n; x2++) {
+      let prob = binomialProbability(n, x1, theta) * binomialProbability(n, x2, theta);
+      probs.push({x1, x2, prob, sum: x1 + x2});
+    }
+  }
+  return probs;
+}
+
+// Calculate conditional probabilities
+conditionalProbs = {
+  let totalProb = probabilities.filter(p => p.sum === t).reduce((sum, p) => sum + p.prob, 0);
+  return Array.from({length: n + 1}, (_, x1) => {
+    let x2 = t - x1;
+    let prob = (x2 >= 0 && x2 <= n) ? probabilities.find(p => p.x1 === x1 && p.x2 === x2)?.prob || 0 : 0;
+    return {x1, prob: prob / totalProb};
+  });
+}
+
+// Create plot container
+html`<div class="plot-container">
+  <div class="plot">
+    <div class="plot-title">P(X₁, X₂)</div>
+    ${
+      Plot.plot({
+        width: 450,
+        height: 450,
+        margin: 60,
+        style: {
+          fontSize: "14px",
+          fontWeight: "normal"
+        },
+        x: {
+          label: "X₂",
+          domain: [-1, n],
+          tickFormat: d => d >= 0 ? d : "",
+        },
+        y: {
+          label: "X₁",
+          domain: [-1, n],
+          tickFormat: d => d >= 0 ? d : "",
+        },
+        marks: [
+          Plot.dot(probabilities, {
+            x: "x2",
+            y: "x1",
+            r: d => Math.sqrt(d.prob) * 200,
+            fill: d => d.sum === t ? "red" : "black",
+          }),
+          Plot.text([{x: n/2, y: -1.5}], {
+            text: ["Distribution of (X₁, X₂)"],
+            fontSize: 16,
+          }),
+        ]
+      })
+    }
+  </div>
+  <div class="plot">
+    <div class="plot-title">P(X₁ | T(X))</div>
+    ${
+      Plot.plot({
+        width: 450,
+        height: 450,
+        margin: 60,
+        style: {
+          fontSize: "14px",
+          fontWeight: "normal"
+        },
+        x: {
+          label: "X₁",
+        },
+        y: {
+          label: "Probability",
+          domain: [0, Math.max(...conditionalProbs.map(d => d.prob)) * 1.1],
+        },
+        marks: [
+          Plot.barY(conditionalProbs, {x: "x1", y: "prob", fill: "red"}),
+        ]
+      })
+    }
+  </div>
+</div>`
+```
 
 ## Factorization theorem
+
+As we will see next, we didn't really need to go to the trouble of calculating the conditional distribution in the first example. Once we noticed that the density depends on $x$ only through $T(x)$, we could have concluded that $T(X)$ was sufficient.
 
 The easiest way to verify that a statistic is sufficient is to show that the density $p_\theta$ factorizes into a part that involves only $\theta$ and $T(x)$, and a part that involves only $h(x)$.
 
@@ -63,16 +200,18 @@ $$
 \mu\left(\{x:\; p_\theta(x) \neq g_\theta(T(x))h(x)\}\right) = 0.
 $$
 
-It is needed to avoid counterexamples with continuous distributions where we could arbitrarily change the value of $p_{\theta_0}(x_0)$ for a single $\theta_0$ and $x_0$ without actually changing any of the distributions.
+It is needed to avoid counterexamples where we mess with the densities on a set of points that the base measure doesn't assign any mass, which would let us destroy the factorization structure without changing any of the distributions.
 
-**Proof:** The proof is easiest in the discrete case, so we don't have to deal with conditioning on measure-zero events.
+**Proof (discrete** $\cX$): The proof is easiest in the discrete case, so that we don't have to deal with conditioning on measure-zero events and worry about things like Jacobians for change of variables.
 
-First, assume that there exists a factorization $p_\theta(x) = g_\theta(T(x)) h(x)$. Then we
+We'll assume without loss of generality that $\mu$ is the counting measure: if $\mu$ were some other measure, it would have to have a density $m$ with respect to the counting measure and we would just have to carry around $m(x)$ in all of our expressions.
+
+First, assume that there exists a factorization $p_\theta(x) = g_\theta(T(x)) h(x)$. Then we have
 
 $$
 \begin{aligned}
 \PP_\theta(X = x \mid T(X) = t) 
-&= \frac{p_\theta(x)1\{T(x) = t\}}{\displaystyle\sum_{z:\;T(z) = t} p_\theta(z)}\\[7pt]
+&= \frac{\PP_\theta(X = x, T(X) = t)}{\PP_\theta(T(X) = t)}\\[7pt]
 &= \frac{g_\theta(t) h(x) 1\{T(x) = t\}}{g_\theta(t)\displaystyle\sum_{z:\;T(z) = t} h(z)}\\[7pt]
 &= \frac{h(x) 1\{T(x) = t\}}{\displaystyle\sum_{z:\;T(z) = t} h(z)},
 \end{aligned}
@@ -82,22 +221,97 @@ which we see does not depend on $\theta$.
 
 Next consider the opposite direction. If $T(X)$ is sufficient, then we can construct a factorization by writing
 
-. First, define
+$$
+\begin{aligned}
+g_\theta(t) &= \PP_\theta(T(X)=t)\\
+h(x) &= \PP(X = x \mid T(X) = T(x)),
+\end{aligned}
+$$ noting that the conditional probability in the definition of $h(x)$ does not depend on $\theta$ by sufficiency. Then we have
 
 $$
-g_\theta(t) = \PP_\theta(T(X)=t) = \sum_{x:\;T(x) = t} p_\theta(x).
+\PP_\theta(X = x) = \PP_\theta(T(X) = T(x)) \;\cdot\;\PP_\theta(X = x \mid T(X) = T(x)) = g_\theta(T(x)) h(x),
+$$ so $g_\theta(T(x))h(x)$ is indeed the pmf $p_\theta(x)$.
+
+## Statement for general $\cX$
+
+## Examples
+
+Some initial examples:
+
+**Example: Normal location family** Assume we observe an i.i.d. sample from a normal distribution with unit variance and unknown mean:
+
+$$
+X_1,\ldots,X_n \simiid N(\theta,1) = \frac{1}{\sqrt{2\pi}} e^{-(x-\theta)^2/2} = \frac{1}{\sqrt{2\pi}} e^{-x^2/2 + \theta x - \theta^2/2}
 $$
 
-Then, let
+The joint density function for the full data set $X = (X_1,\ldots,X_n)$ over $\RR^n$ is
 
 $$
-h(x) = \PP(X = x \mid T(X) = T(x)),
-$$
+\begin{aligned}
+p_\theta(x) &= (2\pi)^{-n/2} \cdot \prod_{i=1}^n e^{-x_i^2/2 + \theta x_i - \theta^2/2}\\[7pt]
+&= \underbrace{e^{\theta \left(\sum_i x_i\right) -n\theta^2/2}}_{g_\theta\left(\sum_i x_i\right)}\cdot \underbrace{\frac{\prod_{i=1}^n e^{-x_i^2/2}}{(2\pi)^{-n/2}}}_{h(x)},
+\end{aligned}
+$$ which by the factorization theorem shows that $\sum_i X_i$ is sufficient.
 
-which does not depend on $\theta$ by sufficiency. Then we have
+**Example: Poisson family** Next assume we observe an i.i.d. sample from a Poisson distribution with unknown mean $\theta$:
 
 $$
-\PP_\theta(X = x) = \PP_\theta(T(X) = T(x)) \;\cdot\;\PP_\theta(X = x \mid T(X) = T(x)) = g_\theta(T(x)) h(x)
-$$
+X_1,\ldots,X_n \simiid \text{Pois}(\theta) = \frac{\theta^x e^{-\theta}}{x!}, \quad \text{ for } x = 0,1,\ldots
+$$ The joint pmf for the full data set $X = (X_1,\ldots,X_n)$ over $\{0,1,\ldots\}^n$ is
 
-## Sufficient statistics in exponential families
+$$
+\begin{aligned}
+p_\theta(x) &= \prod_{i=1}^n \frac{\theta^{x_i}e^{-\theta}}{x_i!}\\[7pt]
+&= \underbrace{e^{\theta \left(\sum_i x_i\right) -n\theta}}_{g_\theta\left(\sum_i x_i\right)}\cdot \underbrace{\left(\prod_{i=1}^n x_i!\right)^{-1}}_{h(x)},
+\end{aligned}
+$$ Showing once again that $T(X) = \sum_i X_i$ is sufficient. As we'll find out in the next lecture, there is a good reason why these calculations turned out so similarly: both of these models have what is called an *exponential family* structure.
+
+**Example: Uniform location family** As a third example, suppose we observe an i.i.d. sample from a uniform distribution on the interval $[\theta, \theta + 1]$:
+
+$$
+X_1,\ldots, X_n \simiid U[\theta, \theta+1] = 1\{\theta \leq x \leq \theta + 1\}.
+$$ The joint density function for the full data set is
+
+$$
+p_\theta(x) = \prod_{i=1}^n 1\{\theta \leq x \leq \theta + 1} = 1\{\theta \leq \min_i x_i\} 1\{\max_i x_i \leq \theta + 1\},
+$$ so $T(X) = (\min_i X_i, \max_i X_i)$ is sufficient.
+
+## Interpretations of sufficiency
+
+## Sufficient statistics under i.i.d. sampling
+
+## Minimal sufficiency
+
+Consider again the example with $X_1,\ldots,X_n \simiid N(\theta,1)$. We have shown that $\sum_i X_i$ is sufficient. It follows that $\overline{X} = \frac{1}{n}\sum_i X_i$ is also sufficient. But we have also shown that the vector of order statistics $S(X) = (X_{(1)}, \ldots, X_{(n)})$ is another sufficient statistic. Finally, the full data set $X$ is always a sufficient statistic, by definition.
+
+While these are indeed all sufficient statistics, some of them represent more significant compressions of the data than others. We can see this from the fact that $\sum_i X_i$ and $\overline{X}$ are recoverable from each other, and can also be recovered from either $S(X)$ or $X$ itself, but $S(X)$ cannot be recovered from $\sum_i X_i$ or $\overline{X}$. The full data $X$ cannot be recovered from any of the other three, but any of the other three can be recovered from it. Among these statistics, the first two represent the greatest reduction of the data, and $X$ represents no reduction at all, while $S(X)$ sits in the middle.
+
+Any statistic from which a sufficient statistic can be recovered is immediately a sufficient statistic:
+
+**Proposition:** If $T(X)$ is sufficient and $T(X) = f(S(X))$ then $S(X)$ is also sufficient.
+
+*Proof:* By the factorization theorem we can find densities with $$
+p_\theta(x) = g_\theta(T(x))h(x) = (g_\theta \circ f)(S(x)) h(x),
+$$ showing that $S(X)$ is sufficient as well.
+
+We say that a sufficient statistic is **minimal** if it can be recovered from any other sufficient statistic. That is, $T(X)$ is **minimal sufficient** if
+
+1.  $T(X)$ is sufficient, and
+
+2.  For any other sufficient statistic $S(X)$, we have $T(X) = f(S(X))$ for some $f$ (almost surely in $\cP$).
+
+We would like to be able to recognize minimal sufficient statistics when we can. For a model $\cP$ with densities $p_\theta$, we can say that two data sets $x,y\in \cX$ are *equivalent* (with respect to statistical inference in $\cP$) if $p_\theta(x)/p_\theta(y)$ does not depend on $\theta$. We can write $x \equiv_{\cP} y$ if this is the case.
+
+Note that, for any sufficient statistic $T(X)$, values that map to the same output value $t$ must be equivalent: if $T(x)=T(y)=t$, we have $$
+\frac{p_\theta(x)}{p_\theta(y)} = \frac{\PP_\theta(X = x \text{ and } T(X) = t)}{\PP_\theta(X = y \text{ and } T(X) = t)} = \frac{\PP(X = x \mid T(X) = t)}{\PP(X = y \mid T(X) = t)},
+$$ which does not depend on $\theta$ by sufficiency of $T(X)$.\footnote{this is really true up to almost sure equality.} Thus, for *any* sufficient statistic we have $T(x) = T(y) \Rightarrow x \equiv_{\cP} y$: the function $T$ is only allowed to collapse values that are equivalent to each other. For a *minimal sufficient statistic*, this implication goes both ways since $T$ collapses the sample space as much as possible. That is,
+
+**Proposition:** Assume $\cP$ has densities $p_\theta(x)$, and $T(X)$ is any statistic. If we have $$x \equiv_{\cP} y \iff T(x) = T(y),$$ then $T(X)$ is minimal sufficient.
+
+*Proof (discrete* $\cX$): First, we show $T(X)$ is sufficient. For any $x$ with $T(x) = t$, we have
+
+$$
+\PP_\theta(X = x \mid T(X) = t) = \frac{p_\theta(x)}{\sum_{z: T(z) = t} p_\theta(z)} = \frac{1}{\sum_{z:\; T(z) = t} p_\theta(z)/p_\theta(x)},
+$$ which does not depend on $\theta$ because all of the values $z$ that we sum over in the denominator map to the same $t$, and are therefore equivalent to $x$ by assumption.
+
+Next, assume $S(X)$ is any other sufficient statistic. If $S(x) = S(y) = s$, then $x \equiv_{\cP} y$, by the argument above the theorem, and consequently $T(x) = T(y)$ by assumption. Then we can set $f(s) = T(x)$. For any other value $z$ with $S(z) = s$, we must also have $x \equiv_{\cP} z$ so $T(z) = T(x) = f(S(z))$. Since $s$ was arbitrary, we have the result.

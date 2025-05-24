@@ -37,6 +37,15 @@
           href: recitation/recitation1-probability.pdf
 - week: 3
   days:
+    - date: "Sep 10"
+      items:
+        - type: "Lecture"
+          id: "4"
+          name: "Sufficiency"
+          href: reader/sufficiency.qmd
+          auxil:
+            - id: "Handwritten notes"
+              href: handwritten/lecture04-sufficiency.pdf
     - date: "Sep 11"
       items:
         - type: "Homework"
@@ -46,6 +55,331 @@
           auxil:
             - id: "LaTeX source"
               href: homework/homework1.tex
+    - date: "Sep 12"
+      items:
+        - type: "Lecture"
+          id: "5"
+          name: "Exponential families"
+          href: reader/exponential-families.qmd
+          auxil:
+            - id: "Handwritten notes"
+              href: handwritten/lecture05-exponentialfamilies.pdf
+- week: 3
+  days:
+    - date: "Sep 17"
+      items:
+        - type: "Lecture"
+          id: "6"
+          name: "Completeness"
+          href: reader/completeness.qmd
+          auxil:
+            - id: "Handwritten notes"
+              href: handwritten/lecture06-completeness.pdf
+    - date: "Sep 18"
+      items:
+        - type: "Homework"
+          id: "2"
+          name: "Problems"
+          href: homework/homework2.pdf
+          auxil:
+            - id: "LaTeX source"
+              href: homework/homework2.tex
+    - date: "Sep 19"
+      items:
+        - type: "Lecture"
+          id: "7"
+          name: "Unbiased estimation"
+          href: reader/unbiased-estimation.qmd
+          auxil:
+            - id: "Handwritten notes"
+              href: handwritten/lecture07-unbiased.pdf
+- week: 4
+  days:
+    - date: "Sep 24"
+      items:
+        - type: "Lecture"
+          id: "8"
+          name: "Score and Fisher information"
+          href: reader/score-fisher.qmd
+          auxil:
+            - id: "Handwritten notes"
+              href: handwritten/lecture08-fisherinfo.pdf
+    - date: "Sep 25"
+      items:
+        - type: "Homework"
+          id: "3"
+          name: "Problems"
+          href: homework/homework3.pdf
+          auxil:
+            - id: "LaTeX source"
+              href: homework/homework3.tex
+    - date: "Sep 26"
+      items:
+        - type: "Lecture"
+          id: "9"
+          name: "Bayes estimation"
+          href: reader/bayes-estimation.qmd
+          auxil:
+            - id: "Handwritten notes"
+              href: handwritten/lecture09-bayesestimation.pdf
+- week: 5
+  days:
+    - date: "Oct 1"
+      items:
+        - type: "Lecture"
+          id: "10"
+          name: "Bayesian interpretation"
+          href: handwritten/lecture10-bayesinterp.pdf
+          auxil:
+            - id: "Handwritten notes"
+              href: handwritten/lecture10-bayesinterp.pdf
+    - date: "Oct 2"
+      items:
+        - type: "Homework"
+          id: "4"
+          name: "Problems"
+          href: homework/homework4.pdf
+          auxil:
+            - id: "LaTeX source"
+              href: homework/homework4.tex
+    - date: "Oct 3"
+      items:
+        - type: "Lecture"
+          id: "11"
+          name: "Hierarchical Bayes"
+          href: handwritten/lecture11-bayescompute.pdf
+          auxil:
+            - id: "Handwritten notes"
+              href: handwritten/lecture11-bayescompute.pdf
+- week: 6
+  days:
+    - date: "Oct 9"
+      items:
+        - type: "Homework"
+          id: "5"
+          name: "Problems"
+          href: homework/homework5.pdf
+          auxil:
+            - id: "LaTeX source"
+              href: homework/homework5.tex
+            - id: "Data for Problem 5"
+              href: homework/gibbspoisson.csv
+    - date: "Oct 10"
+      items:
+        - type: "Lecture"
+          id: "12"
+          name: "James-Stein estimator"
+          href: reader/jamesstein.qmd
+          auxil:
+            - id: "Handwritten notes"
+              href: handwritten/lecture12-jamesstein.pdf
+- week: 7
+  days:
+    - date: "Oct 15"
+      items:
+        - type: "Lecture"
+          id: "13"
+          name: "Minimax estimation"
+          href: handwritten/lecture13-minimax.pdf
+          auxil:
+            - id: "Handwritten notes"
+              href: handwritten/lecture13-minimax.pdf
+    - date: "Oct 16"
+      items:
+        - type: "Homework"
+          id: "6"
+          name: "Problems"
+          href: homework/homework6.pdf
+          auxil:
+            - id: "LaTeX source"
+              href: homework/homework6.tex
+    - date: "Oct 17"
+      items:
+        - type: "Lecture"
+          id: "14"
+          name: "Hypothesis testing"
+          href: reader/hypothesis-testing.qmd
+          auxil:
+            - id: "Handwritten notes"
+              href: handwritten/lecture14-hyptesting.pdf
+- week: 8
+  days:
+    - date: "Oct 22"
+      items:
+        - type: "Lecture"
+          id: "15"
+          name: "Testing with one parameter"
+          href: reader/testing-one-parameter.qmd
+          auxil:
+            - id: "Handwritten notes"
+              href: handwritten/lecture15-testonepar.pdf
+    - date: "Oct 23"
+      items:
+        - type: "Homework"
+          id: "7"
+          name: "Problems"
+          href: homework/homework7.pdf
+          auxil:
+            - id: "LaTeX source"
+              href: homework/homework7.tex
+    - date: "Oct 24"
+      items:
+        - type: "Lecture"
+          id: "16"
+          name: "p-Values and confidence sets"
+          href: handwritten/lecture16-pconf.pdf
+          auxil:
+            - id: "Handwritten notes"
+              href: handwritten/lecture16-pconf.pdf
+- week: 9
+  days:
+    - date: "Oct 29"
+      items:
+        - type: "Lecture"
+          id: "17"
+          name: "Testing with nuisance parameters"
+          href: handwritten/lecture17-nuisanceparams.pdf
+          auxil:
+            - id: "Handwritten notes"
+              href: handwritten/lecture17-nuisanceparams.pdf
+    - date: "Oct 30"
+      items:
+        - type: "Homework"
+          id: "8"
+          name: "Problems"
+          href: homework/homework8.pdf
+          auxil:
+            - id: "LaTeX source"
+              href: homework/homework8.tex
+    - date: "Oct 31"
+      items:
+        - type: "Lecture"
+          id: "18"
+          name: "Linear models"
+          href: handwritten/lecture18-linearmodel.pdf
+          auxil:
+            - id: "Handwritten notes"
+              href: handwritten/lecture18-linearmodel.pdf
+- week: 10
+  days:
+    - date: "Nov 5"
+      items:
+        - type: "Lecture"
+          id: "19"
+          name: "Linear models"
+          href: handwritten/lecture18-linearmodel.pdf
+          auxil:
+            - id: "Handwritten notes"
+              href: handwritten/lecture18-linearmodel.pdf
+    - date: "Nov 7"
+      items:
+        - type: "Lecture"
+          id: "20"
+          name: "Asymptotics"
+          href: handwritten/lecture19-asymptotics.pdf
+          auxil:
+            - id: "Handwritten notes"
+              href: handwritten/lecture19-asymptotics.pdf
+    - date: "Nov 8"
+      items:
+        - type: "Homework"
+          id: "9"
+          name: "Problems"
+          href: homework/homework9.pdf
+          auxil:
+            - id: "LaTeX source"
+              href: homework/homework9.tex
+- week: 11
+  days:
+    - date: "Nov 12"
+      items:
+        - type: "Lecture"
+          id: "21"
+          name: "Maximum Likelihood estimator"
+          href: handwritten/lecture21-mle.pdf
+          auxil:
+            - id: "Handwritten notes"
+              href: handwritten/lecture21-mle.pdf
+    - date: "Nov 14"
+      items:
+        - type: "Lecture"
+          id: "22"
+          name: "Likelihood-based inference"
+          href: handwritten/lecture23-likelihoodbasedinference.pdf
+          auxil:
+            - id: "Handwritten notes"
+              href: handwritten/lecture23-likelihoodbasedinference.pdf
+    - date: "Nov 15"
+      items:
+        - type: "Homework"
+          id: "10"
+          name: "Problems"
+          href: homework/homework10.pdf
+          auxil:
+            - id: "LaTeX source"
+              href: homework/homework10.tex
+            - id: "Data for Problem 3"
+              href: homework/confbands.csv
+- week: 12
+  days:
+    - date: "Nov 19"
+      items:
+        - type: "Lecture"
+          id: "23"
+          name: "MLE consistency"
+          href: handwritten/lecture22-mle-consistency.pdf
+          auxil:
+            - id: "Handwritten notes"
+              href: handwritten/lecture22-mle-consistency.pdf
+    - date: "Nov 21"
+      items:
+        - type: "Lecture"
+          id: "24"
+          name: "Likelihood Based Inference (continuation)"
+          href: handwritten/lecture23-likelihoodbasedinference.pdf
+          auxil:
+            - id: "Handwritten notes"
+              href: handwritten/lecture23-likelihoodbasedinference.pdf
+    - date: "Nov 22"
+      items:
+        - type: "Homework"
+          id: "11"
+          name: "Problems"
+          href: homework/homework11.pdf
+          auxil:
+            - id: "LaTeX source"
+              href: homework/homework11.tex
+- week: 13
+  days:
+    - date: "Nov 26"
+      items:
+        - type: "Lecture"
+          id: "25"
+          name: "Bootstrap"
+          href: handwritten/lecture25-bootstrap.pdf
+          auxil:
+            - id: "Handwritten notes"
+              href: handwritten/lecture25-bootstrap.pdf
+- week: 14
+  days:
+    - date: "Dec 3"
+      items:
+        - type: "Lecture"
+          id: "26"
+          name: "Bootstrap (Continuation)"
+          href: handwritten/lecture25-bootstrap.pdf
+          auxil:
+            - id: "Handwritten notes"
+              href: handwritten/lecture25-bootstrap.pdf
+    - date: "Dec 3"
+      items:
+        - type: "Lecture"
+          id: "27"
+          name: "Multiple testing"
+          href: handwritten/lecture26-multipletesting.pdf
+          auxil:
+            - id: "Handwritten notes"
+              href: handwritten/lecture26-multipletesting.pdf
 - week: 17
   days:
     - date: "Dec 18"

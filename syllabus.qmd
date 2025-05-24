@@ -9,7 +9,7 @@ Stat 210A is an introductory Ph.D.-level course in theoretical statistics. It is
 ### Instructors
 
 -   **Primary Instructor** [Prof. Will Fithian](http://www.stat.berkeley.edu/~wfithian/)
-    -   **Office Hours:** Tuesday 3:30-4:30pm [on Zoom](https://berkeley.zoom.us/j/96319412431?pwd=2OYujkSXdsNuTD1QQ25UGV1bL4CJI0.1), Thursday 9:30-10:30am in Evans 301
+    -   **Office Hours:** Tuesday 3:30-4:30pm [on Zoom](https://berkeley.zoom.us/j/96319412431?pwd=2OYujkSXdsNuTD1QQ25UGV1bL4CJI0.1), Thursday 9:30-10:30am in 301 Evans
     -   **Email:** [wfithian\@berkeley.edu](mailto:wfithian@berkeley.edu)
 -   **GSI** [Dohyeong Ki](https://statistics.berkeley.edu/people/dohyeong-ki)
     -   **Office Hours:** Wednesday 9-10am, Friday 4:30-5:30pm in 444 Evans
@@ -18,7 +18,7 @@ Stat 210A is an introductory Ph.D.-level course in theoretical statistics. It is
 ### Course schedule
 
 -   **Lectures:** Tuesday and Thursday 11am-12:30pm, Evans 60
--   **Recitation sections:** Every second F 3:30-4:30pm (location TBD), starting September 6
+-   **Recitation sections:** Every second F 3:30-4:30pm in 444 Evans, starting September 6
 -   **Election week:**
     -   Blanket 2-day extension on homework 9 (due Friday November 8, 11:59pm)
 -   **Thanksgiving week:**
@@ -104,8 +104,6 @@ Your final grade is based on:
 **Academic integrity:** You are expected to abide by the [Berkeley honor code](http://teaching.berkeley.edu/berkeley-honor-code). Violating the collaboration policy, or cheating in any other way, will result in a failing grade for the semester and you will be reported to the University Office of Student Conduct.
 
 While the final exam is nominally one half of the grade, it is quite difficult and typically accounts for most of the variance in final course grades. If you take shortcuts on the homework, you will save yourself time in the short run, but you may do quite poorly on the final.
-
-<!-- ![Homework and final exam grades for a recent semester, with letter grade cutoffs](assets/gradescatter.png) -->
 
 ## Accommodations
 

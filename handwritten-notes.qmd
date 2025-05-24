@@ -10,3 +10,11 @@ editor: visual
 -   [Lecture 2: Probability](handwritten/lecture02-probability.pdf)
 
 -   [Lecture 3: Estimation](handwritten/lecture03-estimation.pdf)
+
+-   [Lecture 4: Sufficiency](handwritten/lecture04-sufficiency.pdf)
+
+-   [Lecture 5: Exponential families](handwritten/lecture05-exponentialfamilies.pdf)
+
+-   [Lecture 6: Completeness](handwritten/lecture06-completeness.pdf)
+
+-   [Lecture 7: Unbiased estimation](handwritten/lecture07-unbiased.pdf)

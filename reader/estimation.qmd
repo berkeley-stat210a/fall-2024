@@ -1,7 +1,5 @@
 ---
-title: "Statistical decision theory"
-author: Will Fithian
-date: 08-29-2023
+title: "Statistical models and estimation"
 format: html
 editor: visual
 ---

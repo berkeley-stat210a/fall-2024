@@ -19,11 +19,20 @@ website:
           - faq.qmd
           - syllabus.qmd
           - calendar.qmd
-      - handwritten-notes.qmd
+      - section: "Course Materials"
+        contents:
+          - handwritten-notes.qmd
+          - homework.qmd
+          - old-exams.qmd
       - section: "Course Reader"
         contents:
           - reader/introduction.qmd
           - reader/probability.qmd
+          - reader/estimation.qmd
+          - reader/exponential-families.qmd
+          - reader/sufficiency.qmd
+          - reader/completeness.qmd
+          - reader/unbiased-estimation.qmd
       - href: license.qmd
         text: License
 
