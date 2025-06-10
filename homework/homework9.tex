@@ -1,0 +1,196 @@
+\documentclass{article}
+
+\usepackage[margin=1.2in]{geometry}
+\usepackage{graphicx}
+\usepackage{amsmath,amssymb,amsthm,bm}
+\usepackage{latexsym,color,minipage-marginpar,caption,multirow,verbatim}
+\usepackage{enumerate}
+\usepackage[round]{natbib}
+\usepackage{times}
+\usepackage{booktabs}
+
+\newcommand{\cP}{\mathcal{P}}
+\newcommand{\cX}{\mathcal{X}}
+\newcommand{\cR}{\mathcal{R}}
+\newcommand{\cT}{\mathcal{T}}
+\newcommand{\cY}{\mathcal{Y}}
+\newcommand{\cQ}{\mathcal{Q}}
+
+\newcommand{\EE}{\mathbb{E}}
+\newcommand{\PP}{\mathbb{P}}
+\newcommand{\QQ}{\mathbb{Q}}
+\newcommand{\RR}{\mathbb{R}}
+\newcommand{\ZZ}{\mathbb{Z}}
+
+\newcommand{\Var}{\textnormal{Var}}
+\newcommand{\MSE}{\textnormal{MSE}}
+
+\DeclareMathOperator*{\argmax}{argmax}
+
+
+\newcommand{\simiid}{\overset{\text{i.i.d.}}{\sim}}
+\newcommand{\simind}{\overset{\text{ind.}}{\sim}}
+\newcommand{\ep}{\varepsilon}
+
+\definecolor{darkblue}{rgb}{0.2, 0.2, 0.5}
+
+\newenvironment{solution}{~\\\color{darkblue}{\bf Solution:~\\}}{}
+\newenvironment{ifsol}{\color{darkblue}}{}
+
+\newcommand{\optional}{{\bf Optional:} (Not graded, no extra points) }
+
+\theoremstyle{definition}
+\newtheorem{problem}{Problem}
+
+
+\begin{document}
+
+\title{Stats 210A, Fall 2024\\
+  Homework 9 \\
+  {\large {\bf Due on}: Friday, Nov. 8}}
+\date{}
+
+\maketitle
+
+\paragraph{Instructions:} See the standing homework instructions on the course web page
+
+
+\begin{problem}[Fisher's exact test]
+\label{prob:fisher-exact}
+Suppose $X_i \sim \text{Binom}(n_i, \pi_i)$ independently for $i=0,1$ and $\pi_0,\pi_1\in(0,1)$. Consider testing $H_0:\; \pi_1\leq \pi_0$ vs. $H_1:\; \pi_1 > \pi_0$.
+
+\begin{enumerate}[(a)]
+\item  A natural object of inference in this model is the {\em odds ratio}:
+\[
+\rho = \frac{\pi_1/(1-\pi_1)}{\pi_0/(1-\pi_0)}.
+\]
+Write the model in exponential family form with $\theta=\log\rho$ as one of the natural parameters, and reframe $H_0$ as an equivalent hypothesis about $\theta$.
+
+
+
+\item  The hypergeometric distribution $\text{Hypergeom}(N,K,n)$ describes the probability distribution for sampling $n$ binary values without replacement from a finite population of $N$ binary values, of which $K$ are equal to $1$ and the other $N-K$ are equal to $0$. If $X$ is the number of successes in the subsample, its probability mass function is
+\[
+p_{N,K,n}(x) = \frac{\binom{K}{x}\binom{N-K}{n-x}}{\binom{N}{n}}, \quad \text{ for } x = \max\{0,n+K-N\}, \ldots, \min\{K,n\}.
+\]
+Find the UMPU level-$\alpha$ test of $H_0$ in part (a), show that the test statistic has a hypergeometric distribution for appropriate $N,K,n$, and describe how to find the cutoffs $c(u), \gamma(u)$.
+
+
+
+\item Find the conditional distribution of your test statistic for general $\theta$. Note you do not need to find a closed-form expression for the normalizing constant.
+
+\item Suppose $n_0=n_1=40$, $X_0=18$ and $X_1=7$. Give a $95\%$ confidence interval for the odds ratio $\rho$ by numerically inverting the two-sided,
+equal-tailed, conditional test of $H_0:\; \rho=\rho_0$ vs. $H_1:\; \rho \neq \rho_0$. Don't randomize the interval, just return the conservative non-randomized interval. (Hint: it is equivalent to set up the problem in terms of $\theta$, and may be a little easier to think about that way.)
+
+
+\end{enumerate}
+
+{\bf Note:} Fisher's exact test is almost certainly the most important non-Gaussian example of a UMPU test with nuisance parameters, and has been used in countless clinical trials and observational studies. For example, we might give $n_1$ cardiac disease patients a new drug and give $n_0$ a placebo, then observe how many patients in each group suffer a heart attack within the next 5 years.
+\end{problem}
+
+\begin{problem}[Comparing variances]
+\label{prob:comparing-variances}
+Consider testing $H_0:\; \sigma^2 \leq \tau^2$ vs. $H_1:\; \sigma^2 > \tau^2$ in the two-sample Gaussian model with
+\[
+  X_1,\ldots,X_n \simiid N(\mu,\sigma^2), \quad Y_1,\ldots,Y_m\simiid N(\nu,\tau^2),
+\]
+where $X$ is independent of $Y$ and all parameters are unknown.
+
+Define the sample mean and sample variance as
+\[
+\overline X = \frac{1}{n}\sum_{i=1}^n X_i,  \quad S_X^2 = \frac{1}{n-1}\sum_{i=1}^n (X_i-\overline X)^2,
+\]
+and define $\overline Y$ and $S_Y^2$ analogously.
+
+\begin{enumerate}[(a)]
+\item Show that $S_X^2/S_Y^2 \sim F_{n-1,m-1}$ if $\sigma^2=\tau^2$ (i.e., on the boundary of the null).
+
+
+
+\item Show that the test that rejects for (marginally) large values of $S_X^2/S_Y^2$ is UMPU (Hint: it may be helpful to recall that $\overline X, S_X^2, \overline Y,$ and $S_Y^2$ are mutually independent by Basu's theorem, and that ${(n-1)S_X^2 = \|X\|^2 - n\overline X^2}$.)
+
+
+
+%%Maybe next year ask for a confidence interval or confidence bound? Maybe do random effects ANOVA?
+\end{enumerate}
+\end{problem}
+
+
+\begin{problem}[One-sample $t$-interval]
+\label{prob:one-sample-t-interval}
+If $Z\sim N(0,1)$ and $V \sim \chi_d^2$ with $Z,V$ independent, we say that $T=Z/\sqrt{V/d}$ follows a {\em Student's $t$ distribution} with $d$ degrees of freedom, denoted by $T\sim t_d$. Note that $T^2 \sim F_{1,d}$ but $T$ preserves sign information in case we want to do one-sided tests.
+
+Now suppose $X_1,\ldots,X_n \simiid N(\mu,\sigma^2)$ with $\sigma^2>0$ unknown and consider testing $H_0:\; \mu = \mu_0$ vs. $H_1:\; \mu \neq \mu_0$.
+
+We showed in class that the one-sided UMPU test for $H_0:\;\mu \leq 0$ vs. $H_1:\; \mu > 0$ rejects for large values of $T_X = \frac{\overline X \sqrt{n}}{\sqrt{S_X^2}}$, where $S_X^2$ is defined as in Problem 2.
+
+\begin{enumerate}[(a)]
+\item Show that $T_X\sim t_{n-1}$ if $\mu = 0$ (see hint for previous problem).
+
+
+
+
+\item To test $H_0:\;\mu=0$ vs. $H_1:\; \mu \neq 0$, show that the UMPU test rejects for large values of $|T_X|$ (Hint: the simplest way is to use symmetry).
+
+
+
+\item Find a UMPU test of $H_0:\; \mu = \mu_0$ for a generic $\mu_0\in\RR$, and invert to find a confidence interval for $\mu$ in terms of $\overline X$, $S_X^2$, quantiles of the $t_{n-1}$ distribution, and the desired level $\alpha$ (Hint: consider the distribution of $X_i-\mu_0$).
+
+
+
+\end{enumerate}
+\end{problem}
+
+\begin{problem}[McNemar's test]
+\label{prob:mcnemar-test}
+Suppose we have paired binary data: for $i=1,\ldots,n$ we observe $(X_i,Y_i)\in \{0,1\}^2$. The pairs are i.i.d. with
+\[
+\PP\left[(X_i,Y_i) = (a,b)\right] = \pi_{a,b} \quad a,b\in \{0,1\}.
+\]
+This model could describe the performance of two prediction models on a test set, where $X_i$ and $Y_i$ represent respectively whether each model gets the $i$th prediction right. Or it could represent binary outcomes in a matched-pairs clinical trial, where similar patients are matched into pairs and then within each pair a coin is flipped to see who gets the treatment and who gets the placebo.
+
+Write $\pi_X = \PP(X_i=1) = \pi_{1,0}+\pi_{1,1}$ and $\pi_Y = \PP(Y_i=1) = \pi_{0,1}+\pi_{1,1}$, and let $N_{a,b} = \sum_{i=1}^n 1\{X_i=a,Y_i=b\}$.
+
+\begin{enumerate}[(a)]
+\item Find the UMPU test of $H_0:\; \pi_X \leq \pi_Y$ vs. $H_1:\; \pi_X > \pi_Y$, giving the cutoffs $c(u), \gamma(u)$ in terms of solutions to integral equalities for a binomial distribution. (Hint: it may help to first reframe the hypothesis in terms of the $\pi_{a,b}$ parameters.)
+
+
+
+\item Suppose $N_{0,0} = N_{1,1} = 1000$, $N_{0,1} = 5$ and $N_{1,0}=25$. Compute $95\%$ confidence intervals for $\pi_X$ and $\pi_Y$ (invert the two-sided equal-tailed test but without randomizing). Then compute a $p$-value for $H_0:\; \pi_X\leq\pi_Y$ (do not randomize). Does anything about the respective answers surprise you?
+
+
+
+\end{enumerate}
+
+(Note: This test is called McNemar's test; it is very useful for clinical trials with matched pairs of subjects, and also for comparing the performance of different classifiers on a held-out sample.)
+
+  {\bf Moral:} When we have paired data, we can often make much more precise comparisons between two distributions; even more precise than our ability to infer things about either of the distributions individually. This is often worth taking into account if we are designing an experiment: for example, if we match patients into pairs on demographic characteristics and then randomize a treatment/placebo assignment within each pair, we may get a very good inference about whether the treatment is better than the placebo, much better than we would get if we randomly assigned all $2n$ subjects independently of each other.
+\end{problem}
+
+\begin{problem}[Nonparametric tests]
+\label{prob:nonparametric-tests}
+In this problem you will design tests for two nonparametric hypothesis testing problems. There is necessarily some wiggle room in how you choose the test statistic, and it will probably not be possible to determine the cutoff explicitly. Just choose a reasonable one, define the cutoff in terms of a quantile of a well-defined distribution, and show that your test has significance level $\alpha$.
+
+\begin{enumerate}[(a)]
+\item Suppose $X_1,\ldots,X_n\in \RR$ are independent random variables with $X_i \sim P_i$. Consider testing the null hypothesis $H_0:\; P_1=P_2=\cdots=P_n$ (i.e., the observations are i.i.d.) against the alternative that there is a systematic trend toward larger values of $X_i$ as $i$ increases (this is sometimes called a {\em test of trend}). Design a level-$\alpha$ test.
+
+
+
+\item Suppose $(X_1,Y_1),\ldots,(X_n,Y_n) \simiid P$ where $P$ is an unknown joint distribution on $\RR^2$. Consider testing the null hypothesis that $X_i$ and $Y_i$ are independent within each pair (i.e., $P = P_X \times P_Y$, with $P_X$ and $P_Y$ unknown and not necessarily the same) versus the alternative that $(X_i,Y_i)$ are positively correlated within each pair. Design a level-$\alpha$ test.
+
+
+
+
+\end{enumerate}
+
+Note that the alternative is defined a little vaguely in each part above. If that troubles you, we could formally take the alternative be ``$P_i$ are arbitrary but not all equal'' in part (a), or ``$P \neq P_X \times P_Y$'' in part (b). The alternative hypotheses as I've defined them informally are meant to suggest which alternatives to prioritize when you design your test.
+
+{\bf Moral:} We can often design our own nonparametric tests by conditioning on an appropriate sufficient statistic for the null distribution.
+\end{problem}
+
+
+\bibliography{biblio}
+\bibliographystyle{plainnat}
+
+
+
+\end{document}

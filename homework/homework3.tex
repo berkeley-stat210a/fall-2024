@@ -1,0 +1,271 @@
+\documentclass{article}
+
+\usepackage[margin=1.2in]{geometry}
+\usepackage{graphicx}
+\usepackage{amsmath,amssymb,amsthm,bm}
+\usepackage{latexsym,color,minipage-marginpar,caption,multirow,verbatim}
+\usepackage{enumerate}
+\usepackage[round]{natbib}
+\usepackage{times}
+
+\newcommand{\cP}{\mathcal{P}}
+\newcommand{\cX}{\mathcal{X}}
+\newcommand{\cR}{\mathcal{R}}
+\newcommand{\cT}{\mathcal{T}}
+\newcommand{\cY}{\mathcal{Y}}
+\newcommand{\cQ}{\mathcal{Q}}
+
+\newcommand{\EE}{\mathbb{E}}
+\newcommand{\PP}{\mathbb{P}}
+\newcommand{\QQ}{\mathbb{Q}}
+\newcommand{\RR}{\mathbb{R}}
+\newcommand{\ZZ}{\mathbb{Z}}
+
+\newcommand{\Var}{\textnormal{Var}}
+\newcommand{\MSE}{\textnormal{MSE}}
+
+
+\newcommand{\simiid}{\overset{\text{i.i.d.}}{\sim}}
+\newcommand{\ep}{\varepsilon}
+
+\definecolor{darkblue}{rgb}{0.2, 0.2, 0.5}
+
+\newenvironment{solution}{~\\\color{darkblue}{\bf Solution:~\\}}{}
+\newenvironment{ifsol}{\color{darkblue}}{}
+
+\newcommand{\optional}{{\bf Optional:} (Not graded, no extra points) }
+
+\theoremstyle{definition}
+\newtheorem{problem}{Problem}
+
+
+\begin{document}
+
+\title{Stats 210A, Fall 2024\\
+  Homework 3 \\
+  {\large {\bf Due on}: Wednesday, Sep. 25}}
+\date{}
+
+\maketitle
+
+\begin{problem}[Multinomial subfamilies]
+
+  The multinomial family is a multi-category version of the binomial, it measures the number of times each category comes up if we sample a $d$-category random variable with distribution $\pi$ on $n$ independent trials. Throughout this problem assume $d \geq 3$.
+
+  If $X \sim \text{Multinom}(n, \pi)$, with all $\pi_j > 0$ and $\sum_j \pi_j = 1$, then $X$ has density
+  \[
+  p_\pi(x) = \pi_1^{x_1}\pi_2^{x_2}\cdots \pi_d^{x_d} \cdot \frac{n!}{x_1! x_2! \cdots x_d!}
+  \]
+  
+  {\bf Note:} The coordinates of $X=(X_1,\ldots,X_d)$ are neither independent nor identically distributed.
+
+ \begin{enumerate}[(a)]
+    
+  \item Rewrite the densities as a $(d-1)$-parameter exponential family, giving an explicit form for $T(x)$, $h(x)$, $\eta$, and $A(\eta)$. Show whether $X=(X_1,\ldots,X_d)$ is complete sufficient, minimal sufficient, or neither.
+
+    
+  
+  \item Suppose a certain gene has two alleles {\bf A} and {\bf a}, and $\theta\in (0,1)$ is the unknown prevalence of allele {\bf a} in a well-mixed population. Then the proportion of people in the population with genotypes {\bf aa}, {\bf Aa}, and {\bf AA} is $\theta^2$, $2\theta(1-\theta)$, and $(1-\theta)^2$, respectively.
+
+    We can estimate $\theta$ by sampling $n$ independent individuals from the population and counting the number who have each genotype. These counts will have a joint multinomial distribution with probability parameter
+    \[
+    \pi(\theta) = (\theta^2, 2\theta(1-\theta), (1-\theta)^2).
+    \]
+    Hence, scientific considerations might lead us to use the multinomial subfamily indexed by $\theta$:
+    \[
+    \cP = \{\text{Multinom}(n,\pi(\theta)):\; \theta \in (0,1)\}.
+    \]
+    Can $\cP$ be written as a one-parameter exponential family? Find a minimal sufficient statistic for $\cP$, and show whether or not it is complete.
+
+    
+
+
+  \item Now suppose our population is a mixture of two populations with different prevalences $\theta_1$ and $\theta_2$ for allele {\bf a}. Define $\gamma \in (0,1)$ as the proportion of individuals from population 1. Assume that $\theta_1,\theta_2$ are known and only $\gamma$ is unknown. Since $\theta_1$ and $\theta_2$ are known it may be convenient to write the mixture probabilities as
+    \[
+    \pi(\gamma) = \gamma\pi^{(1)} + (1-\gamma)\pi^{(2)}, \quad \text{ for } \pi^{(k)} = (\theta_k^2, 2\theta_k(1-\theta_k), (1-\theta_k)^2), \;\;k=1,2.
+    \]
+
+    Now suppose that we again sample $n$ individuals form our unknown mixture, giving another one-parameter subfamily $\cQ$ indexed by $\gamma$. Can $\cQ$ be written as a one-parameter exponential family? Find a minimal sufficient statistic for $\cQ$, and show whether or not it is complete.
+  \end{enumerate}
+
+  \paragraph{Moral:} The structure of the families and subfamilies determines the properties of the sufficient statistic.
+
+\end{problem}
+
+
+\begin{problem}[Gamma family]
+
+The gamma family is a two-parameter family of distributions on $\RR_+ = [0,\infty)$, with density
+\[
+p_{k,\theta}(x) = \frac{x^{k-1}e^{-x/\theta}}{\Gamma(k)\theta^k}
+\]
+with respect to the Lebesgue measure on $\RR_+$. $k>0$ and $\theta>0$ are respectively called the shape and scale parameters, and $\Gamma(k)$ is the gamma function, defined as
+\[
+\Gamma(k) = \int_0^\infty x^{k-1}e^{-x}\,d x.
+\]
+The gamma distribution generalizes the exponential distribution 
+\[
+\text{Exp}(\theta) = \theta^{-1}e^{-x/\theta} = \text{Gamma}(1,\theta)
+\]
+and the chi-squared distribution 
+\[
+\chi_d^2 = \frac{x^{d/2-1}e^{-x/2}}{\Gamma(d/2)2^{d/2}} = \text{Gamma}(d/2,2).
+\]
+
+
+
+\begin{enumerate}[(a)]
+\item Show that the Gamma is a 2-parameter exponential family by putting it into its canonical form. Find the natural parameter, sufficient statistic, carrier density, and log-partition function ({\bf Note}: there are multiple valid ways of doing this).
+
+  
+
+\item Find the mean and variance of $X \sim \Gamma(k,\theta)$.
+
+  
+
+\item Find the moment generating function of $X\sim \Gamma(k,\theta)$:
+\[
+M_X(u) = \EE_{k,\theta}[e^{uX}],
+\]
+and use it to find the distribution of $X_+ = \sum_{i=1}^n X_i$ where $X_1,\ldots,X_n$ are mutually independent with $X_i \sim \text{Gamma}(k_i, \theta)$.
+
+You may use without proof the following uniqueness result about MGFs:
+If $Y$ and $Z$ are two random variables whose MGFs coincide in a neighborhood of 0 ($\exists \delta>0$ for which $M_Y(u) =M_Z(u) < \infty$ for all $u\in[-\delta,\delta]$), then $Y$ and $Z$ have the same distribution.
+
+
+\end{enumerate}
+\end{problem}
+
+
+\begin{problem}[Interpretation of completeness]
+
+The concept of {\em completeness} for a family of measures was introduced in \citet{lehmann1950completeness} as a precursor to their definition, in the same paper, of a complete statistic. The definition of a complete family did not stick, and lives on only in the (consequently confusingly named) idea of complete statistic (in particular it has nothing to do with the definition of a {\em complete measure} that you can find on Wikipedia).
+
+If $\cP = \{P_\theta:\; \theta \in \Theta\}$ is a family of measures on $\cX$, we say that $\cP$ is {\em complete} if 
+\[
+\int f(x)\,d  P_\theta(x) = 0, \;\forall \theta \quad\Rightarrow\quad
+P_\theta(\{x:\; f(x) \neq 0\}) = 0, \;\forall \theta.
+\]
+This can be interpreted as an inner product $\langle f, P_\theta\rangle = \int f\,d  P_\theta$, where $f \perp P_\theta$ if $\langle f, P_\theta\rangle = 0$. Then, the family is {\bf not} complete if there is some nonzero function $f$ that is orthogonal to every $P_\theta$. We will try to gain some intuition for this definition and, thereby, for the definition of a complete statistic.
+
+For the following parts, let $\cP = \{P_\theta:\; \theta \in \Theta\}$ be a family of probabilty measures on $\cX$, assume $T(X)$ is a statistic, and let $\cT = T(\cX)$ be the range of the statistic $T(X)$. Let $\cP^T = \{P_\theta^T:\; \theta\in \Theta\}$ denote the induced model of push-forward probability measures on $\cT$ denoting the possible distributions of $T(X)$:
+\[
+P_\theta^T(B) = P_\theta(T^{-1}(B)) = \PP_\theta(T(X) \in B).
+\]
+
+\begin{enumerate}[(a)]
+\item Show that $T(X)$ is a complete statistic for the family $\cP$ if and only if $\cP^T$ is a complete family.
+
+
+
+\item Assume (for this part only) that $\cX$ is a finite set, i.e. $\cX = \{x_1,\ldots, x_n\}$ for some $n<\infty$, and assume without loss of generality that every $x\in\cX$ has $P_\theta(\{x\}) > 0$ for at least one value of $\theta$ (otherwise we could truncate the sample space). 
+
+Let $p_\theta(x) = \PP_\theta(X = x) \geq 0$, and $v^\theta = (p_\theta(x_1),\ldots,p_\theta(x_n)) \in \RR^n$. Show that $\cP$ is complete if and only if $\text{Span}\{v^\theta:\;\theta\in\Theta\} = \RR^n$.
+
+
+
+\item Let $X_1,\ldots,X_n \simiid \text{Pois}(\theta)$ for $\theta\in \Theta = \{\theta_1,\ldots, \theta_m\}$ with $2 \leq m < \infty$. Find a sufficient statistic that is minimal but not complete (prove both properties).
+
+  
+
+\item \optional In the same scenario but with $\Theta = \pi\ZZ_+ = \{0, \pi, 2\pi, \ldots\}$, show that the same statistic is minimal but not complete.
+
+{\bf Hint:} Recall the Taylor series 
+\[
+\sin(\theta) = \theta - \frac{\theta^3}{3!} + \frac{\theta^5}{5!} - \frac{\theta^7}{7!} + \cdots.
+\]
+
+
+
+\item \optional  Let $X_1,\ldots,X_n \simiid \text{Pois}(\theta)$ for $\theta\in \Theta$, and assume that $\Theta$ has an accumulation point at 0, i.e. $\Theta$ includes an infinite sequence of positive values $\theta_1,\theta_2,\ldots\in \Theta$ such that $\lim_{m\to\infty} \theta_m = 0$. Find a complete sufficient statistic and prove it is complete sufficient. 
+
+{\bf Hint:} suppose $f$ is a counterexample function; what is $f(0)$? It may be helpful to recall that $\int f\,d  \mu$ is undefined unless either $\int \max(0,f(x))\,d  \mu(x)$ or $\int \max(0, -f(x))\,d  \mu(x)$ is finite; as a result $\int f\,d  \mu = 0 \Rightarrow \int|f|\,d  \mu < \infty$.
+
+
+\end{enumerate}
+
+{\bf Moral 1:} The definition of a complete statistic is easier to remember if we recall its interpretation as saying that the set of distributions $P_\theta^T$ ``spans'' a certain vector space, so that only the zero function is orthogonal to all $P_\theta^T$.
+
+{\bf Moral 2:} If $\cP = \{P_\eta:\; \eta \in \Xi\}$ is a full-rank exponential family with natural parameter $\eta$, meaning $\Xi$ contains an open set, our result from class allows us to prove completeness of $T(X)$. But the converse is far from true: it is possible for $T$ to be complete if $\Xi$ is discrete, or even finite.
+\end{problem}
+
+
+
+\begin{problem}[Ancillarity in location-scale families]
+
+In a parameterized family where $\theta = (\zeta, \lambda)$, we say a statistic $T$ is {\em ancillary for $\zeta$} if its distribution is independent of $\zeta$; that is, if $T(X)$ is ancillary in the subfamily where $\lambda$ is known, for each possible value of $\lambda$.
+
+Suppose that $X_1,\ldots,X_n\in \cX=\RR$ are an i.i.d. sample from a {\em location-scale family} $\cP = \{F_{a,b}(x) = F((x-a)/b): \; a\in \RR, b>0\}$, where $F(\cdot)$ is a known cumulative distribution function. The real numbers $a$ and $b$ are called the {\em location} and {\em scale} parameters respectively. 
+
+{\bf Note:} It is {\em not} enough to prove ancillarity of the coordinates; the joint distribution of the statistic shouldn't depend on the relevant parameter.
+\begin{enumerate}[(a)]
+\item Show that the vector of differences $\left(X_1 - X_i\right)_{i = 2}^n$ is ancillary for $a$.
+
+
+\item Show that the vector of ratios $\left(\frac{X_1 - a}{X_i - a}\right)_{i=2}^n$ is ancillary for $b$. (Note: this is only a statistic when $a$ is known).
+
+
+\item \optional Show that the vector of difference ratios $\left(\frac{X_1 - X_i}{X_2 - X_i}\right)_{i=3}^n$ is ancillary for $(a,b)$.
+
+\item Let $X_1,\ldots,X_n$ be mutually independent with $X_i \sim \text{Gamma}(k_i, \theta)$. Show that $X_+ = \sum_{i=1}^n X_i$ is independent of $(X_1,\ldots,X_n)/X_+$.
+
+
+\end{enumerate}
+
+{\bf Moral:} Location-scale families have common structure that we can exploit in some problems.
+\end{problem}
+
+
+
+\begin{problem}[Complete sufficient statistic for a nonparametric family]
+
+Consider an i.i.d. sample from the nonparametric family of {\em all} distributions on $\RR$:
+\[
+X_1,\ldots,X_n \simiid P,
+\]
+Formally we can write this model as $\cP = \left\{P^n:\; P \text{ is a probability measure on } \RR\right\}$. Let $T(X) = (X_{(1)},\ldots,X_{(n)})$ denote the vector of order statistics.
+
+\begin{enumerate}[(a)]
+
+\item For a finite set of size $m$, $\cY = \{y_1,\ldots,y_m\} \subseteq \RR$, consider the subfamily $\cP_\cY$ of distributions supported on $\cY$:
+  \[
+  \cP_\cY = \{P^n:\; P(\cY) = 1\} \subseteq \cP.
+  \]
+  Show that $T(X)$ is complete sufficient for this family.
+
+{\bf Hint:}  It may help to review different ways to parameterize the multinomial family.
+
+
+
+\item Show that the vector of order statistics $T(X) = (X_{(1)},\ldots,X_{(n)})$ is a complete sufficient statistic for $\cP$.
+
+
+
+\item Next, consider the restricted subfamily 
+\[
+\cQ_k = \{P^n:\; \EE_P[|X_1|^k] < \infty\} \subseteq \cP,
+\]
+and define the sample mean and variance respectively as
+\[
+\overline X = \frac{1}{n}\sum_{i=1}^n X_i, \quad S^2 = \frac{1}{n-1} \sum_{i=1}^n (X_i - \overline X)^2.
+\]
+Show that $\overline X$ is the UMVU estimator of $\EE_P X_1$ in $\cQ_1$, and $S^2$ is the UMVU estimator of $\text{Var}_P(X_1)$ in $\cQ_2$.
+
+
+
+% \item \optional Define the cumulative distribution function $F(x) = \PP(X \leq x)$. In the original family $\cP$, find the UMVU estimator of $F(x)$ for a fixed value of $x \in \RR$.
+
+% {\bf Note:} If we come up with an estimator $\widehat{F}(x)$ for each $x$ we can regard the function $\widehat{F}$ as an unbiased estimator for $F$.
+
+% 
+
+\end{enumerate}
+
+{\bf Moral:} Without any restrictions on the family $\cP$, we can't do much better than estimating population quantities with sample quantities (when the sample quantities are unbiased). In the case of the mean, for examples, $\overline X$ is always available as an unbiased estimator of $\EE X$, but if we impose additional assumptions on the family then we might be able to do better.
+\end{problem}
+
+\bibliography{biblio}
+\bibliographystyle{plainnat}
+
+
+\end{document}

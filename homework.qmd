@@ -1,0 +1,39 @@
+---
+title: "Homework"
+editor: visual
+---
+
+## Standing homework instructions
+
+You may disregard measure-theoretic niceties about conditioning on measure-zero sets, almost-sure equality vs. actual equality, "all functions" vs. "all measurable functions," etc. (unless the problem is explicitly asking about such issues).
+
+If you need to write code to answer a question, show your code. If you need to include a plot, make sure the plot is readable, with appropriate axis labels and a legend if necessary. Points will be deducted for very hard-to-read code or plots.
+
+Anytime I ask you to calculate things numerically, it is implicit that Monte Carlo integration (calculating an expectation by repeatedly sampling data from an appropriate distribution and taking the average) is a valid numerical method. There is no need to ask permission, but please use good judgment about how many samples to take so that your numerical error is not too high: if you report a number it should be correct to a few significant digits; if you are comparing two numbers, the precision of your calculation should be high enough for the difference to be meaningful; and plots of smooth functions should appear smooth enough for the plot to be readable.
+
+Unless otherwise stated, assume asymptotic limits are taken as $n\to \infty$. If I ask for a "limiting distribution," I mean do an appropriate centering and scaling to find a limiting distribution that is non-degenerate (not converging in probability to a constant). That is, find sequences $a_n$ and $b_n$ such that $b_n(X_n−a_n)$ converges to a non-degenerate limiting distribution.
+
+## Assignments
+
+-   [Homework 1](homework/homework1.pdf) ([LaTeX source](homework/homework1.tex))
+
+-   [Homework 2](homework/homework2.pdf) ([LaTeX source](homework/homework2.tex))
+
+-   [Homework 3](homework/homework3.pdf) ([LaTeX source](homework/homework3.tex))
+
+-   [Homework 4](homework/homework4.pdf) ([LaTeX source](homework/homework4.tex))
+
+-   [Homework 5](homework/homework5.pdf) ([Data for Problem 5](homework/gibbspoisson.csv)) ([LaTeX source](homework/homework5.tex))
+
+-   [Homework 6](homework/homework6.pdf) ([LaTeX source](homework/homework6.tex))
+
+-   [Homework 7](homework/homework7.pdf) ([LaTeX source](homework/homework7.tex))
+
+-   [Homework 8](homework/homework8.pdf) ([LaTeX source](homework/homework8.tex))
+
+-   [Homework 9](homework/homework9.pdf) ([LaTeX source](homework/homework9.tex))
+
+-   [Homework 10](homework/homework10.pdf) ([Data for Problem 3](homework/confbands.csv)) ([LaTeX source](homework/homework10.tex))
+
+-   [Homework 11](homework/homework11.pdf) ([LaTeX source](homework/homework11.tex))
+
